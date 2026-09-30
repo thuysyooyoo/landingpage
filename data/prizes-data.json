@@ -97,7 +97,7 @@
   "monthly_wheel": {
     "title": "Đại Lễ Tri Ân Mùng 05 Hàng Tháng",
     "description": "Sự kiện quay thưởng định kỳ do Ban Tổ Chức Eureka thực hiện lúc 10h00 ngày 05 hàng tháng",
-    "rules": "Mỗi đơn hàng hoàn thành thực tế trong tháng nhận ngay 01 mã dự thưởng hợp lệ. Admin quay số ngẫu nhiên chọn ra 03 doanh nghiệp/chủ hàng trúng giải.",
+    "rules": "Mỗi đơn hàng hoàn thành thực tế trong tháng nhận ngay 01 mã dự thưởng hợp lệ. Admin quay số ngẫu nhiên chọn ra 03 mã booking trúng giải.",
     "prizes_schedule": [
       {
         "month": "Tháng 10 (Quay ngày 05/11)",
@@ -117,28 +117,36 @@
     ],
     "winners": [
       {
-        "period": "Tháng 10 (Kỳ 1)",
-        "phone_masked": "098***6789",
-        "company_masked": "Tập Đoàn XNK *** Á Châu",
-        "order_masked": "ERK-***89",
-        "prize": "Voucher 300.000 đ",
-        "status": "Đã trừ cước đơn mới"
+        "id": "W-01",
+        "period": "Kỳ 10/2026 (Mùng 05/11)",
+        "booking_code": "ERK-BK-2026-8891",
+        "prize": "Voucher Chiết Khấu 300.000 đ",
+        "draw_time": "10h05 - 05/11/2026",
+        "status": "✅ Đã đối soát & trừ cước"
       },
       {
-        "period": "Tháng 10 (Kỳ 1)",
-        "phone_masked": "091***4321",
-        "company_masked": "Công Ty CP Thương Mại *** Minh",
-        "order_masked": "ERK-***45",
-        "prize": "Voucher 300.000 đ",
-        "status": "Đã trừ cước đơn mới"
+        "id": "W-02",
+        "period": "Kỳ 10/2026 (Mùng 05/11)",
+        "booking_code": "ERK-BK-2026-4432",
+        "prize": "Vé Ưu Tiên Xếp Cont Sớm",
+        "draw_time": "10h10 - 05/11/2026",
+        "status": "✅ Đã cấp vé ưu tiên"
       },
       {
-        "period": "Tháng 10 (Kỳ 1)",
-        "phone_masked": "090***8827",
-        "company_masked": "TNHH SX & PP Gia Dụng *** An",
-        "order_masked": "ERK-***12",
-        "prize": "Voucher 300.000 đ",
-        "status": "Đang chờ xuất kho"
+        "id": "W-03",
+        "period": "Kỳ 10/2026 (Mùng 05/11)",
+        "booking_code": "ERK-BK-2026-1205",
+        "prize": "Voucher Chiết Khấu 300.000 đ",
+        "draw_time": "10h15 - 05/11/2026",
+        "status": "✅ Đã đối soát & trừ cước"
+      },
+      {
+        "id": "W-04",
+        "period": "Kỳ 09/2026 (Mùng 05/10)",
+        "booking_code": "ERK-BK-2026-7731",
+        "prize": "Giảm 50% Phí Lưu Kho Bãi",
+        "draw_time": "10h08 - 05/10/2026",
+        "status": "✅ Đã hoàn tất trừ phí"
       }
     ]
   }

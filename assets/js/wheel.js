@@ -1,197 +1,231 @@
 /**
  * Dual Lucky Wheel Engine for Eureka Customer Awards 2026
- * 1. Wheel 1: Vòng Quay Trải Nghiệm Khách Hàng (Tự do quay, áp dụng Tỉ lệ & Kho quà do Admin setup)
- * 2. Wheel 2: Vòng Quay Tri Ân Mùng 05 Hàng Tháng (Admin quay chính thức, Khách xem cơ cấu & danh sách trúng thưởng)
+ * 1. Wheel 1: Vòng Quay Trải Nghiệm Khách Hàng (100% Popup Modal, lưu SĐT Lead vào Admin)
+ * 2. Wheel 2: Vòng Quay Đại Lễ Tri Ân Mùng 05 (Admin quay, bảng công khai chỉ hiện mã booking không che)
  */
 
-// ==================== AUDIO SYNTHESIZER (Web Audio API) ====================
-const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-let audioContext = null;
+// ==================== COMMON UTILITIES & SOUND ====================
+let audioCtx = null;
+function getAudioContext() {
+  if (!audioCtx) {
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    if (AudioContextClass) {
+      audioCtx = new AudioContextClass();
+    }
+  }
+  if (audioCtx && audioCtx.state === 'suspended') {
+    audioCtx.resume();
+  }
+  return audioCtx;
+}
 
 function playTickSound() {
   try {
-    if (!audioContext) audioContext = new AudioContextClass();
-    if (audioContext.state === 'suspended') audioContext.resume();
-    const osc = audioContext.createOscillator();
-    const gain = audioContext.createGain();
+    const ctx = getAudioContext();
+    if (!ctx) return;
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
     osc.type = 'triangle';
-    osc.frequency.setValueAtTime(460, audioContext.currentTime);
-    osc.frequency.exponentialRampToValueAtTime(120, audioContext.currentTime + 0.04);
-    gain.gain.setValueAtTime(0.12, audioContext.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.04);
+    osc.frequency.setValueAtTime(540, ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(180, ctx.currentTime + 0.04);
+    gain.gain.setValueAtTime(0.08, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.04);
     osc.connect(gain);
-    gain.connect(audioContext.destination);
+    gain.connect(ctx.destination);
     osc.start();
-    osc.stop(audioContext.currentTime + 0.04);
+    osc.stop(ctx.currentTime + 0.04);
   } catch (e) {}
 }
 
 function playWinSound() {
   try {
-    if (!audioContext) audioContext = new AudioContextClass();
-    if (audioContext.state === 'suspended') audioContext.resume();
-    const notes = [523.25, 659.25, 783.99, 1046.50];
+    const ctx = getAudioContext();
+    if (!ctx) return;
+    const notes = [440, 554.37, 659.25, 880];
     notes.forEach((freq, idx) => {
-      const osc = audioContext.createOscillator();
-      const gain = audioContext.createGain();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
       osc.type = 'sine';
-      osc.frequency.value = freq;
-      gain.gain.setValueAtTime(0.2, audioContext.currentTime + idx * 0.1);
-      gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + idx * 0.1 + 0.4);
+      osc.frequency.setValueAtTime(freq, ctx.currentTime + idx * 0.1);
+      gain.gain.setValueAtTime(0.12, ctx.currentTime + idx * 0.1);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + idx * 0.1 + 0.35);
       osc.connect(gain);
-      gain.connect(audioContext.destination);
-      osc.start(audioContext.currentTime + idx * 0.1);
-      osc.stop(audioContext.currentTime + idx * 0.1 + 0.45);
+      gain.connect(ctx.destination);
+      osc.start(ctx.currentTime + idx * 0.1);
+      osc.stop(ctx.currentTime + idx * 0.1 + 0.35);
     });
   } catch (e) {}
 }
 
+// ==================== STORAGE FOR LEADS (SĐT ĐIỀN VÒNG QUAY) ====================
+const STORAGE_KEY_SPIN_LEADS = 'eureka_spin_leads';
+
+function getSpinLeads() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY_SPIN_LEADS);
+    if (raw) return JSON.parse(raw);
+  } catch (e) {}
+  // Default seed leads for demonstration
+  return [
+    { id: "L-101", phone: "0984356451", voucherCode: "ERK-908618", prize: "Voucher Chiết Khấu 400.000 đ", createdAt: "17:15 - 30/09/2026", status: "Chờ áp dụng qua Zalo" },
+    { id: "L-102", phone: "0912883421", voucherCode: "ERK-441209", prize: "Voucher Chiết Khấu 300.000 đ", createdAt: "16:42 - 30/09/2026", status: "Đã tư vấn Zalo" },
+    { id: "L-103", phone: "0977651209", voucherCode: "ERK-882315", prize: "Vé Ưu Tiên Xếp Cont Sớm", createdAt: "15:20 - 30/09/2026", status: "Chờ áp dụng qua Zalo" },
+    { id: "L-104", phone: "0903112882", voucherCode: "ERK-331908", prize: "Giảm 50% Phí Lưu Kho Bãi", createdAt: "14:05 - 30/09/2026", status: "Đã tư vấn Zalo" }
+  ];
+}
+
+function saveSpinLead(newLead) {
+  const leads = getSpinLeads();
+  leads.unshift(newLead);
+  localStorage.setItem(STORAGE_KEY_SPIN_LEADS, JSON.stringify(leads));
+  if (typeof renderAdminSpinLeadsTable === 'function') {
+    renderAdminSpinLeadsTable();
+  }
+}
 
 // ==================== WHEEL 1: VÒNG QUAY TRẢI NGHIỆM KHÁCH HÀNG ====================
-const wheelCanvas = document.getElementById('lucky-wheel-canvas');
-let wheelCtx = wheelCanvas ? wheelCanvas.getContext('2d') : null;
+const canvas1 = document.getElementById('wheel-canvas');
+let ctx1 = canvas1 ? canvas1.getContext('2d') : null;
 
 let welcomeSegments = [];
-let currentAngle1 = 0;
-let isSpinning1 = false;
 
 function initWelcomeWheelData() {
   if (typeof getActiveWheelSegments === 'function') {
     welcomeSegments = getActiveWheelSegments();
   } else {
     welcomeSegments = [
-      { text: 'VOUCHER 400K', color: '#ea580c', textColor: '#FFFFFF', prize: 'Voucher 400.000 đ', probability_weight: 10, stock_quantity: 8 },
-      { text: 'VOUCHER 300K', color: '#1e293b', textColor: '#FBBF24', prize: 'Voucher 300.000 đ', probability_weight: 20, stock_quantity: 25 },
-      { text: 'ƯU TIÊN XẾP CONT', color: '#f59e0b', textColor: '#0F172A', prize: 'Vé Ưu Tiên Xếp Cont Sớm', probability_weight: 15, stock_quantity: 18 },
-      { text: 'GIẢM 50% LƯU KHO', color: '#0f172a', textColor: '#FFFFFF', prize: 'Giảm 50% Phí Lưu Kho Bãi', probability_weight: 15, stock_quantity: 15 },
-      { text: 'VOUCHER 300K', color: '#ea580c', textColor: '#FFFFFF', prize: 'Voucher 300.000 đ', probability_weight: 15, stock_quantity: 20 },
-      { text: 'GÓI SQUAD 2-IN-1', color: '#1e293b', textColor: '#38BDF8', prize: 'Gói Hỗ Trợ Squad 2-in-1', probability_weight: 10, stock_quantity: 12 },
-      { text: 'VOUCHER 400K', color: '#f59e0b', textColor: '#0F172A', prize: 'Voucher 400.000 đ Lộc Xuân', probability_weight: 10, stock_quantity: 10 },
-      { text: 'MAY MẮN LẦN SAU', color: '#0f172a', textColor: '#94A3B8', prize: 'Vé Tích Lũy Quay Mùng 05', probability_weight: 5, stock_quantity: 999 }
+      { id: 1, text: 'VOUCHER 400K', color: '#ea580c', textColor: '#FFFFFF', prize: 'Voucher 400.000 đ Lộc Xuân', probability_weight: 10, stock_quantity: 8 },
+      { id: 2, text: 'VOUCHER 300K', color: '#1e293b', textColor: '#FBBF24', prize: 'Voucher Chiết Khấu 300.000 đ', probability_weight: 20, stock_quantity: 25 },
+      { id: 3, text: 'ƯU TIÊN XẾP CONT', color: '#f59e0b', textColor: '#0F172A', prize: 'Vé Ưu Tiên Xếp Cont Sớm', probability_weight: 15, stock_quantity: 18 },
+      { id: 4, text: 'GIẢM 50% LƯU KHO', color: '#0f172a', textColor: '#FFFFFF', prize: 'Giảm 50% Phí Lưu Kho Bãi', probability_weight: 15, stock_quantity: 15 },
+      { id: 5, text: 'VOUCHER 300K', color: '#ea580c', textColor: '#FFFFFF', prize: 'Voucher Chiết Khấu 300.000 đ', probability_weight: 15, stock_quantity: 20 },
+      { id: 6, text: 'GÓI SQUAD 2-IN-1', color: '#1e293b', textColor: '#38BDF8', prize: 'Gói Hỗ Trợ Squad 2-in-1', probability_weight: 10, stock_quantity: 12 },
+      { id: 7, text: 'VOUCHER 400K', color: '#f59e0b', textColor: '#0F172A', prize: 'Voucher 400.000 đ Lộc Xuân', probability_weight: 10, stock_quantity: 10 },
+      { id: 8, text: 'MAY MẮN LẦN SAU', color: '#0f172a', textColor: '#94A3B8', prize: 'Vé Tích Lũy Quay Mùng 05', probability_weight: 5, stock_quantity: 999 }
     ];
   }
 }
 
-function updateWheelSegments(newSegments) {
-  welcomeSegments = [...newSegments];
-  drawWheel();
-}
+let currentAngle1 = 0;
+let isSpinning1 = false;
 
 function drawWheel() {
-  if (!wheelCanvas || !wheelCtx) return;
+  if (!canvas1) return;
+  if (!ctx1) ctx1 = canvas1.getContext('2d');
+  if (!ctx1) return;
 
-  const numSegments = welcomeSegments.length || 8;
-  const arcSize = (2 * Math.PI) / numSegments;
-  const centerX = wheelCanvas.width / 2;
-  const centerY = wheelCanvas.height / 2;
-  const radius = centerX - 10;
-
-  wheelCtx.clearRect(0, 0, wheelCanvas.width, wheelCanvas.height);
-
-  // Outer Rim Glow
-  wheelCtx.save();
-  wheelCtx.beginPath();
-  wheelCtx.arc(centerX, centerY, radius + 8, 0, 2 * Math.PI);
-  wheelCtx.fillStyle = '#1e293b';
-  wheelCtx.fill();
-  wheelCtx.lineWidth = 6;
-  wheelCtx.strokeStyle = '#F59E0B';
-  wheelCtx.stroke();
-  wheelCtx.restore();
-
-  // Outer lights/dots
-  for (let i = 0; i < 24; i++) {
-    const dotAngle = (i * 2 * Math.PI) / 24;
-    const dotX = centerX + (radius + 4) * Math.cos(dotAngle);
-    const dotY = centerY + (radius + 4) * Math.sin(dotAngle);
-    wheelCtx.beginPath();
-    wheelCtx.arc(dotX, dotY, 3, 0, 2 * Math.PI);
-    wheelCtx.fillStyle = i % 2 === 0 ? '#FDE047' : '#FFFFFF';
-    wheelCtx.fill();
-  }
-
-  // Draw Segments
-  for (let i = 0; i < numSegments; i++) {
-    const angle = currentAngle1 + i * arcSize;
-    wheelCtx.save();
-    wheelCtx.beginPath();
-    wheelCtx.moveTo(centerX, centerY);
-    wheelCtx.arc(centerX, centerY, radius, angle, angle + arcSize);
-    wheelCtx.fillStyle = welcomeSegments[i].color || (i % 2 === 0 ? '#ea580c' : '#1e293b');
-    wheelCtx.fill();
-    wheelCtx.lineWidth = 1.5;
-    wheelCtx.strokeStyle = 'rgba(255, 255, 255, 0.15)';
-    wheelCtx.stroke();
-
-    // Segment Text
-    wheelCtx.translate(centerX, centerY);
-    wheelCtx.rotate(angle + arcSize / 2);
-    wheelCtx.textAlign = 'right';
-    wheelCtx.fillStyle = welcomeSegments[i].textColor || '#FFFFFF';
-    wheelCtx.font = 'bold 13px "Plus Jakarta Sans", sans-serif';
-    wheelCtx.shadowColor = 'rgba(0,0,0,0.6)';
-    wheelCtx.shadowBlur = 4;
-    wheelCtx.fillText(welcomeSegments[i].text, radius - 25, 5);
-    wheelCtx.restore();
-  }
-
-  // Center ring
-  wheelCtx.save();
-  wheelCtx.beginPath();
-  wheelCtx.arc(centerX, centerY, 52, 0, 2 * Math.PI);
-  wheelCtx.fillStyle = '#0b1120';
-  wheelCtx.fill();
-  wheelCtx.lineWidth = 3;
-  wheelCtx.strokeStyle = '#F59E0B';
-  wheelCtx.stroke();
-  wheelCtx.restore();
-}
-
-// Spin Wheel 1 with Weighted Probability & Stock decrement
-function spinWheel() {
-  if (isSpinning1) return;
-
-  const phoneInput = document.getElementById('user-phone-input');
-  let phone = (phoneInput && phoneInput.value.trim()) || '';
-  if (!phone) {
-    phone = '098' + Math.floor(1000000 + Math.random() * 9000000);
-    if (phoneInput) phoneInput.value = phone;
-  }
-
-  // Mask Phone for privacy: 098***6789
-  const maskedPhone = phone.length >= 7 
-    ? phone.substring(0, 3) + '***' + phone.substring(phone.length - 4) 
-    : '098***' + Math.floor(1000 + Math.random() * 9000);
-
-  // Pick target segment based on Admin-configured probability weights & stock
-  let availableWeights = [];
-  welcomeSegments.forEach((seg, idx) => {
-    // If stock > 0, include weight; otherwise 0
-    const stock = seg.stock_quantity !== undefined ? seg.stock_quantity : 1;
-    const weight = stock > 0 ? (seg.probability_weight || 10) : 0;
-    availableWeights.push(weight);
-  });
-
-  const totalWeight = availableWeights.reduce((a, b) => a + b, 0);
-  let targetIndex = 0;
-
-  if (totalWeight > 0) {
-    let rand = Math.random() * totalWeight;
-    for (let i = 0; i < availableWeights.length; i++) {
-      if (rand < availableWeights[i]) {
-        targetIndex = i;
-        break;
-      }
-      rand -= availableWeights[i];
-    }
-  } else {
-    // All items out of stock -> fallback to segment 7 (May Mắn Lần Sau)
-    targetIndex = welcomeSegments.length - 1;
+  if (!welcomeSegments || welcomeSegments.length === 0) {
+    initWelcomeWheelData();
   }
 
   const numSegments = welcomeSegments.length;
   const arcSize = (2 * Math.PI) / numSegments;
-  const spins = 5 + Math.floor(Math.random() * 3);
+  const centerX = canvas1.width / 2;
+  const centerY = canvas1.height / 2;
+  const radius = centerX - 10;
+
+  ctx1.clearRect(0, 0, canvas1.width, canvas1.height);
+
+  // Outer Gold Rim Glow
+  ctx1.save();
+  ctx1.beginPath();
+  ctx1.arc(centerX, centerY, radius + 6, 0, 2 * Math.PI);
+  ctx1.lineWidth = 10;
+  ctx1.strokeStyle = '#F59E0B';
+  ctx1.shadowColor = '#F59E0B';
+  ctx1.shadowBlur = 18;
+  ctx1.stroke();
+  ctx1.restore();
+
+  // Draw Segments
+  welcomeSegments.forEach((seg, i) => {
+    const angle = currentAngle1 + i * arcSize;
+    ctx1.beginPath();
+    ctx1.moveTo(centerX, centerY);
+    ctx1.arc(centerX, centerY, radius, angle, angle + arcSize);
+    ctx1.fillStyle = seg.color;
+    ctx1.fill();
+    ctx1.lineWidth = 1.5;
+    ctx1.strokeStyle = '#0F172A';
+    ctx1.stroke();
+
+    // Segment Text
+    ctx1.save();
+    ctx1.translate(centerX, centerY);
+    ctx1.rotate(angle + arcSize / 2);
+    ctx1.textAlign = 'right';
+    ctx1.fillStyle = seg.textColor || '#FFFFFF';
+    ctx1.font = 'bold 12px "Plus Jakarta Sans", sans-serif';
+    ctx1.shadowColor = 'rgba(0,0,0,0.8)';
+    ctx1.shadowBlur = 4;
+    ctx1.fillText(seg.text, radius - 24, 4);
+    ctx1.restore();
+  });
+
+  // Center Inner Ring & Indicator
+  ctx1.beginPath();
+  ctx1.arc(centerX, centerY, 38, 0, 2 * Math.PI);
+  ctx1.fillStyle = '#0F172A';
+  ctx1.fill();
+  ctx1.lineWidth = 4;
+  ctx1.strokeStyle = '#FBBF24';
+  ctx1.stroke();
+
+  ctx1.beginPath();
+  ctx1.arc(centerX, centerY, 30, 0, 2 * Math.PI);
+  ctx1.fillStyle = '#F59E0B';
+  ctx1.fill();
+}
+
+function pickWinningIndexByWeight(segments) {
+  const eligible = segments.map((seg, idx) => ({
+    index: idx,
+    weight: (seg.stock_quantity !== undefined && seg.stock_quantity <= 0) ? 0 : (seg.probability_weight || 10)
+  }));
+
+  const totalWeight = eligible.reduce((sum, item) => sum + item.weight, 0);
+  if (totalWeight <= 0) {
+    return segments.length - 1;
+  }
+
+  let randomVal = Math.random() * totalWeight;
+  for (let i = 0; i < eligible.length; i++) {
+    if (randomVal < eligible[i].weight) {
+      return eligible[i].index;
+    }
+    randomVal -= eligible[i].weight;
+  }
+  return eligible[eligible.length - 1].index;
+}
+
+function spinWheel() {
+  if (isSpinning1) return;
+
+  const input = document.getElementById('user-phone-input');
+  const errorEl = document.getElementById('phone-error');
+  const phone = input ? input.value.trim() : '';
+
+  const phoneRegex = /(84|0[3|5|7|8|9])+([0-9]{8})\b/;
+  if (!phoneRegex.test(phone)) {
+    if (errorEl) {
+      errorEl.textContent = 'Vui lòng nhập đúng số điện thoại (10 chữ số) để nhận voucher!';
+      errorEl.classList.remove('hidden');
+    }
+    if (input) input.focus();
+    return;
+  }
+
+  if (errorEl) errorEl.classList.add('hidden');
+
+  // Privacy 50% mask for ticker: e.g. 098*****89 (5 out of 10 digits masked)
+  const maskedPhone = phone.length >= 8 
+    ? phone.slice(0, 3) + '*****' + phone.slice(-2) 
+    : phone.slice(0, 2) + '****' + phone.slice(-2);
+
+  const targetIndex = pickWinningIndexByWeight(welcomeSegments);
+  const numSegments = welcomeSegments.length;
+  const arcSize = (2 * Math.PI) / numSegments;
+  const spins = 5 + Math.floor(Math.random() * 2);
   const targetSegmentAngle = (3 * Math.PI / 2) - (targetIndex * arcSize + arcSize / 2);
   const totalRotation = spins * 2 * Math.PI + targetSegmentAngle;
 
@@ -222,16 +256,30 @@ function spinWheel() {
       isSpinning1 = false;
       playWinSound();
 
-      // Decrement stock if item has stock
       const winningSeg = welcomeSegments[targetIndex];
       if (winningSeg.stock_quantity && winningSeg.stock_quantity > 0) {
         winningSeg.stock_quantity -= 1;
-        // Persist back to localStorage
         localStorage.setItem('eureka_welcome_wheel_config', JSON.stringify(welcomeSegments));
       }
 
+      // Generate Voucher Code
+      const voucherCode = 'ERK-' + Math.floor(100000 + Math.random() * 900000);
+
+      // SAVE LEAD SĐT VÀO ADMIN DATABASE
+      const newLead = {
+        id: 'LEAD-' + Date.now(),
+        phone: phone, // SĐT thật không che dành cho Admin liên hệ
+        voucherCode: voucherCode,
+        prize: winningSeg.prize || winningSeg.text,
+        createdAt: new Date().toLocaleString('vi-VN', {
+          hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit', year: 'numeric'
+        }),
+        status: 'Chờ áp dụng qua Zalo'
+      };
+      saveSpinLead(newLead);
+
       if (typeof showWinningResult === 'function') {
-        showWinningResult(winningSeg, maskedPhone);
+        showWinningResult(winningSeg, maskedPhone, phone, voucherCode);
       }
     }
   }
@@ -252,6 +300,8 @@ function openWelcomeWheelModal() {
   const modal = document.getElementById('welcome-wheel-modal');
   if (modal) {
     modal.classList.remove('hidden');
+    modal.classList.add('show-modal');
+    modal.style.display = 'flex';
     setTimeout(() => {
       drawWheel();
     }, 60);
@@ -262,6 +312,8 @@ function closeWelcomeWheelModal() {
   const modal = document.getElementById('welcome-wheel-modal');
   if (modal) {
     modal.classList.add('hidden');
+    modal.classList.remove('show-modal');
+    modal.style.display = 'none';
   }
 }
 
@@ -298,71 +350,61 @@ function drawM05Wheel() {
   // Outer Rim Glow
   m05Ctx.save();
   m05Ctx.beginPath();
-  m05Ctx.arc(centerX, centerY, radius + 8, 0, 2 * Math.PI);
-  m05Ctx.fillStyle = '#0f172a';
-  m05Ctx.fill();
-  m05Ctx.lineWidth = 6;
+  m05Ctx.arc(centerX, centerY, radius + 6, 0, 2 * Math.PI);
+  m05Ctx.lineWidth = 10;
   m05Ctx.strokeStyle = '#38BDF8';
+  m05Ctx.shadowColor = '#38BDF8';
+  m05Ctx.shadowBlur = 18;
   m05Ctx.stroke();
   m05Ctx.restore();
 
-  // Dots
-  for (let i = 0; i < 24; i++) {
-    const dotAngle = (i * 2 * Math.PI) / 24;
-    const dotX = centerX + (radius + 4) * Math.cos(dotAngle);
-    const dotY = centerY + (radius + 4) * Math.sin(dotAngle);
-    m05Ctx.beginPath();
-    m05Ctx.arc(dotX, dotY, 3, 0, 2 * Math.PI);
-    m05Ctx.fillStyle = i % 2 === 0 ? '#38BDF8' : '#FDE047';
-    m05Ctx.fill();
-  }
-
   // Draw Segments
-  for (let i = 0; i < numSegments; i++) {
+  m05Segments.forEach((seg, i) => {
     const angle = currentAngle2 + i * arcSize;
-    m05Ctx.save();
     m05Ctx.beginPath();
     m05Ctx.moveTo(centerX, centerY);
     m05Ctx.arc(centerX, centerY, radius, angle, angle + arcSize);
-    m05Ctx.fillStyle = m05Segments[i].color;
+    m05Ctx.fillStyle = seg.color;
     m05Ctx.fill();
     m05Ctx.lineWidth = 1.5;
-    m05Ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)';
+    m05Ctx.strokeStyle = '#0F172A';
     m05Ctx.stroke();
 
+    // Segment Text
+    m05Ctx.save();
     m05Ctx.translate(centerX, centerY);
     m05Ctx.rotate(angle + arcSize / 2);
     m05Ctx.textAlign = 'right';
-    m05Ctx.fillStyle = m05Segments[i].textColor;
+    m05Ctx.fillStyle = seg.textColor || '#FFFFFF';
     m05Ctx.font = 'bold 12px "Plus Jakarta Sans", sans-serif';
-    m05Ctx.fillText(m05Segments[i].text, radius - 20, 5);
+    m05Ctx.shadowColor = 'rgba(0,0,0,0.8)';
+    m05Ctx.shadowBlur = 4;
+    m05Ctx.fillText(seg.text, radius - 24, 4);
     m05Ctx.restore();
-  }
+  });
 
-  // Center ring
-  m05Ctx.save();
+  // Center Ring
   m05Ctx.beginPath();
-  m05Ctx.arc(centerX, centerY, 50, 0, 2 * Math.PI);
-  m05Ctx.fillStyle = '#0b1120';
+  m05Ctx.arc(centerX, centerY, 38, 0, 2 * Math.PI);
+  m05Ctx.fillStyle = '#0F172A';
   m05Ctx.fill();
-  m05Ctx.lineWidth = 3;
+  m05Ctx.lineWidth = 4;
   m05Ctx.strokeStyle = '#38BDF8';
   m05Ctx.stroke();
-  m05Ctx.restore();
+
+  m05Ctx.beginPath();
+  m05Ctx.arc(centerX, centerY, 30, 0, 2 * Math.PI);
+  m05Ctx.fillStyle = '#0284C7';
+  m05Ctx.fill();
 }
 
-// User clicks Mùng 05 Spin -> Show Information/Lock Notice
 function triggerM05UserClick() {
   if (typeof isAdminLoggedIn === 'function' && isAdminLoggedIn()) {
     spinM05Admin();
   } else {
-    showM05NoticeModal();
+    const modal = document.getElementById('m05-notice-modal');
+    if (modal) modal.classList.remove('hidden');
   }
-}
-
-function showM05NoticeModal() {
-  const modal = document.getElementById('m05-notice-modal');
-  if (modal) modal.classList.remove('hidden');
 }
 
 function closeM05NoticeModal() {
@@ -370,25 +412,18 @@ function closeM05NoticeModal() {
   if (modal) modal.classList.add('hidden');
 }
 
-// Admin official spin for Mùng 05
 function spinM05Admin() {
   if (isSpinning2) return;
-  isSpinning2 = true;
 
   const periodSelect = document.getElementById('m05-period-select');
-  const period = (periodSelect && periodSelect.value) || 'Tháng 10 (Kỳ 1)';
+  const period = periodSelect ? periodSelect.value : 'Kỳ 10/2026 (Mùng 05/11)';
 
-  // Pick random winner from sample pool or inputs
-  const sampleCompanies = [
-    { company: 'Công Ty CP Thương Mại *** Minh', phone: '091***4321', order: 'ERK-***88' },
-    { company: 'Tập Đoàn XNK *** Á Châu', phone: '098***6789', order: 'ERK-***92' },
-    { company: 'TNHH SX & PP Gia Dụng *** An', phone: '090***8827', order: 'ERK-***27' },
-    { company: 'Hộ KD Phụ Kiện Điện Tử *** Việt', phone: '096***0774', order: 'ERK-***74' },
-    { company: 'Cty XNK Vật Tư Y Tế *** Long', phone: '093***1052', order: 'ERK-***52' }
-  ];
-  const luckyPick = sampleCompanies[Math.floor(Math.random() * sampleCompanies.length)];
+  // Sinh mã booking trúng thưởng KHÔNG CẦN CHE
+  const bookingPrefixes = ['ERK-BK-2026-', 'BK-2026-'];
+  const prefix = bookingPrefixes[Math.floor(Math.random() * bookingPrefixes.length)];
+  const randomBooking = prefix + Math.floor(1000 + Math.random() * 9000);
 
-  // Choose target segment (weight towards Voucher)
+  // Target segment
   const targetIndex = Math.floor(Math.random() * (m05Segments.length - 1));
   const numSegments = m05Segments.length;
   const arcSize = (2 * Math.PI) / numSegments;
@@ -423,29 +458,32 @@ function spinM05Admin() {
 
       const prizeObj = m05Segments[targetIndex];
 
-      // Save winner into monthly list
+      // Save winner into monthly list (Chỉ lưu mã booking, KHÔNG CẦN TÊN DOANH NGHIỆP / HKD)
       if (typeof getMonthlyWinners === 'function') {
         const winners = getMonthlyWinners();
         winners.unshift({
+          id: 'W-' + Date.now(),
           period: period,
-          phone_masked: luckyPick.phone,
-          company_masked: luckyPick.company,
-          order_masked: luckyPick.order,
+          booking_code: randomBooking,
           prize: prizeObj.prize,
-          status: 'Vừa quay trúng'
+          draw_time: new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' }) + ' - ' + new Date().toLocaleDateString('vi-VN'),
+          status: '✅ Vừa quay trúng'
         });
         localStorage.setItem('eureka_monthly_winners', JSON.stringify(winners));
         renderPublicMonthlyWinners();
+        if (typeof renderAdminWinnersTable === 'function') {
+          renderAdminWinnersTable();
+        }
       }
 
-      alert(`🎉 [ADMIN QUAY THƯỞNG MÙNG 05 THÀNH CÔNG]\nKỳ quay: ${period}\nĐơn vị trúng: ${luckyPick.company} (${luckyPick.phone})\nGiải thưởng: ${prizeObj.prize}`);
+      alert(`🎉 [ADMIN QUAY THƯỞNG MÙNG 05 THÀNH CÔNG]\nKỳ quay: ${period}\nMã Booking Trúng Thưởng: ${randomBooking}\nGiải thưởng: ${prizeObj.prize}`);
     }
   }
 
   requestAnimationFrame(animateSpin2);
 }
 
-// Render Public Monthly Winners Table (Masked for privacy)
+// Render Public Monthly Winners Table (CHỈ ĐỂ MÃ BOOKING TRÚNG THƯỞNG, KHÔNG CẦN CHE)
 function renderPublicMonthlyWinners() {
   const container = document.getElementById('public-m05-winners-body');
   if (!container) return;
@@ -455,9 +493,10 @@ function renderPublicMonthlyWinners() {
     winners = getMonthlyWinners();
   } else {
     winners = [
-      { period: "Tháng 10 (Kỳ 1)", phone_masked: "098***6789", company_masked: "Tập Đoàn XNK *** Á Châu", order_masked: "ERK-***89", prize: "Voucher 300.000 đ", status: "Đã trừ cước đơn mới" },
-      { period: "Tháng 10 (Kỳ 1)", phone_masked: "091***4321", company_masked: "Công Ty CP Thương Mại *** Minh", order_masked: "ERK-***45", prize: "Voucher 300.000 đ", status: "Đã trừ cước đơn mới" },
-      { period: "Tháng 10 (Kỳ 1)", phone_masked: "090***8827", company_masked: "TNHH SX & PP Gia Dụng *** An", order_masked: "ERK-***12", prize: "Voucher 300.000 đ", status: "Đang chờ xuất kho" }
+      { period: "Kỳ 10/2026 (Mùng 05/11)", booking_code: "ERK-BK-2026-8891", prize: "Voucher Chiết Khấu 300.000 đ", draw_time: "10h05 - 05/11/2026", status: "✅ Đã đối soát & trừ cước" },
+      { period: "Kỳ 10/2026 (Mùng 05/11)", booking_code: "ERK-BK-2026-4432", prize: "Vé Ưu Tiên Xếp Cont Sớm", draw_time: "10h10 - 05/11/2026", status: "✅ Đã cấp vé ưu tiên" },
+      { period: "Kỳ 10/2026 (Mùng 05/11)", booking_code: "ERK-BK-2026-1205", prize: "Voucher Chiết Khấu 300.000 đ", draw_time: "10h15 - 05/11/2026", status: "✅ Đã đối soát & trừ cước" },
+      { period: "Kỳ 09/2026 (Mùng 05/10)", booking_code: "ERK-BK-2026-7731", prize: "Giảm 50% Phí Lưu Kho Bãi", draw_time: "10h08 - 05/10/2026", status: "✅ Đã hoàn tất trừ phí" }
     ];
   }
 
@@ -469,14 +508,17 @@ function renderPublicMonthlyWinners() {
       <td class="py-3 px-3">
         <span class="px-2 py-0.5 rounded bg-blue-500/10 text-blue-300 font-bold border border-blue-500/20 text-[11px]">${w.period}</span>
       </td>
-      <td class="py-3 px-3 font-mono font-bold text-amber-400">${w.phone_masked}</td>
-      <td class="py-3 px-3 font-semibold text-white">${w.company_masked}</td>
-      <td class="py-3 px-3 font-mono text-slate-400">${w.order_masked}</td>
-      <td class="py-3 px-3 font-bold text-emerald-400">${w.prize}</td>
       <td class="py-3 px-3">
-        <span class="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-300">
+        <span class="font-mono font-black text-amber-300 tracking-wider text-sm bg-slate-800/80 px-2 py-1 rounded border border-amber-400/30">
+          ${w.booking_code || w.order_masked || 'ERK-BK-' + Math.floor(1000 + Math.random() * 9000)}
+        </span>
+      </td>
+      <td class="py-3 px-3 font-bold text-white">${w.prize}</td>
+      <td class="py-3 px-3 text-slate-400 font-mono text-[11px]">${w.draw_time || '10h00 - Mùng 05'}</td>
+      <td class="py-3 px-3">
+        <span class="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-300 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
           <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-          ${w.status}
+          ${w.status || 'Đã ghi nhận hệ thống'}
         </span>
       </td>
     `;
@@ -484,15 +526,20 @@ function renderPublicMonthlyWinners() {
   });
 }
 
-// Initialize on DOM Ready
-window.addEventListener('DOMContentLoaded', () => {
+function initAllWheelEngines() {
   initWelcomeWheelData();
   drawWheel();
   drawM05Wheel();
   renderPublicMonthlyWinners();
 
-  // Auto-pop up welcome wheel modal on page load after 600ms
+  // Auto-pop up welcome wheel modal on page load after 500ms
   setTimeout(() => {
     openWelcomeWheelModal();
-  }, 600);
-});
+  }, 500);
+}
+
+if (document.readyState === 'loading') {
+  window.addEventListener('DOMContentLoaded', initAllWheelEngines);
+} else {
+  initAllWheelEngines();
+}

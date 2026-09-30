@@ -1,6 +1,6 @@
 /**
  * Main Application Script for Eureka Customer Awards 2026 Landing Page
- * Handles UI tab switches, FAQ accordion, modals, and user interactions.
+ * Handles UI tab switches, FAQ accordion, modals, and Zalo Voucher application.
  */
 
 // --- 1. Prize Tab Switching ---
@@ -45,7 +45,13 @@ function toggleFaq(index) {
 }
 
 // --- 3. Winning Modal & Confetti Handler for Welcome Wheel ---
-function showWinningResult(prizeObj, maskedPhone) {
+let currentWinningInfo = {
+  prize: '',
+  voucherCode: '',
+  phone: ''
+};
+
+function showWinningResult(prizeObj, maskedPhone, rawPhone, voucherCode) {
   if (typeof closeWelcomeWheelModal === 'function') {
     closeWelcomeWheelModal();
   }
@@ -53,8 +59,17 @@ function showWinningResult(prizeObj, maskedPhone) {
   const titleEl = document.getElementById('modal-prize-title');
   const codeEl = document.getElementById('modal-voucher-code');
 
-  if (titleEl) titleEl.innerText = prizeObj.prize || prizeObj.text;
-  if (codeEl) codeEl.innerText = 'ERK-' + Math.floor(100000 + Math.random() * 900000);
+  const finalCode = voucherCode || ('ERK-' + Math.floor(100000 + Math.random() * 900000));
+  const finalPrize = prizeObj.prize || prizeObj.text;
+
+  currentWinningInfo = {
+    prize: finalPrize,
+    voucherCode: finalCode,
+    phone: rawPhone || ''
+  };
+
+  if (titleEl) titleEl.innerText = finalPrize;
+  if (codeEl) codeEl.innerText = finalCode;
   if (modal) modal.classList.remove('hidden');
 
   // Push to Live Winner Stream ticker
@@ -82,6 +97,18 @@ function showWinningResult(prizeObj, maskedPhone) {
   }
 }
 
+function handleApplyZaloVoucher(e) {
+  const code = currentWinningInfo.voucherCode || 'EUREKA-VOUCHER';
+  const prize = currentWinningInfo.prize || 'Voucher Ưu Đãi';
+  const phone = currentWinningInfo.phone || '';
+
+  const msg = `Xin chào Eureka Logistics! Tôi có SĐT ${phone} vừa quay trúng thưởng ${prize} (Mã: ${code}) trên website sự kiện Eureka Customer Awards 2026. Nhờ Eureka hỗ trợ áp dụng ưu đãi này vào đơn hàng của tôi nhé!`;
+  
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(msg).catch(() => {});
+  }
+}
+
 function closeWinModal() {
   const modal = document.getElementById('win-modal');
   if (modal) modal.classList.add('hidden');
@@ -105,18 +132,15 @@ function copyVoucherCode() {
         btn.classList.remove('bg-emerald-600');
       }, 2000);
     }
-  }).catch(() => {
-    alert('Đã chọn mã: ' + code);
   });
 }
 
-// Global keyboard accessibility (ESC closes modals)
-window.addEventListener('keydown', (e) => {
+// Close modals on Escape key
+document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') {
     closeWinModal();
     if (typeof closeWelcomeWheelModal === 'function') closeWelcomeWheelModal();
     if (typeof closeAdminLoginModal === 'function') closeAdminLoginModal();
     if (typeof closeAdminDashboard === 'function') closeAdminDashboard();
-    if (typeof closeM05NoticeModal === 'function') closeM05NoticeModal();
   }
 });
