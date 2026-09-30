@@ -103,6 +103,8 @@ function showAdminDashboard() {
   renderAdminSpinLeadsTable();
   renderAdminM05BookingManager();
   renderAdminWinnersTable();
+  renderAdminWeeklyWinnerForm();
+  renderAdminLeaderboardTable();
 }
 
 function closeAdminDashboard() {
@@ -593,6 +595,378 @@ function exportMonthlyWinnersCsv() {
   document.body.removeChild(a);
 }
 
+// ==================== TAB 4: QUẢN LÝ BẢNG XẾP HẠNG & CÔNG BỐ TOP TUẦN ====================
+
+// --- PHẦN 1: CÔNG BỐ CHIẾN TƯỚNG / GIẢI TOP TUẦN ---
+function renderAdminWeeklyWinnerForm() {
+  let winner = null;
+  try {
+    const raw = localStorage.getItem('eureka_weekly_winner');
+    if (raw) winner = JSON.parse(raw);
+  } catch (e) {}
+
+  const activeCheck = document.getElementById('admin-weekly-active');
+  const titleInput = document.getElementById('admin-weekly-title');
+  const nameInput = document.getElementById('admin-weekly-name');
+  const phoneInput = document.getElementById('admin-weekly-phone');
+  const spendInput = document.getElementById('admin-weekly-spending');
+  const prizeInput = document.getElementById('admin-weekly-prize');
+  const msgInput = document.getElementById('admin-weekly-msg');
+  const statusBadge = document.getElementById('admin-weekly-status-badge');
+
+  if (winner) {
+    if (activeCheck) activeCheck.checked = !!winner.is_active;
+    if (titleInput) titleInput.value = winner.week_title || '';
+    if (nameInput) nameInput.value = winner.customer_name || '';
+    if (phoneInput) phoneInput.value = winner.phone_masked || '';
+    if (spendInput) spendInput.value = winner.weekly_spending || '';
+    if (prizeInput) prizeInput.value = winner.prize_name || '';
+    if (msgInput) msgInput.value = winner.congrats_message || '';
+    
+    if (statusBadge) {
+      if (winner.is_active) {
+        statusBadge.textContent = '🟢 ĐANG HIỂN THỊ TRÊN MÀN HÌNH CHÍNH';
+        statusBadge.className = 'text-[11px] font-bold text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/30';
+      } else {
+        statusBadge.textContent = '⚪ ĐANG TẮT / ẨN KHỎI MÀN HÌNH CHÍNH';
+        statusBadge.className = 'text-[11px] font-bold text-slate-400 bg-slate-800 px-2.5 py-1 rounded-full border border-slate-700';
+      }
+    }
+  } else {
+    if (activeCheck) activeCheck.checked = false;
+    if (statusBadge) {
+      statusBadge.textContent = '⚪ CHƯA CÔNG BỐ';
+      statusBadge.className = 'text-[11px] font-bold text-slate-400 bg-slate-800 px-2.5 py-1 rounded-full border border-slate-700';
+    }
+  }
+}
+
+function saveAdminWeeklyWinner() {
+  const activeCheck = document.getElementById('admin-weekly-active');
+  const titleInput = document.getElementById('admin-weekly-title');
+  const nameInput = document.getElementById('admin-weekly-name');
+  const phoneInput = document.getElementById('admin-weekly-phone');
+  const spendInput = document.getElementById('admin-weekly-spending');
+  const prizeInput = document.getElementById('admin-weekly-prize');
+  const msgInput = document.getElementById('admin-weekly-msg');
+
+  const isActive = activeCheck ? activeCheck.checked : false;
+  const nameVal = nameInput ? nameInput.value.trim() : '';
+  const spendVal = spendInput ? spendInput.value.trim() : '';
+
+  if (isActive && (!nameVal || !spendVal)) {
+    alert('⚠️ Vui lòng nhập Tên khách hàng và Số tiền chi tiêu dịch vụ tuần trước khi kích hoạt hiển thị!');
+    return;
+  }
+
+  // Helper mask functions
+  const maskName = (typeof maskCustomerName === 'function') ? maskCustomerName : (n => n);
+  const maskPhone = (typeof maskPhoneNumber === 'function') ? maskPhoneNumber : (p => p);
+
+  const winnerData = {
+    is_active: isActive,
+    week_title: titleInput ? titleInput.value.trim() : 'Tuần Chiến Dịch',
+    customer_name: maskName(nameVal),
+    phone_masked: maskPhone(phoneInput ? phoneInput.value.trim() : ''),
+    weekly_spending: spendVal,
+    prize_name: prizeInput ? prizeInput.value.trim() : 'Voucher Tiền Mặt 2.000.000 đ',
+    congrats_message: msgInput ? msgInput.value.trim() : '',
+    updated_at: new Date().toLocaleString('vi-VN')
+  };
+
+  localStorage.setItem('eureka_weekly_winner', JSON.stringify(winnerData));
+
+  if (typeof renderWeeklyWinnerSpotlight === 'function') {
+    renderWeeklyWinnerSpotlight();
+  }
+  renderAdminWeeklyWinnerForm();
+
+  if (isActive) {
+    alert(`🎉 ĐÃ CÔNG BỐ THÀNH CÔNG LÊN MÀN HÌNH CHÍNH!\n\n👑 Khách Hàng: ${winnerData.customer_name}\n💰 Doanh Số Dịch Vụ Tuần: ${winnerData.weekly_spending}\n🎁 Phần Thưởng: ${winnerData.prize_name}`);
+  } else {
+    alert('✅ Đã lưu cấu hình (Đang ở trạng thái TẮT hiển thị trên trang chủ).');
+  }
+}
+
+function loadDemoWeeklyWinner() {
+  const demoData = {
+    is_active: true,
+    week_title: 'Tuần 42 (05/10 - 11/10/2026)',
+    customer_name: 'Khách hàng T*** Đ*** XNK *** Châu',
+    phone_masked: '098*****89',
+    weekly_spending: '148.650.000 đ',
+    prize_name: 'Voucher Tiền Mặt 2.000.000 đ + Cúp Chiến Tướng Tuần',
+    congrats_message: 'Nhiệt liệt chúc mừng Quý khách đã xuất sắc dẫn đầu bảng vàng chi tiêu dịch vụ tuần qua, bứt phá tiến độ vận chuyển vượt bậc!',
+    updated_at: new Date().toLocaleString('vi-VN')
+  };
+
+  localStorage.setItem('eureka_weekly_winner', JSON.stringify(demoData));
+  if (typeof renderWeeklyWinnerSpotlight === 'function') {
+    renderWeeklyWinnerSpotlight();
+  }
+  renderAdminWeeklyWinnerForm();
+  alert('✅ Đã nạp mẫu Chiến Tướng Tuần 42 và kích hoạt hiển thị lên màn hình chính!');
+}
+
+function disableAdminWeeklyWinner() {
+  let winner = null;
+  try {
+    const raw = localStorage.getItem('eureka_weekly_winner');
+    if (raw) winner = JSON.parse(raw);
+  } catch (e) {}
+
+  if (winner) {
+    winner.is_active = false;
+    localStorage.setItem('eureka_weekly_winner', JSON.stringify(winner));
+  } else {
+    localStorage.removeItem('eureka_weekly_winner');
+  }
+
+  if (typeof renderWeeklyWinnerSpotlight === 'function') {
+    renderWeeklyWinnerSpotlight();
+  }
+  renderAdminWeeklyWinnerForm();
+  alert('🚫 Đã gỡ bỏ / ẩn khối vinh danh Chiến Tướng Top Tuần khỏi màn hình chính!');
+}
+
+// --- PHẦN 2: NẠP & QUẢN LÝ DANH SÁCH BẢNG XẾP HẠNG DOANH SỐ ---
+function getAdminLeaderboardList() {
+  try {
+    const custom = localStorage.getItem('eureka_custom_leaderboard');
+    if (custom) {
+      const parsed = JSON.parse(custom);
+      if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+    }
+  } catch (e) {}
+  if (typeof fallbackLeaderboardData !== 'undefined' && Array.isArray(fallbackLeaderboardData)) {
+    return [...fallbackLeaderboardData];
+  }
+  return [];
+}
+
+function renderAdminLeaderboardTable() {
+  const tbody = document.getElementById('admin-bxh-table-body');
+  const countEl = document.getElementById('admin-bxh-count');
+  if (!tbody) return;
+
+  const data = getAdminLeaderboardList();
+  if (countEl) countEl.textContent = `${data.length}`;
+
+  tbody.innerHTML = '';
+
+  data.forEach((row, idx) => {
+    const tr = document.createElement('tr');
+    tr.className = 'border-b border-slate-700/60 hover:bg-slate-800/40 text-xs text-slate-200';
+    tr.innerHTML = `
+      <td class="py-2 px-2 text-center">
+        <input type="number" min="1" max="999" value="${row.rank || (idx + 1)}" class="admin-bxh-rank w-12 bg-slate-900 border border-slate-700 rounded px-1.5 py-1 text-center font-bold text-amber-400">
+      </td>
+      <td class="py-2 px-2">
+        <input type="text" value="${row.customer_name || ''}" placeholder="Tên khách hàng..." class="admin-bxh-name w-full min-w-[170px] bg-slate-900 border border-slate-700 rounded px-2 py-1 text-white font-semibold">
+      </td>
+      <td class="py-2 px-2">
+        <input type="text" value="${row.phone_masked || ''}" placeholder="098*****89" class="admin-bxh-phone w-28 bg-slate-900 border border-slate-700 rounded px-2 py-1 font-mono text-amber-300">
+      </td>
+      <td class="py-2 px-2">
+        <select class="admin-bxh-vip bg-slate-900 border border-slate-700 rounded px-2 py-1 text-xs text-slate-200">
+          <option value="VIP ELITE" ${row.vip_tier === 'VIP ELITE' ? 'selected' : ''}>VIP ELITE</option>
+          <option value="VIP PREMIUM" ${row.vip_tier === 'VIP PREMIUM' ? 'selected' : ''}>VIP PREMIUM</option>
+          <option value="VIP PRO" ${row.vip_tier === 'VIP PRO' ? 'selected' : ''}>VIP PRO</option>
+          <option value="KH MỚI" ${row.vip_tier === 'KH MỚI' ? 'selected' : ''}>KH MỚI</option>
+          <option value="KH CŨ" ${row.vip_tier === 'KH CŨ' ? 'selected' : ''}>KH CŨ</option>
+        </select>
+      </td>
+      <td class="py-2 px-2">
+        <input type="number" min="0" value="${row.order_count || 0}" class="admin-bxh-orders w-16 bg-slate-900 border border-slate-700 rounded px-1.5 py-1 text-right font-bold text-white">
+      </td>
+      <td class="py-2 px-2">
+        <input type="text" value="${row.volume_weight || ''}" placeholder="142,5 tấn | 190 m³" class="admin-bxh-volume w-32 bg-slate-900 border border-slate-700 rounded px-2 py-1 text-slate-300 text-right">
+      </td>
+      <td class="py-2 px-2">
+        <input type="number" min="0" value="${row.service_fee || 0}" class="admin-bxh-fee w-32 bg-slate-900 border border-slate-700 rounded px-2 py-1 font-bold text-amber-300 text-right">
+      </td>
+      <td class="py-2 px-2">
+        <input type="text" value="${row.prize_tag || ''}" placeholder="💻 Laptop Surface 35Tr" class="admin-bxh-prize w-36 bg-slate-900 border border-slate-700 rounded px-2 py-1 text-slate-200">
+      </td>
+      <td class="py-2 px-2 text-center">
+        <button type="button" onclick="deleteAdminLeaderboardRow(${idx})" class="text-rose-400 hover:text-rose-300 font-bold text-[11px]">Xóa</button>
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+function addAdminLeaderboardRow() {
+  const current = getAdminLeaderboardList();
+  const nextRank = current.length + 1;
+  current.push({
+    rank: nextRank,
+    customer_name: "Khách hàng Mới *** ***",
+    phone_masked: "090*****" + Math.floor(10 + Math.random() * 89),
+    vip_tier: "KH MỚI",
+    order_count: 5,
+    volume_weight: "10,0 tấn | 25 m³",
+    service_fee: 50000000,
+    prize_tag: "Ứng viên Tiềm Năng"
+  });
+  localStorage.setItem('eureka_custom_leaderboard', JSON.stringify(current));
+  renderAdminLeaderboardTable();
+}
+
+function deleteAdminLeaderboardRow(idx) {
+  const current = getAdminLeaderboardList();
+  if (confirm(`Bạn có chắc muốn xóa dòng khách hàng thứ ${idx + 1}?`)) {
+    current.splice(idx, 1);
+    current.forEach((item, i) => item.rank = i + 1);
+    localStorage.setItem('eureka_custom_leaderboard', JSON.stringify(current));
+    renderAdminLeaderboardTable();
+    if (typeof loadLeaderboardData === 'function') loadLeaderboardData();
+  }
+}
+
+function saveAdminLeaderboardFromTable() {
+  const tbody = document.getElementById('admin-bxh-table-body');
+  if (!tbody) return;
+
+  const rows = Array.from(tbody.querySelectorAll('tr'));
+  if (rows.length === 0) {
+    alert('Bảng xếp hạng đang trống!');
+    return;
+  }
+
+  const maskName = (typeof maskCustomerName === 'function') ? maskCustomerName : (n => n);
+  const maskPhone = (typeof maskPhoneNumber === 'function') ? maskPhoneNumber : (p => p);
+
+  const updatedList = rows.map((tr, idx) => {
+    const rank = parseInt(tr.querySelector('.admin-bxh-rank')?.value, 10) || (idx + 1);
+    const rawName = tr.querySelector('.admin-bxh-name')?.value.trim() || 'Khách hàng Eureka';
+    const rawPhone = tr.querySelector('.admin-bxh-phone')?.value.trim() || '098*****89';
+    const vip = tr.querySelector('.admin-bxh-vip')?.value || 'VIP PRO';
+    const orders = parseInt(tr.querySelector('.admin-bxh-orders')?.value, 10) || 0;
+    const volume = tr.querySelector('.admin-bxh-volume')?.value.trim() || '0 tấn | 0 m³';
+    const fee = parseInt(tr.querySelector('.admin-bxh-fee')?.value, 10) || 0;
+    const prize = tr.querySelector('.admin-bxh-prize')?.value.trim() || 'Bám đuổi Top 3';
+
+    return {
+      rank: rank,
+      customer_name: maskName(rawName),
+      phone_masked: maskPhone(rawPhone),
+      vip_tier: vip,
+      order_count: orders,
+      volume_weight: volume,
+      service_fee: fee,
+      prize_tag: prize,
+      prize_type: rank === 1 ? 'top1' : rank === 2 ? 'top2' : rank === 3 ? 'top3' : 'regular'
+    };
+  });
+
+  updatedList.sort((a, b) => a.rank - b.rank);
+
+  localStorage.setItem('eureka_custom_leaderboard', JSON.stringify(updatedList));
+
+  if (typeof loadLeaderboardData === 'function') {
+    loadLeaderboardData();
+  }
+  renderAdminLeaderboardTable();
+
+  alert(`✅ Đã lưu thành công ${updatedList.length} khách hàng vào Bảng Xếp Hạng Doanh Số!\nDữ liệu đã được cập nhật trực tiếp lên màn hình chính.`);
+}
+
+function loadDemoLeaderboardToAdmin() {
+  if (confirm('Đặt lại toàn bộ Bảng Xếp Hạng về 10 khách hàng dẫn đầu chuẩn ban đầu?')) {
+    if (typeof fallbackLeaderboardData !== 'undefined') {
+      localStorage.setItem('eureka_custom_leaderboard', JSON.stringify(fallbackLeaderboardData));
+    }
+    renderAdminLeaderboardTable();
+    if (typeof loadLeaderboardData === 'function') loadLeaderboardData();
+    alert('✅ Đã nạp lại dữ liệu Top 10 mẫu chuẩn!');
+  }
+}
+
+function handleBxhFileUpload(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const content = e.target.result;
+    let list = [];
+
+    const maskName = (typeof maskCustomerName === 'function') ? maskCustomerName : (n => n);
+    const maskPhone = (typeof maskPhoneNumber === 'function') ? maskPhoneNumber : (p => p);
+
+    try {
+      if (file.name.endsWith('.json')) {
+        const parsed = JSON.parse(content);
+        if (Array.isArray(parsed)) {
+          list = parsed.map((item, idx) => ({
+            rank: item.rank || (idx + 1),
+            customer_name: maskName(item.customer_name || item.name || 'Khách hàng Eureka'),
+            phone_masked: maskPhone(item.phone_masked || item.phone || '098*****89'),
+            vip_tier: item.vip_tier || 'VIP PRO',
+            order_count: parseInt(item.order_count, 10) || 0,
+            volume_weight: item.volume_weight || '0 tấn | 0 m³',
+            service_fee: parseInt(item.service_fee, 10) || 0,
+            prize_tag: item.prize_tag || '',
+            prize_type: (item.rank === 1 || idx === 0) ? 'top1' : (item.rank === 2 || idx === 1) ? 'top2' : (item.rank === 3 || idx === 2) ? 'top3' : 'regular'
+          }));
+        }
+      } else {
+        // Parse CSV
+        const lines = content.split(/[\r\n]+/).filter(l => l.trim().length > 0);
+        const startIndex = (lines[0].toLowerCase().includes('hạng') || lines[0].toLowerCase().includes('rank') || lines[0].toLowerCase().includes('khách')) ? 1 : 0;
+        
+        for (let i = startIndex; i < lines.length; i++) {
+          const cols = lines[i].split(',').map(c => c.trim().replace(/^["']+|["']+$/g, ''));
+          if (cols.length >= 3) {
+            list.push({
+              rank: parseInt(cols[0], 10) || (list.length + 1),
+              customer_name: maskName(cols[1] || 'Khách hàng Eureka'),
+              phone_masked: maskPhone(cols[2] || '098*****89'),
+              vip_tier: cols[3] || 'VIP PRO',
+              order_count: parseInt(cols[4], 10) || 0,
+              volume_weight: cols[5] || '0 tấn | 0 m³',
+              service_fee: parseInt(cols[6], 10) || 0,
+              prize_tag: cols[7] || '',
+              prize_type: list.length === 0 ? 'top1' : list.length === 1 ? 'top2' : list.length === 2 ? 'top3' : 'regular'
+            });
+          }
+        }
+      }
+
+      if (list.length > 0) {
+        localStorage.setItem('eureka_custom_leaderboard', JSON.stringify(list));
+        renderAdminLeaderboardTable();
+        if (typeof loadLeaderboardData === 'function') loadLeaderboardData();
+        alert(`🎉 Tải lên thành công ${list.length} khách hàng từ file ${file.name} vào Bảng Xếp Hạng!`);
+      } else {
+        alert('⚠️ Không tìm thấy dữ liệu hợp lệ trong file!');
+      }
+    } catch (err) {
+      alert('⚠️ Lỗi khi đọc file: ' + err.message);
+    }
+  };
+  reader.readAsText(file);
+  event.target.value = '';
+}
+
+function exportLeaderboardJson() {
+  const list = getAdminLeaderboardList();
+  if (list.length === 0) {
+    alert('Bảng xếp hạng đang trống!');
+    return;
+  }
+  const jsonStr = JSON.stringify(list, null, 2);
+  const blob = new Blob([jsonStr], { type: 'application/json;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `Bang_Xep_Hang_Eureka_${new Date().toISOString().slice(0, 10)}.json`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+}
+
 // Admin Tab switcher in modal
 function switchAdminTab(tabName) {
   document.querySelectorAll('.admin-tab-content').forEach(el => el.classList.add('hidden'));
@@ -611,6 +985,10 @@ function switchAdminTab(tabName) {
 
   if (tabName === 'monthly-winners') {
     renderAdminM05BookingManager();
+  }
+  if (tabName === 'leaderboard-manager') {
+    renderAdminWeeklyWinnerForm();
+    renderAdminLeaderboardTable();
   }
 }
 

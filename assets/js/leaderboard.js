@@ -212,7 +212,84 @@ function renderLeaderboard(data) {
   });
 }
 
+const STORAGE_KEY_LEADERBOARD = 'eureka_custom_leaderboard';
+const STORAGE_KEY_WEEKLY_WINNER = 'eureka_weekly_winner';
+
+function maskCustomerName(name) {
+  if (!name) return 'Khách hàng Eureka';
+  if (name.includes('***')) return name;
+  const words = name.trim().split(/\s+/);
+  if (words.length <= 2) {
+    return name.slice(0, 2) + '***' + name.slice(-1);
+  }
+  return words.map((w, idx) => {
+    if (idx === 0 || idx === words.length - 1) return w;
+    return w.slice(0, 1) + '***';
+  }).join(' ');
+}
+
+function maskPhoneNumber(phone) {
+  if (!phone) return '098*****89';
+  if (phone.includes('*')) return phone;
+  const clean = phone.replace(/\D/g, '');
+  if (clean.length >= 10) {
+    return clean.slice(0, 3) + '*****' + clean.slice(-2);
+  }
+  return clean.slice(0, 2) + '***' + clean.slice(-2);
+}
+
+function renderWeeklyWinnerSpotlight() {
+  const container = document.getElementById('weekly-winner-spotlight');
+  if (!container) return;
+
+  let winner = null;
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY_WEEKLY_WINNER);
+    if (raw) winner = JSON.parse(raw);
+  } catch (e) {}
+
+  // ONLY show when Admin has inputted data AND active status is true
+  if (winner && winner.is_active && winner.customer_name && winner.weekly_spending) {
+    const weekEl = document.getElementById('spotlight-week-title');
+    const nameEl = document.getElementById('spotlight-customer-name');
+    const phoneEl = document.getElementById('spotlight-customer-phone');
+    const spendEl = document.getElementById('spotlight-weekly-spending');
+    const prizeEl = document.getElementById('spotlight-prize-tag');
+    const msgEl = document.getElementById('spotlight-congrats-msg');
+
+    if (weekEl) weekEl.textContent = `👑 VINH DANH CHIẾN TƯỚNG: ${winner.week_title || 'TOP TUẦN'}`;
+    if (nameEl) nameEl.textContent = maskCustomerName(winner.customer_name);
+    if (phoneEl) phoneEl.textContent = maskPhoneNumber(winner.phone_masked || winner.phone || '');
+    if (spendEl) spendEl.textContent = winner.weekly_spending.includes('đ') ? winner.weekly_spending : new Intl.NumberFormat('vi-VN').format(winner.weekly_spending) + ' đ';
+    if (prizeEl) prizeEl.textContent = winner.prize_name || 'Voucher Tiền Mặt 2.000.000 đ + Huy Hiệu Chiến Tướng';
+    if (msgEl) msgEl.textContent = winner.congrats_message || 'Nhiệt liệt chúc mừng Quý khách đã xuất sắc dẫn đầu doanh số chi tiêu dịch vụ tuần qua, bứt phá tiến độ vận chuyển vượt bậc!';
+
+    container.classList.remove('hidden');
+    container.style.display = 'block';
+  } else {
+    // Hidden when admin has not entered information
+    container.classList.add('hidden');
+    container.style.display = 'none';
+  }
+}
+
 function loadLeaderboardData() {
+  renderWeeklyWinnerSpotlight();
+
+  // 1. Check custom admin-uploaded leaderboard first
+  const custom = localStorage.getItem(STORAGE_KEY_LEADERBOARD);
+  if (custom) {
+    try {
+      const parsed = JSON.parse(custom);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        leaderboardData = parsed;
+        renderLeaderboard(parsed);
+        return;
+      }
+    } catch (e) {}
+  }
+
+  // 2. Fetch file if no custom data exists
   fetch('data/leaderboard-data.json')
     .then(res => res.json())
     .then(data => {
@@ -253,3 +330,4 @@ if (document.readyState === 'loading') {
 } else {
   loadLeaderboardData();
 }
+

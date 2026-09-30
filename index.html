@@ -829,6 +829,65 @@
         </div>
       </div>
 
+      <!-- ==================== BANNER CÔNG BỐ CHIẾN TƯỚNG TOP TUẦN (CHỈ HIỆN KHI ADMIN NẠP DỮ LIỆU) ==================== -->
+      <div id="weekly-winner-spotlight" class="hidden mb-8 transition-all duration-500">
+        <div class="relative overflow-hidden rounded-3xl p-6 sm:p-8 bg-gradient-to-r from-amber-500/20 via-slate-900/90 to-orange-500/20 border-2 border-amber-400/60 shadow-2xl shadow-amber-500/20 glow-gold">
+          <!-- Background Glow Effect -->
+          <div class="absolute -top-24 -right-24 w-72 h-72 bg-amber-500/20 rounded-full blur-3xl pointer-events-none"></div>
+          <div class="absolute -bottom-24 -left-24 w-72 h-72 bg-brand-500/20 rounded-full blur-3xl pointer-events-none"></div>
+
+          <div class="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-6">
+            
+            <!-- Left Info -->
+            <div class="space-y-3 text-center lg:text-left flex-1">
+              <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-400 text-slate-950 font-black text-xs uppercase tracking-wider shadow">
+                <span class="text-sm">👑</span>
+                <span id="spotlight-week-title">VINH DANH CHIẾN TƯỚNG TOP TUẦN</span>
+                <span class="w-1.5 h-1.5 rounded-full bg-slate-950 animate-ping"></span>
+              </div>
+              
+              <h3 class="text-2xl sm:text-3xl font-black text-white flex flex-wrap items-center justify-center lg:justify-start gap-2">
+                <span>Chúc Mừng:</span>
+                <span id="spotlight-customer-name" class="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-yellow-200 to-amber-400">
+                  Khách hàng T*** Đ*** XNK *** Châu
+                </span>
+                <span id="spotlight-customer-phone" class="font-mono text-sm px-2.5 py-0.5 rounded-lg bg-slate-800 text-amber-300 border border-amber-400/30">
+                  098*****89
+                </span>
+              </h3>
+
+              <p id="spotlight-congrats-msg" class="text-xs sm:text-sm text-slate-300 max-w-2xl leading-relaxed">
+                Nhiệt liệt chúc mừng Quý khách đã xuất sắc dẫn đầu bảng vàng chi tiêu dịch vụ tuần qua, bứt phá tiến độ vận chuyển vượt bậc!
+              </p>
+
+              <div class="flex flex-wrap items-center justify-center lg:justify-start gap-3 pt-1">
+                <span class="inline-flex items-center gap-1.5 text-xs text-emerald-300 font-bold bg-emerald-500/10 px-3 py-1 rounded-lg border border-emerald-500/30">
+                  <span>🎁 Phần Thưởng Tuần:</span>
+                  <span id="spotlight-prize-tag" class="text-white font-extrabold">Voucher 2.000.000 đ + Huy Hiệu Chiến Tướng</span>
+                </span>
+                <span class="text-xs text-slate-400 font-medium">
+                  ⚡ Đã cập nhật đối soát từ phần mềm Eureka
+                </span>
+              </div>
+            </div>
+
+            <!-- Right Box: Weekly Spending Amount Highlight -->
+            <div class="shrink-0 w-full sm:w-auto text-center lg:text-right bg-slate-950/80 p-5 rounded-2xl border border-amber-400/40 shadow-xl min-w-[260px]">
+              <span class="text-[11px] font-extrabold uppercase text-amber-400 tracking-wider block mb-1">
+                💰 CHI TIÊU DỊCH VỤ TUẦN NÀY
+              </span>
+              <div id="spotlight-weekly-spending" class="text-3xl sm:text-4xl font-black text-amber-300 tracking-tight font-mono py-1">
+                148.650.000 đ
+              </div>
+              <span class="text-[10px] text-slate-400 block mt-1">
+                Bảo mật danh tính & doanh số độc quyền
+              </span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
       <!-- Leaderboard Table Container -->
       <div class="glass-card rounded-3xl p-4 sm:p-6 border border-white/10 overflow-hidden">
         <div class="overflow-x-auto">
@@ -1232,6 +1291,9 @@
         <button onclick="switchAdminTab('monthly-winners')" id="admin-btn-monthly-winners" class="admin-tab-btn px-3.5 py-2 rounded-xl text-xs font-bold text-slate-400 hover:text-white flex items-center gap-1.5">
           <span>3. Vòng Quay Booking & Upload DS (Mùng 05)</span>
         </button>
+        <button onclick="switchAdminTab('leaderboard-manager')" id="admin-btn-leaderboard-manager" class="admin-tab-btn px-3.5 py-2 rounded-xl text-xs font-bold text-slate-400 hover:text-white flex items-center gap-1.5">
+          <span>4. Nạp BXH & Vinh Danh Top Tuần</span>
+        </button>
       </div>
 
       <!-- Tab 1: Wheel Config -->
@@ -1416,6 +1478,143 @@
                 </tr>
               </thead>
               <tbody id="admin-winners-body" class="divide-y divide-slate-800">
+                <!-- Rendered dynamically by assets/js/admin.js -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Tab 4: Leaderboard & Weekly Winner Manager -->
+      <div id="admin-tab-leaderboard-manager" class="admin-tab-content hidden space-y-6">
+        
+        <!-- ==================== SUB-PANEL 1: CÔNG BỐ CHIẾN TƯỚNG / GIẢI TOP TUẦN ==================== -->
+        <div class="p-5 rounded-2xl bg-gradient-to-r from-amber-500/10 via-slate-900/90 to-orange-500/10 border-2 border-amber-500/40 space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-slate-800">
+            <div>
+              <h4 class="text-xs font-black uppercase text-amber-400 flex items-center gap-2">
+                <span>👑</span> CÔNG BỐ GIẢI CHIẾN TƯỚNG TOP TUẦN (MÀN HÌNH CHÍNH)
+              </h4>
+              <p class="text-[11px] text-slate-400 mt-0.5">
+                Khi kích hoạt và lưu tại đây, Banner vinh danh giải Top Tuần và số tiền chi tiêu dịch vụ sẽ hiện lên màn hình cuộn chính.
+              </p>
+            </div>
+            <span id="admin-weekly-status-badge" class="text-[11px] font-bold text-slate-400 bg-slate-800 px-2.5 py-1 rounded-full border border-slate-700 shrink-0">
+              ⚪ CHƯA CÔNG BỐ
+            </span>
+          </div>
+
+          <!-- Active Toggle -->
+          <div class="flex items-center gap-3">
+            <label class="inline-flex items-center gap-2.5 cursor-pointer bg-slate-950 px-4 py-2 rounded-xl border border-amber-400/40 hover:border-amber-400 transition-colors">
+              <input type="checkbox" id="admin-weekly-active" class="w-4 h-4 text-amber-500 rounded focus:ring-0">
+              <span class="text-xs font-black text-amber-300 uppercase tracking-wide">KÍCH HOẠT HIỂN THỊ BANNER TOP TUẦN TRÊN MÀN HÌNH CHÍNH</span>
+            </label>
+          </div>
+
+          <!-- Weekly Winner Form Inputs -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            <div>
+              <label class="block text-[11px] font-semibold text-slate-400 mb-1">Tuần xét giải:</label>
+              <input type="text" id="admin-weekly-title" placeholder="Ví dụ: Tuần 42 (05/10 - 11/10/2026)" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs font-bold text-white focus:outline-none focus:border-amber-400">
+            </div>
+            <div>
+              <label class="block text-[11px] font-semibold text-slate-400 mb-1">Khách hàng đạt giải:</label>
+              <input type="text" id="admin-weekly-name" placeholder="Ví dụ: Khách hàng T*** Đ*** XNK *** Châu" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs font-bold text-amber-300 focus:outline-none focus:border-amber-400">
+            </div>
+            <div>
+              <label class="block text-[11px] font-semibold text-slate-400 mb-1">Số điện thoại:</label>
+              <input type="text" id="admin-weekly-phone" placeholder="098*****89" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs font-mono text-slate-200 focus:outline-none focus:border-amber-400">
+            </div>
+            <div>
+              <label class="block text-[11px] font-semibold text-slate-400 mb-1">Số tiền chi tiêu dịch vụ tuần đó:</label>
+              <input type="text" id="admin-weekly-spending" placeholder="Ví dụ: 148.650.000 đ" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs font-mono font-black text-emerald-400 focus:outline-none focus:border-amber-400">
+            </div>
+            <div class="sm:col-span-2">
+              <label class="block text-[11px] font-semibold text-slate-400 mb-1">Phần thưởng đạt được:</label>
+              <input type="text" id="admin-weekly-prize" placeholder="Ví dụ: Voucher Tiền Mặt 2.000.000 đ + Cúp Chiến Tướng Tuần" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs font-bold text-white focus:outline-none focus:border-amber-400">
+            </div>
+            <div class="col-span-full">
+              <label class="block text-[11px] font-semibold text-slate-400 mb-1">Lời chúc mừng vinh danh:</label>
+              <textarea id="admin-weekly-msg" rows="2" placeholder="Nhiệt liệt chúc mừng Quý khách đã xuất sắc dẫn đầu doanh số chi tiêu dịch vụ tuần qua..." class="w-full bg-slate-950 border border-slate-700 rounded-xl p-2.5 text-xs text-slate-200 focus:outline-none focus:border-amber-400"></textarea>
+            </div>
+          </div>
+
+          <!-- Buttons -->
+          <div class="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-slate-800">
+            <div class="flex items-center gap-2">
+              <button type="button" onclick="loadDemoWeeklyWinner()" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold text-xs border border-slate-700 transition-colors">
+                📋 Nạp Mẫu Tuần 42
+              </button>
+              <button type="button" onclick="disableAdminWeeklyWinner()" class="px-3 py-1.5 rounded-xl bg-rose-500/20 text-rose-300 hover:bg-rose-500/30 font-semibold text-xs border border-rose-500/30 transition-colors">
+                🚫 Gỡ Bỏ / Ẩn Khỏi Trang Chủ
+              </button>
+            </div>
+            <button type="button" onclick="saveAdminWeeklyWinner()" class="px-5 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-slate-950 font-black text-xs uppercase tracking-wider shadow-lg transition-all">
+              💾 LƯU & CÔNG BỐ LÊN TRANG CHỦ
+            </button>
+          </div>
+        </div>
+
+        <!-- ==================== SUB-PANEL 2: NẠP & QUẢN LÝ DANH SÁCH BẢNG XẾP HẠNG DOANH SỐ ==================== -->
+        <div class="p-5 rounded-2xl bg-slate-900/90 border border-slate-700/80 space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-800">
+            <div>
+              <h4 class="text-xs font-black uppercase text-white flex items-center gap-2">
+                <span>📊</span> DANH SÁCH KHÁCH HÀNG BẢNG XẾP HẠNG DOANH SỐ (Q4/2026)
+              </h4>
+              <p class="text-[11px] text-slate-400 mt-0.5">
+                Chỉnh sửa trực tiếp từng dòng hoặc tải file danh sách. Hệ thống tự động che *** tên và SĐT bảo mật.
+              </p>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="text-xs text-slate-300">Tổng cộng:</span>
+              <span class="px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 font-mono font-black text-xs">
+                <span id="admin-bxh-count">10</span> khách hàng
+              </span>
+            </div>
+          </div>
+
+          <!-- Actions Toolbar -->
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <div class="flex flex-wrap items-center gap-2">
+              <input type="file" id="admin-bxh-file-input" accept=".json,.csv" onchange="handleBxhFileUpload(event)" class="hidden">
+              <label for="admin-bxh-file-input" class="cursor-pointer px-3.5 py-1.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs inline-flex items-center gap-1.5 shadow transition-colors">
+                📁 Tải File BXH (.json, .csv)
+              </label>
+              <button type="button" onclick="addAdminLeaderboardRow()" class="px-3 py-1.5 rounded-xl bg-emerald-600/30 hover:bg-emerald-600/40 text-emerald-300 border border-emerald-500/40 font-bold text-xs inline-flex items-center gap-1 transition-colors">
+                ➕ Thêm Khách Hàng
+              </button>
+              <button type="button" onclick="loadDemoLeaderboardToAdmin()" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold text-xs border border-slate-700 transition-colors">
+                📋 Nạp Top 10 Mẫu Chuẩn
+              </button>
+              <button type="button" onclick="exportLeaderboardJson()" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold text-xs border border-slate-700 transition-colors">
+                📥 Xuất File (.json)
+              </button>
+            </div>
+            <button type="button" onclick="saveAdminLeaderboardFromTable()" class="px-5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs uppercase tracking-wider shadow-lg transition-all">
+              💾 LƯU BẢNG XẾP HẠNG
+            </button>
+          </div>
+
+          <!-- Editable Table -->
+          <div class="overflow-x-auto max-h-[45vh] border border-slate-800 rounded-xl">
+            <table class="w-full text-left text-xs">
+              <thead class="sticky top-0 bg-slate-950 border-b border-slate-800 text-[11px] text-slate-400 uppercase tracking-wider">
+                <tr>
+                  <th class="py-2.5 px-2 text-center">Hạng</th>
+                  <th class="py-2.5 px-2">Khách Hàng (Tên)</th>
+                  <th class="py-2.5 px-2">Số Điện Thoại</th>
+                  <th class="py-2.5 px-2">Hạng VIP</th>
+                  <th class="py-2.5 px-2 text-right">Tổng Đơn</th>
+                  <th class="py-2.5 px-2 text-right">Sản Lượng</th>
+                  <th class="py-2.5 px-2 text-right">Phí Dịch Vụ (VNĐ)</th>
+                  <th class="py-2.5 px-2">Quà Tạm Tính</th>
+                  <th class="py-2.5 px-2 text-center">Xóa</th>
+                </tr>
+              </thead>
+              <tbody id="admin-bxh-table-body" class="divide-y divide-slate-800/60 bg-slate-900/60">
                 <!-- Rendered dynamically by assets/js/admin.js -->
               </tbody>
             </table>
