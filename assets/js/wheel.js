@@ -262,7 +262,6 @@ function closeWelcomeWheelModal() {
   const modal = document.getElementById('welcome-wheel-modal');
   if (modal) {
     modal.classList.add('hidden');
-    sessionStorage.setItem('eureka_welcome_popup_closed', 'true');
   }
 }
 
@@ -492,10 +491,8 @@ window.addEventListener('DOMContentLoaded', () => {
   drawM05Wheel();
   renderPublicMonthlyWinners();
 
-  // Auto-pop up welcome wheel modal after 1.5s if not closed in this session
+  // Auto-pop up welcome wheel modal on page load after 600ms
   setTimeout(() => {
-    if (!sessionStorage.getItem('eureka_welcome_popup_closed')) {
-      openWelcomeWheelModal();
-    }
-  }, 1500);
+    openWelcomeWheelModal();
+  }, 600);
 });
