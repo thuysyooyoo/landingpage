@@ -46,6 +46,9 @@ function toggleFaq(index) {
 
 // --- 3. Winning Modal & Confetti Handler for Welcome Wheel ---
 function showWinningResult(prizeObj, maskedPhone) {
+  if (typeof closeWelcomeWheelModal === 'function') {
+    closeWelcomeWheelModal();
+  }
   const modal = document.getElementById('win-modal');
   const titleEl = document.getElementById('modal-prize-title');
   const codeEl = document.getElementById('modal-voucher-code');
@@ -111,6 +114,7 @@ function copyVoucherCode() {
 window.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') {
     closeWinModal();
+    if (typeof closeWelcomeWheelModal === 'function') closeWelcomeWheelModal();
     if (typeof closeAdminLoginModal === 'function') closeAdminLoginModal();
     if (typeof closeAdminDashboard === 'function') closeAdminDashboard();
     if (typeof closeM05NoticeModal === 'function') closeM05NoticeModal();

@@ -94,7 +94,7 @@
       <nav class="hidden md:flex items-center gap-1 lg:gap-2">
         <a href="#tong-quan" class="px-3 py-2 text-sm font-medium text-slate-300 hover:text-brand-400 transition-colors">Tổng Quan</a>
         <a href="#giai-thuong" class="px-3 py-2 text-sm font-medium text-slate-300 hover:text-brand-400 transition-colors">Cơ Cấu Giải Thưởng</a>
-        <a href="#vong-quay-trai-nghiem" class="px-3 py-2 text-sm font-medium text-amber-300 hover:text-amber-200 flex items-center gap-1.5 transition-colors">
+        <a href="javascript:void(0)" onclick="openWelcomeWheelModal()" class="px-3 py-2 text-sm font-medium text-amber-300 hover:text-amber-200 flex items-center gap-1.5 transition-colors cursor-pointer">
           <span class="inline-block w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
           Vòng Quay Trải Nghiệm
         </a>
@@ -192,10 +192,10 @@
 
       <!-- Action Buttons -->
       <div class="flex flex-wrap items-center justify-center gap-4 mb-16">
-        <a href="#vong-quay-trai-nghiem" class="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-xl bg-gradient-to-r from-amber-500 to-brand-600 hover:from-amber-400 hover:to-brand-500 text-white font-extrabold text-base shadow-xl shadow-amber-500/25 transition-all hover:scale-105">
+        <button onclick="openWelcomeWheelModal()" class="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-xl bg-gradient-to-r from-amber-500 to-brand-600 hover:from-amber-400 hover:to-brand-500 text-white font-extrabold text-base shadow-xl shadow-amber-500/25 transition-all hover:scale-105 cursor-pointer">
           <svg class="w-5 h-5 animate-spin-slow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
           <span>QUAY VÒNG MAY MẮN NGAY</span>
-        </a>
+        </button>
         <a href="#bxh-truc-tuyen" class="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-white font-bold text-base border border-slate-600 transition-all hover:scale-105">
           <svg class="w-5 h-5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
           <span>Tra Cứu Bảng Xếp Hạng</span>
@@ -450,126 +450,6 @@
             </div>
           </div>
         </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ==================== VÒNG QUAY 1: VÒNG QUAY TRẢI NGHIỆM KHÁCH HÀNG ==================== -->
-  <section id="vong-quay-trai-nghiem" class="py-20 relative overflow-hidden bg-gradient-to-b from-navy-950 via-[#101b33] to-navy-950">
-    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-amber-500/10 rounded-full blur-[120px] pointer-events-none"></div>
-
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-      
-      <div class="text-center max-w-2xl mx-auto mb-12">
-        <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-400/10 border border-amber-400/30 text-amber-400 text-xs font-bold uppercase tracking-wider mb-2">
-          🎡 VÒNG QUAY TRẢI NGHIỆM TRỰC TUYẾN
-        </span>
-        <h2 class="text-3xl sm:text-4xl font-extrabold text-white mb-2">
-          Thử Vận May — Rinh Voucher Khởi Động
-        </h2>
-        <p class="text-slate-300 text-sm">
-          Nhập số điện thoại đại diện để quay ngẫu nhiên nhận Voucher chiết khấu cước và dịch vụ hỗ trợ độc quyền từ Eureka Logistics!
-        </p>
-      </div>
-
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center max-w-6xl mx-auto">
-        
-        <!-- Lucky Wheel Visual (Canvas) -->
-        <div class="lg:col-span-7 flex flex-col items-center justify-center">
-          <div class="wheel-container relative w-[320px] h-[320px] sm:w-[420px] sm:h-[420px]">
-            <!-- Wheel Pointer -->
-            <div class="wheel-pointer">
-              <svg width="48" height="54" viewBox="0 0 48 54" fill="none">
-                <path d="M24 54L4 14C0.5 7 5.5 0 13.5 0H34.5C42.5 0 47.5 7 44 14L24 54Z" fill="url(#pointer-grad)" stroke="#FFF" stroke-width="2"/>
-                <circle cx="24" cy="18" r="7" fill="#FFF"/>
-                <circle cx="24" cy="18" r="4" fill="#EA580C"/>
-                <defs>
-                  <linearGradient id="pointer-grad" x1="24" y1="0" x2="24" y2="54" gradientUnits="userSpaceOnUse">
-                    <stop stop-color="#F59E0B"/>
-                    <stop offset="1" stop-color="#DC2626"/>
-                  </linearGradient>
-                </defs>
-              </svg>
-            </div>
-
-            <!-- Canvas Wheel -->
-            <canvas id="lucky-wheel-canvas" width="420" height="420" class="w-full h-full rounded-full cursor-pointer transition-transform"></canvas>
-
-            <!-- Center Spin Button -->
-            <button id="spin-center-btn" onclick="spinWheel()" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-gradient-to-tr from-brand-700 via-amber-500 to-amber-300 text-slate-950 font-black text-sm sm:text-base uppercase tracking-wider shadow-2xl border-4 border-white flex flex-col items-center justify-center transition-transform hover:scale-110 active:scale-95 z-20">
-              <span class="leading-none">QUAY</span>
-              <span class="text-[10px] tracking-normal opacity-80">NGAY</span>
-            </button>
-          </div>
-
-          <p class="text-xs text-slate-400 mt-5 text-center flex items-center gap-2">
-            <svg class="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
-            Tỉ lệ và số lượng quà tặng được hệ thống đối soát minh bạch
-          </p>
-        </div>
-
-        <!-- Wheel Controls & Spin Log -->
-        <div class="lg:col-span-5 space-y-5">
-          
-          <!-- Phone Entry Box -->
-          <div class="glass-card rounded-2xl p-5 border border-brand-500/20">
-            <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">
-              Nhập Số Điện Thoại Để Nhận Quà:
-            </label>
-            <div class="flex gap-2">
-              <input type="tel" id="user-phone-input" placeholder="Ví dụ: 0987654321" class="flex-1 bg-slate-800/90 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 font-semibold tracking-wider placeholder:font-normal placeholder:text-slate-500" />
-              <button onclick="spinWheel()" id="spin-action-btn" class="px-5 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-bold text-sm shadow-lg shadow-brand-600/30 transition-all flex items-center gap-1.5 whitespace-nowrap">
-                <span>Quay</span>
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-              </button>
-            </div>
-            <div class="flex items-center justify-between mt-3 text-xs text-slate-400">
-              <span>Bảo mật SĐT: Che *** khi hiển thị</span>
-              <button onclick="fillDemoPhone()" class="text-amber-400 hover:underline font-medium">Điền số mẫu</button>
-            </div>
-          </div>
-
-          <!-- Real-time Winner Stream / History -->
-          <div class="glass-card rounded-2xl p-5 border border-slate-700">
-            <div class="flex items-center justify-between mb-3 pb-2 border-b border-slate-700/60">
-              <span class="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-1.5">
-                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                Khách Hàng Vừa Nhận Voucher Trực Tuyến
-              </span>
-              <span class="text-[10px] text-slate-400">Trực tiếp</span>
-            </div>
-            <div id="winner-ticker-list" class="space-y-2 max-h-52 overflow-y-auto pr-1">
-              <div class="flex items-center justify-between text-xs p-2 rounded-lg bg-slate-800/50 border border-slate-700/40">
-                <div class="flex items-center gap-2">
-                  <span class="text-amber-400 font-mono font-bold">098***6789</span>
-                  <span class="text-slate-400">Khách hàng vừa quay</span>
-                </div>
-                <span class="font-bold text-emerald-400">+400.000 đ</span>
-              </div>
-              <div class="flex items-center justify-between text-xs p-2 rounded-lg bg-slate-800/50 border border-slate-700/40">
-                <div class="flex items-center gap-2">
-                  <span class="text-amber-400 font-mono font-bold">091***4321</span>
-                  <span class="text-slate-400">Khách hàng vừa quay</span>
-                </div>
-                <span class="font-bold text-amber-300">+300.000 đ</span>
-              </div>
-              <div class="flex items-center justify-between text-xs p-2 rounded-lg bg-slate-800/50 border border-slate-700/40">
-                <div class="flex items-center gap-2">
-                  <span class="text-amber-400 font-mono font-bold">090***8827</span>
-                  <span class="text-slate-400">Khách hàng vừa quay</span>
-                </div>
-                <span class="font-bold text-blue-400">Gói Squad 2-in-1</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-xs text-amber-200/90 leading-relaxed">
-            💡 <strong>Quy định:</strong> Voucher trúng thưởng được Kế toán Eureka đối soát theo SĐT và trừ trực tiếp vào tiền cước của đơn hàng phát sinh trong vòng 30 ngày.
-          </div>
-
-        </div>
-
       </div>
 
     </div>
@@ -1021,7 +901,7 @@
         <h4 class="text-white font-bold text-sm uppercase tracking-wider mb-3">Liên Kết Chiến Dịch</h4>
         <ul class="space-y-2">
           <li><a href="#tong-quan" class="hover:text-brand-400 transition-colors">Tổng quan giải thưởng</a></li>
-          <li><a href="#vong-quay-trai-nghiem" class="hover:text-brand-400 transition-colors">Vòng quay trải nghiệm</a></li>
+          <li><a href="javascript:void(0)" onclick="openWelcomeWheelModal()" class="hover:text-brand-400 transition-colors cursor-pointer">Vòng quay trải nghiệm</a></li>
           <li><a href="#vong-quay-mung-05" class="hover:text-brand-400 transition-colors">Đại lễ tri ân Mùng 05</a></li>
           <li><a href="#cot-moc-vip" class="hover:text-brand-400 transition-colors">Đặc quyền VIP+1</a></li>
           <li><a href="#bxh-truc-tuyen" class="hover:text-brand-400 transition-colors">Bảng xếp hạng Q4</a></li>
@@ -1049,6 +929,119 @@
       <p>Thiết kế chuẩn HTML Native · Tối ưu tải nhanh & bảo mật danh tính kinh doanh</p>
     </div>
   </footer>
+
+  <!-- ==================== POPUP MODAL: VÒNG QUAY TRẢI NGHIỆM KHÁCH HÀNG ==================== -->
+  <div id="welcome-wheel-modal" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/85 backdrop-blur-md hidden transition-opacity duration-300">
+    <div class="glass-card rounded-3xl p-5 sm:p-7 max-w-4xl w-full border-2 border-amber-400/80 relative glow-gold max-h-[92vh] overflow-y-auto">
+      <button onclick="closeWelcomeWheelModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl font-bold w-9 h-9 rounded-full bg-slate-800 flex items-center justify-center transition-colors z-30" title="Đóng">✕</button>
+
+      <div class="text-center max-w-xl mx-auto mb-6">
+        <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-400/10 border border-amber-400/30 text-amber-400 text-[11px] font-bold uppercase tracking-wider mb-2">
+          🎡 MINIGAME TRẢI NGHIỆM KHÁCH HÀNG
+        </span>
+        <h3 class="text-2xl sm:text-3xl font-extrabold text-white mb-1">
+          Vòng Quay May Mắn Eureka
+        </h3>
+        <p class="text-slate-300 text-xs sm:text-sm">
+          Nhập số điện thoại để quay ngẫu nhiên nhận Voucher chiết khấu cước và dịch vụ hỗ trợ độc quyền từ Eureka Logistics!
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+        <!-- Canvas Wheel Column -->
+        <div class="md:col-span-7 flex flex-col items-center justify-center">
+          <div class="wheel-container relative w-[290px] h-[290px] sm:w-[350px] sm:h-[350px]">
+            <!-- Wheel Pointer -->
+            <div class="wheel-pointer">
+              <svg width="44" height="50" viewBox="0 0 48 54" fill="none">
+                <path d="M24 54L4 14C0.5 7 5.5 0 13.5 0H34.5C42.5 0 47.5 7 44 14L24 54Z" fill="url(#pointer-grad-popup)" stroke="#FFF" stroke-width="2"/>
+                <circle cx="24" cy="18" r="7" fill="#FFF"/>
+                <circle cx="24" cy="18" r="4" fill="#EA580C"/>
+                <defs>
+                  <linearGradient id="pointer-grad-popup" x1="24" y1="0" x2="24" y2="54" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="#F59E0B"/>
+                    <stop offset="1" stop-color="#DC2626"/>
+                  </linearGradient>
+                </defs>
+              </svg>
+            </div>
+
+            <!-- Canvas Wheel -->
+            <canvas id="lucky-wheel-canvas" width="350" height="350" class="w-full h-full rounded-full cursor-pointer transition-transform"></canvas>
+
+            <!-- Center Spin Button -->
+            <button id="spin-center-btn" onclick="spinWheel()" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-18 h-18 sm:w-20 sm:h-20 rounded-full bg-gradient-to-tr from-brand-700 via-amber-500 to-amber-300 text-slate-950 font-black text-xs sm:text-sm uppercase tracking-wider shadow-2xl border-4 border-white flex flex-col items-center justify-center transition-transform hover:scale-110 active:scale-95 z-20">
+              <span class="leading-none">QUAY</span>
+              <span class="text-[9px] tracking-normal opacity-80">NGAY</span>
+            </button>
+          </div>
+
+          <p class="text-[11px] text-slate-400 mt-3 text-center flex items-center gap-1.5">
+            <svg class="w-3.5 h-3.5 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+            Tỉ lệ và số lượng quà tặng được hệ thống đối soát minh bạch
+          </p>
+        </div>
+
+        <!-- Wheel Controls & Spin Log Column -->
+        <div class="md:col-span-5 space-y-4">
+          <!-- Phone Entry Box -->
+          <div class="p-4 rounded-2xl bg-slate-800/80 border border-brand-500/30">
+            <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">
+              Nhập Số Điện Thoại Để Nhận Quà:
+            </label>
+            <div class="flex gap-2">
+              <input type="tel" id="user-phone-input" placeholder="Ví dụ: 0987654321" class="flex-1 bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2 text-xs sm:text-sm text-white focus:outline-none focus:border-brand-500 font-semibold tracking-wider placeholder:font-normal placeholder:text-slate-500" />
+              <button onclick="spinWheel()" id="spin-action-btn" class="px-4 py-2 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-bold text-xs uppercase tracking-wider shadow-lg shadow-brand-600/30 transition-all flex items-center gap-1 whitespace-nowrap">
+                <span>Quay</span>
+              </button>
+            </div>
+            <div class="flex items-center justify-between mt-2.5 text-[11px] text-slate-400">
+              <span>Bảo mật SĐT: Che ***</span>
+              <button onclick="fillDemoPhone()" class="text-amber-400 hover:underline font-medium">Điền số mẫu</button>
+            </div>
+          </div>
+
+          <!-- Real-time Winner Stream / History -->
+          <div class="p-4 rounded-2xl bg-slate-800/60 border border-slate-700">
+            <div class="flex items-center justify-between mb-2.5 pb-2 border-b border-slate-700/60">
+              <span class="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                Khách Vừa Nhận Voucher Trực Tuyến
+              </span>
+              <span class="text-[10px] text-slate-400">Trực tiếp</span>
+            </div>
+            <div id="winner-ticker-list" class="space-y-1.5 max-h-40 overflow-y-auto pr-1">
+              <div class="flex items-center justify-between text-xs p-2 rounded-lg bg-slate-900/60 border border-slate-700/40">
+                <div class="flex items-center gap-2">
+                  <span class="text-amber-400 font-mono font-bold">098***6789</span>
+                  <span class="text-slate-400 text-[11px]">Khách hàng vừa quay</span>
+                </div>
+                <span class="font-bold text-emerald-400">+400.000 đ</span>
+              </div>
+              <div class="flex items-center justify-between text-xs p-2 rounded-lg bg-slate-900/60 border border-slate-700/40">
+                <div class="flex items-center gap-2">
+                  <span class="text-amber-400 font-mono font-bold">091***4321</span>
+                  <span class="text-slate-400 text-[11px]">Khách hàng vừa quay</span>
+                </div>
+                <span class="font-bold text-amber-300">+300.000 đ</span>
+              </div>
+              <div class="flex items-center justify-between text-xs p-2 rounded-lg bg-slate-900/60 border border-slate-700/40">
+                <div class="flex items-center gap-2">
+                  <span class="text-amber-400 font-mono font-bold">090***8827</span>
+                  <span class="text-slate-400 text-[11px]">Khách hàng vừa quay</span>
+                </div>
+                <span class="font-bold text-blue-400">Gói Squad 2-in-1</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-[11px] text-amber-200/90 leading-relaxed">
+            💡 <strong>Quy định:</strong> Voucher trúng thưởng được Kế toán Eureka đối soát theo SĐT và trừ trực tiếp vào tiền cước của đơn hàng phát sinh trong vòng 30 ngày.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- ==================== MODAL 1: CHÚC MỪNG TRÚNG THƯỞNG VÒNG 1 ==================== -->
   <div id="win-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md hidden transition-opacity duration-300">
@@ -1221,6 +1214,18 @@
       </div>
 
     </div>
+  </div>
+
+  <!-- ==================== FLOATING LUCKY WHEEL WIDGET ==================== -->
+  <div class="fixed bottom-6 right-6 z-40">
+    <button onclick="openWelcomeWheelModal()" class="group relative flex items-center gap-2.5 px-4 py-3 rounded-full bg-gradient-to-r from-amber-500 via-brand-600 to-orange-500 text-white font-extrabold text-xs sm:text-sm shadow-2xl shadow-amber-500/40 border-2 border-amber-300/60 hover:scale-105 active:scale-95 transition-all cursor-pointer">
+      <span class="text-xl animate-spin-slow">🎡</span>
+      <span class="tracking-wide">Quay Nhận Voucher</span>
+      <span class="absolute -top-1 -right-1 flex h-3.5 w-3.5">
+        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+        <span class="relative inline-flex rounded-full h-3.5 w-3.5 bg-amber-400"></span>
+      </span>
+    </button>
   </div>
 
   <!-- Confetti Canvas overlay -->

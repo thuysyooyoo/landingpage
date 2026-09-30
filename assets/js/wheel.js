@@ -247,6 +247,25 @@ function fillDemoPhone() {
   if (input) input.value = randomPhone;
 }
 
+// Modal open/close controls for Welcome Wheel Popup
+function openWelcomeWheelModal() {
+  const modal = document.getElementById('welcome-wheel-modal');
+  if (modal) {
+    modal.classList.remove('hidden');
+    setTimeout(() => {
+      drawWheel();
+    }, 60);
+  }
+}
+
+function closeWelcomeWheelModal() {
+  const modal = document.getElementById('welcome-wheel-modal');
+  if (modal) {
+    modal.classList.add('hidden');
+    sessionStorage.setItem('eureka_welcome_popup_closed', 'true');
+  }
+}
+
 
 // ==================== WHEEL 2: VÒNG QUAY TRI ÂN MÙNG 05 HÀNG THÁNG ====================
 const m05Canvas = document.getElementById('m05-wheel-canvas');
@@ -472,4 +491,11 @@ window.addEventListener('DOMContentLoaded', () => {
   drawWheel();
   drawM05Wheel();
   renderPublicMonthlyWinners();
+
+  // Auto-pop up welcome wheel modal after 1.5s if not closed in this session
+  setTimeout(() => {
+    if (!sessionStorage.getItem('eureka_welcome_popup_closed')) {
+      openWelcomeWheelModal();
+    }
+  }, 1500);
 });
