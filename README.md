@@ -1,132 +1,84 @@
 # 🏆 EUREKA CUSTOMER AWARDS 2026 — LANDING PAGE SỰ KIỆN
 
-> **Dự án Landing Page Sự Kiện & Vòng Quay May Mắn Tri Ân Khách Hàng Quý 4/2026**  
+> **Dự án Landing Page Sự Kiện & Hệ Thống Vòng Quay Kép Tri Ân Khách Hàng Quý 4/2026**  
 > **Thương hiệu:** Eureka Logistics ([erktransport.com](https://www.erktransport.com/))  
-> **Tổng quỹ giải thưởng:** 135.000.000 VNĐ  
-> **Phong cách thiết kế:** *Huashu-Design* (HTML Native High Craft, giao diện sang trọng, ít chữ, chuyển động mượt mà, tối ưu tải nhanh, đồng bộ 100% nhận diện thương hiệu Eureka).
+> **Hệ thống giải thưởng:** Top 3 Chung Cuộc Q4 (Surface Pro 11, iPad Air M3, Dyson), 05 Giải Phụ Chuyên Môn, Cột Mốc VIP+1 và Vòng Quay Tri Ân Mùng 05.  
+> **Phong cách:** *Huashu-Design* (HTML Native High Craft, ít chữ, nhiều visual, bảo mật B2B tuyệt đối, tốc độ tải tức thì).
 
 ---
 
-## 📁 1. Cấu Trúc Thư Mục Dự Án (Project Structure)
+## 🔒 1. Chính Sách Bảo Mật B2B & Chống Cào Dữ Liệu Đối Thủ
 
-Dự án được đóng gói theo mô hình **Module hóa chuẩn công nghiệp (Self-contained & Modular)**, tách biệt hoàn toàn giữa Giao diện (HTML), Kiểu dáng (CSS), Dữ liệu (JSON) và Logic xử lý (JavaScript). Bất kỳ ai (từ Marketer không biết lập trình đến Web Developer) đều có thể dễ dàng sửa đổi:
+Để bảo vệ tối đa dữ liệu kinh doanh của hàng trăm doanh nghiệp và hộ kinh doanh đối tác:
+* **Che Tên Công Ty / Hộ Kinh Doanh (`***`):** Chỉ hiển thị tiền tố và hậu tố nhận diện (Ví dụ: `Tập Đoàn XNK *** Á Châu`, `Công Ty CP Thương Mại *** Minh`, `TNHH SX & PP Gia Dụng *** An`).
+* **Không Hiển Thị Mã Khách Hàng:** Tuyệt đối loại bỏ mã định danh khách hàng trên giao diện web công khai để ngăn chặn đối thủ cào dữ liệu (web scraping) hoặc dò tìm danh tính đối tác.
+* **Thay Bằng Số Điện Thoại Ẩn (`098***6789`):** Hiển thị số điện thoại đại diện được che 4 chữ số ở giữa, vừa tạo tính minh bạch và uy tín, vừa bảo đảm quyền riêng tư liên hệ của khách hàng.
+
+---
+
+## 🎡 2. Kiến Trúc 2 Vòng Quay May Mắn (Dual Lucky Wheels)
+
+### 🎡 Vòng Quay 1: Vòng Quay Trải Nghiệm Khách Hàng (Tự Do Quay)
+* **Vị trí trên web:** Section `#vong-quay-trai-nghiem`.
+* **Đối tượng:** Tất cả khách hàng và đối tác truy cập landing page.
+* **Cơ chế:** Khách hàng nhập số điện thoại để quay ngẫu nhiên nhận Voucher 300k - 400k hoặc vé ưu tiên dịch vụ (trừ trực tiếp vào cước chuyến hàng tiếp theo).
+* **Quản trị tỉ lệ & Kho quà:** Tỉ lệ trúng thưởng (%) và số lượng quà tặng trong kho **do Admin toàn quyền thiết lập trong Bảng Quản Trị**. Khi khách hàng quay trúng, số lượng quà trong kho sẽ tự động giảm trừ.
+
+### 👑 Vòng Quay 2: Đại Lễ Tri Ân Mùng 05 Hàng Tháng (Admin Quay Chính Thức)
+* **Vị trí trên web:** Section `#vong-quay-mung-05`.
+* **Thể lệ:** Dành riêng cho 100% đơn hàng có booking hoàn thành thực tế trong tháng. Hệ thống tự động cấp 01 mã dự thưởng hợp lệ cho mỗi đơn.
+* **Phân quyền truy cập:**
+  * **Khách hàng thông thường:** **CHỈ ĐƯỢC XEM** thể lệ, cơ cấu giải thưởng từng kỳ và **Bảng Vinh Danh Khách Hàng Nhận Quà Mùng 05**. Nếu bấm vào vòng quay, hệ thống sẽ hiện thông báo chính sách.
+  * **Ban Tổ Chức (Admin):** Sau khi đăng nhập Admin, xuất hiện **Bảng Điều Khiển Quay Số Mùng 05** để Admin chọn kỳ quay (Tháng 10, Tháng 11, Tháng 12) và bấm quay số trực tiếp. Kết quả trúng giải sẽ tự động lưu và cập nhật lên bảng công khai cho khách hàng theo dõi.
+
+---
+
+## 🔐 3. Hướng Dẫn Truy Cập Bảng Quản Trị Admin
+
+1. **Cách truy cập:**
+   * Cách 1: Thêm `#admin` hoặc `?admin` vào đuôi đường dẫn web (Ví dụ: `https://thuysyooyoo.github.io/landingpage/#admin`).
+   * Cách 2: Cuộn xuống chân trang (Footer), click vào dòng chữ: **`🔐 Quản Trị Sự Kiện (Admin)`**.
+2. **Mật khẩu đăng nhập mặc định:**
+   ```text
+   eureka2026
+   ```
+3. **Các tính năng trong Admin Dashboard:**
+   * **Cấu hình Ô Quay Vòng 1:** Thay đổi nhãn hiển thị, tên phần thưởng, điều chỉnh thanh Tỉ lệ % trúng, cập nhật Số lượng quà còn trong kho, hoặc bấm Khôi phục mặc định.
+   * **Quản lý Người Trúng Quà Mùng 05:** Xem danh sách, kiểm tra trạng thái trừ cước và xóa các lượt quay thử nghiệm nếu cần.
+
+---
+
+## 📁 4. Cấu Trúc Thư Mục Module Hóa
 
 ```text
 Landing-Page-Project-Eureka-Customer-Awards-2026/
 │
-├── index.html                    # File giao diện chính (Single Source of Truth)
-├── README.md                     # Tài liệu hướng dẫn sử dụng và bàn giao (File này)
+├── index.html                    # Giao diện chính thức chuẩn nhận diện erktransport.com
+├── README.md                     # Tài liệu bàn giao và quản trị (File này)
+├── .gitignore                    # Bỏ qua các file rác hệ thống
 │
 ├── assets/
 │   ├── css/
-│   │   └── style.css             # Hệ màu Eureka, Dark Slate Blue, Glassmorphism, Animation
+│   │   └── style.css             # Hệ màu Eureka (Cam/Deep Slate Navy/Gold), Glassmorphism
 │   ├── js/
-│   │   ├── countdown.js          # Bộ đếm ngược thời gian thực đến 31/12/2026 23:59:59
-│   │   ├── confetti.js           # Hiệu ứng bắn pháo hoa hạt Canvas HTML5 ăn mừng trúng thưởng
-│   │   ├── wheel.js              # Động cơ Vòng quay may mắn Canvas 2D + Âm thanh Web Audio API
-│   │   ├── leaderboard.js        # Logic nạp BXH từ JSON, tìm kiếm tức thì, phân hạng VIP
-│   │   └── main.js               # Chuyển tab giải thưởng, mở/đóng FAQ accordion, popup modal
-│   └── images/                   # Thư mục chứa hình ảnh tùy biến (logo, banner, quà tặng)
+│   │   ├── admin.js              # Module quản trị: Xác thực mật khẩu, chỉnh tỉ lệ & kho quà, quản lý giải Mùng 05
+│   │   ├── wheel.js              # Động cơ Vòng quay kép Canvas 2D + Âm thanh Web Audio API
+│   │   ├── confetti.js           # Hiệu ứng pháo hoa Canvas HTML5 khi trúng quà
+│   │   ├── countdown.js          # Đồng hồ đếm ngược đóng cổng nhận đơn 31/12/2026
+│   │   ├── leaderboard.js        # Bảng xếp hạng Q4 động, bảo mật tên & SĐT, tìm kiếm tức thì
+│   │   └── main.js               # Chuyển tab giải thưởng, FAQ accordion, popup modal
+│   └── images/                   # Thư mục lưu ảnh tùy biến
 │
 └── data/
-    ├── leaderboard-data.json     # DỮ LIỆU BẢNG XẾP HẠNG TOP 10 (Cập nhật định kỳ thứ Hai)
-    └── prizes-data.json          # Cấu hình 8 ô phần thưởng Vòng quay & Tỷ lệ trúng
+    ├── leaderboard-data.json     # Dữ liệu BXH Top 10 (Cập nhật định kỳ thứ Hai)
+    └── prizes-data.json          # Cấu hình quà tặng & xác suất Vòng 1 + Vòng 2
 ```
 
 ---
 
-## 🎯 2. Hướng Dẫn Nhanh Cho Marketer / Content (Không Cần Biết Code)
+## 🚀 5. Xuất Bản Trực Tuyến Qua GitHub Pages
 
-### 📌 A. Cập nhật Bảng Xếp Hạng Doanh Số Top 10 (Hàng tuần)
-Khi kết thúc mỗi tuần hoặc mỗi chặng, bạn chỉ cần mở file:  
-👉 `data/leaderboard-data.json` bằng Notepad, VS Code hoặc bất kỳ trình soạn thảo văn bản nào.
-
-Cấu trúc mỗi khách hàng như sau:
-```json
-{
-  "rank": 1,
-  "company_name": "Tập Đoàn XNK Thiết Bị Công Nghiệp Á Châu",
-  "customer_code": "ERK-00912",
-  "vip_tier": "VIP ELITE",
-  "order_count": 48,
-  "volume_weight": "142,5 tấn | 190 m³",
-  "service_fee": 428650000,
-  "prize_tag": "💻 Laptop Surface 35Tr",
-  "prize_type": "top1"
-}
-```
-* **`rank`**: Số thứ tự xếp hạng (1, 2, 3...).
-* **`company_name`**: Tên doanh nghiệp hiển thị trên BXH.
-* **`customer_code`**: Mã định danh khách hàng trên hệ thống Eureka (VD: `ERK-00912`).
-* **`vip_tier`**: Hạng thành viên (`VIP ELITE`, `VIP PREMIUM`, `VIP PRO`, `KH MỚI`).
-* **`order_count`**: Tổng số đơn booking hoàn tất.
-* **`volume_weight`**: Khối lượng / Thể tích tích lũy.
-* **`service_fee`**: Doanh số phí dịch vụ (đơn vị: VNĐ, viết liền không dấu chấm phẩy, VD: `428650000`).
-* **`prize_tag`**: Nhãn quà tặng tạm tính đang nắm giữ.
-
-Sau khi lưu file `leaderboard-data.json`, tải lại trang web là dữ liệu tự động cập nhật!
-
----
-
-### 📌 B. Chỉnh sửa các ô của Vòng Quay May Mắn
-Mở file 👉 `data/prizes-data.json`:
-Bạn có thể thay đổi tên voucher, màu sắc các ô quay, hoặc câu chúc mừng trúng thưởng.
-
----
-
-### 📌 C. Thay đổi thông tin liên hệ (Hotline, Zalo, Fanpage)
-Mở file 👉 `index.html`, nhấn `Ctrl + F` để tìm và thay thế nhanh:
-* **Số Hotline:** `0898586622` (thay bằng số mới ở cả thẻ hiển thị và `tel:0898586622`).
-* **Link Zalo OA:** `https://zalo.me/0898586622`.
-* **Link Fanpage Facebook:** `https://www.facebook.com/101674648022986`.
-* **Link TikTok:** `https://www.tiktok.com/@eureka_logistics`.
-* **Link YouTube:** `https://www.youtube.com/@erktransport.logistics`.
-
----
-
-## 💻 3. Hướng Dẫn Dành Cho Lập Trình Viên (Developer Guide)
-
-### 🚀 A. Chạy thử nghiệm Local
-1. **Cách 1 (Mở trực tiếp):** Double-click vào file `index.html`. Trang web sẽ chạy ngay lập tức trên trình duyệt mặc định (Chrome, Edge, Safari...).  
-   *(Lưu ý: Hệ thống đã tích hợp sẵn cơ chế **Fallback in-memory** an toàn, nên ngay cả khi mở qua giao thức `file://` bị chặn CORS, bảng xếp hạng và vòng quay vẫn hoạt động hoàn hảo 100%).*
-2. **Cách 2 (Khuyên dùng - Chạy Local Web Server):**
-   * Sử dụng extension **Live Server** trên Visual Studio Code.
-   * Hoặc mở terminal trong thư mục dự án và chạy:
-     ```bash
-     # Nếu máy có Python
-     python -m http.server 8000
-     # Truy cập: http://localhost:8000
-     ```
-
-### 🎨 B. Hệ thống thiết kế & Công nghệ (Tech Stack)
-* **HTML5 Semantic & Native Elements**: Cấu trúc chuẩn SEO, thẻ mở rộng chuẩn Social Open Graph metadata.
-* **Tailwind CSS (JIT via CDN)**: Tùy biến bảng màu Eureka:
-  * Brand Orange: `#ea580c`, `#f97316` (Nhận diện logo Eureka).
-  * Deep Slate Navy: `#0b1120`, `#0f172a` (Trùng khớp 100% với nền `erktransport.com`).
-  * Amber Gold: `#f59e0b`, `#fde047` (Vinh danh cúp & giải thưởng).
-* **Font chữ**: Google Fonts `'Plus Jakarta Sans'` kết hợp `'Google Sans'`, mang lại diện mạo hiện đại, thanh thoát của một cổng thông tin Logistics cao cấp.
-* **Web Audio API Synthesis**: Âm thanh quay bánh đà `tick` và âm thanh chiến thắng `fanfare chord` được **tổng hợp trực tiếp bằng dao động sóng âm (Oscillator)** trong trình duyệt, **hoàn toàn không cần tải file MP3 bên ngoài**, giúp tốc độ load trang là 0ms và không bao giờ bị lỗi đứt link audio.
-* **HTML5 Canvas 2D Particle Engine**:
-  * Vòng quay may mắn render trên canvas với đường cong giảm tốc `Cubic Ease-Out` chân thực.
-  * Hiệu ứng pháo hoa giấy Confetti 150 hạt đa sắc bung xõa rực rỡ khi trúng thưởng.
-
----
-
-## 🌐 4. Hướng Dẫn Triển Khai / Đưa Lên Mạng (Deployment)
-
-### Phương án 1: Gắn vào tên miền chính thức của Eureka (Khuyên dùng)
-* **Subdomain:** Cấu hình DNS trỏ subdomain `awards.erktransport.com` hoặc `sukien.erktransport.com` về hosting/server chứa thư mục này.
-* **Subfolder:** Copy toàn bộ nội dung thư mục này vào thư mục con `/awards/` hoặc `/su-kien-2026/` trên hosting hiện tại của `erktransport.com`.
-
-### Phương án 2: Xuất bản tức thì qua Vercel / Netlify / Cloudflare Pages (30 giây)
-1. Truy cập [vercel.com](https://vercel.com) hoặc [netlify.com](https://netlify.com).
-2. Kéo thả (Drag & Drop) cả thư mục `Landing-Page-Project-Eureka-Customer-Awards-2026` vào khu vực Deploy.
-3. Nhận ngay link trực tuyến miễn phí có SSL (HTTPS) trong 30 giây để gửi cho khách hàng và đối tác!
-
----
-
-## 📞 5. Hỗ Trợ & Bản Quyền
-* **Chủ quản chiến dịch:** Phòng Marketing & Phòng Vận Hành — Công ty TNHH Thương mại và Xuất nhập khẩu Eureka.
-* **Website:** [https://www.erktransport.com/](https://www.erktransport.com/)
-* **Hotline kỹ thuật & tiếp nhận đơn:** 0898.586.622
-* **Email:** support@erktransport.com
+1. Kho lưu trữ: **[https://github.com/thuysyooyoo/landingpage](https://github.com/thuysyooyoo/landingpage)**
+2. Vào **Settings** > **Pages** > Chọn branch **`main`**, thư mục **`/ (root)`** > Nhấn **Save**.
+3. Trang web chạy trực tuyến tại:  
+   👉 **`https://thuysyooyoo.github.io/landingpage/`**

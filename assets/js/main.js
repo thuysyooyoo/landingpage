@@ -5,18 +5,15 @@
 
 // --- 1. Prize Tab Switching ---
 function switchPrizeTab(tabId) {
-  // Hide all tab contents
   document.querySelectorAll('.prize-tab-content').forEach(el => {
     el.classList.add('hidden');
   });
 
-  // Reset all tab button styles
   document.querySelectorAll('.prize-tab-btn').forEach(btn => {
     btn.classList.remove('bg-brand-600', 'text-white', 'shadow-md');
     btn.classList.add('text-slate-400', 'hover:text-white');
   });
 
-  // Activate target content
   const activeContent = document.getElementById('tab-content-' + tabId);
   const activeBtn = document.getElementById('tab-btn-' + tabId);
 
@@ -47,8 +44,8 @@ function toggleFaq(index) {
   }
 }
 
-// --- 3. Winning Modal & Confetti Handler ---
-function showWinningResult(prizeObj, orderCode) {
+// --- 3. Winning Modal & Confetti Handler for Welcome Wheel ---
+function showWinningResult(prizeObj, maskedPhone) {
   const modal = document.getElementById('win-modal');
   const titleEl = document.getElementById('modal-prize-title');
   const codeEl = document.getElementById('modal-voucher-code');
@@ -64,15 +61,14 @@ function showWinningResult(prizeObj, orderCode) {
     newEntry.className = 'flex items-center justify-between text-xs p-2 rounded-lg bg-brand-500/10 border border-brand-500/40 animate-pulse';
     newEntry.innerHTML = `
       <div class="flex items-center gap-2">
-        <span class="text-amber-400 font-mono font-bold">${orderCode}</span>
-        <span class="text-white font-medium">Doanh nghiệp vừa quay</span>
+        <span class="text-amber-400 font-mono font-bold">${maskedPhone}</span>
+        <span class="text-white font-medium">Khách hàng vừa quay</span>
       </div>
       <span class="font-bold text-emerald-400">${prizeObj.text}</span>
     `;
     ticker.insertBefore(newEntry, ticker.firstChild);
 
-    // Keep max 10 entries
-    while (ticker.children.length > 10) {
+    while (ticker.children.length > 8) {
       ticker.removeChild(ticker.lastChild);
     }
   }
@@ -111,9 +107,12 @@ function copyVoucherCode() {
   });
 }
 
-// Global keyboard accessibility (ESC closes modal)
+// Global keyboard accessibility (ESC closes modals)
 window.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') {
     closeWinModal();
+    if (typeof closeAdminLoginModal === 'function') closeAdminLoginModal();
+    if (typeof closeAdminDashboard === 'function') closeAdminDashboard();
+    if (typeof closeM05NoticeModal === 'function') closeM05NoticeModal();
   }
 });

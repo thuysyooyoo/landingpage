@@ -1,6 +1,7 @@
 /**
- * Leaderboard Engine
- * Data-driven from data/leaderboard-data.json with Instant Search & Filtering
+ * Leaderboard Engine for Eureka Customer Awards 2026
+ * Privacy-First: Masked Company Names & Phone Numbers (No customer codes exposed)
+ * Dynamic Fetch with In-Memory Safe Fallback
  */
 
 let leaderboardData = [];
@@ -9,8 +10,8 @@ let leaderboardData = [];
 const fallbackLeaderboardData = [
   {
     "rank": 1,
-    "company_name": "Tập Đoàn XNK Thiết Bị Công Nghiệp Á Châu",
-    "customer_code": "ERK-00912",
+    "company_name": "Tập Đoàn XNK *** Á Châu",
+    "phone_masked": "098***6789",
     "vip_tier": "VIP ELITE",
     "order_count": 48,
     "volume_weight": "142,5 tấn | 190 m³",
@@ -20,8 +21,8 @@ const fallbackLeaderboardData = [
   },
   {
     "rank": 2,
-    "company_name": "Công Ty Cổ Phần Thương Mại Tân Phát Minh",
-    "customer_code": "ERK-00431",
+    "company_name": "Công Ty Cổ Phần Thương Mại *** Minh",
+    "phone_masked": "091***4321",
     "vip_tier": "VIP ELITE",
     "order_count": 35,
     "volume_weight": "98,2 tấn | 135 m³",
@@ -31,8 +32,8 @@ const fallbackLeaderboardData = [
   },
   {
     "rank": 3,
-    "company_name": "TNHH Sản Xuất & Phân Phối Đồ Gia Dụng Bảo An",
-    "customer_code": "ERK-00827",
+    "company_name": "TNHH Sản Xuất & PP Gia Dụng *** An",
+    "phone_masked": "090***8827",
     "vip_tier": "VIP PREMIUM",
     "order_count": 29,
     "volume_weight": "76,0 tấn | 110 m³",
@@ -42,8 +43,8 @@ const fallbackLeaderboardData = [
   },
   {
     "rank": 4,
-    "company_name": "Cty XNK Vật Tư Y Tế Thăng Long",
-    "customer_code": "ERK-01052",
+    "company_name": "Cty XNK Vật Tư Y Tế *** Long",
+    "phone_masked": "093***1052",
     "vip_tier": "VIP PREMIUM",
     "order_count": 22,
     "volume_weight": "54,1 tấn | 68 m³",
@@ -53,8 +54,8 @@ const fallbackLeaderboardData = [
   },
   {
     "rank": 5,
-    "company_name": "Thương Mại & Dịch Vụ Vĩnh Hưng",
-    "customer_code": "ERK-00219",
+    "company_name": "Hộ KD Thương Mại & Dịch Vụ *** Hưng",
+    "phone_masked": "097***0219",
     "vip_tier": "VIP PRO",
     "order_count": 19,
     "volume_weight": "42,8 tấn | 55 m³",
@@ -64,8 +65,8 @@ const fallbackLeaderboardData = [
   },
   {
     "rank": 6,
-    "company_name": "TNHH Phụ Kiện Điện Tử SmartViet",
-    "customer_code": "ERK-00774",
+    "company_name": "TNHH Phụ Kiện Điện Tử *** Việt",
+    "phone_masked": "096***0774",
     "vip_tier": "VIP PRO",
     "order_count": 26,
     "volume_weight": "31,5 tấn | 45 m³",
@@ -75,13 +76,46 @@ const fallbackLeaderboardData = [
   },
   {
     "rank": 7,
-    "company_name": "Công Ty Cổ Phần Đồ Chơi Thông Minh KidTech",
-    "customer_code": "ERK-01289",
+    "company_name": "Công Ty Cổ Phần Đồ Chơi *** Tech",
+    "phone_masked": "088***1289",
     "vip_tier": "KH MỚI",
     "order_count": 14,
     "volume_weight": "18,2 tấn | 88 m³",
     "service_fee": 128900000,
     "prize_tag": "Dẫn đầu Tân Binh",
+    "prize_type": "regular"
+  },
+  {
+    "rank": 8,
+    "company_name": "Hộ KD Cơ Khí Chế Tạo *** Trung",
+    "phone_masked": "094***0615",
+    "vip_tier": "VIP PRO",
+    "order_count": 11,
+    "volume_weight": "85,6 tấn | 32 m³",
+    "service_fee": 115400000,
+    "prize_tag": "Ứng viên Vua Tải Trọng",
+    "prize_type": "regular"
+  },
+  {
+    "rank": 9,
+    "company_name": "Doanh Nghiệp XNK Tiêu Dùng *** Nam",
+    "phone_masked": "091***0388",
+    "vip_tier": "KH CŨ",
+    "order_count": 12,
+    "volume_weight": "24,0 tấn | 38 m³",
+    "service_fee": 98700000,
+    "prize_tag": "Sự Trở Lại Ấn Tượng",
+    "prize_type": "regular"
+  },
+  {
+    "rank": 10,
+    "company_name": "Hộ KD Nội Thất XNK *** Đô",
+    "phone_masked": "098***1422",
+    "vip_tier": "KH MỚI",
+    "order_count": 9,
+    "volume_weight": "12,5 tấn | 72 m³",
+    "service_fee": 86300000,
+    "prize_tag": "Ứng viên Vua Thể Tích",
     "prize_type": "regular"
   }
 ];
@@ -154,7 +188,9 @@ function renderLeaderboard(data) {
       <td class="py-4 px-3">${rankBadge}</td>
       <td class="py-4 px-3">
         <span class="font-bold text-white block">${item.company_name}</span>
-        <span class="text-[11px] font-mono text-slate-400">Mã KH: ${item.customer_code}</span>
+      </td>
+      <td class="py-4 px-3">
+        <span class="font-mono font-bold text-amber-300 text-xs">${item.phone_masked}</span>
       </td>
       <td class="py-4 px-3">
         <span class="px-2 py-0.5 rounded text-[11px] font-bold ${vipBadgeClass}">
@@ -180,7 +216,6 @@ function loadLeaderboardData() {
       renderLeaderboard(data);
     })
     .catch(() => {
-      // Fallback for local file:// previews
       leaderboardData = fallbackLeaderboardData;
       renderLeaderboard(fallbackLeaderboardData);
     });
@@ -194,7 +229,7 @@ function filterLeaderboard() {
   }
   const filtered = leaderboardData.filter(item => 
     item.company_name.toLowerCase().includes(query) ||
-    item.customer_code.toLowerCase().includes(query)
+    item.phone_masked.toLowerCase().includes(query)
   );
   renderLeaderboard(filtered);
 }
