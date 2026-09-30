@@ -9,9 +9,13 @@ function switchPrizeTab(tabId) {
     el.classList.add('hidden');
   });
 
+  const activeClasses = ['bg-gradient-to-r', 'from-brand-600', 'to-amber-500', 'text-white', 'shadow-lg', 'font-black'];
+  const inactiveClasses = ['text-slate-300', 'font-bold', 'hover:text-white', 'hover:bg-white/5'];
+
   document.querySelectorAll('.prize-tab-btn').forEach(btn => {
-    btn.classList.remove('bg-brand-600', 'text-white', 'shadow-md');
-    btn.classList.add('text-slate-400', 'hover:text-white');
+    btn.classList.remove(...activeClasses);
+    btn.classList.remove('bg-brand-600', 'text-white', 'shadow-md', 'active');
+    btn.classList.add(...inactiveClasses);
   });
 
   const activeContent = document.getElementById('tab-content-' + tabId);
@@ -21,8 +25,8 @@ function switchPrizeTab(tabId) {
     activeContent.classList.remove('hidden');
   }
   if (activeBtn) {
-    activeBtn.classList.add('bg-brand-600', 'text-white', 'shadow-md');
-    activeBtn.classList.remove('text-slate-400', 'hover:text-white');
+    activeBtn.classList.remove(...inactiveClasses);
+    activeBtn.classList.add(...activeClasses, 'active');
   }
 }
 

@@ -487,19 +487,19 @@
         </p>
       </div>
 
-      <!-- Tab Buttons for Prizes -->
+            <!-- Tab Buttons for Prizes -->
       <div class="flex justify-center mb-10">
-        <div class="glass-card p-1.5 rounded-2xl inline-flex flex-wrap gap-1 border border-white/10">
-          <button onclick="switchPrizeTab('top3-q4')" id="tab-btn-top3-q4" class="prize-tab-btn active px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-brand-600 text-white shadow-md transition-all">
+        <div class="p-1.5 rounded-2xl inline-flex flex-wrap gap-1.5 border border-white/15 shadow-2xl bg-slate-900/80 backdrop-blur-2xl">
+          <button onclick="switchPrizeTab('top3-q4')" id="tab-btn-top3-q4" class="prize-tab-btn active px-4 py-2.5 rounded-xl text-xs sm:text-sm font-black bg-gradient-to-r from-brand-600 to-amber-500 text-white shadow-lg transition-all duration-300 cursor-pointer">
             Top 3 Chung Cuộc Q4 (65 Tr)
           </button>
-          <button onclick="switchPrizeTab('giai-phu')" id="tab-btn-giai-phu" class="prize-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-400 hover:text-white transition-all">
+          <button onclick="switchPrizeTab('giai-phu')" id="tab-btn-giai-phu" class="prize-tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-slate-300 hover:text-white hover:bg-white/5 transition-all duration-300 cursor-pointer">
             05 Giải Phụ Chuyên Môn (15 Tr)
           </button>
-          <button onclick="switchPrizeTab('m05-tri-an')" id="tab-btn-m05-tri-an" class="prize-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-400 hover:text-white transition-all">
+          <button onclick="switchPrizeTab('m05-tri-an')" id="tab-btn-m05-tri-an" class="prize-tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-slate-300 hover:text-white hover:bg-white/5 transition-all duration-300 cursor-pointer">
             Vòng Quay Tri Ân Mùng 05
           </button>
-          <button onclick="switchPrizeTab('vip-dac-quyen')" id="tab-btn-vip-dac-quyen" class="prize-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold text-slate-400 hover:text-white transition-all">
+          <button onclick="switchPrizeTab('vip-dac-quyen')" id="tab-btn-vip-dac-quyen" class="prize-tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-slate-300 hover:text-white hover:bg-white/5 transition-all duration-300 cursor-pointer">
             Cột Mốc VIP+1
           </button>
         </div>
@@ -508,20 +508,20 @@
       <!-- Tab 1: Top 3 Chung Cuộc Q4 -->
       <div id="tab-content-top3-q4" class="prize-tab-content grid grid-cols-1 md:grid-cols-3 gap-6">
         <!-- Giải Nhì (Silver) -->
-        <div class="glass-card glass-card-hover rounded-3xl p-6 border border-slate-600/50 flex flex-col justify-between relative order-2 md:order-1">
-          <div class="absolute -top-3 left-6 px-3 py-1 rounded-full bg-slate-400 text-slate-900 font-extrabold text-xs uppercase tracking-wider shadow">
+        <div class="rounded-3xl p-6 sm:p-7 bg-slate-800/40 backdrop-blur-xl border border-slate-500/50 hover:border-slate-300/80 shadow-xl hover:shadow-slate-400/10 flex flex-col justify-between relative order-2 md:order-1 transition-all duration-300 hover:-translate-y-2 group">
+          <div class="absolute -top-3.5 left-6 px-3.5 py-1 rounded-full bg-slate-300 text-slate-900 font-black text-xs uppercase tracking-wider shadow-md">
             🥈 GIẢI NHÌ CHUNG CUỘC
           </div>
           <div>
-            <div class="h-44 w-full bg-gradient-to-b from-slate-700/30 to-slate-800/60 rounded-2xl flex items-center justify-center mb-6 relative overflow-hidden">
-              <span class="text-7xl animate-float">📱</span>
-              <div class="absolute bottom-3 right-3 px-2.5 py-1 rounded-md bg-black/60 backdrop-blur text-[11px] font-semibold text-slate-300">
+            <div class="crystal-plate h-48 w-full rounded-2xl flex items-center justify-center p-3 mb-6 relative overflow-hidden bg-slate-900/60 border border-white/10 group-hover:border-slate-400/40 transition-colors">
+              <img src="assets/img/ipad-air-m3.jpg" alt="iPad Air 11 inch M3 5G" class="max-h-full object-contain mx-auto drop-shadow-xl group-hover:scale-105 transition-transform duration-300" />
+              <div class="absolute bottom-3 right-3 px-2.5 py-1 rounded-md bg-black/70 backdrop-blur text-[11px] font-semibold text-slate-300 border border-white/10">
                 Chính Hãng Fullbox
               </div>
             </div>
-            <h3 class="text-xl font-bold text-white mb-1">iPad Air 11 inch M3 5G</h3>
-            <p class="text-xs text-slate-400 mb-3">Phiên bản 128GB Cellular 5G cao cấp nhất</p>
-            <div class="text-2xl font-black text-slate-200 mb-4">20.000.000 đ</div>
+            <h3 class="text-xl font-black text-white mb-1 font-display">iPad Air 11 inch M3 5G</h3>
+            <p class="text-xs text-slate-300 mb-3 font-medium">Phiên bản 128GB Cellular 5G cao cấp nhất</p>
+            <div class="text-2xl font-black text-slate-200 mb-4 font-display">20.000.000 đ</div>
           </div>
           <div class="pt-4 border-t border-slate-700/60">
             <span class="text-xs text-slate-300 flex items-center gap-1.5 font-medium">
@@ -532,20 +532,20 @@
         </div>
 
         <!-- Giải Nhất (Gold - Hero Center) -->
-        <div class="glass-card rounded-3xl p-6 sm:p-8 border-2 border-amber-400/70 glow-gold flex flex-col justify-between relative order-1 md:order-2 md:-translate-y-4">
+        <div class="rounded-3xl p-6 sm:p-8 bg-slate-800/50 backdrop-blur-2xl border-2 border-amber-400/80 shadow-2xl shadow-amber-500/20 glow-gold flex flex-col justify-between relative order-1 md:order-2 md:-translate-y-4 hover:-translate-y-6 transition-all duration-300 group">
           <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1.5 rounded-full bg-gradient-to-r from-amber-400 to-amber-600 text-slate-950 font-black text-xs uppercase tracking-widest shadow-lg flex items-center gap-1.5">
             <span>👑</span> QUÁN QUÂN CHUNG CUỘC
           </div>
           <div>
-            <div class="h-52 w-full bg-gradient-to-b from-amber-500/20 via-slate-800/40 to-slate-900/80 rounded-2xl flex items-center justify-center mb-6 relative overflow-hidden border border-amber-400/20">
-              <span class="text-8xl animate-float">💻</span>
+            <div class="crystal-plate h-52 w-full rounded-2xl flex items-center justify-center p-3 mb-6 relative overflow-hidden bg-slate-900/60 border border-amber-400/30 group-hover:border-amber-400/60 transition-colors">
+              <img src="assets/img/surface-pro-11.jpg" alt="Surface Pro 11 / Laptop AI Đỉnh Cao" class="max-h-full object-contain mx-auto drop-shadow-2xl scale-105 group-hover:scale-110 transition-transform duration-300" />
               <div class="absolute bottom-3 right-3 px-3 py-1 rounded-md bg-amber-500/20 border border-amber-400/40 backdrop-blur text-xs font-bold text-amber-300">
                 Siêu Phẩm 2026
               </div>
             </div>
-            <h3 class="text-2xl font-black text-white mb-1">Máy Tính Xách Tay Cao Cấp</h3>
+            <h3 class="text-2xl font-black text-white mb-1 font-display">Máy Tính Xách Tay Cao Cấp</h3>
             <p class="text-sm font-semibold text-amber-400 mb-2">Surface Pro 11 / Laptop AI Đỉnh Cao</p>
-            <div class="text-3xl sm:text-4xl font-black gold-gradient-text mb-4">35.000.000 đ</div>
+            <div class="text-3xl sm:text-4xl font-black gold-gradient-text mb-4 font-display">35.000.000 đ</div>
           </div>
           <div class="pt-4 border-t border-amber-400/20">
             <span class="text-sm text-slate-200 flex items-center gap-2 font-semibold">
@@ -556,20 +556,20 @@
         </div>
 
         <!-- Giải Ba (Bronze) -->
-        <div class="glass-card glass-card-hover rounded-3xl p-6 border border-amber-700/50 flex flex-col justify-between relative order-3">
-          <div class="absolute -top-3 left-6 px-3 py-1 rounded-full bg-amber-700 text-white font-extrabold text-xs uppercase tracking-wider shadow">
+        <div class="rounded-3xl p-6 sm:p-7 bg-slate-800/40 backdrop-blur-xl border border-amber-700/50 hover:border-amber-500/80 shadow-xl hover:shadow-amber-600/10 flex flex-col justify-between relative order-3 transition-all duration-300 hover:-translate-y-2 group">
+          <div class="absolute -top-3.5 left-6 px-3.5 py-1 rounded-full bg-amber-700 text-white font-extrabold text-xs uppercase tracking-wider shadow-md">
             🥉 GIẢI BA CHUNG CUỘC
           </div>
           <div>
-            <div class="h-44 w-full bg-gradient-to-b from-amber-900/20 to-slate-800/60 rounded-2xl flex items-center justify-center mb-6 relative overflow-hidden">
-              <span class="text-7xl animate-float">🌪️</span>
-              <div class="absolute bottom-3 right-3 px-2.5 py-1 rounded-md bg-black/60 backdrop-blur text-[11px] font-semibold text-slate-300">
+            <div class="crystal-plate h-48 w-full rounded-2xl flex items-center justify-center p-3 mb-6 relative overflow-hidden bg-slate-900/60 border border-white/10 group-hover:border-amber-600/40 transition-colors">
+              <img src="assets/img/dyson-purifier.jpg" alt="Máy Lọc Không Khí Dyson" class="max-h-full object-contain mx-auto drop-shadow-xl group-hover:scale-105 transition-transform duration-300" />
+              <div class="absolute bottom-3 right-3 px-2.5 py-1 rounded-md bg-black/70 backdrop-blur text-[11px] font-semibold text-slate-300 border border-white/10">
                 Đẳng Cấp Dyson
               </div>
             </div>
-            <h3 class="text-xl font-bold text-white mb-1">Máy Lọc Không Khí Dyson</h3>
-            <p class="text-xs text-slate-400 mb-3">Công nghệ lọc sạch vi khuẩn & bụi mịn chính hãng</p>
-            <div class="text-2xl font-black text-amber-500 mb-4">10.000.000 đ</div>
+            <h3 class="text-xl font-bold text-white mb-1 font-display">Máy Lọc Không Khí Dyson</h3>
+            <p class="text-xs text-slate-300 mb-3 font-medium">Công nghệ lọc sạch vi khuẩn & bụi mịn chính hãng</p>
+            <div class="text-2xl font-black text-amber-500 mb-4 font-display">10.000.000 đ</div>
           </div>
           <div class="pt-4 border-t border-slate-700/60">
             <span class="text-xs text-slate-300 flex items-center gap-1.5 font-medium">
@@ -582,39 +582,84 @@
 
       <!-- Tab 2: 05 Giải Phụ Chuyên Môn -->
       <div id="tab-content-giai-phu" class="prize-tab-content hidden grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-        <div class="glass-card glass-card-hover rounded-2xl p-5 border border-slate-700">
-          <div class="text-3xl mb-2">📦</div>
-          <h4 class="font-bold text-white text-sm mb-1">Vua Số Lượng Đơn</h4>
-          <div class="text-lg font-black text-amber-400 mb-2">3.000.000 đ</div>
-          <p class="text-[11px] text-slate-300">Doanh nghiệp có tổng số đơn booking hoàn tất nhiều nhất trong Q4.</p>
+        <!-- Vua Số Lượng Đơn -->
+        <div class="rounded-2xl p-5 flex flex-col justify-between text-left group bg-slate-800/40 backdrop-blur-xl border border-white/10 hover:border-brand-500/60 hover:shadow-xl hover:shadow-brand-500/10 transition-all duration-300 hover:-translate-y-1">
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-slate-700/50 border border-white/10 flex items-center justify-center text-2xl mb-3 group-hover:scale-110 transition-transform">
+              📦
+            </div>
+            <h4 class="font-bold text-white text-sm mb-1">Vua Số Lượng Đơn</h4>
+            <div class="text-lg font-black text-amber-400 mb-2 font-display">3.000.000 đ</div>
+            <p class="text-[11px] text-slate-300 leading-relaxed font-normal">Doanh nghiệp có tổng số đơn booking hoàn tất nhiều nhất trong Q4.</p>
+          </div>
+          <div class="pt-3 mt-3 border-t border-slate-700/50 flex items-center justify-between text-[11px] font-bold text-brand-400 group-hover:text-brand-300">
+            <span>Tiêu chí đơn hàng</span>
+            <span>Chi tiết →</span>
+          </div>
         </div>
 
-        <div class="glass-card glass-card-hover rounded-2xl p-5 border border-slate-700">
-          <div class="text-3xl mb-2">🌟</div>
-          <h4 class="font-bold text-white text-sm mb-1">Tân Binh Xuất Sắc</h4>
-          <div class="text-lg font-black text-amber-400 mb-2">3.000.000 đ</div>
-          <p class="text-[11px] text-slate-300">Khách hàng Mới (tạo tài khoản từ 01/10) có Phí Dịch Vụ cao nhất.</p>
+        <!-- Tân Binh Xuất Sắc -->
+        <div class="rounded-2xl p-5 flex flex-col justify-between text-left group bg-slate-800/40 backdrop-blur-xl border border-white/10 hover:border-brand-500/60 hover:shadow-xl hover:shadow-brand-500/10 transition-all duration-300 hover:-translate-y-1">
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-slate-700/50 border border-white/10 flex items-center justify-center text-2xl mb-3 group-hover:scale-110 transition-transform">
+              🌟
+            </div>
+            <h4 class="font-bold text-white text-sm mb-1">Tân Binh Xuất Sắc</h4>
+            <div class="text-lg font-black text-amber-400 mb-2 font-display">3.000.000 đ</div>
+            <p class="text-[11px] text-slate-300 leading-relaxed font-normal">Khách hàng Mới (tạo tài khoản từ 01/10) có Phí Dịch Vụ cao nhất.</p>
+          </div>
+          <div class="pt-3 mt-3 border-t border-slate-700/50 flex items-center justify-between text-[11px] font-bold text-brand-400 group-hover:text-brand-300">
+            <span>Khách hàng mới</span>
+            <span>Chi tiết →</span>
+          </div>
         </div>
 
-        <div class="glass-card glass-card-hover rounded-2xl p-5 border border-slate-700">
-          <div class="text-3xl mb-2">🔄</div>
-          <h4 class="font-bold text-white text-sm mb-1">Sự Trở Lại Ấn Tượng</h4>
-          <div class="text-lg font-black text-amber-400 mb-2">3.000.000 đ</div>
-          <p class="text-[11px] text-slate-300">Khách hàng cũ (từ đầu năm chưa đi) quay lại gửi hàng bứt phá nhất.</p>
+        <!-- Sự Trở Lại Ấn Tượng -->
+        <div class="rounded-2xl p-5 flex flex-col justify-between text-left group bg-slate-800/40 backdrop-blur-xl border border-white/10 hover:border-brand-500/60 hover:shadow-xl hover:shadow-brand-500/10 transition-all duration-300 hover:-translate-y-1">
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-slate-700/50 border border-white/10 flex items-center justify-center text-2xl mb-3 group-hover:scale-110 transition-transform">
+              🔄
+            </div>
+            <h4 class="font-bold text-white text-sm mb-1">Sự Trở Lại Ấn Tượng</h4>
+            <div class="text-lg font-black text-amber-400 mb-2 font-display">3.000.000 đ</div>
+            <p class="text-[11px] text-slate-300 leading-relaxed font-normal">Khách hàng cũ (từ đầu năm chưa đi) quay lại gửi hàng bứt phá nhất.</p>
+          </div>
+          <div class="pt-3 mt-3 border-t border-slate-700/50 flex items-center justify-between text-[11px] font-bold text-brand-400 group-hover:text-brand-300">
+            <span>Tái kích hoạt</span>
+            <span>Chi tiết →</span>
+          </div>
         </div>
 
-        <div class="glass-card glass-card-hover rounded-2xl p-5 border border-slate-700">
-          <div class="text-3xl mb-2">⚓</div>
-          <h4 class="font-bold text-white text-sm mb-1">Vua Tải Trọng (Kg)</h4>
-          <div class="text-lg font-black text-amber-400 mb-2">3.000.000 đ</div>
-          <p class="text-[11px] text-slate-300">Tổng khối lượng kg cao nhất (áp dụng lô hàng đi term E & F quốc tế).</p>
+        <!-- Vua Tải Trọng (Kg) -->
+        <div class="rounded-2xl p-5 flex flex-col justify-between text-left group bg-slate-800/40 backdrop-blur-xl border border-white/10 hover:border-brand-500/60 hover:shadow-xl hover:shadow-brand-500/10 transition-all duration-300 hover:-translate-y-1">
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-slate-700/50 border border-white/10 flex items-center justify-center text-2xl mb-3 group-hover:scale-110 transition-transform">
+              ⚓
+            </div>
+            <h4 class="font-bold text-white text-sm mb-1">Vua Tải Trọng (Kg)</h4>
+            <div class="text-lg font-black text-amber-400 mb-2 font-display">3.000.000 đ</div>
+            <p class="text-[11px] text-slate-300 leading-relaxed font-normal">Tổng khối lượng kg cao nhất (áp dụng lô hàng đi term E & F quốc tế).</p>
+          </div>
+          <div class="pt-3 mt-3 border-t border-slate-700/50 flex items-center justify-between text-[11px] font-bold text-brand-400 group-hover:text-brand-300">
+            <span>Tổng khối lượng</span>
+            <span>Chi tiết →</span>
+          </div>
         </div>
 
-        <div class="glass-card glass-card-hover rounded-2xl p-5 border border-slate-700">
-          <div class="text-3xl mb-2">🚛</div>
-          <h4 class="font-bold text-white text-sm mb-1">Vua Khối Lượng (M³)</h4>
-          <div class="text-lg font-black text-amber-400 mb-2">3.000.000 đ</div>
-          <p class="text-[11px] text-slate-300">Tổng thể tích m³ cao nhất (áp dụng lô hàng gom cont chính ngạch).</p>
+        <!-- Vua Khối Lượng (M³) -->
+        <div class="rounded-2xl p-5 flex flex-col justify-between text-left group bg-slate-800/40 backdrop-blur-xl border border-white/10 hover:border-brand-500/60 hover:shadow-xl hover:shadow-brand-500/10 transition-all duration-300 hover:-translate-y-1">
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-slate-700/50 border border-white/10 flex items-center justify-center text-2xl mb-3 group-hover:scale-110 transition-transform">
+              🚛
+            </div>
+            <h4 class="font-bold text-white text-sm mb-1">Vua Khối Lượng (M³)</h4>
+            <div class="text-lg font-black text-amber-400 mb-2 font-display">3.000.000 đ</div>
+            <p class="text-[11px] text-slate-300 leading-relaxed font-normal">Tổng thể tích m³ cao nhất (áp dụng lô hàng gom cont chính ngạch).</p>
+          </div>
+          <div class="pt-3 mt-3 border-t border-slate-700/50 flex items-center justify-between text-[11px] font-bold text-brand-400 group-hover:text-brand-300">
+            <span>Tổng thể tích</span>
+            <span>Chi tiết →</span>
+          </div>
         </div>
       </div>
 
@@ -677,39 +722,43 @@
 
       <!-- Tab 4: Cột Mốc VIP+1 -->
       <div id="tab-content-vip-dac-quyen" class="prize-tab-content hidden">
-        <div class="glass-card rounded-3xl p-6 sm:p-8 border border-white/10">
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-4 border-b border-slate-700">
+        <div class="rounded-3xl p-6 sm:p-8 bg-slate-800/40 backdrop-blur-2xl border border-white/15 shadow-2xl relative overflow-hidden">
+          <div class="absolute -top-24 -right-24 w-60 h-60 bg-brand-500/15 rounded-full blur-3xl pointer-events-none"></div>
+
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-4 border-b border-slate-700 relative z-10">
             <div>
-              <h3 class="text-xl font-black text-white">Chính Sách Nâng Cấp VIP+1 Hàng Tháng</h3>
-              <p class="text-xs text-slate-400 mt-1">Chốt đơn trước ngày 20 hàng tháng để nhận đặc quyền cước và công nợ</p>
+              <h3 class="text-xl sm:text-2xl font-black text-white font-display">Chính Sách Nâng Cấp VIP+1 Hàng Tháng</h3>
+              <p class="text-xs sm:text-sm text-slate-300 mt-1">Chốt đơn trước ngày 20 hàng tháng để nhận đặc quyền cước và công nợ</p>
             </div>
-            <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-brand-500/10 text-brand-400 text-xs font-bold">
+            <span class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-brand-500/20 border border-brand-500/40 text-brand-300 text-xs font-black shadow-inner">
               ⚡ Tự Động Kích Hoạt Ngày 21 Hàng Tháng
             </span>
           </div>
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
-            <div class="p-4 rounded-2xl bg-slate-800/60 border border-slate-700">
-              <span class="font-bold text-white block mb-1">BASIC → VIP PRO</span>
-              <p class="text-emerald-400 font-bold mb-2">Giảm 10% cước gom cont</p>
-              <p class="text-slate-400">Lưu kho: 10 ngày TQ / 3 ngày VN. Squad hỗ trợ 2-in-1, CK 2đ/RMB.</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-xs relative z-10">
+            <div class="rounded-2xl p-5 bg-slate-900/60 backdrop-blur-md border border-slate-700 hover:border-slate-500 transition-all duration-300 hover:-translate-y-1 shadow-lg">
+              <span class="font-black text-white block mb-1 tracking-wider text-xs">BASIC → VIP PRO</span>
+              <p class="text-emerald-400 font-extrabold text-sm mb-2">Giảm 10% cước gom cont</p>
+              <p class="text-slate-300 leading-relaxed font-normal">Lưu kho: 10 ngày TQ / 3 ngày VN. Squad hỗ trợ 2-in-1, CK 2đ/RMB.</p>
             </div>
-            <div class="p-4 rounded-2xl bg-slate-800/60 border border-blue-500/30">
-              <span class="font-bold text-white block mb-1">VIP PRO → PREMIUM</span>
-              <p class="text-emerald-400 font-bold mb-2">Giảm 20% cước gom cont</p>
-              <p class="text-slate-400">Lưu kho: 15 ngày TQ / 5 ngày VN. Squad hỗ trợ 3-in-1, CK 3đ/RMB.</p>
+            <div class="rounded-2xl p-5 bg-slate-900/60 backdrop-blur-md border border-blue-500/40 hover:border-blue-400 transition-all duration-300 hover:-translate-y-1 shadow-lg">
+              <span class="font-black text-blue-300 block mb-1 tracking-wider text-xs">VIP PRO → PREMIUM</span>
+              <p class="text-emerald-400 font-extrabold text-sm mb-2">Giảm 20% cước gom cont</p>
+              <p class="text-slate-300 leading-relaxed font-normal">Lưu kho: 15 ngày TQ / 5 ngày VN. Squad hỗ trợ 3-in-1, CK 3đ/RMB.</p>
             </div>
-            <div class="p-4 rounded-2xl bg-slate-800/60 border border-purple-500/30">
-              <span class="font-bold text-white block mb-1">PREMIUM → ELITE</span>
-              <p class="text-emerald-400 font-bold mb-2">Giảm 30% cước gom cont</p>
-              <p class="text-slate-400">Lưu kho: 30 ngày TQ / 7 ngày VN. Tổ tác chiến 4-in-1, CK 5đ/RMB.</p>
+            <div class="rounded-2xl p-5 bg-slate-900/60 backdrop-blur-md border border-purple-500/40 hover:border-purple-400 transition-all duration-300 hover:-translate-y-1 shadow-lg">
+              <span class="font-black text-purple-300 block mb-1 tracking-wider text-xs">PREMIUM → ELITE</span>
+              <p class="text-emerald-400 font-extrabold text-sm mb-2">Giảm 30% cước gom cont</p>
+              <p class="text-slate-300 leading-relaxed font-normal">Lưu kho: 30 ngày TQ / 7 ngày VN. Tổ tác chiến 4-in-1, CK 5đ/RMB.</p>
             </div>
-            <div class="p-4 rounded-2xl bg-amber-500/10 border border-amber-400/40">
-              <span class="font-bold text-amber-300 block mb-1">VIP ELITE → ELITE+</span>
-              <p class="text-amber-400 font-bold mb-2">TĂNG THÊM 15 NGÀY NỢ</p>
-              <p class="text-slate-300">Giải tỏa áp lực vốn cao điểm Tết cho khách hàng uy tín.</p>
+            <div class="rounded-2xl p-5 bg-gradient-to-br from-amber-500/15 to-slate-900/80 backdrop-blur-md border-2 border-amber-400/50 hover:border-amber-400 transition-all duration-300 hover:-translate-y-1 shadow-xl shadow-amber-500/10">
+              <span class="font-black text-amber-300 block mb-1 tracking-wider text-xs">VIP ELITE → ELITE+</span>
+              <p class="text-amber-300 font-black text-sm mb-2 uppercase tracking-wide">TĂNG THÊM 15 NGÀY NỢ</p>
+              <p class="text-slate-200 leading-relaxed font-medium">Giải tỏa áp lực vốn cao điểm Tết cho khách hàng uy tín.</p>
             </div>
           </div>
         </div>
+      </div>
+    </div>
       </div>
 
     </div>
@@ -1845,7 +1894,7 @@
   <script src="assets/js/admin.js"></script>
   <script src="assets/js/wheel.js"></script>
   <script src="assets/js/leaderboard.js"></script>
-  <script src="assets/js/main.js"></script>
+  <script src="assets/js/main.js?v=3"></script>
 
   <!-- Gala Lucky Wheel Driver Script (16 LEDs, Canvas, Sound, Confetti) -->
   <script>
@@ -2027,6 +2076,31 @@
       drawGalaWheel();
       initGalaLedBulbs();
     });
+  </script>
+  <script>
+    // Robust Prize Tab Switcher (Supports Gradient Pills)
+    window.switchPrizeTab = function(tabId) {
+      document.querySelectorAll('.prize-tab-content').forEach(el => {
+        el.classList.add('hidden');
+      });
+
+      const activeClasses = ['bg-gradient-to-r', 'from-brand-600', 'to-amber-500', 'text-white', 'shadow-lg', 'bg-brand-600', 'shadow-md', 'active'];
+      document.querySelectorAll('.prize-tab-btn').forEach(btn => {
+        activeClasses.forEach(cls => btn.classList.remove(cls));
+        btn.classList.add('text-slate-300', 'font-bold');
+      });
+
+      const activeContent = document.getElementById('tab-content-' + tabId);
+      const activeBtn = document.getElementById('tab-btn-' + tabId);
+
+      if (activeContent) {
+        activeContent.classList.remove('hidden');
+      }
+      if (activeBtn) {
+        activeBtn.classList.remove('text-slate-300');
+        activeBtn.classList.add('bg-gradient-to-r', 'from-brand-600', 'to-amber-500', 'text-white', 'shadow-lg', 'active');
+      }
+    };
   </script>
 </body>
 </html>
