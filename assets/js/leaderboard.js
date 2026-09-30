@@ -196,9 +196,10 @@ function renderLeaderboard(data) {
         <span class="font-mono font-bold text-amber-300 text-xs tracking-wider">${item.phone_masked}</span>
       </td>
       <td class="py-4 px-3">
-        <span class="px-2 py-0.5 rounded text-[11px] font-bold ${vipBadgeClass}">
-          ${item.vip_tier}
-        </span>
+        <a href="https://www.erktransport.com/pricing" target="_blank" rel="noopener noreferrer" class="px-2 py-0.5 rounded text-[11px] font-bold ${vipBadgeClass} hover:scale-105 transition-transform inline-flex items-center gap-1 cursor-pointer" title="Bấm để xem chi tiết quyền lợi gói ${item.vip_tier} tại bảng giá Eureka Logistics">
+          <span>${item.vip_tier}</span>
+          <span class="text-[9px] opacity-70">↗</span>
+        </a>
       </td>
       <td class="py-4 px-3 text-right font-bold text-white">${item.order_count} đơn</td>
       <td class="py-4 px-3 text-right text-slate-300">${item.volume_weight}</td>
