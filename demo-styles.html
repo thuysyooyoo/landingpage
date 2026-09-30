@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>EUREKA AWARDS 2026 — Floating Aurora Glass</title>
+  <title>EUREKA AWARDS 2026 — 3 Phong Cách Demo Trực Quan</title>
   <link rel="icon" type="image/png" href="https://erktransport.com/logo.png" />
   
   <!-- Fonts: Plus Jakarta Sans (Brand Typography) + Outfit (Display Numbers & Headlines) -->
@@ -70,9 +70,11 @@
     }
 
     /* =========================================================
-       1. FLOATING AURORA GLASS (KÍNH TRONG SUỐT NỀN SÁNG MỀM MẠI)
+       1. STYLES DESIGN TOKENS & GLASSMORPHISM
        ========================================================= */
-    .glass-ultra {
+
+    /* Style 1: Floating Aurora Glass (Mềm mại, trong suốt, ánh cực quang) */
+    .glass-aurora {
       background: rgba(255, 255, 255, 0.52);
       backdrop-filter: blur(26px) saturate(200%);
       -webkit-backdrop-filter: blur(26px) saturate(200%);
@@ -84,7 +86,7 @@
         inset 0 -1.5px 2px 0 rgba(0, 0, 0, 0.02);
       position: relative;
     }
-    .glass-ultra:hover {
+    .glass-aurora:hover {
       background: rgba(255, 255, 255, 0.72);
       border-color: #FFFFFF;
       box-shadow: 
@@ -93,26 +95,46 @@
         inset 0 2px 3px 0 rgba(255, 255, 255, 1);
     }
 
-    .glass-ultra-amber {
-      background: rgba(255, 251, 245, 0.6);
-      backdrop-filter: blur(26px) saturate(190%);
-      -webkit-backdrop-filter: blur(26px) saturate(190%);
-      border: 1.5px solid rgba(254, 243, 199, 0.9);
+    /* Style 2: Golden Trophy & Cont 3D (Khối vàng kim, container nổi khối sang trọng) */
+    .glass-trophy {
+      background: rgba(255, 252, 245, 0.65);
+      backdrop-filter: blur(28px) saturate(190%);
+      -webkit-backdrop-filter: blur(28px) saturate(190%);
+      border: 1.5px solid rgba(254, 243, 199, 0.95);
       box-shadow: 
-        0 24px 60px -15px rgba(245, 158, 11, 0.2),
+        0 24px 60px -15px rgba(217, 119, 6, 0.22),
+        0 10px 25px -5px rgba(15, 23, 42, 0.06),
+        inset 0 2px 3px 0 rgba(255, 255, 255, 1),
+        inset 0 -1.5px 2px 0 rgba(245, 158, 11, 0.1);
+      position: relative;
+    }
+    .glass-trophy:hover {
+      background: rgba(255, 253, 248, 0.82);
+      border-color: rgba(245, 158, 11, 0.8);
+      box-shadow: 
+        0 30px 70px -12px rgba(217, 119, 6, 0.35),
+        0 0 35px rgba(251, 191, 36, 0.3),
+        inset 0 2px 3px 0 rgba(255, 255, 255, 1);
+    }
+
+    /* Style 3: Kinetic Logistics Rush (Khí động học, tốc độ, tuyến vận tải phát sáng) */
+    .glass-kinetic {
+      background: rgba(255, 255, 255, 0.58);
+      backdrop-filter: blur(24px) saturate(210%);
+      -webkit-backdrop-filter: blur(24px) saturate(210%);
+      border: 1.5px solid rgba(255, 255, 255, 0.95);
+      box-shadow: 
+        0 20px 50px -15px rgba(15, 23, 42, 0.09),
+        0 8px 20px -5px rgba(234, 88, 12, 0.12),
         inset 0 2px 3px 0 rgba(255, 255, 255, 1);
       position: relative;
     }
-
-    .glass-ultra-crystal {
-      background: rgba(255, 255, 255, 0.48);
-      backdrop-filter: blur(28px) saturate(210%);
-      -webkit-backdrop-filter: blur(28px) saturate(210%);
-      border: 1.5px solid rgba(255, 255, 255, 0.95);
+    .glass-kinetic:hover {
+      background: rgba(255, 255, 255, 0.8);
+      border-color: rgba(249, 115, 22, 0.6);
       box-shadow: 
-        0 20px 50px -15px rgba(15, 23, 42, 0.08),
+        0 28px 65px -12px rgba(234, 88, 12, 0.25),
         inset 0 2px 3px 0 rgba(255, 255, 255, 1);
-      position: relative;
     }
 
     /* Dynamic Spotlight Effect on Glass (Vệt sáng chạy theo con trỏ chuột) */
@@ -152,8 +174,13 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
-    .text-gradient-amber-deep {
+    .text-gradient-gold-flame {
       background: linear-gradient(135deg, #D97706 0%, #EA580C 50%, #B91C1C 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .text-gradient-kinetic {
+      background: linear-gradient(135deg, #EA580C 0%, #F59E0B 50%, #DC2626 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
@@ -275,14 +302,14 @@
         </span>
         <div>
           <div class="flex items-center gap-2">
-            <span class="text-xs font-black tracking-wider text-amber-300 uppercase">Floating Aurora Glass Lab</span>
+            <span class="text-xs font-black tracking-wider text-amber-300 uppercase">Eureka Design Lab</span>
             <span class="text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-mono font-bold">100% Khóa Toàn Bộ Text</span>
           </div>
-          <span class="text-[11px] text-slate-300 hidden sm:inline">Màu sắc Floating Aurora Glass • Chuyển sắc mềm mại • Kính trong suốt đổ bóng tinh tế</span>
+          <span class="text-[11px] text-slate-300 hidden sm:inline">3 Phong cách nguyên bản: Floating Aurora • Golden Trophy & Cont 3D • Kinetic Rush</span>
         </div>
       </div>
 
-      <!-- 3 Style Selector Buttons -->
+      <!-- 3 Style Selector Buttons (Đúng chuẩn 3 tên bản gốc bạn chọn!) -->
       <div class="flex items-center bg-black/60 p-1.5 rounded-2xl border border-white/10 gap-1.5 overflow-x-auto no-scrollbar max-w-full">
         <button onclick="switchStyle(1)" id="btn-style-1" class="px-3.5 sm:px-4 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap flex items-center gap-1.5 cursor-pointer transition-all bg-gradient-to-r from-brand-orangeDark to-brand-redDeep text-white shadow-lg shadow-orange-500/40 scale-102">
           <span>01</span>
@@ -291,13 +318,13 @@
         </button>
         <button onclick="switchStyle(2)" id="btn-style-2" class="px-3.5 sm:px-4 py-1.5 rounded-xl text-xs font-bold text-slate-300 hover:text-white hover:bg-white/10 whitespace-nowrap flex items-center gap-1.5 cursor-pointer transition-all">
           <span>02</span>
-          <span>Velvet Amber Glass</span>
-          <span class="text-[10px] opacity-80 font-normal hidden xl:inline">(Kính Hổ Phách)</span>
+          <span>Golden Trophy & Cont 3D</span>
+          <span class="text-[10px] opacity-80 font-normal hidden xl:inline">(Cúp Vàng & Container)</span>
         </button>
         <button onclick="switchStyle(3)" id="btn-style-3" class="px-3.5 sm:px-4 py-1.5 rounded-xl text-xs font-bold text-slate-300 hover:text-white hover:bg-white/10 whitespace-nowrap flex items-center gap-1.5 cursor-pointer transition-all">
           <span>03</span>
-          <span>Aerodynamic Clean Glass</span>
-          <span class="text-[10px] opacity-80 font-normal hidden xl:inline">(Khí Động Học)</span>
+          <span>Kinetic Logistics Rush</span>
+          <span class="text-[10px] opacity-80 font-normal hidden xl:inline">(Khí Động Học & Tốc Độ)</span>
         </button>
       </div>
 
@@ -371,7 +398,7 @@
   <!-- =====================================================================
        PHONG CÁCH 01: FLOATING AURORA GLASS (KHUYÊN DÙNG)
        - Nền sáng ấm áp, dịu mắt (#FFFDF9 -> #FFF6EE -> #FFFBF5)
-       - Màu sắc Floating Aurora Glass êm dịu, rạng rỡ, sang trọng
+       - Dải màu cực quang chuyển sắc mềm mại tuyệt đẹp
        - Các box Kính Trong Suốt (Glassmorphism) nhìn thấu các dải sáng lướt ngầm phía sau
        ===================================================================== -->
   <main id="container-style-1" class="style-container tab-fade-enter relative min-h-screen pt-8 pb-28 overflow-hidden bg-gradient-to-b from-[#FFFDF9] via-[#FFF6EE] to-[#FFFBF5]">
@@ -403,7 +430,7 @@
       
       <!-- Top Campaign Badge (Floating Glass Capsule) -->
       <div class="flex justify-center mb-8">
-        <div class="glass-ultra glass-interactive sweep-shine inline-flex items-center gap-3 px-6 py-2.5 rounded-full shadow-lg shadow-orange-500/10 animate-float-fast cursor-pointer" onclick="testCardClick('Huy Hiệu Chiến Dịch Tri Ân')">
+        <div class="glass-aurora glass-interactive sweep-shine inline-flex items-center gap-3 px-6 py-2.5 rounded-full shadow-lg shadow-orange-500/10 animate-float-fast cursor-pointer" onclick="testCardClick('Huy Hiệu Chiến Dịch Tri Ân')">
           <span class="flex h-2.5 w-2.5 rounded-full bg-brand-orangeDark animate-ping"></span>
           <span class="text-xs sm:text-sm font-extrabold text-brand-slate tracking-wide">CHIẾN DỊCH TRI ÂN KHÁCH HÀNG & ĐUA TOP CAO ĐIỂM QUÝ 4/2026</span>
           <span class="text-amber-400 font-black">|</span>
@@ -427,7 +454,7 @@
 
       <!-- Live Countdown Clock Box (GLASSMORPHISM TRONG SUỐT BẮT SÁNG) -->
       <div class="max-w-3xl mx-auto mb-12 animate-float-slow">
-        <div class="glass-ultra glass-interactive sweep-shine rounded-3xl p-6 sm:p-8 shadow-2xl relative overflow-hidden">
+        <div class="glass-aurora glass-interactive sweep-shine rounded-3xl p-6 sm:p-8 shadow-2xl relative overflow-hidden">
           
           <!-- Soft blended top glow bar -->
           <div class="absolute -top-12 left-1/2 -translate-x-1/2 w-4/5 h-24 bg-gradient-to-r from-amber-400 via-orange-500 to-red-500 blur-2xl opacity-50 pointer-events-none"></div>
@@ -467,23 +494,23 @@
         </div>
       </div>
 
-      <!-- Action Buttons (Có phản hồi tương tác đầy đủ!) -->
+      <!-- Action Buttons -->
       <div class="flex flex-wrap items-center justify-center gap-4 mb-16">
         <button onclick="openLuckyWheelModal()" class="inline-flex items-center gap-3 px-8 sm:px-9 py-4 rounded-2xl bg-gradient-to-r from-brand-orangeDark via-orange-600 to-brand-redDeep hover:brightness-110 text-white font-black text-sm sm:text-base shadow-xl shadow-orange-500/35 transition-all hover:scale-105 active:scale-95 cursor-pointer group">
           <svg class="w-5 h-5 animate-spin" style="animation-duration: 8s;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
           <span class="tracking-wide">QUAY VÒNG MAY MẮN NGAY</span>
           <span class="text-xs bg-white/20 px-2 py-0.5 rounded-full font-bold group-hover:bg-white/30">Ấn Thử</span>
         </button>
-        <button onclick="openLeaderboardModal()" class="inline-flex items-center gap-2.5 px-8 py-4 rounded-2xl glass-ultra glass-interactive hover:bg-white/80 text-brand-charcoal font-black text-sm sm:text-base shadow-md transition-all hover:scale-105 active:scale-95 cursor-pointer">
+        <button onclick="openLeaderboardModal()" class="inline-flex items-center gap-2.5 px-8 py-4 rounded-2xl glass-aurora glass-interactive hover:bg-white/80 text-brand-charcoal font-black text-sm sm:text-base shadow-md transition-all hover:scale-105 active:scale-95 cursor-pointer">
           <svg class="w-5 h-5 text-brand-orangeDark" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
           <span>Tra Cứu Bảng Xếp Hạng</span>
         </button>
       </div>
 
-      <!-- 4 Pillars Feature Cards (CÁC BOX TRONG SUỐT GLASSMORPHISM 3D TILT) -->
+      <!-- 4 Pillars Feature Cards -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
         
-        <div class="glass-ultra glass-interactive tilt-card sweep-shine rounded-3xl p-6 relative overflow-hidden group cursor-pointer" onclick="testCardClick('Top 3 Chung Cuộc Q4')">
+        <div class="glass-aurora glass-interactive tilt-card sweep-shine rounded-3xl p-6 relative overflow-hidden group cursor-pointer" onclick="testCardClick('Top 3 Chung Cuộc Q4')">
           <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-amber-400/25 to-orange-400/25 flex items-center justify-center text-3xl mb-4 shadow-inner group-hover:scale-110 transition-transform">
             🏆
           </div>
@@ -491,7 +518,7 @@
           <p class="text-xs text-brand-slate leading-relaxed font-semibold">Bộ giải thưởng công nghệ đỉnh cao: Surface Pro 11 (35Tr), iPad Air M3 (20Tr), Máy lọc Dyson (10Tr).</p>
         </div>
 
-        <div class="glass-ultra glass-interactive tilt-card sweep-shine rounded-3xl p-6 relative overflow-hidden group cursor-pointer" onclick="testCardClick('05 Giải Phụ Chuyên Môn')">
+        <div class="glass-aurora glass-interactive tilt-card sweep-shine rounded-3xl p-6 relative overflow-hidden group cursor-pointer" onclick="testCardClick('05 Giải Phụ Chuyên Môn')">
           <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-orange-400/25 to-red-400/25 flex items-center justify-center text-3xl mb-4 shadow-inner group-hover:scale-110 transition-transform">
             📦
           </div>
@@ -499,7 +526,7 @@
           <p class="text-xs text-brand-slate leading-relaxed font-semibold">Mỗi giải 3.000.000 đ: Vua Số Đơn, Tân Binh, Sự Trở Lại Ấn Tượng, Vua Tải Trọng và Vua Thể Tích.</p>
         </div>
 
-        <div class="glass-ultra glass-interactive tilt-card sweep-shine rounded-3xl p-6 relative overflow-hidden group cursor-pointer" onclick="testCardClick('Đặc Quyền Nâng Hạng VIP+1')">
+        <div class="glass-aurora glass-interactive tilt-card sweep-shine rounded-3xl p-6 relative overflow-hidden group cursor-pointer" onclick="testCardClick('Đặc Quyền Nâng Hạng VIP+1')">
           <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-red-400/25 to-pink-400/25 flex items-center justify-center text-3xl mb-4 shadow-inner group-hover:scale-110 transition-transform">
             👑
           </div>
@@ -507,7 +534,7 @@
           <p class="text-xs text-brand-slate leading-relaxed font-semibold">Đạt mốc ngày 20 hàng tháng: Giảm đến 30% cước gom cont và đặc quyền tăng thêm 15 ngày công nợ.</p>
         </div>
 
-        <div class="glass-ultra glass-interactive tilt-card sweep-shine rounded-3xl p-6 relative overflow-hidden group cursor-pointer" onclick="testCardClick('Đại Lễ Tri Ân Mùng 05')">
+        <div class="glass-aurora glass-interactive tilt-card sweep-shine rounded-3xl p-6 relative overflow-hidden group cursor-pointer" onclick="testCardClick('Đại Lễ Tri Ân Mùng 05')">
           <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-emerald-400/25 to-teal-400/25 flex items-center justify-center text-3xl mb-4 shadow-inner group-hover:scale-110 transition-transform">
             🎡
           </div>
@@ -522,29 +549,36 @@
 
 
   <!-- =====================================================================
-       PHONG CÁCH 02: VELVET AMBER GLASS (KÍNH HỔ PHÁCH SANG TRỌNG)
+       PHONG CÁCH 02: GOLDEN TROPHY & CONT 3D (CÚP VÀNG HOÀNG KIM & CONTAINER 3D)
+       - Nền vàng kem vương giả, các khối container và cúp vàng 3D sang trọng
+       - Tôn vinh đẳng cấp đối tác doanh nghiệp B2B
        ===================================================================== -->
   <main id="container-style-2" class="style-container hidden relative min-h-screen pt-8 pb-28 overflow-hidden bg-gradient-to-b from-[#FFFBF2] via-[#FFF3E3] to-[#FFF9ED]">
     
+    <!-- Ambient Gold & Terracotta Glowing Blobs -->
     <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[600px] bg-gradient-to-b from-amber-500/30 via-orange-600/20 to-transparent rounded-full blur-[130px] pointer-events-none -z-10 animate-aurora"></div>
-    
+    <div class="absolute top-64 -left-10 w-[500px] h-[500px] bg-amber-400/25 rounded-full blur-[90px] pointer-events-none -z-10 animate-float-slow"></div>
+    <div class="absolute top-48 -right-10 w-[500px] h-[500px] bg-orange-500/25 rounded-full blur-[90px] pointer-events-none -z-10 animate-float-medium"></div>
+
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
       
+      <!-- Top Campaign Badge (Golden Halo Capsule) -->
       <div class="flex justify-center mb-8">
-        <div class="glass-ultra-amber glass-interactive sweep-shine inline-flex items-center gap-3 px-6 py-2.5 rounded-full shadow-xl shadow-orange-500/15 animate-float-fast cursor-pointer" onclick="testCardClick('Huy Hiệu Phong Cách 2')">
-          <span class="text-brand-orangeDark text-base">✨</span>
+        <div class="glass-trophy glass-interactive sweep-shine inline-flex items-center gap-3 px-6 py-2.5 rounded-full shadow-xl shadow-amber-500/15 animate-float-fast cursor-pointer" onclick="testCardClick('Huy Hiệu Phong Cách 2')">
+          <span class="text-brand-orangeDark text-base">🏆</span>
           <span class="text-xs sm:text-sm font-black text-brand-charcoal tracking-wide">CHIẾN DỊCH TRI ÂN KHÁCH HÀNG & ĐUA TOP CAO ĐIỂM QUÝ 4/2026</span>
           <span class="text-amber-500 font-black">★</span>
           <span class="text-xs sm:text-sm font-black text-brand-redDeep">GIẢI THƯỞNG 80.000.000+ VNĐ</span>
         </div>
       </div>
 
+      <!-- Main Headline (Golden Trophy & Cont 3D) -->
       <div class="text-center max-w-4xl mx-auto mb-10">
         <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight leading-[1.08] mb-5 font-display">
           <span class="block text-brand-charcoal">EUREKA CUSTOMER</span>
-          <span class="text-gradient-amber-deep">AWARDS 2026</span>
+          <span class="text-gradient-gold-flame">AWARDS 2026</span>
         </h1>
-        <p class="text-xl sm:text-2xl font-black text-amber-700 tracking-wide mb-4">
+        <p class="text-xl sm:text-2xl font-black text-amber-800 tracking-wide mb-4">
           "Lên Đơn Sớm – Về Đích Nhanh – Rinh Trọn Quà Khủng"
         </p>
         <p class="text-brand-slate text-sm sm:text-base max-w-2xl mx-auto leading-relaxed font-semibold">
@@ -552,12 +586,16 @@
         </p>
       </div>
 
+      <!-- Countdown Clock Box (Golden Amber Trim) -->
       <div class="max-w-3xl mx-auto mb-12 animate-float-slow">
-        <div class="glass-ultra-amber glass-interactive sweep-shine rounded-3xl p-6 sm:p-8 shadow-2xl relative overflow-hidden">
+        <div class="glass-trophy glass-interactive sweep-shine rounded-3xl p-6 sm:p-8 shadow-2xl relative overflow-hidden">
+          
+          <div class="absolute -top-12 left-1/2 -translate-x-1/2 w-4/5 h-24 bg-gradient-to-r from-amber-300 via-amber-500 to-orange-500 blur-2xl opacity-40 pointer-events-none"></div>
+
           <div class="flex flex-col sm:flex-row items-center justify-between gap-6 relative z-10">
             <div class="text-center sm:text-left">
               <span class="inline-flex items-center gap-2 text-xs font-black uppercase tracking-wider text-amber-800">
-                <span class="text-base">💎</span>
+                <span class="text-base">📦</span>
                 ĐẾM NGƯỢC ĐÓNG CỔNG NHẬN ĐƠN MÙA GIẢI Q4/2026
               </span>
               <p class="text-amber-900/60 text-xs mt-1.5 font-bold">Khóa sổ đơn hàng hợp lệ: 23h59 ngày 31/12/2026</p>
@@ -588,47 +626,51 @@
         </div>
       </div>
 
+      <!-- Action Buttons -->
       <div class="flex flex-wrap items-center justify-center gap-4 mb-16">
         <button onclick="openLuckyWheelModal()" class="inline-flex items-center gap-3 px-8 sm:px-9 py-4 rounded-2xl bg-gradient-to-r from-amber-600 via-brand-orange to-brand-orangeDark hover:brightness-110 text-white font-black text-sm sm:text-base shadow-xl shadow-amber-600/30 transition-all hover:scale-105 active:scale-95 cursor-pointer">
           <span class="tracking-wide">QUAY VÒNG MAY MẮN NGAY</span>
         </button>
-        <button onclick="openLeaderboardModal()" class="inline-flex items-center gap-2.5 px-8 py-4 rounded-2xl glass-ultra-amber glass-interactive text-brand-charcoal font-black text-sm sm:text-base shadow-md transition-all hover:scale-105 active:scale-95 cursor-pointer">
+        <button onclick="openLeaderboardModal()" class="inline-flex items-center gap-2.5 px-8 py-4 rounded-2xl glass-trophy glass-interactive text-brand-charcoal font-black text-sm sm:text-base shadow-md transition-all hover:scale-105 active:scale-95 cursor-pointer">
           <span>Tra Cứu Bảng Xếp Hạng</span>
         </button>
       </div>
 
+      <!-- 4 Pillars Feature Cards (Container & Trophy 3D Concept) -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-        <div class="glass-ultra-amber glass-interactive tilt-card sweep-shine rounded-3xl p-6 relative overflow-hidden group cursor-pointer" onclick="testCardClick('Top 3 Chung Cuộc Q4')">
-          <div class="w-14 h-14 rounded-2xl bg-amber-500/20 flex items-center justify-center text-3xl mb-4 shadow-inner group-hover:scale-110 transition-transform">
+        
+        <div class="glass-trophy glass-interactive tilt-card sweep-shine rounded-3xl p-6 relative overflow-hidden group cursor-pointer" onclick="testCardClick('Top 3 Chung Cuộc Q4')">
+          <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-amber-400 to-amber-600 text-white flex items-center justify-center text-3xl mb-4 shadow-lg shadow-amber-500/30 group-hover:scale-110 transition-transform">
             🏆
           </div>
           <h3 class="text-base font-black text-brand-charcoal mb-2">Top 3 Chung Cuộc Q4</h3>
           <p class="text-xs text-brand-slate leading-relaxed font-semibold">Bộ giải thưởng công nghệ đỉnh cao: Surface Pro 11 (35Tr), iPad Air M3 (20Tr), Máy lọc Dyson (10Tr).</p>
         </div>
 
-        <div class="glass-ultra-amber glass-interactive tilt-card sweep-shine rounded-3xl p-6 relative overflow-hidden group cursor-pointer" onclick="testCardClick('05 Giải Phụ Chuyên Môn')">
-          <div class="w-14 h-14 rounded-2xl bg-orange-500/20 flex items-center justify-center text-3xl mb-4 shadow-inner group-hover:scale-110 transition-transform">
+        <div class="glass-trophy glass-interactive tilt-card sweep-shine rounded-3xl p-6 relative overflow-hidden group cursor-pointer" onclick="testCardClick('05 Giải Phụ Chuyên Môn')">
+          <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-orange-400 to-brand-orangeDark text-white flex items-center justify-center text-3xl mb-4 shadow-lg shadow-orange-500/30 group-hover:scale-110 transition-transform">
             📦
           </div>
           <h3 class="text-base font-black text-brand-charcoal mb-2">05 Giải Phụ Chuyên Môn</h3>
           <p class="text-xs text-brand-slate leading-relaxed font-semibold">Mỗi giải 3.000.000 đ: Vua Số Đơn, Tân Binh, Sự Trở Lại Ấn Tượng, Vua Tải Trọng và Vua Thể Tích.</p>
         </div>
 
-        <div class="glass-ultra-amber glass-interactive tilt-card sweep-shine rounded-3xl p-6 relative overflow-hidden group cursor-pointer" onclick="testCardClick('Đặc Quyền Nâng Hạng VIP+1')">
-          <div class="w-14 h-14 rounded-2xl bg-red-500/20 flex items-center justify-center text-3xl mb-4 shadow-inner group-hover:scale-110 transition-transform">
+        <div class="glass-trophy glass-interactive tilt-card sweep-shine rounded-3xl p-6 relative overflow-hidden group cursor-pointer" onclick="testCardClick('Đặc Quyền Nâng Hạng VIP+1')">
+          <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-red-500 to-amber-600 text-white flex items-center justify-center text-3xl mb-4 shadow-lg shadow-red-500/30 group-hover:scale-110 transition-transform">
             👑
           </div>
           <h3 class="text-base font-black text-brand-charcoal mb-2">Đặc Quyền Nâng Hạng VIP+1</h3>
           <p class="text-xs text-brand-slate leading-relaxed font-semibold">Đạt mốc ngày 20 hàng tháng: Giảm đến 30% cước gom cont và đặc quyền tăng thêm 15 ngày công nợ.</p>
         </div>
 
-        <div class="glass-ultra-amber glass-interactive tilt-card sweep-shine rounded-3xl p-6 relative overflow-hidden group cursor-pointer" onclick="testCardClick('Đại Lễ Tri Ân Mùng 05')">
-          <div class="w-14 h-14 rounded-2xl bg-emerald-500/20 flex items-center justify-center text-3xl mb-4 shadow-inner group-hover:scale-110 transition-transform">
+        <div class="glass-trophy glass-interactive tilt-card sweep-shine rounded-3xl p-6 relative overflow-hidden group cursor-pointer" onclick="testCardClick('Đại Lễ Tri Ân Mùng 05')">
+          <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-emerald-500 to-teal-600 text-white flex items-center justify-center text-3xl mb-4 shadow-lg shadow-emerald-500/30 group-hover:scale-110 transition-transform">
             🎡
           </div>
           <h3 class="text-base font-black text-brand-charcoal mb-2">Đại Lễ Tri Ân Mùng 05</h3>
           <p class="text-xs text-brand-slate leading-relaxed font-semibold">Quay thưởng định kỳ hàng tháng cho 100% đơn booking hoàn thành. Ban Tổ Chức quay số công khai minh bạch.</p>
         </div>
+
       </div>
 
     </div>
@@ -636,27 +678,32 @@
 
 
   <!-- =====================================================================
-       PHONG CÁCH 03: AERODYNAMIC CLEAN GLASS (KHÍ ĐỘNG HỌC HIỆN ĐẠI)
+       PHONG CÁCH 03: KINETIC LOGISTICS RUSH (KHÍ ĐỘNG HỌC & TỐC ĐỘ BỨT PHÁ)
+       - Nền công nghệ hiện đại, tuyến đường vận tải cao tốc, mũi tên bứt phá
+       - Nhấn mạnh tinh thần bứt phá mùa cao điểm xuất nhập khẩu
        ===================================================================== -->
   <main id="container-style-3" class="style-container hidden relative min-h-screen pt-8 pb-28 overflow-hidden bg-gradient-to-b from-[#F8FAFC] via-[#F1F5F9] to-[#FFFFFF] text-brand-charcoal">
     
+    <!-- Dynamic Speed Lines & Waypoint Glows -->
     <div class="absolute top-20 left-1/3 w-[700px] h-[500px] bg-gradient-to-r from-orange-400/20 via-amber-300/25 to-transparent rounded-full blur-[110px] pointer-events-none -z-10 animate-float-slow"></div>
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
       
+      <!-- Top Campaign Badge (Speed Pill) -->
       <div class="flex justify-center mb-8">
-        <div class="glass-ultra-crystal glass-interactive sweep-shine inline-flex items-center gap-3 px-5 py-2 rounded-full shadow-md text-xs sm:text-sm font-black text-brand-charcoal animate-float-fast cursor-pointer" onclick="testCardClick('Huy Hiệu Phong Cách 3')">
-          <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-brand-orangeDark text-white text-[10px]">🚀</span>
+        <div class="glass-kinetic glass-interactive sweep-shine inline-flex items-center gap-3 px-5 py-2 rounded-full shadow-md text-xs sm:text-sm font-black text-brand-charcoal animate-float-fast cursor-pointer" onclick="testCardClick('Huy Hiệu Phong Cách 3')">
+          <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-brand-orangeDark text-white text-[10px]">⚡</span>
           <span>CHIẾN DỊCH TRI ÂN KHÁCH HÀNG & ĐUA TOP CAO ĐIỂM QUÝ 4/2026</span>
           <span class="text-slate-300">/</span>
           <span class="text-brand-orangeDark font-black">GIẢI THƯỞNG 80.000.000+ VNĐ</span>
         </div>
       </div>
 
+      <!-- Main Headline (Kinetic Logistics Rush) -->
       <div class="text-center max-w-4xl mx-auto mb-10">
         <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight leading-[1.08] mb-5 font-display">
           <span class="block text-brand-charcoal">EUREKA CUSTOMER</span>
-          <span class="text-gradient-mature">AWARDS 2026</span>
+          <span class="text-gradient-kinetic">AWARDS 2026</span>
         </h1>
         <p class="text-xl sm:text-2xl font-black text-brand-orangeDark tracking-wide mb-4">
           "Lên Đơn Sớm – Về Đích Nhanh – Rinh Trọn Quà Khủng"
@@ -666,8 +713,9 @@
         </p>
       </div>
 
+      <!-- Countdown Clock Box -->
       <div class="max-w-3xl mx-auto mb-12 animate-float-slow">
-        <div class="glass-ultra-crystal glass-interactive sweep-shine rounded-3xl p-6 sm:p-7 shadow-xl relative overflow-hidden">
+        <div class="glass-kinetic glass-interactive sweep-shine rounded-3xl p-6 sm:p-7 shadow-xl relative overflow-hidden">
           <div class="flex flex-col sm:flex-row items-center justify-between gap-5">
             <div class="text-center sm:text-left">
               <span class="text-xs font-black uppercase tracking-wider text-brand-orangeDark block">
@@ -701,52 +749,56 @@
         </div>
       </div>
 
+      <!-- Action Buttons -->
       <div class="flex flex-wrap items-center justify-center gap-4 mb-16">
         <button onclick="openLuckyWheelModal()" class="inline-flex items-center gap-3 px-8 py-3.5 rounded-2xl bg-brand-charcoal hover:bg-brand-orangeDark text-white font-extrabold text-sm sm:text-base shadow-lg transition-all hover:scale-105 active:scale-95 cursor-pointer">
           <span class="text-amber-400">⚡</span>
           <span>QUAY VÒNG MAY MẮN NGAY</span>
         </button>
-        <button onclick="openLeaderboardModal()" class="inline-flex items-center gap-2 px-8 py-3.5 rounded-2xl glass-ultra-crystal glass-interactive text-brand-charcoal font-bold text-sm sm:text-base transition-all hover:scale-105 active:scale-95 cursor-pointer">
+        <button onclick="openLeaderboardModal()" class="inline-flex items-center gap-2 px-8 py-3.5 rounded-2xl glass-kinetic glass-interactive text-brand-charcoal font-bold text-sm sm:text-base transition-all hover:scale-105 active:scale-95 cursor-pointer">
           <span>Tra Cứu Bảng Xếp Hạng</span>
         </button>
       </div>
 
+      <!-- 4 Pillars Feature Cards -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div class="glass-ultra-crystal glass-interactive tilt-card sweep-shine rounded-2xl p-6 shadow-sm hover:shadow-lg transition-all cursor-pointer" onclick="testCardClick('Top 3 Chung Cuộc Q4')">
+        
+        <div class="glass-kinetic glass-interactive tilt-card sweep-shine rounded-2xl p-6 shadow-sm hover:shadow-lg transition-all cursor-pointer" onclick="testCardClick('Top 3 Chung Cuộc Q4')">
           <div class="flex items-center justify-between mb-3">
             <span class="text-2xl">🏆</span>
-            <span class="text-[10px] font-black uppercase tracking-wider text-amber-700 bg-amber-100/70 px-2 py-0.5 rounded-md">Chung Cuộc</span>
+            <span class="text-[10px] font-black uppercase tracking-wider text-amber-700 bg-amber-100/80 px-2 py-0.5 rounded-md">Chung Cuộc</span>
           </div>
           <h3 class="text-base font-extrabold text-brand-charcoal mb-1.5">Top 3 Chung Cuộc Q4</h3>
           <p class="text-xs text-brand-slate leading-relaxed font-semibold">Bộ giải thưởng công nghệ đỉnh cao: Surface Pro 11 (35Tr), iPad Air M3 (20Tr), Máy lọc Dyson (10Tr).</p>
         </div>
 
-        <div class="glass-ultra-crystal glass-interactive tilt-card sweep-shine rounded-2xl p-6 shadow-sm hover:shadow-lg transition-all cursor-pointer" onclick="testCardClick('05 Giải Phụ Chuyên Môn')">
+        <div class="glass-kinetic glass-interactive tilt-card sweep-shine rounded-2xl p-6 shadow-sm hover:shadow-lg transition-all cursor-pointer" onclick="testCardClick('05 Giải Phụ Chuyên Môn')">
           <div class="flex items-center justify-between mb-3">
             <span class="text-2xl">📦</span>
-            <span class="text-[10px] font-black uppercase tracking-wider text-orange-700 bg-orange-100/70 px-2 py-0.5 rounded-md">Chuyên Môn</span>
+            <span class="text-[10px] font-black uppercase tracking-wider text-orange-700 bg-orange-100/80 px-2 py-0.5 rounded-md">Chuyên Môn</span>
           </div>
           <h3 class="text-base font-extrabold text-brand-charcoal mb-1.5">05 Giải Phụ Chuyên Môn</h3>
           <p class="text-xs text-brand-slate leading-relaxed font-semibold">Mỗi giải 3.000.000 đ: Vua Số Đơn, Tân Binh, Sự Trở Lại Ấn Tượng, Vua Tải Trọng và Vua Thể Tích.</p>
         </div>
 
-        <div class="glass-ultra-crystal glass-interactive tilt-card sweep-shine rounded-2xl p-6 shadow-sm hover:shadow-lg transition-all cursor-pointer" onclick="testCardClick('Đặc Quyền Nâng Hạng VIP+1')">
+        <div class="glass-kinetic glass-interactive tilt-card sweep-shine rounded-2xl p-6 shadow-sm hover:shadow-lg transition-all cursor-pointer" onclick="testCardClick('Đặc Quyền Nâng Hạng VIP+1')">
           <div class="flex items-center justify-between mb-3">
             <span class="text-2xl">👑</span>
-            <span class="text-[10px] font-black uppercase tracking-wider text-red-700 bg-red-100/70 px-2 py-0.5 rounded-md">Đặc Quyền</span>
+            <span class="text-[10px] font-black uppercase tracking-wider text-red-700 bg-red-100/80 px-2 py-0.5 rounded-md">Đặc Quyền</span>
           </div>
           <h3 class="text-base font-extrabold text-brand-charcoal mb-1.5">Đặc Quyền Nâng Hạng VIP+1</h3>
           <p class="text-xs text-brand-slate leading-relaxed font-semibold">Đạt mốc ngày 20 hàng tháng: Giảm đến 30% cước gom cont và đặc quyền tăng thêm 15 ngày công nợ.</p>
         </div>
 
-        <div class="glass-ultra-crystal glass-interactive tilt-card sweep-shine rounded-2xl p-6 shadow-sm hover:shadow-lg transition-all cursor-pointer" onclick="testCardClick('Đại Lễ Tri Ân Mùng 05')">
+        <div class="glass-kinetic glass-interactive tilt-card sweep-shine rounded-2xl p-6 shadow-sm hover:shadow-lg transition-all cursor-pointer" onclick="testCardClick('Đại Lễ Tri Ân Mùng 05')">
           <div class="flex items-center justify-between mb-3">
             <span class="text-2xl">🎡</span>
-            <span class="text-[10px] font-black uppercase tracking-wider text-emerald-700 bg-emerald-100/70 px-2 py-0.5 rounded-md">Định Kỳ</span>
+            <span class="text-[10px] font-black uppercase tracking-wider text-emerald-700 bg-emerald-100/80 px-2 py-0.5 rounded-md">Định Kỳ</span>
           </div>
           <h3 class="text-base font-extrabold text-brand-charcoal mb-1.5">Đại Lễ Tri Ân Mùng 05</h3>
           <p class="text-xs text-brand-slate leading-relaxed font-semibold">Quay thưởng định kỳ hàng tháng cho 100% đơn booking hoàn thành. Ban Tổ Chức quay số công khai minh bạch.</p>
         </div>
+
       </div>
 
     </div>
@@ -757,7 +809,7 @@
        INTERACTIVE MODAL 1: LUCKY WHEEL (VÒNG QUAY MAY MẮN TRỰC TIẾP VỚI SOUND & CONFETTI)
        ===================================================================== -->
   <div id="modal-lucky-wheel" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-md hidden transition-opacity">
-    <div class="glass-ultra max-w-lg w-full rounded-3xl p-6 sm:p-8 shadow-2xl relative border-2 border-white/90 animate-float-fast">
+    <div class="glass-aurora max-w-lg w-full rounded-3xl p-6 sm:p-8 shadow-2xl relative border-2 border-white/90 animate-float-fast">
       <!-- Close Button -->
       <button onclick="closeLuckyWheelModal()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center justify-center font-black text-lg transition-transform hover:scale-110 cursor-pointer">
         ✕
@@ -794,7 +846,7 @@
        INTERACTIVE MODAL 2: LEADERBOARD MODAL (BẢNG XẾP HẠNG ĐUA TOP Q4)
        ===================================================================== -->
   <div id="modal-leaderboard" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-md hidden transition-opacity">
-    <div class="glass-ultra max-w-xl w-full rounded-3xl p-6 sm:p-8 shadow-2xl relative border-2 border-white/90">
+    <div class="glass-aurora max-w-xl w-full rounded-3xl p-6 sm:p-8 shadow-2xl relative border-2 border-white/90">
       <button onclick="closeLeaderboardModal()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center justify-center font-black text-lg transition-transform hover:scale-110 cursor-pointer">
         ✕
       </button>
@@ -848,7 +900,7 @@
 
   <!-- Floating Toast Notification -->
   <div id="demo-toast" class="fixed bottom-6 right-6 z-50 transform translate-y-24 opacity-0 transition-all duration-300 pointer-events-none">
-    <div class="glass-ultra px-4 py-3 rounded-2xl shadow-2xl border border-white flex items-center gap-3 text-brand-charcoal">
+    <div class="glass-aurora px-4 py-3 rounded-2xl shadow-2xl border border-white flex items-center gap-3 text-brand-charcoal">
       <span class="text-amber-500 text-lg">✨</span>
       <span id="demo-toast-msg" class="text-xs font-bold"></span>
     </div>
@@ -1200,9 +1252,9 @@
         target.classList.add('tab-fade-enter');
         
         const descriptions = [
-          'Đang xem: Phong cách 1 (Floating Aurora Glass - Khuyên dùng)',
-          'Đang xem: Phong cách 2 (Velvet Amber Glass)',
-          'Đang xem: Phong cách 3 (Aerodynamic Clean Glass)'
+          'Đang xem: 01 Floating Aurora Glass (Khuyên dùng)',
+          'Đang xem: 02 Golden Trophy & Cont 3D',
+          'Đang xem: 03 Kinetic Logistics Rush'
         ];
         showToast(descriptions[styleIndex - 1]);
       }
