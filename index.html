@@ -210,7 +210,35 @@
       left: 200%;
       transition: left 0.85s ease-in-out;
     }
+    /* Running LED Bulbs on Lucky Wheel */
+    .wheel-outer-rim {
+      border: 6px solid #D97706;
+      box-shadow: 0 0 30px rgba(255, 106, 0, 0.35), inset 0 0 15px rgba(0,0,0,0.25);
+    }
+    .led-bulb {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #FFFFFF;
+      box-shadow: 0 0 8px #FFD700;
+      transform: translate(-50%, -50%);
+      transition: all 0.15s ease;
+    }
+    .led-bulb.bulb-on {
+      background: #FFE600;
+      box-shadow: 0 0 14px #FF9900, 0 0 6px #FFFFFF;
+    }
+    @keyframes needleVibrate {
+      0%, 100% { transform: translateX(-50%) rotate(0deg); }
+      30% { transform: translateX(-50%) rotate(-12deg); }
+      70% { transform: translateX(-50%) rotate(10deg); }
+    }
+    .needle-vibrating {
+      animation: needleVibrate 0.1s ease-in-out infinite;
+    }
   </style>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 </head>
 
 <body class="selection:bg-brand-500 selection:text-white">
@@ -592,31 +620,58 @@
 
       <!-- Tab 3: Vòng Quay Tri Ân Mùng 05 -->
       <div id="tab-content-m05-tri-an" class="prize-tab-content hidden grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="glass-card rounded-3xl p-6 border-l-4 border-sky-400">
-          <span class="text-xs font-bold text-sky-400 uppercase tracking-widest block mb-1">KỲ QUAY THÁNG 10 (05/11)</span>
-          <h3 class="text-lg font-bold text-white mb-2">03 Giải Voucher 300.000 đ</h3>
-          <p class="text-xs text-slate-300 mb-3 leading-relaxed">
-            Dành cho tất cả các đơn hàng hoàn tất từ 01/10 đến 31/10. Tự động cấp mã dự thưởng theo số đơn.
-          </p>
-          <span class="inline-block px-2.5 py-1 rounded bg-sky-500/10 text-sky-300 text-[11px] font-semibold">Trừ cước đơn tháng 11</span>
+        <!-- Tháng 10 -->
+        <div class="rounded-3xl p-6 flex flex-col justify-between text-left group bg-slate-800/40 backdrop-blur-xl border border-sky-400/30 hover:border-sky-400/70 hover:shadow-xl hover:shadow-sky-500/10 transition-all duration-300 hover:-translate-y-1">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-xs font-black text-sky-300 bg-sky-500/20 border border-sky-400/40 px-3 py-1 rounded-xl tracking-wider">KỲ QUAY THÁNG 10 (05/11)</span>
+              <span class="text-xl">🗓️</span>
+            </div>
+            <h3 class="text-xl font-black text-white mb-2 font-display">03 Giải Voucher 300.000 đ</h3>
+            <p class="text-xs text-slate-300 mb-4 leading-relaxed font-normal">
+              Dành cho tất cả các đơn hàng hoàn tất từ 01/10 đến 31/10. Tự động cấp mã dự thưởng theo số đơn.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-slate-700/60 flex items-center justify-between">
+            <span class="inline-block px-3 py-1 rounded-lg bg-sky-500/15 text-sky-300 text-[11px] font-bold border border-sky-500/30">Trừ cước đơn tháng 11</span>
+            <span class="text-xs font-black text-sky-400 flex items-center gap-1 group-hover:translate-x-1 transition-transform">Xem thể lệ →</span>
+          </div>
         </div>
 
-        <div class="glass-card rounded-3xl p-6 border-l-4 border-sky-400">
-          <span class="text-xs font-bold text-sky-400 uppercase tracking-widest block mb-1">KỲ QUAY THÁNG 11 (05/12)</span>
-          <h3 class="text-lg font-bold text-white mb-2">03 Giải Voucher 300.000 đ</h3>
-          <p class="text-xs text-slate-300 mb-3 leading-relaxed">
-            Dành cho tất cả các đơn hàng hoàn tất từ 01/11 đến 30/11 trong đợt cao điểm Black Friday.
-          </p>
-          <span class="inline-block px-2.5 py-1 rounded bg-sky-500/10 text-sky-300 text-[11px] font-semibold">Trừ cước đơn tháng 12</span>
+        <!-- Tháng 11 -->
+        <div class="rounded-3xl p-6 flex flex-col justify-between text-left group bg-slate-800/40 backdrop-blur-xl border border-sky-400/30 hover:border-sky-400/70 hover:shadow-xl hover:shadow-sky-500/10 transition-all duration-300 hover:-translate-y-1">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-xs font-black text-sky-300 bg-sky-500/20 border border-sky-400/40 px-3 py-1 rounded-xl tracking-wider">KỲ QUAY THÁNG 11 (05/12)</span>
+              <span class="text-xl">🏷️</span>
+            </div>
+            <h3 class="text-xl font-black text-white mb-2 font-display">03 Giải Voucher 300.000 đ</h3>
+            <p class="text-xs text-slate-300 mb-4 leading-relaxed font-normal">
+              Dành cho tất cả các đơn hàng hoàn tất từ 01/11 đến 30/11 trong đợt cao điểm Black Friday.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-slate-700/60 flex items-center justify-between">
+            <span class="inline-block px-3 py-1 rounded-lg bg-sky-500/15 text-sky-300 text-[11px] font-bold border border-sky-500/30">Trừ cước đơn tháng 12</span>
+            <span class="text-xs font-black text-sky-400 flex items-center gap-1 group-hover:translate-x-1 transition-transform">Xem thể lệ →</span>
+          </div>
         </div>
 
-        <div class="glass-card rounded-3xl p-6 border-l-4 border-amber-400">
-          <span class="text-xs font-bold text-amber-400 uppercase tracking-widest block mb-1">KỲ THÁNG 12 — LỘC XUÂN (05/01)</span>
-          <h3 class="text-lg font-bold text-white mb-2">03 Giải Voucher 400.000 đ</h3>
-          <p class="text-xs text-slate-300 mb-3 leading-relaxed">
-            Kỳ quay đặc biệt chào đón Tết Nguyên Đán với voucher 400k chúc mừng năm mới.
-          </p>
-          <span class="inline-block px-2.5 py-1 rounded bg-amber-500/10 text-amber-300 text-[11px] font-bold">Lộc Xuân May Mắn</span>
+        <!-- Tháng 12 Lộc Xuân -->
+        <div class="rounded-3xl p-6 flex flex-col justify-between text-left group bg-slate-800/40 backdrop-blur-xl border border-amber-400/40 hover:border-amber-400/80 hover:shadow-xl hover:shadow-amber-500/10 transition-all duration-300 hover:-translate-y-1">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-xs font-black text-amber-300 bg-amber-500/20 border border-amber-400/50 px-3 py-1 rounded-xl tracking-wider">KỲ THÁNG 12 — LỘC XUÂN (05/01)</span>
+              <span class="text-xl">🧧</span>
+            </div>
+            <h3 class="text-xl font-black text-white mb-2 font-display">03 Giải Voucher 400.000 đ</h3>
+            <p class="text-xs text-slate-300 mb-4 leading-relaxed font-normal">
+              Kỳ quay đặc biệt chào đón Tết Nguyên Đán với voucher 400k chúc mừng năm mới.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-slate-700/60 flex items-center justify-between">
+            <span class="inline-block px-3 py-1 rounded-lg bg-amber-500/20 text-amber-300 text-[11px] font-bold border border-amber-400/40">Lộc Xuân May Mắn</span>
+            <span class="text-xs font-black text-amber-300 flex items-center gap-1 group-hover:translate-x-1 transition-transform">Xem thể lệ →</span>
+          </div>
         </div>
       </div>
 
@@ -1263,115 +1318,53 @@
     </div>
   </footer>
 
-  <!-- ==================== POPUP MODAL: VÒNG QUAY TRẢI NGHIỆM KHÁCH HÀNG ==================== -->
-  <div id="welcome-wheel-modal" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/85 backdrop-blur-md hidden transition-opacity duration-300">
-    <div class="glass-card rounded-3xl p-5 sm:p-7 max-w-4xl w-full border-2 border-amber-400/80 relative glow-gold max-h-[92vh] overflow-y-auto">
-      <button onclick="closeWelcomeWheelModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl font-bold w-9 h-9 rounded-full bg-slate-800 flex items-center justify-center transition-colors z-30" title="Đóng">✕</button>
+  <!-- ==================== POPUP MODAL: VÒNG QUAY TRẢI NGHIỆM KHÁCH HÀNG (GALA 16-LED WHEEL) ==================== -->
+  <div id="welcome-wheel-modal" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/75 backdrop-blur-xl hidden transition-all duration-300">
+    <!-- Modal Card (Glassmorphic Container) -->
+    <div class="relative bg-white/95 backdrop-blur-2xl rounded-3xl border-2 border-brand-orange/50 shadow-2xl max-w-lg w-full p-6 sm:p-8 z-10 text-center overflow-hidden">
+      <!-- Ambient Glow Orbs in Modal -->
+      <div class="absolute -top-20 -left-20 w-48 h-48 bg-brand-orange/30 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute -bottom-20 -right-20 w-48 h-48 bg-amber-400/30 rounded-full blur-3xl pointer-events-none"></div>
 
-      <div class="text-center max-w-xl mx-auto mb-6">
-        <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-400/10 border border-amber-400/30 text-amber-400 text-[11px] font-bold uppercase tracking-wider mb-2">
-          🎡 MINIGAME TRẢI NGHIỆM KHÁCH HÀNG
-        </span>
-        <h3 class="text-2xl sm:text-3xl font-extrabold text-white mb-1">
-          Vòng Quay May Mắn Eureka
-        </h3>
-        <p class="text-slate-300 text-xs sm:text-sm">
-          Nhập số điện thoại để quay ngẫu nhiên nhận Voucher chiết khấu cước và dịch vụ hỗ trợ độc quyền từ Eureka Logistics!
-        </p>
+      <!-- Close Button -->
+      <button onclick="closeWelcomeWheelModal()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center font-bold text-lg transition-all cursor-pointer z-30">✕</button>
+
+      <span class="inline-block px-3.5 py-1 rounded-full bg-orange-100 text-brand-deep text-xs font-black tracking-wider uppercase mb-2">✦ VÒNG QUAY MAY MẮN ✦</span>
+      <h3 class="text-xl sm:text-2xl font-black text-slate-900 font-display mb-1">Đại Tiệc Tri Ân Triệu Lộc</h3>
+      <p class="text-xs text-slate-500 font-semibold mb-6">Thử vận may ngay hôm nay cùng Eureka Logistics</p>
+
+      <!-- Wheel Container with 16 Running LED Bulbs -->
+      <div class="relative w-64 h-64 sm:w-72 sm:h-72 mx-auto mb-6">
+        
+        <!-- LED Bulbs Ring -->
+        <div id="led-bulbs-container" class="absolute inset-0 rounded-full pointer-events-none z-20"></div>
+
+        <!-- Pointer Indicator at top -->
+        <div id="wheel-needle" class="absolute -top-3 left-1/2 -translate-x-1/2 z-30 w-0 h-0 border-l-[14px] border-l-transparent border-r-[14px] border-r-transparent border-t-[26px] border-t-red-600 drop-shadow-lg"></div>
+
+        <!-- Canvas Wheel with Gold Rim -->
+        <div class="w-full h-full rounded-full wheel-outer-rim p-1 bg-amber-500 overflow-hidden shadow-2xl">
+          <canvas id="wheel-canvas" width="288" height="288" class="w-full h-full rounded-full"></canvas>
+        </div>
+
+        <!-- Center Spin Button -->
+        <button id="spin-center-btn" onclick="spinWheelGala()" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 rounded-full bg-gradient-to-br from-brand-orange to-red-600 text-white font-black text-xs shadow-2xl border-2 border-white hover:scale-110 active:scale-95 transition-all z-30 cursor-pointer flex items-center justify-center">
+          QUAY
+        </button>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
-        <!-- Canvas Wheel Column -->
-        <div class="md:col-span-7 flex flex-col items-center justify-center">
-          <div class="wheel-container relative w-[290px] h-[290px] sm:w-[350px] sm:h-[350px]">
-            <!-- Wheel Pointer -->
-            <div class="wheel-pointer">
-              <svg width="44" height="50" viewBox="0 0 48 54" fill="none">
-                <path d="M24 54L4 14C0.5 7 5.5 0 13.5 0H34.5C42.5 0 47.5 7 44 14L24 54Z" fill="url(#pointer-grad-popup)" stroke="#FFF" stroke-width="2"/>
-                <circle cx="24" cy="18" r="7" fill="#FFF"/>
-                <circle cx="24" cy="18" r="4" fill="#EA580C"/>
-                <defs>
-                  <linearGradient id="pointer-grad-popup" x1="24" y1="0" x2="24" y2="54" gradientUnits="userSpaceOnUse">
-                    <stop stop-color="#F59E0B"/>
-                    <stop offset="1" stop-color="#DC2626"/>
-                  </linearGradient>
-                </defs>
-              </svg>
-            </div>
+      <!-- Result Notification Box -->
+      <div id="wheel-result" class="min-h-[50px] p-3.5 rounded-2xl bg-orange-50/90 border border-brand-orange/40 text-xs sm:text-sm font-black text-slate-900 font-extrabold flex items-center justify-center mb-4 transition-all shadow-inner">
+        <span class="text-slate-700 font-bold">Nhấn nút "QUAY" để bắt đầu quay thưởng!</span>
+      </div>
 
-            <!-- Canvas Wheel -->
-            <canvas id="lucky-wheel-canvas" width="350" height="350" class="w-full h-full rounded-full cursor-pointer transition-transform"></canvas>
-
-            <!-- Center Spin Button -->
-            <button id="spin-center-btn" onclick="spinWheel()" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-18 h-18 sm:w-20 sm:h-20 rounded-full bg-gradient-to-tr from-brand-700 via-amber-500 to-amber-300 text-slate-950 font-black text-xs sm:text-sm uppercase tracking-wider shadow-2xl border-4 border-white flex flex-col items-center justify-center transition-transform hover:scale-110 active:scale-95 z-20">
-              <span class="leading-none">QUAY</span>
-              <span class="text-[9px] tracking-normal opacity-80">NGAY</span>
-            </button>
-          </div>
-
-          <p class="text-[11px] text-slate-400 mt-3 text-center flex items-center gap-1.5">
-            <svg class="w-3.5 h-3.5 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
-            Tỉ lệ và số lượng quà tặng được hệ thống đối soát minh bạch
-          </p>
-        </div>
-
-        <!-- Wheel Controls & Spin Log Column -->
-        <div class="md:col-span-5 space-y-4">
-          <!-- Phone Entry Box -->
-          <div class="p-4 rounded-2xl bg-slate-800/80 border border-brand-500/30">
-            <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">
-              Nhập Số Điện Thoại Để Nhận Quà:
-            </label>
-            <div class="flex gap-2">
-              <input type="tel" id="user-phone-input" placeholder="Ví dụ: 0987654321" class="flex-1 bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2 text-xs sm:text-sm text-white focus:outline-none focus:border-brand-500 font-semibold tracking-wider placeholder:font-normal placeholder:text-slate-500" />
-              <button onclick="spinWheel()" id="spin-action-btn" class="px-4 py-2 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-bold text-xs uppercase tracking-wider shadow-lg shadow-brand-600/30 transition-all flex items-center gap-1 whitespace-nowrap">
-                <span>Quay</span>
-              </button>
-            </div>
-            <div class="flex items-center justify-between mt-2.5 text-[11px] text-slate-400">
-              <span>Bảo mật SĐT: Che ***</span>
-              <button onclick="fillDemoPhone()" class="text-amber-400 hover:underline font-medium">Điền số mẫu</button>
-            </div>
-          </div>
-
-          <!-- Real-time Winner Stream / History -->
-          <div class="p-4 rounded-2xl bg-slate-800/60 border border-slate-700">
-            <div class="flex items-center justify-between mb-2.5 pb-2 border-b border-slate-700/60">
-              <span class="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-1.5">
-                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                Khách Vừa Nhận Voucher Trực Tuyến
-              </span>
-              <span class="text-[10px] text-slate-400">Trực tiếp</span>
-            </div>
-            <div id="winner-ticker-list" class="space-y-1.5 max-h-40 overflow-y-auto pr-1">
-              <div class="flex items-center justify-between text-xs p-2 rounded-lg bg-slate-900/60 border border-slate-700/40">
-                <div class="flex items-center gap-2">
-                  <span class="text-amber-400 font-mono font-bold">098***6789</span>
-                  <span class="text-slate-400 text-[11px]">Khách hàng vừa quay</span>
-                </div>
-                <span class="font-bold text-emerald-400">+400.000 đ</span>
-              </div>
-              <div class="flex items-center justify-between text-xs p-2 rounded-lg bg-slate-900/60 border border-slate-700/40">
-                <div class="flex items-center gap-2">
-                  <span class="text-amber-400 font-mono font-bold">091***4321</span>
-                  <span class="text-slate-400 text-[11px]">Khách hàng vừa quay</span>
-                </div>
-                <span class="font-bold text-amber-300">+300.000 đ</span>
-              </div>
-              <div class="flex items-center justify-between text-xs p-2 rounded-lg bg-slate-900/60 border border-slate-700/40">
-                <div class="flex items-center gap-2">
-                  <span class="text-amber-400 font-mono font-bold">090***8827</span>
-                  <span class="text-slate-400 text-[11px]">Khách hàng vừa quay</span>
-                </div>
-                <span class="font-bold text-blue-400">Gói Squad 2-in-1</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-[11px] text-amber-200/90 leading-relaxed">
-            💡 <strong>Quy định:</strong> Voucher trúng thưởng được Kế toán Eureka đối soát theo SĐT và trừ trực tiếp vào tiền cước của đơn hàng phát sinh trong vòng 30 ngày.
-          </div>
-        </div>
+      <div class="flex items-center justify-center gap-3">
+        <button id="spin-action-btn" onclick="spinWheelGala()" class="btn-gala-shimmer px-7 py-3 rounded-xl text-white font-black text-sm shadow-md cursor-pointer hover:scale-105 active:scale-95">
+          QUAY NGAY
+        </button>
+        <button onclick="closeWelcomeWheelModal()" class="px-5 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-sm cursor-pointer">
+          Đóng
+        </button>
       </div>
     </div>
   </div>
@@ -1854,5 +1847,186 @@
   <script src="assets/js/leaderboard.js"></script>
   <script src="assets/js/main.js"></script>
 
+  <!-- Gala Lucky Wheel Driver Script (16 LEDs, Canvas, Sound, Confetti) -->
+  <script>
+    const galaWheelSegments = [
+      { label: 'Surface Pro 11', color: '#FF5E00', text: '#FFFFFF' },
+      { label: 'Voucher 500k', color: '#FFF8F0', text: '#EA580C' },
+      { label: 'iPad Air M3', color: '#F59E0B', text: '#FFFFFF' },
+      { label: '-30% Cước', color: '#FFF8F0', text: '#EA580C' },
+      { label: 'Máy Lọc Dyson', color: '#DC2626', text: '#FFFFFF' },
+      { label: 'Voucher 1 Triệu', color: '#FFF8F0', text: '#EA580C' },
+      { label: 'Thẻ VIP+1', color: '#FF8A00', text: '#FFFFFF' },
+      { label: 'Tri Ân Mùng 05', color: '#FFF8F0', text: '#EA580C' }
+    ];
+
+    let galaWheelRotation = 0;
+    let isGalaWheelSpinning = false;
+    let galaLedInterval = null;
+
+    function initGalaLedBulbs() {
+      const container = document.getElementById('led-bulbs-container');
+      if (!container || container.children.length > 0) return;
+      const numBulbs = 16;
+      const radius = 138;
+      const center = 144;
+      for (let i = 0; i < numBulbs; i++) {
+        const angle = (i * 2 * Math.PI) / numBulbs;
+        const x = center + radius * Math.cos(angle);
+        const y = center + radius * Math.sin(angle);
+        const bulb = document.createElement('div');
+        bulb.className = 'led-bulb' + (i % 2 === 0 ? ' bulb-on' : '');
+        bulb.style.left = x + 'px';
+        bulb.style.top = y + 'px';
+        container.appendChild(bulb);
+      }
+    }
+
+    function toggleGalaLedBulbs(chaseSpeed = 400) {
+      if (galaLedInterval) clearInterval(galaLedInterval);
+      galaLedInterval = setInterval(() => {
+        document.querySelectorAll('.led-bulb').forEach((bulb) => {
+          bulb.classList.toggle('bulb-on');
+        });
+      }, chaseSpeed);
+    }
+
+    function drawGalaWheel() {
+      const canvas = document.getElementById('wheel-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const numSegments = galaWheelSegments.length;
+      const arcSize = (2 * Math.PI) / numSegments;
+      const radius = canvas.width / 2;
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.save();
+      ctx.translate(radius, radius);
+      ctx.rotate(galaWheelRotation);
+
+      for (let i = 0; i < numSegments; i++) {
+        const seg = galaWheelSegments[i];
+        const angle = i * arcSize;
+        ctx.beginPath();
+        ctx.fillStyle = seg.color;
+        ctx.moveTo(0, 0);
+        ctx.arc(0, 0, radius, angle, angle + arcSize);
+        ctx.lineTo(0, 0);
+        ctx.fill();
+
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.85)';
+        ctx.lineWidth = 2.5;
+        ctx.stroke();
+
+        ctx.save();
+        ctx.rotate(angle + arcSize / 2);
+        ctx.textAlign = 'right';
+        ctx.fillStyle = seg.text;
+        ctx.font = 'bold 11px "Plus Jakarta Sans", sans-serif';
+        ctx.fillText(seg.label, radius - 16, 4);
+        ctx.restore();
+      }
+      ctx.restore();
+    }
+
+    // Override openWelcomeWheelModal to open Gala Wheel cleanly
+    window.openWelcomeWheelModal = function() {
+      const modal = document.getElementById('welcome-wheel-modal');
+      if (modal) {
+        modal.classList.remove('hidden');
+        modal.style.display = 'flex';
+        initGalaLedBulbs();
+        toggleGalaLedBulbs(350);
+        drawGalaWheel();
+      }
+    };
+
+    window.closeWelcomeWheelModal = function() {
+      const modal = document.getElementById('welcome-wheel-modal');
+      if (modal) {
+        modal.classList.add('hidden');
+        modal.style.display = 'none';
+        if (galaLedInterval) clearInterval(galaLedInterval);
+      }
+    };
+
+    window.openLuckyWheelModal = window.openWelcomeWheelModal;
+    window.closeLuckyWheelModal = window.closeWelcomeWheelModal;
+
+    function spinWheelGala() {
+      if (isGalaWheelSpinning) return;
+      isGalaWheelSpinning = true;
+
+      toggleGalaLedBulbs(90);
+
+      const needle = document.getElementById('wheel-needle');
+      if (needle) needle.classList.add('needle-vibrating');
+
+      const resultBox = document.getElementById('wheel-result');
+      resultBox.innerHTML = '<span class="text-brand-orange animate-pulse">🎡 Vòng quay đang xoay với tốc độ cao... Đang tìm giải thưởng!</span>';
+
+      const spinBtn1 = document.getElementById('spin-center-btn');
+      const spinBtn2 = document.getElementById('spin-action-btn');
+      if (spinBtn1) spinBtn1.disabled = true;
+      if (spinBtn2) spinBtn2.disabled = true;
+
+      const numSegments = galaWheelSegments.length;
+      const arcSize = (2 * Math.PI) / numSegments;
+      const winningIndex = Math.floor(Math.random() * numSegments);
+      const extraRounds = 6 + Math.floor(Math.random() * 2);
+      const targetAngle = (extraRounds * 2 * Math.PI) + ((numSegments - winningIndex - 0.5) * arcSize) - (Math.PI / 2);
+      const startAngle = galaWheelRotation % (2 * Math.PI);
+      const totalRotationNeeded = targetAngle;
+
+      const duration = 4200;
+      const startTime = performance.now();
+      let lastTickAngle = 0;
+
+      function animateSpin(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const easeOut = 1 - Math.pow(1 - progress, 3);
+        galaWheelRotation = startAngle + totalRotationNeeded * easeOut;
+
+        if (Math.abs(galaWheelRotation - lastTickAngle) > arcSize) {
+          if (typeof playTickSound === 'function') playTickSound();
+          lastTickAngle = galaWheelRotation;
+        }
+
+        drawGalaWheel();
+
+        if (progress < 1) {
+          requestAnimationFrame(animateSpin);
+        } else {
+          isGalaWheelSpinning = false;
+          if (spinBtn1) spinBtn1.disabled = false;
+          if (spinBtn2) spinBtn2.disabled = false;
+          if (needle) needle.classList.remove('needle-vibrating');
+
+          toggleGalaLedBulbs(400);
+
+          const wonPrize = galaWheelSegments[winningIndex];
+          resultBox.innerHTML = `<span class="text-slate-900 font-extrabold">🎉 CHÚC MỪNG BẠN TRÚNG: </span><span class="text-red-600 font-black ml-1 text-sm sm:text-base">${wonPrize.label}</span><span class="text-slate-900 font-extrabold">!</span>`;
+
+          if (typeof playWinSound === 'function') playWinSound();
+
+          if (typeof confetti === 'function') {
+            confetti({ particleCount: 90, spread: 75, origin: { y: 0.6 } });
+            setTimeout(() => {
+              confetti({ particleCount: 60, angle: 60, spread: 55, origin: { x: 0.05 } });
+              confetti({ particleCount: 60, angle: 120, spread: 55, origin: { x: 0.95 } });
+            }, 250);
+          }
+        }
+      }
+
+      requestAnimationFrame(animateSpin);
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      drawGalaWheel();
+      initGalaLedBulbs();
+    });
+  </script>
 </body>
 </html>
