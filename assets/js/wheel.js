@@ -318,26 +318,102 @@ function closeWelcomeWheelModal() {
 }
 
 
+// ==================== STORAGE & CONFIG FOR WHEEL 2 (MÙNG 05) ====================
+const STORAGE_KEY_M05_BOOKINGS = 'eureka_m05_booking_pool';
+const STORAGE_KEY_M05_PRIZE = 'eureka_m05_current_prize';
+const DEFAULT_M05_PRIZE = 'Voucher Chiết Khấu 300.000 đ';
+
+const DEFAULT_M05_BOOKING_POOL = [
+  "ERK-BK-2026-8891", "ERK-BK-2026-4432", "ERK-BK-2026-1205", "ERK-BK-2026-9012",
+  "ERK-BK-2026-7731", "ERK-BK-2026-5524", "ERK-BK-2026-3198", "ERK-BK-2026-6640",
+  "ERK-BK-2026-2287", "ERK-BK-2026-9914", "ERK-BK-2026-1043", "ERK-BK-2026-8320",
+  "ERK-BK-2026-4176", "ERK-BK-2026-5902", "ERK-BK-2026-7241", "ERK-BK-2026-3819",
+  "ERK-BK-2026-6055", "ERK-BK-2026-2790", "ERK-BK-2026-8411", "ERK-BK-2026-9533"
+];
+
+function getM05BookingPool() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY_M05_BOOKINGS);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+    }
+  } catch (e) {}
+  return [...DEFAULT_M05_BOOKING_POOL];
+}
+
+function getM05CurrentPrize() {
+  return localStorage.getItem(STORAGE_KEY_M05_PRIZE) || DEFAULT_M05_PRIZE;
+}
+
+function setM05CurrentPrize(prize) {
+  if (!prize) return;
+  localStorage.setItem(STORAGE_KEY_M05_PRIZE, prize.trim());
+  updateM05PublicInfo();
+}
+
+function updateM05PublicInfo() {
+  const currentPrize = getM05CurrentPrize();
+  const pool = getM05BookingPool();
+
+  const publicPrizeBadge = document.getElementById('m05-public-prize-badge');
+  if (publicPrizeBadge) publicPrizeBadge.textContent = currentPrize;
+
+  const publicCountBadge = document.getElementById('m05-public-count-badge');
+  if (publicCountBadge) publicCountBadge.textContent = `${pool.length} mã hợp lệ`;
+
+  const adminSpinPrize = document.getElementById('m05-admin-spin-prize');
+  if (adminSpinPrize) adminSpinPrize.textContent = currentPrize;
+}
+
 // ==================== WHEEL 2: VÒNG QUAY TRI ÂN MÙNG 05 HÀNG THÁNG ====================
 const m05Canvas = document.getElementById('m05-wheel-canvas');
 let m05Ctx = m05Canvas ? m05Canvas.getContext('2d') : null;
 
-const m05Segments = [
-  { text: 'VOUCHER 300K', color: '#ea580c', textColor: '#FFFFFF', prize: 'Giải Voucher 300.000 đ' },
-  { text: 'ƯU TIÊN XẾP CONT', color: '#1e293b', textColor: '#FBBF24', prize: 'Vé Ưu Tiên Xếp Cont Sớm' },
-  { text: 'VOUCHER 400K', color: '#f59e0b', textColor: '#0F172A', prize: 'Giải Voucher 400.000 đ Lộc Xuân' },
-  { text: 'GIẢM 50% LƯU KHO', color: '#0f172a', textColor: '#FFFFFF', prize: 'Giảm 50% Phí Lưu Kho Bãi' },
-  { text: 'VOUCHER 300K', color: '#ea580c', textColor: '#FFFFFF', prize: 'Giải Voucher 300.000 đ' },
-  { text: 'GÓI SQUAD 2-IN-1', color: '#1e293b', textColor: '#38BDF8', prize: 'Gói Chuyên Viên Squad 2-in-1' },
-  { text: 'TRI ÂN ĐỐI TÁC', color: '#f59e0b', textColor: '#0F172A', prize: 'Bộ Quà Tri Ân Khách Hàng Eureka' },
-  { text: 'MAY MẮN LẦN SAU', color: '#0f172a', textColor: '#94A3B8', prize: 'Tích Lũy Vào Kỳ Quay Tới' }
+const M05_PALETTE = [
+  { bg: '#0284C7', text: '#FFFFFF' },
+  { bg: '#0F172A', text: '#38BDF8' },
+  { bg: '#EA580C', text: '#FFFFFF' },
+  { bg: '#1E293B', text: '#FBBF24' },
+  { bg: '#0369A1', text: '#FFFFFF' },
+  { bg: '#F59E0B', text: '#0F172A' },
+  { bg: '#0F172A', text: '#34D399' },
+  { bg: '#0284C7', text: '#FFFFFF' },
+  { bg: '#1E293B', text: '#38BDF8' },
+  { bg: '#D97706', text: '#0F172A' },
+  { bg: '#0369A1', text: '#FFFFFF' },
+  { bg: '#0F172A', text: '#F87171' }
 ];
+
+let m05Segments = [];
+
+function initM05WheelSegments() {
+  const pool = getM05BookingPool();
+  // Display between 8 and 12 slices for visual clarity and readability
+  const sliceCount = Math.min(Math.max(pool.length, 6), 12);
+  m05Segments = [];
+  for (let i = 0; i < sliceCount; i++) {
+    const code = pool[i % pool.length];
+    const colorScheme = M05_PALETTE[i % M05_PALETTE.length];
+    m05Segments.push({
+      text: code,
+      color: colorScheme.bg,
+      textColor: colorScheme.text
+    });
+  }
+}
 
 let currentAngle2 = 0;
 let isSpinning2 = false;
 
 function drawM05Wheel() {
-  if (!m05Canvas || !m05Ctx) return;
+  if (!m05Canvas) return;
+  if (!m05Ctx) m05Ctx = m05Canvas.getContext('2d');
+  if (!m05Ctx) return;
+
+  if (!m05Segments || m05Segments.length === 0) {
+    initM05WheelSegments();
+  }
 
   const numSegments = m05Segments.length;
   const arcSize = (2 * Math.PI) / numSegments;
@@ -370,16 +446,16 @@ function drawM05Wheel() {
     m05Ctx.strokeStyle = '#0F172A';
     m05Ctx.stroke();
 
-    // Segment Text
+    // Segment Text (Mã Booking)
     m05Ctx.save();
     m05Ctx.translate(centerX, centerY);
     m05Ctx.rotate(angle + arcSize / 2);
     m05Ctx.textAlign = 'right';
     m05Ctx.fillStyle = seg.textColor || '#FFFFFF';
-    m05Ctx.font = 'bold 12px "Plus Jakarta Sans", sans-serif';
-    m05Ctx.shadowColor = 'rgba(0,0,0,0.8)';
+    m05Ctx.font = 'bold 11px monospace, "Plus Jakarta Sans", sans-serif';
+    m05Ctx.shadowColor = 'rgba(0,0,0,0.85)';
     m05Ctx.shadowBlur = 4;
-    m05Ctx.fillText(seg.text, radius - 24, 4);
+    m05Ctx.fillText(seg.text, radius - 20, 4);
     m05Ctx.restore();
   });
 
@@ -415,27 +491,40 @@ function closeM05NoticeModal() {
 function spinM05Admin() {
   if (isSpinning2) return;
 
+  const pool = getM05BookingPool();
+  if (!pool || pool.length === 0) {
+    alert('⚠️ Danh sách mã booking dự thưởng đang trống!\nVui lòng vào Admin để tải hoặc nạp danh sách mã booking trước khi quay.');
+    return;
+  }
+
   const periodSelect = document.getElementById('m05-period-select');
   const period = periodSelect ? periodSelect.value : 'Kỳ 10/2026 (Mùng 05/11)';
+  const currentPrize = getM05CurrentPrize();
 
-  // Sinh mã booking trúng thưởng KHÔNG CẦN CHE
-  const bookingPrefixes = ['ERK-BK-2026-', 'BK-2026-'];
-  const prefix = bookingPrefixes[Math.floor(Math.random() * bookingPrefixes.length)];
-  const randomBooking = prefix + Math.floor(1000 + Math.random() * 9000);
+  // 1. Pick the winning booking code from 100% of the uploaded booking pool
+  const winningBooking = pool[Math.floor(Math.random() * pool.length)];
 
-  // Target segment
-  const targetIndex = Math.floor(Math.random() * (m05Segments.length - 1));
+  // 2. Select target segment and ensure its text displays the winning booking code
+  const targetIndex = Math.floor(Math.random() * m05Segments.length);
+  m05Segments[targetIndex].text = winningBooking;
+  drawM05Wheel();
+
+  // 3. Calculation for pointer stopping angle
   const numSegments = m05Segments.length;
   const arcSize = (2 * Math.PI) / numSegments;
   const spins = 6 + Math.floor(Math.random() * 2);
   const targetSegmentAngle = (3 * Math.PI / 2) - (targetIndex * arcSize + arcSize / 2);
-  const totalRotation = spins * 2 * Math.PI + targetSegmentAngle;
-
   const startAngle = currentAngle2 % (2 * Math.PI);
-  const finalAngle = startAngle + totalRotation;
-  const duration = 5000;
+  let totalRotation = spins * 2 * Math.PI + (targetSegmentAngle - startAngle);
+  while (totalRotation < spins * 2 * Math.PI) {
+    totalRotation += 2 * Math.PI;
+  }
+  const finalAngle = currentAngle2 + totalRotation;
+  const duration = 5200;
   const startTime = performance.now();
-  let lastTickAngle = startAngle;
+  let lastTickAngle = currentAngle2;
+
+  isSpinning2 = true;
 
   function animateSpin2(currentTime) {
     const elapsed = currentTime - startTime;
@@ -443,7 +532,7 @@ function spinM05Admin() {
     const easeOut = 1 - Math.pow(1 - progress, 3.5);
     currentAngle2 = startAngle + (finalAngle - startAngle) * easeOut;
 
-    if (Math.abs(currentAngle2 - lastTickAngle) >= arcSize) {
+    if (Math.abs(currentAngle2 - lastTickAngle) >= arcSize * 0.8) {
       playTickSound();
       lastTickAngle = currentAngle2;
     }
@@ -455,17 +544,16 @@ function spinM05Admin() {
     } else {
       isSpinning2 = false;
       playWinSound();
+      if (typeof triggerConfetti === 'function') triggerConfetti();
 
-      const prizeObj = m05Segments[targetIndex];
-
-      // Save winner into monthly list (Chỉ lưu mã booking, KHÔNG CẦN TÊN DOANH NGHIỆP / HKD)
+      // Record winning booking into monthly list
       if (typeof getMonthlyWinners === 'function') {
         const winners = getMonthlyWinners();
         winners.unshift({
           id: 'W-' + Date.now(),
           period: period,
-          booking_code: randomBooking,
-          prize: prizeObj.prize,
+          booking_code: winningBooking,
+          prize: currentPrize,
           draw_time: new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' }) + ' - ' + new Date().toLocaleDateString('vi-VN'),
           status: '✅ Vừa quay trúng'
         });
@@ -476,7 +564,9 @@ function spinM05Admin() {
         }
       }
 
-      alert(`🎉 [ADMIN QUAY THƯỞNG MÙNG 05 THÀNH CÔNG]\nKỳ quay: ${period}\nMã Booking Trúng Thưởng: ${randomBooking}\nGiải thưởng: ${prizeObj.prize}`);
+      setTimeout(() => {
+        alert(`🎉 [CHÚC MỪNG MÃ BOOKING TRÚNG THƯỞNG]\n═════════════════════════════════════\n🎯 Kỳ Quay: ${period}\n🎫 Mã Booking Trúng Thưởng: ${winningBooking}\n🎁 Giải Thưởng Tri Ân: ${currentPrize}\n═════════════════════════════════════\nKết quả đã được ghi nhận tự động vào Bảng Vinh Danh Công Khai!`);
+      }, 250);
     }
   }
 
@@ -529,7 +619,9 @@ function renderPublicMonthlyWinners() {
 function initAllWheelEngines() {
   initWelcomeWheelData();
   drawWheel();
+  initM05WheelSegments();
   drawM05Wheel();
+  updateM05PublicInfo();
   renderPublicMonthlyWinners();
 
   // Auto-pop up welcome wheel modal on page load after 500ms

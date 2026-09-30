@@ -101,6 +101,7 @@ function showAdminDashboard() {
   modal.classList.remove('hidden');
   renderAdminWheelConfigTable();
   renderAdminSpinLeadsTable();
+  renderAdminM05BookingManager();
   renderAdminWinnersTable();
 }
 
@@ -316,7 +317,197 @@ function exportSpinLeadsCsv() {
   document.body.removeChild(a);
 }
 
-// ==================== TAB 3: MÙNG 05 WINNERS (CHỈ MÃ BOOKING TRÚNG THƯỞNG) ====================
+// ==================== TAB 3: MÙNG 05 BOOKING POOL & QUẢN LÝ GIẢI THƯỞNG ====================
+
+// 1. Cấu hình Giải thưởng Mùng 05
+function saveAdminM05Prize() {
+  const prizeInput = document.getElementById('admin-m05-prize-input');
+  if (!prizeInput) return;
+  const val = prizeInput.value.trim();
+  if (!val) {
+    alert('⚠️ Vui lòng nhập tên giải thưởng!');
+    return;
+  }
+  if (typeof setM05CurrentPrize === 'function') {
+    setM05CurrentPrize(val);
+  } else {
+    localStorage.setItem('eureka_m05_current_prize', val);
+  }
+  if (typeof updateM05PublicInfo === 'function') {
+    updateM05PublicInfo();
+  }
+  alert(`✅ Đã cập nhật giải thưởng định kỳ thành: "${val}"`);
+}
+
+function setQuickM05Prize(prizeText) {
+  const prizeInput = document.getElementById('admin-m05-prize-input');
+  if (prizeInput) {
+    prizeInput.value = prizeText;
+    saveAdminM05Prize();
+  }
+}
+
+// 2. Parser và quản lý Danh sách Mã Booking Dự Thưởng
+function parseBookingCodesFromText(text) {
+  if (!text) return [];
+  // Tách theo dòng mới, dấu phẩy, chấm phẩy, tab, khoảng trắng
+  const rawTokens = text.split(/[\r\n,;\t]+/);
+  const codes = [];
+  const seen = new Set();
+
+  rawTokens.forEach(t => {
+    let clean = t.trim().replace(/^["']+|["']+$/g, '');
+    if (clean.length >= 3) {
+      const upper = clean.toUpperCase();
+      if (!seen.has(upper)) {
+        seen.add(upper);
+        codes.push(clean);
+      }
+    }
+  });
+  return codes;
+}
+
+function saveM05BookingPoolFromTextarea() {
+  const textarea = document.getElementById('admin-m05-booking-textarea');
+  if (!textarea) return;
+  const codes = parseBookingCodesFromText(textarea.value);
+  if (codes.length === 0) {
+    alert('⚠️ Vui lòng nhập hoặc dán ít nhất 01 mã booking hợp lệ!');
+    return;
+  }
+
+  localStorage.setItem('eureka_m05_booking_pool', JSON.stringify(codes));
+
+  if (typeof initM05WheelSegments === 'function') initM05WheelSegments();
+  if (typeof drawM05Wheel === 'function') drawM05Wheel();
+  if (typeof updateM05PublicInfo === 'function') updateM05PublicInfo();
+
+  renderAdminM05BookingManager();
+  alert(`✅ Đã lưu thành công ${codes.length} mã booking vào Vòng Quay Mùng 05!`);
+}
+
+function loadDemoM05Bookings() {
+  const demoCodes = [
+    "ERK-BK-2026-8891", "ERK-BK-2026-4432", "ERK-BK-2026-1205", "ERK-BK-2026-9012",
+    "ERK-BK-2026-7731", "ERK-BK-2026-5524", "ERK-BK-2026-3198", "ERK-BK-2026-6640",
+    "ERK-BK-2026-2287", "ERK-BK-2026-9914", "ERK-BK-2026-1043", "ERK-BK-2026-8320",
+    "ERK-BK-2026-4176", "ERK-BK-2026-5902", "ERK-BK-2026-7241", "ERK-BK-2026-3819",
+    "ERK-BK-2026-6055", "ERK-BK-2026-2790", "ERK-BK-2026-8411", "ERK-BK-2026-9533"
+  ];
+  localStorage.setItem('eureka_m05_booking_pool', JSON.stringify(demoCodes));
+
+  if (typeof initM05WheelSegments === 'function') initM05WheelSegments();
+  if (typeof drawM05Wheel === 'function') drawM05Wheel();
+  if (typeof updateM05PublicInfo === 'function') updateM05PublicInfo();
+
+  renderAdminM05BookingManager();
+  alert(`✅ Đã nạp ${demoCodes.length} mã booking mẫu vào hệ thống!`);
+}
+
+function clearM05BookingPool() {
+  if (confirm('CẢNH BÁO: Bạn có chắc chắn muốn xóa TOÀN BỘ danh sách mã booking dự thưởng hiện tại?')) {
+    localStorage.removeItem('eureka_m05_booking_pool');
+    if (typeof initM05WheelSegments === 'function') initM05WheelSegments();
+    if (typeof drawM05Wheel === 'function') drawM05Wheel();
+    if (typeof updateM05PublicInfo === 'function') updateM05PublicInfo();
+    renderAdminM05BookingManager();
+    alert('Đã xóa sạch danh sách mã booking!');
+  }
+}
+
+function handleM05FileUpload(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const content = e.target.result;
+    const codes = parseBookingCodesFromText(content);
+    if (codes.length === 0) {
+      alert('⚠️ Không tìm thấy mã booking nào trong file vừa chọn!');
+      return;
+    }
+
+    const textarea = document.getElementById('admin-m05-booking-textarea');
+    if (textarea) textarea.value = codes.join('\n');
+
+    // Auto save to pool
+    localStorage.setItem('eureka_m05_booking_pool', JSON.stringify(codes));
+    if (typeof initM05WheelSegments === 'function') initM05WheelSegments();
+    if (typeof drawM05Wheel === 'function') drawM05Wheel();
+    if (typeof updateM05PublicInfo === 'function') updateM05PublicInfo();
+    renderAdminM05BookingManager();
+
+    alert(`🎉 Đã tải lên và nhập thành công ${codes.length} mã booking từ file: ${file.name}!`);
+  };
+  reader.readAsText(file);
+  event.target.value = '';
+}
+
+function exportM05BookingPoolTxt() {
+  const pool = (typeof getM05BookingPool === 'function') ? getM05BookingPool() : [];
+  if (pool.length === 0) {
+    alert('Danh sách mã booking đang trống!');
+    return;
+  }
+  const text = pool.join('\r\n');
+  const blob = new Blob([text], { type: 'text/plain;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `Danh_Sach_Ma_Booking_Du_Thuong_${new Date().toISOString().slice(0, 10)}.txt`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+}
+
+function renderAdminM05BookingManager() {
+  const pool = (typeof getM05BookingPool === 'function') ? getM05BookingPool() : [];
+  const currentPrize = (typeof getM05CurrentPrize === 'function') ? getM05CurrentPrize() : 'Voucher Chiết Khấu 300.000 đ';
+
+  // Update prize input
+  const prizeInput = document.getElementById('admin-m05-prize-input');
+  if (prizeInput) prizeInput.value = currentPrize;
+
+  // Update total count badge in Tab 3
+  const countBadge = document.getElementById('admin-m05-booking-count');
+  if (countBadge) countBadge.textContent = `${pool.length}`;
+
+  // Update textarea
+  const textarea = document.getElementById('admin-m05-booking-textarea');
+  if (textarea) {
+    textarea.value = pool.join('\n');
+  }
+
+  // Update preview chip cloud (first 30 codes)
+  const chipsContainer = document.getElementById('admin-m05-preview-chips');
+  if (chipsContainer) {
+    chipsContainer.innerHTML = '';
+    if (pool.length === 0) {
+      chipsContainer.innerHTML = '<span class="text-xs text-slate-500">Chưa có mã booking nào trong danh sách. Hãy nhấn "Nạp 20 Mã Mẫu" hoặc "Tải File" để bắt đầu!</span>';
+    } else {
+      const showCount = Math.min(pool.length, 30);
+      for (let i = 0; i < showCount; i++) {
+        const span = document.createElement('span');
+        span.className = 'px-2 py-0.5 rounded bg-slate-800 text-amber-300 font-mono text-[11px] font-bold border border-slate-700';
+        span.textContent = pool[i];
+        chipsContainer.appendChild(span);
+      }
+      if (pool.length > showCount) {
+        const moreSpan = document.createElement('span');
+        moreSpan.className = 'px-2 py-0.5 rounded bg-slate-800/60 text-slate-400 font-mono text-[11px]';
+        moreSpan.textContent = `+ ${pool.length - showCount} mã khác...`;
+        chipsContainer.appendChild(moreSpan);
+      }
+    }
+  }
+
+  // Render winners table
+  renderAdminWinnersTable();
+}
+
+// 3. Quản lý Lịch sử Trúng Thưởng Mùng 05
 function getMonthlyWinners() {
   const saved = localStorage.getItem(STORAGE_KEY_MONTHLY_WINNERS);
   if (saved) {
@@ -326,9 +517,9 @@ function getMonthlyWinners() {
   }
   return [
     { period: "Kỳ 10/2026 (Mùng 05/11)", booking_code: "ERK-BK-2026-8891", prize: "Voucher Chiết Khấu 300.000 đ", draw_time: "10h05 - 05/11/2026", status: "✅ Đã đối soát & trừ cước" },
-    { period: "Kỳ 10/2026 (Mùng 05/11)", booking_code: "ERK-BK-2026-4432", prize: "Vé Ưu Tiên Xếp Cont Sớm", draw_time: "10h10 - 05/11/2026", status: "✅ Đã cấp vé ưu tiên" },
+    { period: "Kỳ 10/2026 (Mùng 05/11)", booking_code: "ERK-BK-2026-4432", prize: "Voucher Chiết Khấu 300.000 đ", draw_time: "10h10 - 05/11/2026", status: "✅ Đã đối soát & trừ cước" },
     { period: "Kỳ 10/2026 (Mùng 05/11)", booking_code: "ERK-BK-2026-1205", prize: "Voucher Chiết Khấu 300.000 đ", draw_time: "10h15 - 05/11/2026", status: "✅ Đã đối soát & trừ cước" },
-    { period: "Kỳ 09/2026 (Mùng 05/10)", booking_code: "ERK-BK-2026-7731", prize: "Giảm 50% Phí Lưu Kho Bãi", draw_time: "10h08 - 05/10/2026", status: "✅ Đã hoàn tất trừ phí" }
+    { period: "Kỳ 09/2026 (Mùng 05/10)", booking_code: "ERK-BK-2026-7731", prize: "Voucher Chiết Khấu 300.000 đ", draw_time: "10h08 - 05/10/2026", status: "✅ Đã hoàn tất trừ phí" }
   ];
 }
 
@@ -338,6 +529,17 @@ function renderAdminWinnersTable() {
 
   const winners = getMonthlyWinners();
   container.innerHTML = '';
+
+  if (winners.length === 0) {
+    container.innerHTML = `
+      <tr>
+        <td colspan="6" class="py-6 text-center text-slate-500 text-xs">
+          Chưa có lượt quay trúng thưởng nào.
+        </td>
+      </tr>
+    `;
+    return;
+  }
 
   winners.forEach((w, idx) => {
     const tr = document.createElement('tr');
@@ -351,7 +553,7 @@ function renderAdminWinnersTable() {
       <td class="py-2.5 px-3 text-slate-400 font-mono text-[11px]">${w.draw_time || '10h00 - Mùng 05'}</td>
       <td class="py-2.5 px-3 text-slate-300">${w.status || 'Đã ghi nhận'}</td>
       <td class="py-2.5 px-3 text-center">
-        <button onclick="deleteMonthlyWinner(${idx})" class="text-rose-400 hover:text-rose-300 font-bold">Xóa</button>
+        <button onclick="deleteMonthlyWinner(${idx})" class="text-rose-400 hover:text-rose-300 font-bold text-[11px]">Xóa</button>
       </td>
     `;
     container.appendChild(tr);
@@ -370,6 +572,27 @@ function deleteMonthlyWinner(idx) {
   }
 }
 
+function exportMonthlyWinnersCsv() {
+  const winners = getMonthlyWinners();
+  if (winners.length === 0) {
+    alert('Chưa có dữ liệu trúng thưởng để xuất file!');
+    return;
+  }
+  let csv = 'STT,Ky Quay,Ma Booking Trung Thuong,Giai Thuong,Thoi Gian Quay,Trang Thai\n';
+  winners.forEach((w, idx) => {
+    csv += `"${idx + 1}","${w.period || ''}","${w.booking_code || ''}","${w.prize || ''}","${w.draw_time || ''}","${w.status || ''}"\n`;
+  });
+
+  const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `Danh_Sach_Ma_Booking_Trung_Thuong_Mung_05_${new Date().toISOString().slice(0, 10)}.csv`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+}
+
 // Admin Tab switcher in modal
 function switchAdminTab(tabName) {
   document.querySelectorAll('.admin-tab-content').forEach(el => el.classList.add('hidden'));
@@ -384,6 +607,10 @@ function switchAdminTab(tabName) {
   if (activeBtn) {
     activeBtn.classList.add('bg-brand-600', 'text-white');
     activeBtn.classList.remove('text-slate-400');
+  }
+
+  if (tabName === 'monthly-winners') {
+    renderAdminM05BookingManager();
   }
 }
 
@@ -400,3 +627,4 @@ if (document.readyState === 'loading') {
 } else {
   initAdminTriggers();
 }
+
