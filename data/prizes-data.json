@@ -1,0 +1,78 @@
+{
+  "campaign_title": "EUREKA CUSTOMER AWARDS 2026",
+  "total_budget": 135000000,
+  "wheel_segments": [
+    {
+      "id": 1,
+      "text": "VOUCHER 400K",
+      "color": "#ea580c",
+      "textColor": "#FFFFFF",
+      "prize": "Voucher Chiết Khấu 400.000 đ",
+      "description": "Trừ trực tiếp vào cước chuyến hàng tiếp theo",
+      "probability_weight": 15
+    },
+    {
+      "id": 2,
+      "text": "VOUCHER 300K",
+      "color": "#1e293b",
+      "textColor": "#FBBF24",
+      "prize": "Voucher Chiết Khấu 300.000 đ",
+      "description": "Trừ trực tiếp vào cước chuyến hàng tiếp theo",
+      "probability_weight": 25
+    },
+    {
+      "id": 3,
+      "text": "ƯU TIÊN XẾP CONT",
+      "color": "#f59e0b",
+      "textColor": "#0F172A",
+      "prize": "Vé Ưu Tiên Xếp Cont Sớm",
+      "description": "Lô hàng được ưu tiên xếp vào container đầu tiên trong ngày",
+      "probability_weight": 15
+    },
+    {
+      "id": 4,
+      "text": "GIẢM 50% LƯU KHO",
+      "color": "#0f172a",
+      "textColor": "#FFFFFF",
+      "prize": "Giảm 50% Phí Lưu Kho Bãi",
+      "description": "Áp dụng cho 01 lô hàng lưu kho Trung Quốc hoặc Việt Nam",
+      "probability_weight": 15
+    },
+    {
+      "id": 5,
+      "text": "VOUCHER 300K",
+      "color": "#ea580c",
+      "textColor": "#FFFFFF",
+      "prize": "Voucher Chiết Khấu 300.000 đ",
+      "description": "Trừ trực tiếp vào cước chuyến hàng tiếp theo",
+      "probability_weight": 20
+    },
+    {
+      "id": 6,
+      "text": "GÓI SQUAD 2-IN-1",
+      "color": "#1e293b",
+      "textColor": "#38BDF8",
+      "prize": "Gói Chuyên Viên Squad 2-in-1",
+      "description": "Chuyên viên hải quan + chuyên viên logistics hỗ trợ 1-1",
+      "probability_weight": 10
+    },
+    {
+      "id": 7,
+      "text": "VOUCHER 400K",
+      "color": "#f59e0b",
+      "textColor": "#0F172A",
+      "prize": "Voucher 400.000 đ Lộc Xuân",
+      "description": "Voucher lộc xuân đặc biệt áp dụng tháng 12 & tháng 1",
+      "probability_weight": 15
+    },
+    {
+      "id": 8,
+      "text": "MAY MẮN LẦN SAU",
+      "color": "#0f172a",
+      "textColor": "#94A3B8",
+      "prize": "Vé Tích Lũy Quay Mùng 05",
+      "description": "Đơn hàng được tự động lưu vào danh sách quay số kỳ tới",
+      "probability_weight": 10
+    }
+  ]
+}

@@ -1,0 +1,112 @@
+[
+  {
+    "rank": 1,
+    "company_name": "Tập Đoàn XNK Thiết Bị Công Nghiệp Á Châu",
+    "customer_code": "ERK-00912",
+    "vip_tier": "VIP ELITE",
+    "order_count": 48,
+    "volume_weight": "142,5 tấn | 190 m³",
+    "service_fee": 428650000,
+    "prize_tag": "💻 Laptop Surface 35Tr",
+    "prize_type": "top1"
+  },
+  {
+    "rank": 2,
+    "company_name": "Công Ty Cổ Phần Thương Mại Tân Phát Minh",
+    "customer_code": "ERK-00431",
+    "vip_tier": "VIP ELITE",
+    "order_count": 35,
+    "volume_weight": "98,2 tấn | 135 m³",
+    "service_fee": 312400000,
+    "prize_tag": "📱 iPad Air M3 20Tr",
+    "prize_type": "top2"
+  },
+  {
+    "rank": 3,
+    "company_name": "TNHH Sản Xuất & Phân Phối Đồ Gia Dụng Bảo An",
+    "customer_code": "ERK-00827",
+    "vip_tier": "VIP PREMIUM",
+    "order_count": 29,
+    "volume_weight": "76,0 tấn | 110 m³",
+    "service_fee": 245900000,
+    "prize_tag": "🌪️ Máy Lọc Dyson 10Tr",
+    "prize_type": "top3"
+  },
+  {
+    "rank": 4,
+    "company_name": "Cty XNK Vật Tư Y Tế Thăng Long",
+    "customer_code": "ERK-01052",
+    "vip_tier": "VIP PREMIUM",
+    "order_count": 22,
+    "volume_weight": "54,1 tấn | 68 m³",
+    "service_fee": 188300000,
+    "prize_tag": "Bám đuổi Top 3",
+    "prize_type": "regular"
+  },
+  {
+    "rank": 5,
+    "company_name": "Thương Mại & Dịch Vụ Vĩnh Hưng",
+    "customer_code": "ERK-00219",
+    "vip_tier": "VIP PRO",
+    "order_count": 19,
+    "volume_weight": "42,8 tấn | 55 m³",
+    "service_fee": 154200000,
+    "prize_tag": "Cột mốc VIP+1",
+    "prize_type": "regular"
+  },
+  {
+    "rank": 6,
+    "company_name": "TNHH Phụ Kiện Điện Tử SmartViet",
+    "customer_code": "ERK-00774",
+    "vip_tier": "VIP PRO",
+    "order_count": 26,
+    "volume_weight": "31,5 tấn | 45 m³",
+    "service_fee": 141050000,
+    "prize_tag": "Ứng viên Vua Số Đơn",
+    "prize_type": "regular"
+  },
+  {
+    "rank": 7,
+    "company_name": "Công Ty Cổ Phần Đồ Chơi Thông Minh KidTech",
+    "customer_code": "ERK-01289",
+    "vip_tier": "KH MỚI",
+    "order_count": 14,
+    "volume_weight": "18,2 tấn | 88 m³",
+    "service_fee": 128900000,
+    "prize_tag": "Dẫn đầu Tân Binh",
+    "prize_type": "regular"
+  },
+  {
+    "rank": 8,
+    "company_name": "Cơ Khí Chế Tạo Máy Việt Trung",
+    "customer_code": "ERK-00615",
+    "vip_tier": "VIP PRO",
+    "order_count": 11,
+    "volume_weight": "85,6 tấn | 32 m³",
+    "service_fee": 115400000,
+    "prize_tag": "Ứng viên Vua Tải Trọng",
+    "prize_type": "regular"
+  },
+  {
+    "rank": 9,
+    "company_name": "XNK Hàng Tiêu Dùng Phương Nam",
+    "customer_code": "ERK-00388",
+    "vip_tier": "KH CŨ",
+    "order_count": 12,
+    "volume_weight": "24,0 tấn | 38 m³",
+    "service_fee": 98700000,
+    "prize_tag": "Sự Trở Lại Ấn Tượng",
+    "prize_type": "regular"
+  },
+  {
+    "rank": 10,
+    "company_name": "Nội Thất Xuất Nhập Khẩu Đông Đô",
+    "customer_code": "ERK-01422",
+    "vip_tier": "KH MỚI",
+    "order_count": 9,
+    "volume_weight": "12,5 tấn | 72 m³",
+    "service_fee": 86300000,
+    "prize_tag": "Ứng viên Vua Thể Tích",
+    "prize_type": "regular"
+  }
+]
