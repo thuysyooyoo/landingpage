@@ -84,8 +84,38 @@ function saveSpinLead(newLead) {
 }
 
 // ==================== WHEEL 1: VÒNG QUAY TRẢI NGHIỆM KHÁCH HÀNG ====================
-const canvas1 = document.getElementById('wheel-canvas');
-let ctx1 = canvas1 ? canvas1.getContext('2d') : null;
+function getWheelCanvas1() {
+  return document.getElementById('wheel-canvas') || document.getElementById('lucky-wheel-canvas');
+}
+
+let galaLedInterval = null;
+
+function initGalaLedBulbs() {
+  const container = document.getElementById('led-bulbs-container');
+  if (!container || container.children.length > 0) return;
+  const numBulbs = 16;
+  const radius = 138;
+  const center = 144;
+  for (let i = 0; i < numBulbs; i++) {
+    const angle = (i * 2 * Math.PI) / numBulbs;
+    const x = center + radius * Math.cos(angle);
+    const y = center + radius * Math.sin(angle);
+    const bulb = document.createElement('div');
+    bulb.className = 'led-bulb' + (i % 2 === 0 ? ' bulb-on' : '');
+    bulb.style.left = x + 'px';
+    bulb.style.top = y + 'px';
+    container.appendChild(bulb);
+  }
+}
+
+function toggleGalaLedBulbs(chaseSpeed = 400) {
+  if (galaLedInterval) clearInterval(galaLedInterval);
+  galaLedInterval = setInterval(() => {
+    document.querySelectorAll('.led-bulb').forEach((bulb) => {
+      bulb.classList.toggle('bulb-on');
+    });
+  }, chaseSpeed);
+}
 
 let welcomeSegments = [];
 
@@ -110,8 +140,9 @@ let currentAngle1 = 0;
 let isSpinning1 = false;
 
 function drawWheel() {
+  const canvas1 = getWheelCanvas1();
   if (!canvas1) return;
-  if (!ctx1) ctx1 = canvas1.getContext('2d');
+  const ctx1 = canvas1.getContext('2d');
   if (!ctx1) return;
 
   if (!welcomeSegments || welcomeSegments.length === 0) {
@@ -236,6 +267,9 @@ function spinWheel() {
   let lastTickAngle = startAngle;
 
   isSpinning1 = true;
+  toggleGalaLedBulbs(90);
+  const needle = document.getElementById('wheel-needle');
+  if (needle) needle.classList.add('needle-vibrating');
 
   function animateSpin1(currentTime) {
     const elapsed = currentTime - startTime;
@@ -254,6 +288,8 @@ function spinWheel() {
       requestAnimationFrame(animateSpin1);
     } else {
       isSpinning1 = false;
+      toggleGalaLedBulbs(400);
+      if (needle) needle.classList.remove('needle-vibrating');
       playWinSound();
 
       const winningSeg = welcomeSegments[targetIndex];
@@ -302,6 +338,8 @@ function openWelcomeWheelModal() {
     modal.classList.remove('hidden');
     modal.classList.add('show-modal');
     modal.style.display = 'flex';
+    initGalaLedBulbs();
+    toggleGalaLedBulbs(400);
     setTimeout(() => {
       drawWheel();
     }, 60);
@@ -314,6 +352,7 @@ function closeWelcomeWheelModal() {
     modal.classList.add('hidden');
     modal.classList.remove('show-modal');
     modal.style.display = 'none';
+    if (galaLedInterval) clearInterval(galaLedInterval);
   }
 }
 

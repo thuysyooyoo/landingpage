@@ -1368,52 +1368,124 @@
   </footer>
 
   <!-- ==================== POPUP MODAL: VÒNG QUAY TRẢI NGHIỆM KHÁCH HÀNG (GALA 16-LED WHEEL) ==================== -->
-  <div id="welcome-wheel-modal" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/75 backdrop-blur-xl hidden transition-all duration-300">
-    <!-- Modal Card (Glassmorphic Container) -->
-    <div class="relative bg-white/95 backdrop-blur-2xl rounded-3xl border-2 border-brand-orange/50 shadow-2xl max-w-lg w-full p-6 sm:p-8 z-10 text-center overflow-hidden">
+  <div id="welcome-wheel-modal" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/80 backdrop-blur-xl hidden transition-all duration-300">
+    <!-- Modal Card (Glassmorphic Container with Ambient Glow) -->
+    <div class="relative bg-slate-900/95 backdrop-blur-2xl rounded-3xl border-2 border-brand-500/50 shadow-2xl max-w-4xl w-full p-6 sm:p-8 z-10 overflow-hidden max-h-[92vh] overflow-y-auto">
       <!-- Ambient Glow Orbs in Modal -->
-      <div class="absolute -top-20 -left-20 w-48 h-48 bg-brand-orange/30 rounded-full blur-3xl pointer-events-none"></div>
-      <div class="absolute -bottom-20 -right-20 w-48 h-48 bg-amber-400/30 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute -top-20 -left-20 w-48 h-48 bg-brand-500/20 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute -bottom-20 -right-20 w-48 h-48 bg-amber-400/20 rounded-full blur-3xl pointer-events-none"></div>
 
       <!-- Close Button -->
-      <button onclick="closeWelcomeWheelModal()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center font-bold text-lg transition-all cursor-pointer z-30">✕</button>
+      <button onclick="closeWelcomeWheelModal()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white flex items-center justify-center font-bold text-lg transition-all cursor-pointer z-30" title="Đóng">✕</button>
 
-      <span class="inline-block px-3.5 py-1 rounded-full bg-orange-100 text-brand-deep text-xs font-black tracking-wider uppercase mb-2">✦ VÒNG QUAY MAY MẮN ✦</span>
-      <h3 class="text-xl sm:text-2xl font-black text-slate-900 font-display mb-1">Đại Tiệc Tri Ân Triệu Lộc</h3>
-      <p class="text-xs text-slate-500 font-semibold mb-6">Thử vận may ngay hôm nay cùng Eureka Logistics</p>
+      <!-- Modal Header -->
+      <div class="text-center max-w-xl mx-auto mb-6">
+        <span class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-400/10 border border-amber-400/30 text-amber-400 text-[11px] font-black uppercase tracking-wider mb-2 font-display">
+          🎡 MINIGAME TRẢI NGHIỆM KHÁCH HÀNG
+        </span>
+        <h3 class="text-2xl sm:text-3xl font-black text-white mb-1.5 font-display">
+          Vòng Quay May Mắn Eureka
+        </h3>
+        <p class="text-slate-300 text-xs sm:text-sm">
+          Nhập số điện thoại để quay ngẫu nhiên nhận Voucher chiết khấu cước và dịch vụ hỗ trợ độc quyền từ Eureka Logistics!
+        </p>
+      </div>
 
-      <!-- Wheel Container with 16 Running LED Bulbs -->
-      <div class="relative w-64 h-64 sm:w-72 sm:h-72 mx-auto mb-6">
-        
-        <!-- LED Bulbs Ring -->
-        <div id="led-bulbs-container" class="absolute inset-0 rounded-full pointer-events-none z-20"></div>
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+        <!-- Canvas Wheel Column (With 16 Chasing LEDs) -->
+        <div class="md:col-span-7 flex flex-col items-center justify-center">
+          <div class="relative w-[300px] h-[300px] sm:w-[320px] sm:h-[320px] mx-auto flex items-center justify-center">
+            <!-- 16 Chasing LED Bulbs Ring -->
+            <div id="led-bulbs-container" class="absolute inset-0 pointer-events-none z-20"></div>
 
-        <!-- Pointer Indicator at top -->
-        <div id="wheel-needle" class="absolute -top-3 left-1/2 -translate-x-1/2 z-30 w-0 h-0 border-l-[14px] border-l-transparent border-r-[14px] border-r-transparent border-t-[26px] border-t-red-600 drop-shadow-lg"></div>
+            <!-- Wheel Outer Rim with Gold Border -->
+            <div class="relative w-full h-full rounded-full wheel-outer-rim p-2 flex items-center justify-center bg-slate-900 shadow-2xl">
+              <!-- Wheel Pointer (Top Needle with Vibration animation) -->
+              <div id="wheel-needle" class="absolute -top-3 left-1/2 -translate-x-1/2 z-30 pointer-events-none drop-shadow-lg">
+                <svg width="40" height="46" viewBox="0 0 48 54" fill="none">
+                  <path d="M24 54L4 14C0.5 7 5.5 0 13.5 0H34.5C42.5 0 47.5 7 44 14L24 54Z" fill="url(#pointer-grad-modal)" stroke="#FFF" stroke-width="2.5"/>
+                  <circle cx="24" cy="18" r="7" fill="#FFF"/>
+                  <circle cx="24" cy="18" r="4" fill="#EA580C"/>
+                  <defs>
+                    <linearGradient id="pointer-grad-modal" x1="24" y1="0" x2="24" y2="54" gradientUnits="userSpaceOnUse">
+                      <stop stop-color="#F59E0B"/>
+                      <stop offset="1" stop-color="#DC2626"/>
+                    </linearGradient>
+                  </defs>
+                </svg>
+              </div>
 
-        <!-- Canvas Wheel with Gold Rim -->
-        <div class="w-full h-full rounded-full wheel-outer-rim p-1 bg-amber-500 overflow-hidden shadow-2xl">
-          <canvas id="wheel-canvas" width="288" height="288" class="w-full h-full rounded-full"></canvas>
+              <!-- Canvas Wheel -->
+              <canvas id="wheel-canvas" width="288" height="288" class="rounded-full shadow-inner cursor-pointer"></canvas>
+
+              <!-- Center Spin Button -->
+              <button id="spin-center-btn" onclick="spinWheel()" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 sm:w-18 sm:h-18 rounded-full bg-gradient-to-tr from-brand-600 via-amber-500 to-amber-300 text-slate-950 font-black text-xs sm:text-sm uppercase tracking-wider shadow-2xl border-4 border-white flex flex-col items-center justify-center transition-transform hover:scale-110 active:scale-95 z-20 cursor-pointer">
+                <span class="leading-none">QUAY</span>
+                <span class="text-[9px] tracking-normal opacity-90">NGAY</span>
+              </button>
+            </div>
+          </div>
+
+          <p class="text-[11px] text-slate-400 mt-4 text-center flex items-center justify-center gap-1.5 font-medium">
+            <svg class="w-3.5 h-3.5 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+            Tỉ lệ và số lượng quà tặng được hệ thống đối soát minh bạch
+          </p>
         </div>
 
-        <!-- Center Spin Button -->
-        <button id="spin-center-btn" onclick="spinWheelGala()" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 rounded-full bg-gradient-to-br from-brand-orange to-red-600 text-white font-black text-xs shadow-2xl border-2 border-white hover:scale-110 active:scale-95 transition-all z-30 cursor-pointer flex items-center justify-center">
-          QUAY
-        </button>
-      </div>
+        <!-- Wheel Controls & Lead Phone Capture Column -->
+        <div class="md:col-span-5 space-y-4">
+          <!-- Phone Entry Box -->
+          <div class="p-5 rounded-2xl bg-slate-800/80 backdrop-blur-md border border-brand-500/40 shadow-xl">
+            <label class="block text-xs font-black text-slate-200 uppercase tracking-wider mb-2 font-display">
+              Nhập Số Điện Thoại Để Nhận Quà:
+            </label>
+            <div class="flex gap-2">
+              <input type="tel" id="user-phone-input" placeholder="Ví dụ: 0987654321" class="flex-1 bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-white focus:outline-none focus:border-brand-500 font-semibold tracking-wider placeholder:font-normal placeholder:text-slate-500" />
+              <button onclick="spinWheel()" id="spin-action-btn" class="px-5 py-2.5 rounded-xl btn-gala-shimmer text-white font-black text-xs uppercase tracking-wider shadow-lg transition-all flex items-center gap-1 whitespace-nowrap cursor-pointer">
+                <span>Quay</span>
+              </button>
+            </div>
+            <p id="phone-error" class="text-xs text-red-400 mt-2 hidden font-semibold"></p>
+            <div class="flex items-center justify-between mt-3 text-[11px] text-slate-400">
+              <span>Bảo mật SĐT: Che ***</span>
+              <button onclick="fillDemoPhone()" class="text-amber-400 hover:underline font-bold cursor-pointer">Điền số mẫu</button>
+            </div>
+          </div>
 
-      <!-- Result Notification Box -->
-      <div id="wheel-result" class="min-h-[50px] p-3.5 rounded-2xl bg-orange-50/90 border border-brand-orange/40 text-xs sm:text-sm font-black text-slate-900 font-extrabold flex items-center justify-center mb-4 transition-all shadow-inner">
-        <span class="text-slate-700 font-bold">Nhấn nút "QUAY" để bắt đầu quay thưởng!</span>
-      </div>
-
-      <div class="flex items-center justify-center gap-3">
-        <button id="spin-action-btn" onclick="spinWheelGala()" class="btn-gala-shimmer px-7 py-3 rounded-xl text-white font-black text-sm shadow-md cursor-pointer hover:scale-105 active:scale-95">
-          QUAY NGAY
-        </button>
-        <button onclick="closeWelcomeWheelModal()" class="px-5 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-sm cursor-pointer">
-          Đóng
-        </button>
+          <!-- Real-time Winner Stream / History -->
+          <div class="p-4 rounded-2xl bg-slate-800/60 backdrop-blur-md border border-slate-700">
+            <div class="flex items-center justify-between mb-2.5 pb-2 border-b border-slate-700/60">
+              <span class="text-xs font-black text-white uppercase tracking-wider flex items-center gap-1.5 font-display">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                Khách Vừa Nhận Voucher Trực Tuyến
+              </span>
+              <span class="text-[10px] text-slate-400 font-semibold">Trực tiếp</span>
+            </div>
+            <div id="winner-ticker-list" class="space-y-2 max-h-44 overflow-y-auto pr-1 text-xs">
+              <div class="flex items-center justify-between text-xs p-2 rounded-lg bg-slate-900/60 border border-slate-700/50">
+                <div class="flex items-center gap-2">
+                  <span class="text-amber-400 font-mono font-bold">098*****89</span>
+                  <span class="text-slate-300 font-medium">Khách hàng</span>
+                </div>
+                <span class="font-black text-emerald-400">VOUCHER 400K</span>
+              </div>
+              <div class="flex items-center justify-between text-xs p-2 rounded-lg bg-slate-900/60 border border-slate-700/50">
+                <div class="flex items-center gap-2">
+                  <span class="text-amber-400 font-mono font-bold">091*****21</span>
+                  <span class="text-slate-300 font-medium">Khách hàng</span>
+                </div>
+                <span class="font-black text-emerald-400">VOUCHER 300K</span>
+              </div>
+              <div class="flex items-center justify-between text-xs p-2 rounded-lg bg-slate-900/60 border border-slate-700/50">
+                <div class="flex items-center gap-2">
+                  <span class="text-amber-400 font-mono font-bold">097*****09</span>
+                  <span class="text-slate-300 font-medium">Khách hàng</span>
+                </div>
+                <span class="font-black text-amber-400">ƯU TIÊN XẾP CONT</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -1894,213 +1966,7 @@
   <script src="assets/js/admin.js"></script>
   <script src="assets/js/wheel.js"></script>
   <script src="assets/js/leaderboard.js"></script>
-  <script src="assets/js/main.js?v=3"></script>
+  <script src="assets/js/main.js"></script>
 
-  <!-- Gala Lucky Wheel Driver Script (16 LEDs, Canvas, Sound, Confetti) -->
-  <script>
-    const galaWheelSegments = [
-      { label: 'Surface Pro 11', color: '#FF5E00', text: '#FFFFFF' },
-      { label: 'Voucher 500k', color: '#FFF8F0', text: '#EA580C' },
-      { label: 'iPad Air M3', color: '#F59E0B', text: '#FFFFFF' },
-      { label: '-30% Cước', color: '#FFF8F0', text: '#EA580C' },
-      { label: 'Máy Lọc Dyson', color: '#DC2626', text: '#FFFFFF' },
-      { label: 'Voucher 1 Triệu', color: '#FFF8F0', text: '#EA580C' },
-      { label: 'Thẻ VIP+1', color: '#FF8A00', text: '#FFFFFF' },
-      { label: 'Tri Ân Mùng 05', color: '#FFF8F0', text: '#EA580C' }
-    ];
-
-    let galaWheelRotation = 0;
-    let isGalaWheelSpinning = false;
-    let galaLedInterval = null;
-
-    function initGalaLedBulbs() {
-      const container = document.getElementById('led-bulbs-container');
-      if (!container || container.children.length > 0) return;
-      const numBulbs = 16;
-      const radius = 138;
-      const center = 144;
-      for (let i = 0; i < numBulbs; i++) {
-        const angle = (i * 2 * Math.PI) / numBulbs;
-        const x = center + radius * Math.cos(angle);
-        const y = center + radius * Math.sin(angle);
-        const bulb = document.createElement('div');
-        bulb.className = 'led-bulb' + (i % 2 === 0 ? ' bulb-on' : '');
-        bulb.style.left = x + 'px';
-        bulb.style.top = y + 'px';
-        container.appendChild(bulb);
-      }
-    }
-
-    function toggleGalaLedBulbs(chaseSpeed = 400) {
-      if (galaLedInterval) clearInterval(galaLedInterval);
-      galaLedInterval = setInterval(() => {
-        document.querySelectorAll('.led-bulb').forEach((bulb) => {
-          bulb.classList.toggle('bulb-on');
-        });
-      }, chaseSpeed);
-    }
-
-    function drawGalaWheel() {
-      const canvas = document.getElementById('wheel-canvas');
-      if (!canvas) return;
-      const ctx = canvas.getContext('2d');
-      const numSegments = galaWheelSegments.length;
-      const arcSize = (2 * Math.PI) / numSegments;
-      const radius = canvas.width / 2;
-
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.save();
-      ctx.translate(radius, radius);
-      ctx.rotate(galaWheelRotation);
-
-      for (let i = 0; i < numSegments; i++) {
-        const seg = galaWheelSegments[i];
-        const angle = i * arcSize;
-        ctx.beginPath();
-        ctx.fillStyle = seg.color;
-        ctx.moveTo(0, 0);
-        ctx.arc(0, 0, radius, angle, angle + arcSize);
-        ctx.lineTo(0, 0);
-        ctx.fill();
-
-        ctx.strokeStyle = 'rgba(255, 255, 255, 0.85)';
-        ctx.lineWidth = 2.5;
-        ctx.stroke();
-
-        ctx.save();
-        ctx.rotate(angle + arcSize / 2);
-        ctx.textAlign = 'right';
-        ctx.fillStyle = seg.text;
-        ctx.font = 'bold 11px "Plus Jakarta Sans", sans-serif';
-        ctx.fillText(seg.label, radius - 16, 4);
-        ctx.restore();
-      }
-      ctx.restore();
-    }
-
-    // Override openWelcomeWheelModal to open Gala Wheel cleanly
-    window.openWelcomeWheelModal = function() {
-      const modal = document.getElementById('welcome-wheel-modal');
-      if (modal) {
-        modal.classList.remove('hidden');
-        modal.style.display = 'flex';
-        initGalaLedBulbs();
-        toggleGalaLedBulbs(350);
-        drawGalaWheel();
-      }
-    };
-
-    window.closeWelcomeWheelModal = function() {
-      const modal = document.getElementById('welcome-wheel-modal');
-      if (modal) {
-        modal.classList.add('hidden');
-        modal.style.display = 'none';
-        if (galaLedInterval) clearInterval(galaLedInterval);
-      }
-    };
-
-    window.openLuckyWheelModal = window.openWelcomeWheelModal;
-    window.closeLuckyWheelModal = window.closeWelcomeWheelModal;
-
-    function spinWheelGala() {
-      if (isGalaWheelSpinning) return;
-      isGalaWheelSpinning = true;
-
-      toggleGalaLedBulbs(90);
-
-      const needle = document.getElementById('wheel-needle');
-      if (needle) needle.classList.add('needle-vibrating');
-
-      const resultBox = document.getElementById('wheel-result');
-      resultBox.innerHTML = '<span class="text-brand-orange animate-pulse">🎡 Vòng quay đang xoay với tốc độ cao... Đang tìm giải thưởng!</span>';
-
-      const spinBtn1 = document.getElementById('spin-center-btn');
-      const spinBtn2 = document.getElementById('spin-action-btn');
-      if (spinBtn1) spinBtn1.disabled = true;
-      if (spinBtn2) spinBtn2.disabled = true;
-
-      const numSegments = galaWheelSegments.length;
-      const arcSize = (2 * Math.PI) / numSegments;
-      const winningIndex = Math.floor(Math.random() * numSegments);
-      const extraRounds = 6 + Math.floor(Math.random() * 2);
-      const targetAngle = (extraRounds * 2 * Math.PI) + ((numSegments - winningIndex - 0.5) * arcSize) - (Math.PI / 2);
-      const startAngle = galaWheelRotation % (2 * Math.PI);
-      const totalRotationNeeded = targetAngle;
-
-      const duration = 4200;
-      const startTime = performance.now();
-      let lastTickAngle = 0;
-
-      function animateSpin(currentTime) {
-        const elapsed = currentTime - startTime;
-        const progress = Math.min(elapsed / duration, 1);
-        const easeOut = 1 - Math.pow(1 - progress, 3);
-        galaWheelRotation = startAngle + totalRotationNeeded * easeOut;
-
-        if (Math.abs(galaWheelRotation - lastTickAngle) > arcSize) {
-          if (typeof playTickSound === 'function') playTickSound();
-          lastTickAngle = galaWheelRotation;
-        }
-
-        drawGalaWheel();
-
-        if (progress < 1) {
-          requestAnimationFrame(animateSpin);
-        } else {
-          isGalaWheelSpinning = false;
-          if (spinBtn1) spinBtn1.disabled = false;
-          if (spinBtn2) spinBtn2.disabled = false;
-          if (needle) needle.classList.remove('needle-vibrating');
-
-          toggleGalaLedBulbs(400);
-
-          const wonPrize = galaWheelSegments[winningIndex];
-          resultBox.innerHTML = `<span class="text-slate-900 font-extrabold">🎉 CHÚC MỪNG BẠN TRÚNG: </span><span class="text-red-600 font-black ml-1 text-sm sm:text-base">${wonPrize.label}</span><span class="text-slate-900 font-extrabold">!</span>`;
-
-          if (typeof playWinSound === 'function') playWinSound();
-
-          if (typeof confetti === 'function') {
-            confetti({ particleCount: 90, spread: 75, origin: { y: 0.6 } });
-            setTimeout(() => {
-              confetti({ particleCount: 60, angle: 60, spread: 55, origin: { x: 0.05 } });
-              confetti({ particleCount: 60, angle: 120, spread: 55, origin: { x: 0.95 } });
-            }, 250);
-          }
-        }
-      }
-
-      requestAnimationFrame(animateSpin);
-    }
-
-    window.addEventListener('DOMContentLoaded', () => {
-      drawGalaWheel();
-      initGalaLedBulbs();
-    });
-  </script>
-  <script>
-    // Robust Prize Tab Switcher (Supports Gradient Pills)
-    window.switchPrizeTab = function(tabId) {
-      document.querySelectorAll('.prize-tab-content').forEach(el => {
-        el.classList.add('hidden');
-      });
-
-      const activeClasses = ['bg-gradient-to-r', 'from-brand-600', 'to-amber-500', 'text-white', 'shadow-lg', 'bg-brand-600', 'shadow-md', 'active'];
-      document.querySelectorAll('.prize-tab-btn').forEach(btn => {
-        activeClasses.forEach(cls => btn.classList.remove(cls));
-        btn.classList.add('text-slate-300', 'font-bold');
-      });
-
-      const activeContent = document.getElementById('tab-content-' + tabId);
-      const activeBtn = document.getElementById('tab-btn-' + tabId);
-
-      if (activeContent) {
-        activeContent.classList.remove('hidden');
-      }
-      if (activeBtn) {
-        activeBtn.classList.remove('text-slate-300');
-        activeBtn.classList.add('bg-gradient-to-r', 'from-brand-600', 'to-amber-500', 'text-white', 'shadow-lg', 'active');
-      }
-    };
-  </script>
 </body>
 </html>
