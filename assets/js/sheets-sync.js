@@ -4,7 +4,7 @@
  */
 
 const STORAGE_KEY_SHEETS_URL = 'eureka_sheets_api_url';
-const DEFAULT_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbx_placeholder/exec'; // Placeholder, configured via Admin
+const DEFAULT_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbz0jaKwtOv8BSZljDtxDxJ9vQ7Zw2dLRwI5Bgg7tvQTn_W7PxbfymX6rtA9YMy5uke_/exec';
 
 // Get active API URL
 function getSheetsApiUrl() {
@@ -12,7 +12,7 @@ function getSheetsApiUrl() {
     const saved = localStorage.getItem(STORAGE_KEY_SHEETS_URL);
     if (saved && saved.trim().startsWith('http')) return saved.trim();
   } catch (e) {}
-  return '';
+  return DEFAULT_SHEETS_URL;
 }
 
 function setSheetsApiUrl(url) {
@@ -237,16 +237,32 @@ async function pushAllLocalDataToCloud() {
     return false;
   }
 
+  const leads = (typeof getSpinLeads === 'function') ? getSpinLeads() : JSON.parse(localStorage.getItem('eureka_spin_leads') || '[]');
+  const monthly = (typeof getMonthlyWinners === 'function') ? getMonthlyWinners() : JSON.parse(localStorage.getItem('eureka_monthly_winners') || '[]');
+  const nhiemVu = (typeof getNhiemVuConfig === 'function') ? getNhiemVuConfig() : JSON.parse(localStorage.getItem('eureka_nhiem_vu_config') || 'null');
+  const gala = JSON.parse(localStorage.getItem('eureka_gala_awards_config') || '{"is_active": true}');
+  const weekly = (typeof getWeeklyWinnerData === 'function') ? getWeeklyWinnerData() : JSON.parse(localStorage.getItem('eureka_weekly_winner') || 'null');
+  const customLb = JSON.parse(localStorage.getItem('eureka_custom_leaderboard') || '[]');
+  const lockedPhones = Object.values(JSON.parse(localStorage.getItem('eureka_locked_spun_phones') || '{}'));
+  
+  if (Array.isArray(leads)) {
+    leads.forEach(l => {
+      if (l.phone && !lockedPhones.some(p => (typeof p === 'string' ? p : p.phone) === l.phone)) {
+        lockedPhones.push(l.phone);
+      }
+    });
+  }
+
   const payload = {
     action: 'sync_all',
     data: {
-      spinLeads: JSON.parse(localStorage.getItem('eureka_spin_leads') || '[]'),
-      lockedPhones: Object.values(JSON.parse(localStorage.getItem('eureka_locked_spun_phones') || '{}')),
-      monthlyWinners: JSON.parse(localStorage.getItem('eureka_monthly_winners') || '[]'),
-      nhiemVuConfig: JSON.parse(localStorage.getItem('eureka_nhiem_vu_config') || 'null'),
-      galaConfig: JSON.parse(localStorage.getItem('eureka_gala_awards_config') || 'null'),
-      weeklyWinner: JSON.parse(localStorage.getItem('eureka_weekly_winner') || 'null'),
-      customLeaderboard: JSON.parse(localStorage.getItem('eureka_custom_leaderboard') || '[]')
+      spinLeads: leads,
+      lockedPhones: lockedPhones,
+      monthlyWinners: monthly,
+      nhiemVuConfig: nhiemVu,
+      galaConfig: gala,
+      weeklyWinner: weekly,
+      customLeaderboard: customLb
     }
   };
 
