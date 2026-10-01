@@ -22,6 +22,7 @@
           fontFamily: {
             sans: ['"Plus Jakarta Sans"', 'system-ui', '-apple-system', 'sans-serif'],
             display: ['"Plus Jakarta Sans"', 'system-ui', '-apple-system', 'sans-serif'],
+            mono: ['"Plus Jakarta Sans"', 'system-ui', '-apple-system', 'sans-serif'],
           },
           colors: {
             brand: {
@@ -77,6 +78,25 @@
   <link rel="stylesheet" href="assets/css/style.css">
 
   <style>
+    /* GALA CELEBRATION MODE: ONLY KEEP HERO (TONG QUAN), GALA SUMMARY, AND LEADERBOARD */
+    body.gala-celebration-mode #giai-thuong,
+    body.gala-celebration-mode #vong-quay-mung-05,
+    body.gala-celebration-mode #cot-moc-vip,
+    body.gala-celebration-mode #the-le,
+    body.gala-celebration-mode #floating-lucky-wheel-widget,
+    body.gala-celebration-mode #live-voucher-toast,
+    body.gala-celebration-mode #hero-spin-btn-wrapper,
+    body.gala-celebration-mode .nav-campaign-only,
+    body.gala-celebration-mode .gala-hidden-section {
+      display: none !important;
+    }
+    body.gala-celebration-mode #hero-gala-jump-btn {
+      display: inline-flex !important;
+    }
+    body:not(.gala-celebration-mode) #nav-gala-link {
+      display: none !important;
+    }
+
     /* Glassmorphism System for Hero Section */
     @keyframes orbFloat1 {
       0% { transform: translate(0, 0) scale(1); }
@@ -238,7 +258,7 @@
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 </head>
 
-<body class="selection:bg-brand-500 selection:text-white">
+<body class="gala-celebration-mode selection:bg-brand-500 selection:text-white">
 
   <!-- ==================== HEADER (Khớp 100% Navbar erktransport.com) ==================== -->
   <header class="sticky top-0 z-40 glass-card border-b border-white/10 transition-all duration-300">
@@ -399,32 +419,32 @@
             </div>
           </div>
 
-          <!-- 4 Thẻ Chỉ Số Tổng Kết Chương Trình -->
+          <!-- 4 Thẻ Chỉ Số Tổng Kết Chương Trình (Tự Động Tính Từ BXH) -->
           <div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mt-6 pt-6 border-t border-slate-800">
             <div class="p-3.5 rounded-2xl bg-slate-800/60 border border-white/5">
               <span class="text-[11px] text-slate-400 font-bold block mb-1">👥 KHÁCH HÀNG THAM GIA</span>
-              <div class="text-xl sm:text-2xl font-black text-amber-400">285+</div>
+              <div id="gala-stat-total-customers" class="text-xl sm:text-2xl font-black text-amber-400">285+</div>
               <span class="text-[10px] text-slate-400">Doanh nghiệp & Hộ KD</span>
             </div>
             <div class="p-3.5 rounded-2xl bg-slate-800/60 border border-white/5">
               <span class="text-[11px] text-slate-400 font-bold block mb-1">📦 ĐƠN HÀNG HOÀN TẤT</span>
-              <div class="text-xl sm:text-2xl font-black text-emerald-400">2.140+</div>
+              <div id="gala-stat-total-orders" class="text-xl sm:text-2xl font-black text-emerald-400">2.140+</div>
               <span class="text-[10px] text-slate-400">Booking thông quan chính ngạch</span>
             </div>
             <div class="p-3.5 rounded-2xl bg-slate-800/60 border border-white/5">
               <span class="text-[11px] text-slate-400 font-bold block mb-1">⚖️ TỔNG SẢN LƯỢNG VẬN TẢI</span>
-              <div class="text-xl sm:text-2xl font-black text-sky-400">560 Tấn / 1.820 m³</div>
+              <div id="gala-stat-total-volume" class="text-xl sm:text-2xl font-black text-sky-400">560 Tấn / 1.820 m³</div>
               <span class="text-[10px] text-slate-400">Đường bộ Trung - Việt 24/7</span>
             </div>
             <div class="p-3.5 rounded-2xl bg-slate-800/60 border border-white/5">
               <span class="text-[11px] text-slate-400 font-bold block mb-1">💎 TỔNG GIẢI THƯỞNG TRAO TAY</span>
-              <div class="text-xl sm:text-2xl font-black text-amber-300">135 Triệu đ</div>
+              <div id="gala-stat-total-revenue" class="text-xl sm:text-2xl font-black text-amber-300">135 Triệu đ</div>
               <span class="text-[10px] text-slate-400">Quà công nghệ & Voucher</span>
             </div>
           </div>
         </div>
 
-        <!-- 1. TOP 3 CHUNG CUỘC - AI ĐẠT GIẢI GÌ -->
+        <!-- 1. TOP 3 CHUNG CUỘC - AI ĐẠT GIẢI GÌ (Tự Động Lấy Từ BXH) -->
         <div class="mb-12">
           <div class="flex items-center justify-between mb-6 px-1">
             <div class="text-left">
@@ -444,11 +464,11 @@
               </div>
               <div>
                 <div class="mt-2 mb-4 flex items-center justify-between">
-                  <span class="text-xs text-amber-300 font-bold">MÃ: ERK-KH-8891</span>
+                  <span id="gala-top1-code" class="text-xs text-amber-300 font-bold">MÃ: ERK-KH-8891</span>
                   <span class="text-xs font-black text-amber-400 bg-amber-400/20 px-2.5 py-0.5 rounded-lg border border-amber-400/40">HẠNG 1 TOÀN ĐOÀN</span>
                 </div>
-                <h4 class="text-lg font-black text-white mb-1">CÔNG TY TNHH TM XNK MINH CHÂU</h4>
-                <div class="text-2xl font-black text-amber-400 mb-3">1.280.500.000 đ</div>
+                <h4 id="gala-top1-name" class="text-lg font-black text-white mb-1">CÔNG TY TNHH TM XNK MINH CHÂU</h4>
+                <div id="gala-top1-fee" class="text-2xl font-black text-amber-400 mb-3">1.280.500.000 đ</div>
                 <div class="p-3 rounded-2xl bg-slate-950/70 border border-amber-400/30 mb-4 flex items-center gap-3">
                   <img src="assets/img/surface-pro-11.jpg" alt="Surface Pro 11" class="w-16 h-16 object-contain rounded-lg bg-white/5 p-1" />
                   <div>
@@ -457,10 +477,10 @@
                     <span class="text-xs text-slate-400">Trị giá 35.000.000 đ + Cúp Vàng Danh Dự</span>
                   </div>
                 </div>
-                <p class="text-xs text-slate-300 leading-relaxed">Xuất sắc dẫn đầu bảng tổng sắp với 38 đơn booking hoàn tất đúng hạn.</p>
+                <p class="text-xs text-slate-300 leading-relaxed">Xuất sắc dẫn đầu bảng tổng sắp với sự bứt phá vượt bậc.</p>
               </div>
               <div class="pt-4 border-t border-slate-800 mt-4 flex items-center justify-between text-xs text-amber-300 font-bold">
-                <span>✓ 38 Đơn hoàn tất</span>
+                <span id="gala-top1-orders">✓ 38 Đơn hoàn tất</span>
                 <span>Vinh danh Quán quân</span>
               </div>
             </div>
@@ -472,11 +492,11 @@
               </div>
               <div>
                 <div class="mt-2 mb-4 flex items-center justify-between">
-                  <span class="text-xs text-slate-300 font-bold">MÃ: ERK-KH-4432</span>
+                  <span id="gala-top2-code" class="text-xs text-slate-300 font-bold">MÃ: ERK-KH-4432</span>
                   <span class="text-xs font-black text-slate-300 bg-slate-700/50 px-2 py-0.5 rounded-lg border border-slate-600">HẠNG 2 TOÀN ĐOÀN</span>
                 </div>
-                <h4 class="text-lg font-black text-white mb-1">CÔNG TY CP VẬN TẢI & XNK ĐÔNG Á</h4>
-                <div class="text-2xl font-black text-slate-200 mb-3">945.200.000 đ</div>
+                <h4 id="gala-top2-name" class="text-lg font-black text-white mb-1">CÔNG TY CP VẬN TẢI & XNK ĐÔNG Á</h4>
+                <div id="gala-top2-fee" class="text-2xl font-black text-slate-200 mb-3">945.200.000 đ</div>
                 <div class="p-3 rounded-2xl bg-slate-950/70 border border-slate-700 mb-4 flex items-center gap-3">
                   <img src="assets/img/ipad-air-m3.jpg" alt="iPad Air M3" class="w-16 h-16 object-contain rounded-lg bg-white/5 p-1" />
                   <div>
@@ -485,10 +505,10 @@
                     <span class="text-xs text-slate-400">Trị giá 20.000.000 đ + Kỷ niệm chương Bạc</span>
                   </div>
                 </div>
-                <p class="text-xs text-slate-300 leading-relaxed">Tốc độ bứt phá ngoạn mục với 27 chuyến hàng xuất nhập khẩu liên tục.</p>
+                <p class="text-xs text-slate-300 leading-relaxed">Tốc độ bứt phá ngoạn mục với các chuyến hàng liên tục.</p>
               </div>
               <div class="pt-4 border-t border-slate-800 mt-4 flex items-center justify-between text-xs text-slate-300 font-bold">
-                <span>✓ 27 Đơn hoàn tất</span>
+                <span id="gala-top2-orders">✓ 27 Đơn hoàn tất</span>
                 <span>Vinh danh Á Quân 1</span>
               </div>
             </div>
@@ -500,11 +520,11 @@
               </div>
               <div>
                 <div class="mt-2 mb-4 flex items-center justify-between">
-                  <span class="text-xs text-amber-300/80 font-bold">MÃ: ERK-KH-1205</span>
+                  <span id="gala-top3-code" class="text-xs text-amber-300/80 font-bold">MÃ: ERK-KH-1205</span>
                   <span class="text-xs font-black text-amber-300 bg-amber-900/30 px-2 py-0.5 rounded-lg border border-amber-700/50">HẠNG 3 TOÀN ĐOÀN</span>
                 </div>
-                <h4 class="text-lg font-black text-white mb-1">HỘ KINH DOANH LOGISTICS ĐẠI NAM</h4>
-                <div class="text-2xl font-black text-amber-500 mb-3">710.800.000 đ</div>
+                <h4 id="gala-top3-name" class="text-lg font-black text-white mb-1">HỘ KINH DOANH LOGISTICS ĐẠI NAM</h4>
+                <div id="gala-top3-fee" class="text-2xl font-black text-amber-500 mb-3">710.800.000 đ</div>
                 <div class="p-3 rounded-2xl bg-slate-950/70 border border-amber-700/40 mb-4 flex items-center gap-3">
                   <img src="assets/img/dyson-purifier.jpg" alt="Máy lọc Dyson" class="w-16 h-16 object-contain rounded-lg bg-white/5 p-1" />
                   <div>
@@ -513,10 +533,10 @@
                     <span class="text-xs text-slate-400">Trị giá 10.000.000 đ + Kỷ niệm chương Đồng</span>
                   </div>
                 </div>
-                <p class="text-xs text-slate-300 leading-relaxed">Đồng hành bền bỉ từ những ngày đầu mùa cao điểm với 21 đơn booking.</p>
+                <p class="text-xs text-slate-300 leading-relaxed">Đồng hành bền bỉ từ những ngày đầu mùa cao điểm.</p>
               </div>
               <div class="pt-4 border-t border-slate-800 mt-4 flex items-center justify-between text-xs text-amber-400 font-bold">
-                <span>✓ 21 Đơn hoàn tất</span>
+                <span id="gala-top3-orders">✓ 21 Đơn hoàn tất</span>
                 <span>Vinh danh Á Quân 2</span>
               </div>
             </div>
@@ -537,92 +557,97 @@
 
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 text-left">
             <!-- Giải 1: Vua Số Lượng Đơn -->
-            <div class="rounded-2xl p-4 bg-slate-900/90 border border-white/10 hover:border-amber-400/60 transition-all flex flex-col justify-between">
+            <div onclick="openGiaiPhuModal('vua-so-luong-don')" class="cursor-pointer rounded-2xl p-4 bg-slate-900/90 border border-white/10 hover:border-amber-400/60 hover:scale-[1.02] transition-all flex flex-col justify-between group">
               <div>
                 <div class="h-24 rounded-xl overflow-hidden mb-3 relative">
-                  <img src="assets/images/award-so-luong-don.jpg" class="w-full h-full object-cover" />
+                  <img src="assets/images/award-so-luong-don.jpg" class="w-full h-full object-cover group-hover:scale-105 transition-transform" />
                   <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
                   <span class="absolute top-2 left-2 px-2 py-0.5 rounded bg-amber-500 text-slate-950 text-[10px] font-black">📦 VUA SỐ ĐƠN</span>
                 </div>
-                <span class="text-[11px] text-amber-300 font-bold block">ERK-KH-9012</span>
-                <h5 class="text-sm font-bold text-white mb-1">XNK Hoàng Long</h5>
-                <div class="text-base font-black text-amber-400 mb-1">46 Đơn Booking</div>
+                <span id="gala-award-don-code" class="text-[11px] text-amber-300 font-bold block">ERK-KH-9012</span>
+                <h5 id="gala-award-don-name" class="text-sm font-bold text-white mb-1">XNK Hoàng Long</h5>
+                <div id="gala-award-don-val" class="text-base font-black text-amber-400 mb-1">46 Đơn Booking</div>
                 <p class="text-[11px] text-slate-400">Kỷ lục booking hoàn tất nhiều nhất chương trình.</p>
               </div>
-              <div class="pt-3 mt-3 border-t border-slate-800 text-[11px] font-bold text-emerald-400">
-                Thưởng: 3.000.000 đ
+              <div class="pt-3 mt-3 border-t border-slate-800 flex items-center justify-between text-[11px] font-bold">
+                <span class="text-emerald-400">Thưởng: 3.000.000 đ</span>
+                <span class="text-amber-400 group-hover:text-amber-300 flex items-center gap-0.5">BXH <span>↗</span></span>
               </div>
             </div>
 
             <!-- Giải 2: Tân Binh Xuất Sắc -->
-            <div class="rounded-2xl p-4 bg-slate-900/90 border border-white/10 hover:border-amber-400/60 transition-all flex flex-col justify-between">
+            <div onclick="openGiaiPhuModal('tan-binh-xuat-sac')" class="cursor-pointer rounded-2xl p-4 bg-slate-900/90 border border-white/10 hover:border-amber-400/60 hover:scale-[1.02] transition-all flex flex-col justify-between group">
               <div>
                 <div class="h-24 rounded-xl overflow-hidden mb-3 relative">
-                  <img src="assets/images/award-tan-binh.jpg" class="w-full h-full object-cover" />
+                  <img src="assets/images/award-tan-binh.jpg" class="w-full h-full object-cover group-hover:scale-105 transition-transform" />
                   <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
                   <span class="absolute top-2 left-2 px-2 py-0.5 rounded bg-amber-500 text-slate-950 text-[10px] font-black">🌟 TÂN BINH</span>
                 </div>
-                <span class="text-[11px] text-amber-300 font-bold block">ERK-KH-7731</span>
-                <h5 class="text-sm font-bold text-white mb-1">Công ty Tân Thời Đại</h5>
-                <div class="text-base font-black text-amber-400 mb-1">485.000.000 đ</div>
+                <span id="gala-award-new-code" class="text-[11px] text-amber-300 font-bold block">ERK-KH-7731</span>
+                <h5 id="gala-award-new-name" class="text-sm font-bold text-white mb-1">Công ty Tân Thời Đại</h5>
+                <div id="gala-award-new-val" class="text-base font-black text-amber-400 mb-1">485.000.000 đ</div>
                 <p class="text-[11px] text-slate-400">Khách hàng mới tạo tài khoản có doanh số cao nhất.</p>
               </div>
-              <div class="pt-3 mt-3 border-t border-slate-800 text-[11px] font-bold text-emerald-400">
-                Thưởng: 3.000.000 đ
+              <div class="pt-3 mt-3 border-t border-slate-800 flex items-center justify-between text-[11px] font-bold">
+                <span class="text-emerald-400">Thưởng: 3.000.000 đ</span>
+                <span class="text-amber-400 group-hover:text-amber-300 flex items-center gap-0.5">BXH <span>↗</span></span>
               </div>
             </div>
 
             <!-- Giải 3: Sự Trở Lại Ấn Tượng -->
-            <div class="rounded-2xl p-4 bg-slate-900/90 border border-white/10 hover:border-amber-400/60 transition-all flex flex-col justify-between">
+            <div onclick="openGiaiPhuModal('su-tro-lai-an-tuong')" class="cursor-pointer rounded-2xl p-4 bg-slate-900/90 border border-white/10 hover:border-amber-400/60 hover:scale-[1.02] transition-all flex flex-col justify-between group">
               <div>
                 <div class="h-24 rounded-xl overflow-hidden mb-3 relative">
-                  <img src="assets/images/award-tro-lai.jpg" class="w-full h-full object-cover" />
+                  <img src="assets/images/award-tro-lai.jpg" class="w-full h-full object-cover group-hover:scale-105 transition-transform" />
                   <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
                   <span class="absolute top-2 left-2 px-2 py-0.5 rounded bg-amber-500 text-slate-950 text-[10px] font-black">🔄 TRỞ LẠI</span>
                 </div>
-                <span class="text-[11px] text-amber-300 font-bold block">ERK-KH-5524</span>
-                <h5 class="text-sm font-bold text-white mb-1">XNK Việt Trung Thịnh Vượng</h5>
-                <div class="text-base font-black text-amber-400 mb-1">18 Đơn Tái Xuất</div>
+                <span id="gala-award-return-code" class="text-[11px] text-amber-300 font-bold block">ERK-KH-5524</span>
+                <h5 id="gala-award-return-name" class="text-sm font-bold text-white mb-1">XNK Việt Trung Thịnh Vượng</h5>
+                <div id="gala-award-return-val" class="text-base font-black text-amber-400 mb-1">18 Đơn Tái Xuất</div>
                 <p class="text-[11px] text-slate-400">Khách cũ quay lại hợp tác bứt phá ngoạn mục nhất.</p>
               </div>
-              <div class="pt-3 mt-3 border-t border-slate-800 text-[11px] font-bold text-emerald-400">
-                Thưởng: 3.000.000 đ
+              <div class="pt-3 mt-3 border-t border-slate-800 flex items-center justify-between text-[11px] font-bold">
+                <span class="text-emerald-400">Thưởng: 3.000.000 đ</span>
+                <span class="text-amber-400 group-hover:text-amber-300 flex items-center gap-0.5">BXH <span>↗</span></span>
               </div>
             </div>
 
             <!-- Giải 4: Vua Tải Trọng (Kg) -->
-            <div class="rounded-2xl p-4 bg-slate-900/90 border border-white/10 hover:border-amber-400/60 transition-all flex flex-col justify-between">
+            <div onclick="openGiaiPhuModal('vua-tai-trong')" class="cursor-pointer rounded-2xl p-4 bg-slate-900/90 border border-white/10 hover:border-amber-400/60 hover:scale-[1.02] transition-all flex flex-col justify-between group">
               <div>
                 <div class="h-24 rounded-xl overflow-hidden mb-3 relative">
-                  <img src="assets/images/award-tai-trong.jpg" class="w-full h-full object-cover" />
+                  <img src="assets/images/award-tai-trong.jpg" class="w-full h-full object-cover group-hover:scale-105 transition-transform" />
                   <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
                   <span class="absolute top-2 left-2 px-2 py-0.5 rounded bg-amber-500 text-slate-950 text-[10px] font-black">⚓ TẢI TRỌNG</span>
                 </div>
-                <span class="text-[11px] text-amber-300 font-bold block">ERK-KH-3198</span>
-                <h5 class="text-sm font-bold text-white mb-1">Thép & TB Tân Phát</h5>
-                <div class="text-base font-black text-amber-400 mb-1">68.450 kg</div>
+                <span id="gala-award-weight-code" class="text-[11px] text-amber-300 font-bold block">ERK-KH-3198</span>
+                <h5 id="gala-award-weight-name" class="text-sm font-bold text-white mb-1">Thép & TB Tân Phát</h5>
+                <div id="gala-award-weight-val" class="text-base font-black text-amber-400 mb-1">68.450 kg</div>
                 <p class="text-[11px] text-slate-400">Tổng khối lượng kg cao nhất lô hàng term E & F.</p>
               </div>
-              <div class="pt-3 mt-3 border-t border-slate-800 text-[11px] font-bold text-emerald-400">
-                Thưởng: 3.000.000 đ
+              <div class="pt-3 mt-3 border-t border-slate-800 flex items-center justify-between text-[11px] font-bold">
+                <span class="text-emerald-400">Thưởng: 3.000.000 đ</span>
+                <span class="text-amber-400 group-hover:text-amber-300 flex items-center gap-0.5">BXH <span>↗</span></span>
               </div>
             </div>
 
             <!-- Giải 5: Vua Khối Lượng (M³) -->
-            <div class="rounded-2xl p-4 bg-slate-900/90 border border-white/10 hover:border-amber-400/60 transition-all flex flex-col justify-between">
+            <div onclick="openGiaiPhuModal('vua-khoi-luong')" class="cursor-pointer rounded-2xl p-4 bg-slate-900/90 border border-white/10 hover:border-amber-400/60 hover:scale-[1.02] transition-all flex flex-col justify-between group">
               <div>
                 <div class="h-24 rounded-xl overflow-hidden mb-3 relative">
-                  <img src="assets/images/award-khoi-luong.jpg" class="w-full h-full object-cover" />
+                  <img src="assets/images/award-khoi-luong.jpg" class="w-full h-full object-cover group-hover:scale-105 transition-transform" />
                   <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
                   <span class="absolute top-2 left-2 px-2 py-0.5 rounded bg-amber-500 text-slate-950 text-[10px] font-black">🚛 KHỐI LƯỢNG</span>
                 </div>
-                <span class="text-[11px] text-amber-300 font-bold block">ERK-KH-6640</span>
-                <h5 class="text-sm font-bold text-white mb-1">Nội Thất Á Châu</h5>
-                <div class="text-base font-black text-amber-400 mb-1">215 m³</div>
+                <span id="gala-award-volume-code" class="text-[11px] text-amber-300 font-bold block">ERK-KH-6640</span>
+                <h5 id="gala-award-volume-name" class="text-sm font-bold text-white mb-1">Nội Thất Á Châu</h5>
+                <div id="gala-award-volume-val" class="text-base font-black text-amber-400 mb-1">215 m³</div>
                 <p class="text-[11px] text-slate-400">Tổng thể tích m³ gom cont chính ngạch cao nhất.</p>
               </div>
-              <div class="pt-3 mt-3 border-t border-slate-800 text-[11px] font-bold text-emerald-400">
-                Thưởng: 3.000.000 đ
+              <div class="pt-3 mt-3 border-t border-slate-800 flex items-center justify-between text-[11px] font-bold">
+                <span class="text-emerald-400">Thưởng: 3.000.000 đ</span>
+                <span class="text-amber-400 group-hover:text-amber-300 flex items-center gap-0.5">BXH <span>↗</span></span>
               </div>
             </div>
           </div>
@@ -1714,7 +1739,7 @@
   </section>
 
   <!-- ==================== CALL TO ACTION BOTTOM ==================== -->
-  <section class="py-16 relative bg-gradient-to-r from-brand-700 via-brand-600 to-amber-600 text-white overflow-hidden">
+  <section class="py-16 relative bg-gradient-to-r from-brand-700 via-brand-600 to-amber-600 text-white overflow-hidden gala-hidden-section">
     <div class="max-w-5xl mx-auto px-4 text-center relative z-10">
       <h2 class="text-3xl sm:text-4xl font-black mb-3">
         Sẵn Sàng Bước Vào Chương Trình Tri Ân Khách Hàng 2026?
@@ -2521,7 +2546,7 @@
                 <span>🎯</span> CẤU HÌNH CÔNG BỐ NHIỆM VỤ HỆ THỐNG (MÀN HÌNH CHÍNH)
               </h4>
               <p class="text-[11px] text-slate-400 mt-0.5">
-                Mỗi tháng chỉ công bố 1 chặng kèm danh sách mã khách hàng đạt chuẩn. Hoặc chuyển sang chế độ Tổng kết 3 chặng.
+                Mỗi tháng chỉ công bố 1 chặng kèm danh sách mã khách hàng hoàn thành nhiệm vụ. Hoặc chuyển sang chế độ Tổng kết 3 chặng.
               </p>
             </div>
             <span id="admin-nhiemvu-status-badge" class="px-2.5 py-1 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 text-[10px] font-bold shrink-0">
@@ -2536,7 +2561,7 @@
               <button type="button" onclick="setAdminNhiemVuMode('chang-1')" id="btn-mode-chang-1" class="admin-nhiemvu-mode-btn p-2.5 rounded-xl border text-left transition-all bg-amber-500/20 border-amber-400 text-amber-300 font-bold text-xs">
                 <div class="flex items-center justify-between">
                   <span>Chặng 1</span>
-                  <span class="text-[10px] px-1.5 py-0.2 rounded bg-amber-400/20 font-mono">T10</span>
+                  <span class="text-[10px] px-1.5 py-0.2 rounded bg-amber-400/20 font-bold">T10</span>
                 </div>
                 <div class="text-[10px] text-slate-400 font-normal mt-0.5">01/10 - 30/10</div>
               </button>
@@ -2544,7 +2569,7 @@
               <button type="button" onclick="setAdminNhiemVuMode('chang-2')" id="btn-mode-chang-2" class="admin-nhiemvu-mode-btn p-2.5 rounded-xl border text-left transition-all bg-slate-900 border-slate-700 text-slate-400 hover:text-white font-bold text-xs">
                 <div class="flex items-center justify-between">
                   <span>Chặng 2</span>
-                  <span class="text-[10px] px-1.5 py-0.2 rounded bg-orange-400/20 font-mono">T11</span>
+                  <span class="text-[10px] px-1.5 py-0.2 rounded bg-orange-400/20 font-bold">T11</span>
                 </div>
                 <div class="text-[10px] text-slate-400 font-normal mt-0.5">01/11 - 20/11</div>
               </button>
@@ -2552,7 +2577,7 @@
               <button type="button" onclick="setAdminNhiemVuMode('chang-3')" id="btn-mode-chang-3" class="admin-nhiemvu-mode-btn p-2.5 rounded-xl border text-left transition-all bg-slate-900 border-slate-700 text-slate-400 hover:text-white font-bold text-xs">
                 <div class="flex items-center justify-between">
                   <span>Chặng 3</span>
-                  <span class="text-[10px] px-1.5 py-0.2 rounded bg-blue-400/20 font-mono">T12</span>
+                  <span class="text-[10px] px-1.5 py-0.2 rounded bg-blue-400/20 font-bold">T12</span>
                 </div>
                 <div class="text-[10px] text-slate-400 font-normal mt-0.5">01/12 - 20/12</div>
               </button>
@@ -2560,7 +2585,7 @@
               <button type="button" onclick="setAdminNhiemVuMode('tong-ket')" id="btn-mode-tong-ket" class="admin-nhiemvu-mode-btn p-2.5 rounded-xl border text-left transition-all bg-slate-900 border-slate-700 text-slate-400 hover:text-white font-bold text-xs">
                 <div class="flex items-center justify-between">
                   <span>📊 Tổng Kết 3 Chặng</span>
-                  <span class="text-[10px] px-1.5 py-0.2 rounded bg-purple-400/20 font-mono">ALL</span>
+                  <span class="text-[10px] px-1.5 py-0.2 rounded bg-purple-400/20 font-bold">ALL</span>
                 </div>
                 <div class="text-[10px] text-slate-400 font-normal mt-0.5">Thống kê toàn bộ</div>
               </button>
@@ -2576,7 +2601,7 @@
               </div>
               <div class="flex items-center gap-2">
                 <span class="text-[11px] text-slate-400">Đang có:</span>
-                <span id="admin-nhiemvu-editor-count" class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-mono font-bold text-xs border border-emerald-500/30">18 mã</span>
+                <span id="admin-nhiemvu-editor-count" class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-bold text-xs border border-emerald-500/30">18 mã</span>
               </div>
             </div>
 
@@ -2590,19 +2615,19 @@
                 <input type="text" id="admin-nhiemvu-reward" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-emerald-300 font-bold focus:outline-none focus:border-cyan-400">
               </div>
               <div class="sm:col-span-2">
-                <label class="block text-[11px] font-semibold text-slate-400 mb-1">Điều kiện đạt chuẩn:</label>
+                <label class="block text-[11px] font-semibold text-slate-400 mb-1">Điều kiện hoàn thành nhiệm vụ:</label>
                 <input type="text" id="admin-nhiemvu-condition" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-amber-300 focus:outline-none focus:border-cyan-400">
               </div>
             </div>
 
             <div>
               <div class="flex items-center justify-between mb-1">
-                <label class="text-[11px] font-semibold text-slate-400">Danh sách Mã Khách Hàng đạt chuẩn (mỗi mã 1 dòng hoặc cách nhau bởi dấu phẩy):</label>
+                <label class="text-[11px] font-semibold text-slate-400">Danh sách Mã Khách Hàng hoàn thành nhiệm vụ (mỗi mã 1 dòng hoặc cách nhau bởi dấu phẩy):</label>
                 <button type="button" onclick="loadDemoNhiemVuCurrentChang()" class="text-[11px] text-cyan-400 hover:text-cyan-300 font-bold underline">
                   📋 Nạp mã mẫu
                 </button>
               </div>
-              <textarea id="admin-nhiemvu-codes-input" rows="4" oninput="updateAdminNhiemVuPreview()" placeholder="Ví dụ:&#10;ERK-KH-8891&#10;ERK-KH-7732&#10;ERK-KH-9941..." class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-xs font-mono text-amber-300 focus:outline-none focus:border-cyan-400"></textarea>
+              <textarea id="admin-nhiemvu-codes-input" rows="4" oninput="updateAdminNhiemVuPreview()" placeholder="Ví dụ:&#10;ERK-KH-8891&#10;ERK-KH-7732&#10;ERK-KH-9941..." class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-xs text-amber-300 focus:outline-none focus:border-cyan-400"></textarea>
             </div>
 
             <div>
@@ -2915,7 +2940,7 @@
   </div>
 
   <!-- ==================== FLOATING LUCKY WHEEL WIDGET ==================== -->
-  <div class="fixed bottom-6 right-6 z-40">
+  <div id="floating-lucky-wheel-widget" class="fixed bottom-6 right-6 z-40">
     <button onclick="openWelcomeWheelModal()" class="group relative flex items-center gap-2.5 px-4 py-3 rounded-full bg-gradient-to-r from-amber-500 via-brand-600 to-orange-500 text-white font-extrabold text-xs sm:text-sm shadow-2xl shadow-amber-500/40 border-2 border-amber-300/60 hover:scale-105 active:scale-95 transition-all cursor-pointer">
       <span class="text-xl animate-spin-slow">🎡</span>
       <span class="tracking-wide">Quay Nhận Voucher</span>

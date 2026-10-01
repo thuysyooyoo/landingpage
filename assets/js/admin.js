@@ -1366,7 +1366,7 @@ function updateAdminNhiemVuPreview() {
 
   codes.forEach(code => {
     const chip = document.createElement('span');
-    chip.className = 'px-2 py-0.5 rounded bg-slate-800 text-amber-300 font-mono text-[11px] font-bold border border-slate-700';
+    chip.className = 'px-2 py-0.5 rounded bg-slate-800 text-amber-300 text-[11px] font-bold border border-slate-700 tracking-wide';
     chip.textContent = code;
     preview.appendChild(chip);
   });

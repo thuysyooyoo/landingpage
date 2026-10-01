@@ -407,7 +407,7 @@ function renderLeaderboard(data) {
           </a>
         </div>
         <div class="flex items-center gap-1.5 mt-1 flex-wrap">
-          <span class="font-mono text-[10px] sm:text-[11px] font-semibold text-amber-300 bg-amber-400/10 border border-amber-400/25 px-1.5 sm:px-2 py-0.5 rounded tracking-wider inline-flex items-center gap-1">
+          <span class="text-[10px] sm:text-[11px] font-bold text-amber-300 bg-amber-400/10 border border-amber-400/25 px-1.5 sm:px-2 py-0.5 rounded tracking-wide inline-flex items-center gap-1">
             <span class="text-[9px] opacity-75 text-slate-400">MÃ:</span>${customerCode}
           </span>
           <span class="md:hidden text-[10px] text-slate-400 font-medium">
@@ -513,6 +513,7 @@ function loadLeaderboardData() {
         window.leaderboardData = parsed;
         renderLeaderboard(parsed);
         updateSearchCounter(parsed.length, parsed.length);
+        if (typeof window.renderGalaSummaryData === 'function') window.renderGalaSummaryData();
         return;
       }
     } catch (e) {}
@@ -526,12 +527,14 @@ function loadLeaderboardData() {
       window.leaderboardData = data;
       renderLeaderboard(data);
       updateSearchCounter(data.length, data.length);
+      if (typeof window.renderGalaSummaryData === 'function') window.renderGalaSummaryData();
     })
     .catch(() => {
       leaderboardData = fallbackLeaderboardData;
       window.leaderboardData = fallbackLeaderboardData;
       renderLeaderboard(fallbackLeaderboardData);
       updateSearchCounter(fallbackLeaderboardData.length, fallbackLeaderboardData.length);
+      if (typeof window.renderGalaSummaryData === 'function') window.renderGalaSummaryData();
     });
 }
 

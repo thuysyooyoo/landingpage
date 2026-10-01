@@ -276,8 +276,8 @@ function renderNhiemVuDisplay() {
               <h4 class="text-lg font-black text-white mb-1 font-display">"Khởi Động Sớm"</h4>
               <p class="text-xs text-slate-400 mb-3">Tối thiểu 01 đơn booking</p>
               <div class="my-4 p-4 rounded-xl bg-slate-800/60 border border-slate-700/60 text-center">
-                <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Số KH Đạt Chuẩn</span>
-                <div class="text-3xl sm:text-4xl font-black text-amber-400 font-mono">${count1}</div>
+                <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Số KH hoàn thành nhiệm vụ</span>
+                <div class="text-3xl sm:text-4xl font-black text-amber-400">${count1}</div>
                 <span class="text-[11px] text-emerald-400 font-semibold mt-1 block">✓ Đã nhận VIP+1 Tháng 11</span>
               </div>
             </div>
@@ -297,8 +297,8 @@ function renderNhiemVuDisplay() {
               <h4 class="text-lg font-black text-white mb-1 font-display">"Giữ Nhịp Cao Điểm"</h4>
               <p class="text-xs text-slate-400 mb-3">02 đơn booking Tháng 11</p>
               <div class="my-4 p-4 rounded-xl bg-slate-800/60 border border-slate-700/60 text-center">
-                <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Số KH Đạt Chuẩn</span>
-                <div class="text-3xl sm:text-4xl font-black text-orange-400 font-mono">${count2}</div>
+                <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Số KH hoàn thành nhiệm vụ</span>
+                <div class="text-3xl sm:text-4xl font-black text-orange-400">${count2}</div>
                 <span class="text-[11px] text-emerald-400 font-semibold mt-1 block">✓ Đã nhận VIP+1 Tháng 12</span>
               </div>
             </div>
@@ -318,8 +318,8 @@ function renderNhiemVuDisplay() {
               <h4 class="text-lg font-black text-white mb-1 font-display">"Về Đích An Toàn"</h4>
               <p class="text-xs text-slate-400 mb-3">Tối thiểu 01 đơn booking</p>
               <div class="my-4 p-4 rounded-xl bg-slate-800/60 border border-slate-700/60 text-center">
-                <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Số KH Đạt Chuẩn</span>
-                <div class="text-3xl sm:text-4xl font-black text-blue-400 font-mono">${count3}</div>
+                <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Số KH hoàn thành nhiệm vụ</span>
+                <div class="text-3xl sm:text-4xl font-black text-blue-400">${count3}</div>
                 <span class="text-[11px] text-emerald-400 font-semibold mt-1 block">✓ Đã nhận VIP+1 Tháng 01/2027</span>
               </div>
             </div>
@@ -336,8 +336,8 @@ function renderNhiemVuDisplay() {
             <span class="text-4xl sm:text-5xl">🏆</span>
             <div>
               <h4 class="text-base sm:text-lg font-black text-amber-300 font-display">Chiến Binh Bứt Phá — Hoàn Thành Trọn Vẹn 3 Chặng</h4>
-              <p class="text-xs sm:text-sm text-slate-300 mt-0.5 leading-relaxed">
-                Các khách hàng xuất sắc hoàn thành liên tiếp cả 3 chặng được vinh danh tại Gala Year-End Party và duy trì đặc quyền VIP ELITE+ dài hạn!
+              <p class="text-xs sm:text-sm text-slate-200 mt-0.5 leading-relaxed">
+                Eureka Logistics xin gửi lời cảm ơn chân thành và sâu sắc nhất tới toàn thể Quý khách hàng đã luôn đồng hành, tin tưởng và nhiệt tình tham gia chương trình thi đua tri ân 2026!
               </p>
             </div>
           </div>
@@ -351,8 +351,8 @@ function renderNhiemVuDisplay() {
   }
 
   // Single Chặng Mode ('chang-1', 'chang-2', 'chang-3')
-  const curChang = cfg[mode.replace('-', '_')] || cfg.chang_1;
-  const codes = curChang.customer_codes || [];
+  const curChang = (cfg && cfg[mode.replace('-', '_')]) || (cfg && cfg.chang_1) || (typeof DEFAULT_NHIEM_VU_CONFIG !== 'undefined' ? DEFAULT_NHIEM_VU_CONFIG.chang_1 : { customer_codes: [] });
+  const codes = (curChang && curChang.customer_codes) ? curChang.customer_codes : [];
   currentNhiemVuCodes = codes;
 
   const themeColors = {
@@ -489,7 +489,7 @@ function renderNhiemVuDisplay() {
           <div class="flex items-center justify-between gap-2 mb-3.5 pb-3 border-b border-slate-700">
             <div>
               <h3 class="text-base font-black text-white font-display flex items-center gap-1.5">
-                <span>👑</span> Mã KH Đạt Chuẩn
+                <span>👑</span> Mã KH Hoàn Thành Nhiệm Vụ
               </h3>
               <p class="text-[11px] text-slate-300">Đã nâng hạng VIP+1</p>
             </div>
@@ -526,11 +526,11 @@ function renderNhiemVuDisplay() {
 
 function renderNhiemVuCodeBadges(codes) {
   if (!codes || codes.length === 0) {
-    return `<div class="col-span-full py-6 text-center text-xs text-slate-400">Chưa có mã khách hàng nào đạt chuẩn.</div>`;
+    return `<div class="col-span-full py-6 text-center text-xs text-slate-400">Chưa có mã khách hàng nào hoàn thành nhiệm vụ.</div>`;
   }
   return codes.map(code => `
     <div class="py-1.5 px-2.5 rounded-lg bg-slate-900/85 border border-slate-700/70 hover:border-amber-400/50 transition-all flex items-center justify-between gap-1.5 group">
-      <span class="font-mono text-xs font-bold text-amber-300 tracking-wider group-hover:text-amber-200 truncate">
+      <span class="text-xs font-bold text-amber-300 tracking-wide group-hover:text-amber-200 truncate">
         ${code}
       </span>
       <span class="text-[9px] font-bold text-emerald-300 bg-emerald-500/15 px-1 py-0.2 rounded border border-emerald-500/30 shrink-0">
@@ -953,54 +953,221 @@ window.scrollToVongQuayTriAn = scrollToVongQuayTriAn;
 // ==================== 8. CHẾ ĐỘ TỔNG KẾT & VINH DANH GALA 2026 ====================
 let isGalaCelebrationMode = true; // Mặc định mở chế độ tổng kết vinh danh đêm gala
 
+// TỰ ĐỘNG TỔNG KẾT DỮ LIỆU GALA TỪ BẢNG XẾP HẠNG THỜI GIAN THỰC
+function renderGalaSummaryData() {
+  const data = (typeof window.getLeaderboardData === 'function') 
+    ? window.getLeaderboardData() 
+    : (window.leaderboardData || []);
+
+  if (!data || !Array.isArray(data) || data.length === 0) return;
+
+  // 1. TÍNH TOÁN CÁC CHỈ SỐ TỔNG QUAN
+  const totalCustomers = data.length;
+  let totalOrders = 0;
+  let totalKg = 0;
+  let totalM3 = 0;
+  let totalRevenue = 0;
+
+  data.forEach(item => {
+    totalOrders += (Number(item.order_count) || 0);
+    totalRevenue += (Number(item.service_fee) || 0);
+    if (item.volume_weight) {
+      const w = parseWeightKg(item.volume_weight);
+      const v = parseVolumeM3(item.volume_weight);
+      totalKg += (w.kg || 0);
+      totalM3 += (v.m3 || 0);
+    }
+  });
+
+  // Gán vào 4 ô chỉ số thống kê
+  const elTotalCust = document.getElementById('gala-stat-total-customers');
+  const elTotalOrders = document.getElementById('gala-stat-total-orders');
+  const elTotalVol = document.getElementById('gala-stat-total-volume');
+
+  if (elTotalCust) elTotalCust.textContent = `${totalCustomers.toLocaleString('vi-VN')} Doanh Nghiệp`;
+  if (elTotalOrders) elTotalOrders.textContent = `${totalOrders.toLocaleString('vi-VN')} Đơn Booking`;
+  if (elTotalVol) {
+    const kgStr = totalKg >= 1000 ? `${(Math.round(totalKg / 1000)).toLocaleString('vi-VN')} Tấn` : `${Math.round(totalKg).toLocaleString('vi-VN')} Kg`;
+    const m3Str = `${Math.round(totalM3).toLocaleString('vi-VN')} m³`;
+    elTotalVol.textContent = `${kgStr} & ${m3Str}`;
+  }
+
+  // 2. TỔNG SẮP TOP 3 CHUNG CUỘC (Sắp xếp theo service_fee giảm dần)
+  const sortedByRank = [...data].sort((a, b) => (b.service_fee || 0) - (a.service_fee || 0) || (b.order_count || 0) - (a.order_count || 0));
+
+  // Top 1 - Quán Quân
+  const top1 = sortedByRank[0];
+  if (top1) {
+    const t1Code = document.getElementById('gala-top1-code');
+    const t1Name = document.getElementById('gala-top1-name');
+    const t1Fee = document.getElementById('gala-top1-fee');
+    const t1Orders = document.getElementById('gala-top1-orders');
+    if (t1Code) t1Code.textContent = `MÃ: ${top1.customer_code || 'ERK-KH-8891'}`;
+    if (t1Name) t1Name.textContent = top1.customer_name || top1.original_name || 'Khách hàng Quán Quân';
+    if (t1Fee) t1Fee.textContent = formatVND(top1.service_fee);
+    if (t1Orders) t1Orders.textContent = `✓ ${top1.order_count || 0} Đơn hoàn tất`;
+  }
+
+  // Top 2 - Á Quân 1
+  const top2 = sortedByRank[1];
+  if (top2) {
+    const t2Code = document.getElementById('gala-top2-code');
+    const t2Name = document.getElementById('gala-top2-name');
+    const t2Fee = document.getElementById('gala-top2-fee');
+    const t2Orders = document.getElementById('gala-top2-orders');
+    if (t2Code) t2Code.textContent = `MÃ: ${top2.customer_code || 'ERK-KH-4432'}`;
+    if (t2Name) t2Name.textContent = top2.customer_name || top2.original_name || 'Khách hàng Á Quân 1';
+    if (t2Fee) t2Fee.textContent = formatVND(top2.service_fee);
+    if (t2Orders) t2Orders.textContent = `✓ ${top2.order_count || 0} Đơn hoàn tất`;
+  }
+
+  // Top 3 - Á Quân 2
+  const top3 = sortedByRank[2];
+  if (top3) {
+    const t3Code = document.getElementById('gala-top3-code');
+    const t3Name = document.getElementById('gala-top3-name');
+    const t3Fee = document.getElementById('gala-top3-fee');
+    const t3Orders = document.getElementById('gala-top3-orders');
+    if (t3Code) t3Code.textContent = `MÃ: ${top3.customer_code || 'ERK-KH-1205'}`;
+    if (t3Name) t3Name.textContent = top3.customer_name || top3.original_name || 'Khách hàng Á Quân 2';
+    if (t3Fee) t3Fee.textContent = formatVND(top3.service_fee);
+    if (t3Orders) t3Orders.textContent = `✓ ${top3.order_count || 0} Đơn hoàn tất`;
+  }
+
+  // 3. TỰ ĐỘNG PHÂN PHỐI 05 GIẢI PHỤ CHUYÊN MÔN THEO TIÊU CHÍ BXH
+  // Giải 1: Vua Số Lượng Đơn
+  const listDon = GIAI_PHU_CONFIGS['vua-so-luong-don'].filterAndSort(data);
+  if (listDon && listDon.length > 0) {
+    const w1 = listDon[0];
+    const cEl = document.getElementById('gala-award-don-code');
+    const nEl = document.getElementById('gala-award-don-name');
+    const vEl = document.getElementById('gala-award-don-val');
+    if (cEl) cEl.textContent = w1.customer_code || '';
+    if (nEl) nEl.textContent = w1.customer_name || w1.original_name || '';
+    if (vEl) vEl.textContent = `${w1.order_count || 0} Đơn Booking`;
+  }
+
+  // Giải 2: Tân Binh Xuất Sắc
+  const listNew = GIAI_PHU_CONFIGS['tan-binh-xuat-sac'].filterAndSort(data);
+  const w2 = (listNew && listNew.length > 0) ? listNew[0] : sortedByRank.find(x => (x.vip_tier || '').toLowerCase().includes('mới')) || sortedByRank[3];
+  if (w2) {
+    const cEl = document.getElementById('gala-award-new-code');
+    const nEl = document.getElementById('gala-award-new-name');
+    const vEl = document.getElementById('gala-award-new-val');
+    if (cEl) cEl.textContent = w2.customer_code || '';
+    if (nEl) nEl.textContent = w2.customer_name || w2.original_name || '';
+    if (vEl) vEl.textContent = formatVND(w2.service_fee);
+  }
+
+  // Giải 3: Sự Trở Lại Ấn Tượng
+  const listReturn = GIAI_PHU_CONFIGS['su-tro-lai-an-tuong'].filterAndSort(data);
+  const w3 = (listReturn && listReturn.length > 0) ? listReturn[0] : sortedByRank.find(x => (x.prize_tag || '').toLowerCase().includes('trở lại')) || sortedByRank[4];
+  if (w3) {
+    const cEl = document.getElementById('gala-award-return-code');
+    const nEl = document.getElementById('gala-award-return-name');
+    const vEl = document.getElementById('gala-award-return-val');
+    if (cEl) cEl.textContent = w3.customer_code || '';
+    if (nEl) nEl.textContent = w3.customer_name || w3.original_name || '';
+    if (vEl) vEl.textContent = `${w3.order_count || 18} Đơn Tái Xuất`;
+  }
+
+  // Giải 4: Vua Tải Trọng (Kg)
+  const listWeight = GIAI_PHU_CONFIGS['vua-tai-trong'].filterAndSort(data);
+  if (listWeight && listWeight.length > 0) {
+    const w4 = listWeight[0];
+    const cEl = document.getElementById('gala-award-weight-code');
+    const nEl = document.getElementById('gala-award-weight-name');
+    const vEl = document.getElementById('gala-award-weight-val');
+    if (cEl) cEl.textContent = w4.customer_code || '';
+    if (nEl) nEl.textContent = w4.customer_name || w4.original_name || '';
+    const weightParsed = parseWeightKg(w4.volume_weight);
+    if (vEl) vEl.textContent = weightParsed.kg > 0 ? `${weightParsed.kg.toLocaleString('vi-VN')} kg` : (w4.volume_weight || '68.450 kg');
+  }
+
+  // Giải 5: Vua Khối Lượng (M³)
+  const listVol = GIAI_PHU_CONFIGS['vua-khoi-luong'].filterAndSort(data);
+  if (listVol && listVol.length > 0) {
+    const w5 = listVol[0];
+    const cEl = document.getElementById('gala-award-volume-code');
+    const nEl = document.getElementById('gala-award-volume-name');
+    const vEl = document.getElementById('gala-award-volume-val');
+    if (cEl) cEl.textContent = w5.customer_code || '';
+    if (nEl) nEl.textContent = w5.customer_name || w5.original_name || '';
+    const volParsed = parseVolumeM3(w5.volume_weight);
+    if (vEl) vEl.textContent = volParsed.m3 > 0 ? `${volParsed.m3.toLocaleString('vi-VN')} m³` : (w5.volume_weight || '215 m³');
+  }
+}
+window.renderGalaSummaryData = renderGalaSummaryData;
+
 function applyGalaCelebrationState(active) {
   isGalaCelebrationMode = active;
   
+  // 1. Thêm/gỡ class trên <body> (kích hoạt CSS display: none !important ngay lập tức)
+  if (document.body) {
+    document.body.classList.toggle('gala-celebration-mode', active);
+  }
+
+  // 2. Can thiệp trực tiếp vào từng ID phần tử để đảm bảo ẩn sạch 100%
+  const hideIds = [
+    'giai-thuong',
+    'vong-quay-mung-05',
+    'cot-moc-vip',
+    'the-le',
+    'floating-lucky-wheel-widget',
+    'live-voucher-toast',
+    'hero-spin-btn-wrapper'
+  ];
+
+  hideIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.style.display = active ? 'none' : '';
+    }
+  });
+
+  // Ẩn tất cả các section phụ khác có class .gala-hidden-section (như CTA mở mã)
+  const hiddenSections = document.querySelectorAll('.gala-hidden-section');
+  hiddenSections.forEach(el => {
+    el.style.display = active ? 'none' : '';
+  });
+
+  // Chỉ để lại: Tổng quan, Vinh danh Gala, Bảng xếp hạng
   const sectionGala = document.getElementById('gala-awards-section');
-  const sectionGiaiThuong = document.getElementById('giai-thuong');
-  const sectionTheLe = document.getElementById('the-le');
-  const sectionVongQuay = document.getElementById('vong-quay-mung-05');
-  const heroSpinBtn = document.getElementById('hero-spin-btn-wrapper');
+  if (sectionGala) sectionGala.style.display = 'block';
+
   const heroGalaBtn = document.getElementById('hero-gala-jump-btn');
+  if (heroGalaBtn) {
+    if (active) heroGalaBtn.classList.remove('hidden');
+    else heroGalaBtn.classList.add('hidden');
+  }
+
+  // Cập nhật Header Menu
+  const navCampaignLinks = document.querySelectorAll('.nav-campaign-only');
+  navCampaignLinks.forEach(el => {
+    if (active) el.classList.add('hidden');
+    else el.classList.remove('hidden');
+  });
+
+  const navGalaLink = document.getElementById('nav-gala-link');
+  if (navGalaLink) {
+    if (active) navGalaLink.classList.remove('hidden');
+    else navGalaLink.classList.add('hidden');
+  }
+
+  // Nút trạng thái
   const toggleBtnText = document.getElementById('gala-mode-text');
   const toggleBtnIcon = document.getElementById('gala-mode-icon');
-  const navCampaignLinks = document.querySelectorAll('.nav-campaign-only');
-  const navGalaLink = document.getElementById('nav-gala-link');
-
-  if (active) {
-    // Ẩn tất cả những phần đang đua: vòng quay tri ân, nhiệm vụ hệ thống, cơ cấu giải thưởng, thể lệ
-    if (sectionGiaiThuong) sectionGiaiThuong.style.display = 'none';
-    if (sectionTheLe) sectionTheLe.style.display = 'none';
-    if (sectionVongQuay) sectionVongQuay.style.display = 'none';
-    if (heroSpinBtn) heroSpinBtn.style.display = 'none';
-    if (heroGalaBtn) heroGalaBtn.classList.remove('hidden');
-
-    // Chỉ để lại: Tổng quan, Vinh danh Gala, Bảng xếp hạng
-    if (sectionGala) sectionGala.style.display = 'block';
-
-    // Cập nhật Header Menu
-    navCampaignLinks.forEach(el => el.classList.add('hidden'));
-    if (navGalaLink) navGalaLink.classList.remove('hidden');
-
-    // Nút trạng thái
-    if (toggleBtnText) toggleBtnText.textContent = 'Chế Độ Vinh Danh Gala (Đang Bật) ⇋ Bấm xem Toàn Bộ';
-    if (toggleBtnIcon) toggleBtnIcon.textContent = '🏆';
-  } else {
-    // Hiện lại toàn bộ chương trình bình thường
-    if (sectionGiaiThuong) sectionGiaiThuong.style.display = '';
-    if (sectionTheLe) sectionTheLe.style.display = '';
-    if (sectionVongQuay) sectionVongQuay.style.display = '';
-    if (heroSpinBtn) heroSpinBtn.style.display = '';
-    if (heroGalaBtn) heroGalaBtn.classList.add('hidden');
-    if (sectionGala) sectionGala.style.display = 'block';
-
-    // Hiện lại Header Menu
-    navCampaignLinks.forEach(el => el.classList.remove('hidden'));
-
-    // Nút trạng thái
-    if (toggleBtnText) toggleBtnText.textContent = 'Bật Chế Độ Vinh Danh Gala (Chỉ Hiện Tổng Kết & BXH)';
-    if (toggleBtnIcon) toggleBtnIcon.textContent = '📋';
+  if (toggleBtnText) {
+    toggleBtnText.textContent = active 
+      ? 'Chế Độ Vinh Danh Gala (Đang Bật) ⇋ Bấm xem Toàn Bộ' 
+      : 'Bật Chế Độ Vinh Danh Gala (Chỉ Hiện Tổng Kết & BXH)';
   }
+  if (toggleBtnIcon) {
+    toggleBtnIcon.textContent = active ? '🏆' : '📋';
+  }
+
+  // Tự động tính toán & điền số liệu Gala từ BXH
+  renderGalaSummaryData();
 
   try {
     localStorage.setItem('eureka_gala_celebration_mode', active ? '1' : '0');
@@ -1023,6 +1190,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Mặc định active = true (chế độ vinh danh đêm gala)
   const shouldBeActive = saved === null ? true : saved === '1';
   applyGalaCelebrationState(shouldBeActive);
+  setTimeout(renderGalaSummaryData, 300);
 });
 if (document.readyState === 'complete' || document.readyState === 'interactive') {
   let saved = null;
@@ -1031,4 +1199,5 @@ if (document.readyState === 'complete' || document.readyState === 'interactive')
   } catch (e) {}
   const shouldBeActive = saved === null ? true : saved === '1';
   applyGalaCelebrationState(shouldBeActive);
+  setTimeout(renderGalaSummaryData, 300);
 }
