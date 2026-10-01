@@ -12,6 +12,7 @@ const fallbackLeaderboardData = [
   {
     "rank": 1,
     "customer_name": "Khách hàng T*** Đ*** XNK *** Châu",
+    "original_name": "Khách hàng Tập Đoàn XNK Toàn Châu",
     "customer_code": "ERK-KH-8891",
     "vip_tier": "VIP ELITE",
     "order_count": 48,
@@ -23,6 +24,7 @@ const fallbackLeaderboardData = [
   {
     "rank": 2,
     "customer_name": "Khách hàng CP TM *** *** Minh",
+    "original_name": "Khách hàng CP TM Bình Minh",
     "customer_code": "ERK-KH-4432",
     "vip_tier": "VIP ELITE",
     "order_count": 35,
@@ -34,6 +36,7 @@ const fallbackLeaderboardData = [
   {
     "rank": 3,
     "customer_name": "Khách hàng SX & PP *** *** An",
+    "original_name": "Khách hàng SX & PP Trường An",
     "customer_code": "ERK-KH-1205",
     "vip_tier": "VIP PREMIUM",
     "order_count": 29,
@@ -45,6 +48,7 @@ const fallbackLeaderboardData = [
   {
     "rank": 4,
     "customer_name": "Khách hàng XNK Y Tế *** *** Long",
+    "original_name": "Khách hàng XNK Y Tế Hoàng Long",
     "customer_code": "ERK-KH-9012",
     "vip_tier": "VIP PREMIUM",
     "order_count": 22,
@@ -56,6 +60,7 @@ const fallbackLeaderboardData = [
   {
     "rank": 5,
     "customer_name": "Khách hàng Hộ KD *** *** Hưng",
+    "original_name": "Khách hàng Hộ KD Hưng Phát",
     "customer_code": "ERK-KH-7731",
     "vip_tier": "VIP PRO",
     "order_count": 19,
@@ -67,6 +72,7 @@ const fallbackLeaderboardData = [
   {
     "rank": 6,
     "customer_name": "Khách hàng Phụ Kiện *** *** Việt",
+    "original_name": "Khách hàng Phụ Kiện Đại Việt",
     "customer_code": "ERK-KH-5524",
     "vip_tier": "VIP PRO",
     "order_count": 26,
@@ -78,6 +84,7 @@ const fallbackLeaderboardData = [
   {
     "rank": 7,
     "customer_name": "Khách hàng Đồ Chơi *** *** Tech",
+    "original_name": "Khách hàng Đồ Chơi Quang Tech",
     "customer_code": "ERK-KH-3198",
     "vip_tier": "KH MỚI",
     "order_count": 14,
@@ -89,6 +96,7 @@ const fallbackLeaderboardData = [
   {
     "rank": 8,
     "customer_name": "Khách hàng Cơ Khí *** *** Trung",
+    "original_name": "Khách hàng Cơ Khí Thành Trung",
     "customer_code": "ERK-KH-6640",
     "vip_tier": "VIP PRO",
     "order_count": 11,
@@ -100,6 +108,7 @@ const fallbackLeaderboardData = [
   {
     "rank": 9,
     "customer_name": "Khách hàng Tiêu Dùng *** *** Nam",
+    "original_name": "Khách hàng Tiêu Dùng Phương Nam",
     "customer_code": "ERK-KH-2287",
     "vip_tier": "KH CŨ",
     "order_count": 12,
@@ -111,6 +120,7 @@ const fallbackLeaderboardData = [
   {
     "rank": 10,
     "customer_name": "Khách hàng Nội Thất *** *** Đô",
+    "original_name": "Khách hàng Nội Thất Hà Đô",
     "customer_code": "ERK-KH-9914",
     "vip_tier": "KH MỚI",
     "order_count": 9,
@@ -122,6 +132,7 @@ const fallbackLeaderboardData = [
   {
     "rank": 11,
     "customer_name": "Khách hàng Gia Dụng *** *** Phát",
+    "original_name": "Khách hàng Gia Dụng Tấn Phát",
     "customer_code": "ERK-KH-1043",
     "vip_tier": "VIP PRO",
     "order_count": 15,
@@ -133,6 +144,7 @@ const fallbackLeaderboardData = [
   {
     "rank": 12,
     "customer_name": "Khách hàng Thiết Bị *** *** Thắng",
+    "original_name": "Khách hàng Thiết Bị Quyết Thắng",
     "customer_code": "ERK-KH-8320",
     "vip_tier": "VIP PRO",
     "order_count": 13,
@@ -144,6 +156,7 @@ const fallbackLeaderboardData = [
   {
     "rank": 13,
     "customer_name": "Khách hàng May Mặc *** *** Linh",
+    "original_name": "Khách hàng May Mặc Trúc Linh",
     "customer_code": "ERK-KH-4176",
     "vip_tier": "KH MỚI",
     "order_count": 10,
@@ -155,6 +168,7 @@ const fallbackLeaderboardData = [
   {
     "rank": 14,
     "customer_name": "Khách hàng Hóa Mỹ Phẩm *** *** Hà",
+    "original_name": "Khách hàng Hóa Mỹ Phẩm Thu Hà",
     "customer_code": "ERK-KH-5902",
     "vip_tier": "VIP PRO",
     "order_count": 11,
@@ -166,6 +180,7 @@ const fallbackLeaderboardData = [
   {
     "rank": 15,
     "customer_name": "Khách hàng Điện Tử *** *** Quang",
+    "original_name": "Khách hàng Điện Tử Nhật Quang",
     "customer_code": "ERK-KH-7241",
     "vip_tier": "VIP PREMIUM",
     "order_count": 8,
@@ -177,6 +192,7 @@ const fallbackLeaderboardData = [
   {
     "rank": 16,
     "customer_name": "Khách hàng Bao Bì *** *** Hưng",
+    "original_name": "Khách hàng Bao Bì Gia Hưng",
     "customer_code": "ERK-KH-3819",
     "vip_tier": "BASIC",
     "order_count": 9,
@@ -188,6 +204,7 @@ const fallbackLeaderboardData = [
   {
     "rank": 17,
     "customer_name": "Khách hàng Hộ KD Giày Dép *** *** Vy",
+    "original_name": "Khách hàng Hộ KD Giày Dép Thúy Vy",
     "customer_code": "ERK-KH-6055",
     "vip_tier": "BASIC",
     "order_count": 12,
@@ -199,6 +216,7 @@ const fallbackLeaderboardData = [
   {
     "rank": 18,
     "customer_name": "Khách hàng Vật Liệu Xây Dựng *** *** Sơn",
+    "original_name": "Khách hàng Vật Liệu Xây Dựng Thái Sơn",
     "customer_code": "ERK-KH-2790",
     "vip_tier": "VIP PRO",
     "order_count": 6,
@@ -210,6 +228,7 @@ const fallbackLeaderboardData = [
   {
     "rank": 19,
     "customer_name": "Khách hàng VPP & Quà Tặng *** *** Mai",
+    "original_name": "Khách hàng VPP & Quà Tặng Ban Mai",
     "customer_code": "ERK-KH-8411",
     "vip_tier": "KH MỚI",
     "order_count": 8,
@@ -221,6 +240,7 @@ const fallbackLeaderboardData = [
   {
     "rank": 20,
     "customer_name": "Khách hàng Nông Sản Chế Biến *** *** Lộc",
+    "original_name": "Khách hàng Nông Sản Chế Biến Tấn Lộc",
     "customer_code": "ERK-KH-9533",
     "vip_tier": "KH CŨ",
     "order_count": 7,
@@ -232,6 +252,7 @@ const fallbackLeaderboardData = [
   {
     "rank": 21,
     "customer_name": "Khách hàng Thủ Công Mỹ Nghệ *** *** Tâm",
+    "original_name": "Khách hàng Thủ Công Mỹ Nghệ Thành Tâm",
     "customer_code": "ERK-KH-1188",
     "vip_tier": "BASIC",
     "order_count": 6,
@@ -243,6 +264,7 @@ const fallbackLeaderboardData = [
   {
     "rank": 22,
     "customer_name": "Khách hàng Phụ Tùng Xe Máy *** *** Dũng",
+    "original_name": "Khách hàng Phụ Tùng Xe Máy Tiến Dũng",
     "customer_code": "ERK-KH-7629",
     "vip_tier": "BASIC",
     "order_count": 5,
@@ -254,6 +276,7 @@ const fallbackLeaderboardData = [
   {
     "rank": 23,
     "customer_name": "Khách hàng Hộ KD Mẹ & Bé *** *** Thảo",
+    "original_name": "Khách hàng Hộ KD Mẹ & Bé Phương Thảo",
     "customer_code": "ERK-KH-3341",
     "vip_tier": "KH MỚI",
     "order_count": 7,
@@ -265,6 +288,7 @@ const fallbackLeaderboardData = [
   {
     "rank": 24,
     "customer_name": "Khách hàng Đèn Trang Trí *** *** Hoàng",
+    "original_name": "Khách hàng Đèn Trang Trí Huy Hoàng",
     "customer_code": "ERK-KH-5820",
     "vip_tier": "BASIC",
     "order_count": 4,
@@ -276,6 +300,7 @@ const fallbackLeaderboardData = [
   {
     "rank": 25,
     "customer_name": "Khách hàng Dược Liệu Tự Nhiên *** *** Trúc",
+    "original_name": "Khách hàng Dược Liệu Tự Nhiên Thanh Trúc",
     "customer_code": "ERK-KH-9102",
     "vip_tier": "BASIC",
     "order_count": 4,
@@ -284,7 +309,8 @@ const fallbackLeaderboardData = [
     "prize_tag": "Khởi động 2026",
     "prize_type": "regular"
   }
-];
+]
+;
 
 function formatCurrency(num) {
   return new Intl.NumberFormat('vi-VN').format(num) + ' đ';
@@ -517,6 +543,70 @@ function updateSearchCounter(currentCount, totalCount) {
   }
 }
 
+// Helper to strip Vietnamese accents for flexible search
+function removeVietnameseTones(str) {
+  if (!str) return '';
+  str = str.toLowerCase();
+  str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, 'a');
+  str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, 'e');
+  str = str.replace(/ì|í|ị|ỉ|ĩ/g, 'i');
+  str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, 'o');
+  str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, 'u');
+  str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, 'y');
+  str = str.replace(/đ/g, 'd');
+  str = str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  return str.trim();
+}
+
+function matchesLeaderboardSearch(item, rawQuery) {
+  if (!rawQuery) return true;
+  const q = rawQuery.toLowerCase().trim();
+  const qNoTone = removeVietnameseTones(q);
+  const qAlphaNum = q.replace(/[^a-z0-9]/g, '');
+
+  const code = (item.customer_code || item.code || ('ERK-KH-' + (1000 + (item.rank || 0)))).toLowerCase();
+  const codeAlphaNum = code.replace(/[^a-z0-9]/g, '');
+
+  // 1. Customer code match (direct substring or cleaned alphanumeric e.g. '8891', 'kh8891', 'a114', 'erk')
+  if (code.includes(q)) return true;
+  if (qAlphaNum.length >= 2 && codeAlphaNum.includes(qAlphaNum)) return true;
+
+  // 2. Rank match (e.g. 'top 1', '#1', 'hang 1', '1')
+  if (item.rank) {
+    if (q === `top ${item.rank}` || q === `#${item.rank}` || q === `hang ${item.rank}` || q === `${item.rank}`) return true;
+  }
+
+  // 3. Name match: original unmasked name (with & without Vietnamese tones)
+  const origName = (item.original_name || '').toLowerCase();
+  const origNameNoTone = removeVietnameseTones(origName);
+  if (origName && (origName.includes(q) || (qNoTone && origNameNoTone.includes(qNoTone)))) return true;
+
+  // 4. Name match: displayed customer_name (with & without Vietnamese tones)
+  const custName = (item.customer_name || item.company_name || '').toLowerCase();
+  const custNameNoTone = removeVietnameseTones(custName);
+  if (custName.includes(q) || (qNoTone && custNameNoTone.includes(qNoTone))) return true;
+
+  // 5. Smart masked word matching:
+  // e.g. Customer name: "Khách hàng T*** Đ*** XNK *** Châu" -> typing "Toàn Châu", "Tập Đoàn", "Bình Minh"
+  const qWords = qNoTone.split(/\s+/).filter(w => w.length > 0);
+  const nameWords = custNameNoTone.split(/\s+/).filter(w => w.length > 0);
+  if (qWords.length > 0) {
+    const allWordsMatch = qWords.every(qw => {
+      return nameWords.some(nw => {
+        if (nw.includes(qw) || qw.includes(nw.replace(/\*/g, ''))) {
+          const cleanNw = nw.replace(/\*/g, '');
+          if (cleanNw.length >= 1 && qw.startsWith(cleanNw)) return true;
+          if (nw === qw) return true;
+        }
+        return false;
+      });
+    });
+    if (allWordsMatch) return true;
+  }
+
+  return false;
+}
+
 function filterLeaderboard() {
   const query = (document.getElementById('leaderboard-search')?.value || '').toLowerCase().trim();
   const clearBtn = document.getElementById('leaderboard-search-clear');
@@ -531,12 +621,7 @@ function filterLeaderboard() {
     return;
   }
 
-  const filtered = leaderboardData.filter(item => {
-    const name = (item.customer_name || item.company_name || '').toLowerCase();
-    const code = (item.customer_code || item.code || '').toLowerCase();
-    const originalName = (item.original_name || '').toLowerCase();
-    return name.includes(query) || code.includes(query) || originalName.includes(query);
-  });
+  const filtered = leaderboardData.filter(item => matchesLeaderboardSearch(item, query));
 
   renderLeaderboard(filtered);
   updateSearchCounter(filtered.length, leaderboardData.length);

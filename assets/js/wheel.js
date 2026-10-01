@@ -668,7 +668,7 @@ function spinM05Admin() {
   }
 
   const periodSelect = document.getElementById('m05-period-select');
-  const period = periodSelect ? periodSelect.value : 'Kỳ Tháng 11/2026 (Mùng 05/12)';
+  const period = periodSelect ? periodSelect.value : 'Kỳ Tháng 10/2026 (Quay Mùng 05/11)';
   const currentPrize = getM05CurrentPrize();
 
   // Extract customer code prefix from booking code (e.g., 'A114-10' -> 'A114', 'ERK-BK-2026-8891' -> '8891')

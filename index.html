@@ -266,7 +266,7 @@
         <a href="#vong-quay-mung-05" class="px-3 py-2 text-sm font-medium text-sky-400 hover:text-sky-300 transition-colors">
           Tri Ân Mùng 05
         </a>
-        <a href="#cot-moc-vip" class="px-3 py-2 text-sm font-medium text-slate-300 hover:text-brand-400 transition-colors">Cột Mốc VIP+1</a>
+        <a href="#cot-moc-vip" class="px-3 py-2 text-sm font-medium text-slate-300 hover:text-brand-400 transition-colors">Nhiệm Vụ Hệ Thống</a>
         <a href="#bxh-truc-tuyen" class="px-3 py-2 text-sm font-medium text-slate-300 hover:text-brand-400 transition-colors">Bảng Xếp Hạng</a>
         <a href="#the-le" class="px-3 py-2 text-sm font-medium text-slate-300 hover:text-brand-400 transition-colors">Thể Lệ</a>
       </nav>
@@ -458,7 +458,7 @@
 
         <div class="glass-ultra p-6">
           <span class="text-[10px] font-black uppercase text-brand-600 bg-orange-100/90 border border-brand-500/30 px-2.5 py-1 rounded-lg inline-block mb-3">AWARDS 03</span>
-          <h3 class="text-lg font-black text-slate-900 mb-2 font-display">Đặc Quyền Nâng Hạng VIP+1</h3>
+          <h3 class="text-lg font-black text-slate-900 mb-2 font-display">Nhiệm Vụ Hệ Thống (VIP+1)</h3>
           <p class="text-xs text-slate-600 leading-relaxed font-semibold mb-4">Đạt mốc ngày 20 hàng tháng: Giảm đến 30% cước gom cont và đặc quyền tăng thêm 15 ngày công nợ.</p>
           <span class="text-xs font-black text-brand-600 flex items-center gap-1 hover:translate-x-1">Đặc quyền độc quyền →</span>
         </div>
@@ -466,7 +466,7 @@
         <div class="glass-ultra p-6">
           <span class="text-[10px] font-black uppercase text-brand-600 bg-orange-100/90 border border-brand-500/30 px-2.5 py-1 rounded-lg inline-block mb-3">AWARDS 04</span>
           <h3 class="text-lg font-black text-slate-900 mb-2 font-display">Vòng Quay Tri Ân</h3>
-          <p class="text-xs text-slate-600 leading-relaxed font-semibold mb-4">Quay thưởng định kỳ mùng 05 hàng tháng (T11/2026 – T01/2027). Mỗi kỳ quay 3 lần, mã cộng dồn hoặc tùy chọn.</p>
+          <p class="text-xs text-slate-600 leading-relaxed font-semibold mb-4">Quay thưởng mùng 05 hàng tháng (05/11, 05/12 & 05/01 cho Kỳ T10, T11, T12). Mỗi kỳ quay 3 lần, mã cộng dồn hoặc tùy chọn.</p>
           <span class="text-xs font-black text-brand-600 flex items-center gap-1 hover:translate-x-1">Quay số hàng tháng →</span>
         </div>
       </div>
@@ -503,6 +503,9 @@
           </button>
           <button onclick="switchPrizeTab('top-tuan')" id="tab-btn-top-tuan" class="prize-tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-slate-300 hover:text-white hover:bg-white/5 transition-all duration-300 cursor-pointer">
             Giải Top Tuần
+          </button>
+          <button onclick="switchPrizeTab('nhiem-vu')" id="tab-btn-nhiem-vu" class="prize-tab-btn px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-slate-300 hover:text-white hover:bg-white/5 transition-all duration-300 cursor-pointer">
+            Nhiệm Vụ Hệ Thống
           </button>
         </div>
       </div>
@@ -778,6 +781,107 @@
 
         </div>
       </div>
+
+      <!-- Tab 5: Nhiệm Vụ Hệ Thống -->
+      <div id="tab-content-nhiem-vu" class="prize-tab-content hidden">
+        <div class="rounded-3xl p-6 sm:p-8 bg-slate-800/40 backdrop-blur-2xl border border-white/15 shadow-2xl relative overflow-hidden">
+          <div class="absolute -top-24 -right-24 w-60 h-60 bg-brand-500/15 rounded-full blur-3xl pointer-events-none"></div>
+
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-4 border-b border-slate-700 relative z-10">
+            <div>
+              <h3 class="text-xl sm:text-2xl font-black text-white font-display">⚡ Nhiệm Vụ Hệ Thống — 3 Cột Mốc & Đặc Quyền VIP+1</h3>
+              <p class="text-xs sm:text-sm text-slate-300 mt-1">Hoàn thành nhiệm vụ lên đơn đúng hạn trước ngày 20 hàng tháng để tự động nâng hạng VIP+1</p>
+            </div>
+            <a href="#cot-moc-vip" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-brand-500/20 border border-brand-500/40 text-brand-300 text-xs font-black shadow-inner cursor-pointer hover:bg-brand-500/30 transition-all">
+              ⚡ Xem Bảng Đặc Quyền Chi Tiết ↓
+            </a>
+          </div>
+
+          <!-- 3 Milestone Mission Cards (Tóm tắt thể lệ & giải thưởng) -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-6 relative z-10">
+            <!-- Chặng 1 -->
+            <div class="rounded-2xl p-5 bg-slate-900/60 backdrop-blur-md border-t-4 border-amber-400 border-x border-b border-slate-700 hover:border-amber-400/60 transition-all duration-300 shadow-lg flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between mb-3">
+                  <span class="px-2.5 py-1 rounded-lg bg-amber-400/15 text-amber-300 text-[11px] font-extrabold uppercase tracking-wide">CHẶNG 1 — T10</span>
+                  <span class="text-xs text-slate-400 font-semibold">01/10 – 20/10</span>
+                </div>
+                <h4 class="text-base font-black text-white mb-2 font-display">"Khởi Động Sớm"</h4>
+                <div class="p-3 rounded-xl bg-slate-800/70 border border-slate-700/80 mb-3 text-xs">
+                  <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-0.5">📋 Thể Lệ Nhiệm Vụ:</span>
+                  <strong class="text-amber-300 text-xs">Tối thiểu 01 đơn booking</strong>
+                  <span class="text-[11px] text-slate-400 block mt-0.5">(Tạo từ 01/10 - 20/10)</span>
+                </div>
+              </div>
+              <div class="pt-3 border-t border-slate-800 flex items-center justify-between">
+                <span class="text-[11px] text-slate-400">🎁 Giải thưởng:</span>
+                <span class="text-xs font-black text-emerald-400 bg-emerald-500/15 border border-emerald-500/30 px-2.5 py-1 rounded-lg">VIP+1 Trọn Tháng 11</span>
+              </div>
+            </div>
+
+            <!-- Chặng 2 -->
+            <div class="rounded-2xl p-5 bg-slate-900/60 backdrop-blur-md border-t-4 border-brand-500 border-x border-b border-slate-700 hover:border-brand-400/60 transition-all duration-300 shadow-lg flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between mb-3">
+                  <span class="px-2.5 py-1 rounded-lg bg-brand-500/15 text-brand-300 text-[11px] font-extrabold uppercase tracking-wide">CHẶNG 2 — T11</span>
+                  <span class="text-xs text-slate-400 font-semibold">01/11 – 20/11</span>
+                </div>
+                <h4 class="text-base font-black text-white mb-2 font-display">"Giữ Nhịp Cao Điểm"</h4>
+                <div class="p-3 rounded-xl bg-slate-800/70 border border-slate-700/80 mb-3 text-xs">
+                  <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-0.5">📋 Thể Lệ Nhiệm Vụ:</span>
+                  <strong class="text-brand-300 text-xs">02 đơn booking Tháng 11</strong>
+                  <span class="text-[11px] text-slate-400 block mt-0.5">(Ít nhất 01 đơn trước 20/11)</span>
+                </div>
+              </div>
+              <div class="pt-3 border-t border-slate-800 flex items-center justify-between">
+                <span class="text-[11px] text-slate-400">🎁 Giải thưởng:</span>
+                <span class="text-xs font-black text-emerald-400 bg-emerald-500/15 border border-emerald-500/30 px-2.5 py-1 rounded-lg">VIP+1 Trọn Tháng 12</span>
+              </div>
+            </div>
+
+            <!-- Chặng 3 -->
+            <div class="rounded-2xl p-5 bg-slate-900/60 backdrop-blur-md border-t-4 border-blue-400 border-x border-b border-slate-700 hover:border-blue-400/60 transition-all duration-300 shadow-lg flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between mb-3">
+                  <span class="px-2.5 py-1 rounded-lg bg-blue-400/15 text-blue-300 text-[11px] font-extrabold uppercase tracking-wide">CHẶNG 3 — T12</span>
+                  <span class="text-xs text-slate-400 font-semibold">01/12 – 20/12</span>
+                </div>
+                <h4 class="text-base font-black text-white mb-2 font-display">"Về Đích An Toàn"</h4>
+                <div class="p-3 rounded-xl bg-slate-800/70 border border-slate-700/80 mb-3 text-xs">
+                  <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-0.5">📋 Thể Lệ Nhiệm Vụ:</span>
+                  <strong class="text-blue-300 text-xs">Tối thiểu 01 đơn booking</strong>
+                  <span class="text-[11px] text-slate-400 block mt-0.5">(Tạo từ 01/12 - 20/12)</span>
+                </div>
+              </div>
+              <div class="pt-3 border-t border-slate-800 flex items-center justify-between">
+                <span class="text-[11px] text-slate-400">🎁 Giải thưởng:</span>
+                <span class="text-xs font-black text-emerald-400 bg-emerald-500/15 border border-emerald-500/30 px-2.5 py-1 rounded-lg">VIP+1 Tháng 01/2027</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Summary Strip: Nấc thang đặc quyền VIP -->
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs relative z-10 pt-4 border-t border-slate-800">
+            <div class="p-3 rounded-xl bg-slate-900/50 border border-slate-800 text-center">
+              <span class="text-slate-400 font-semibold block text-[10px]">BASIC → PRO</span>
+              <span class="text-emerald-400 font-bold text-xs mt-0.5 block">Giảm 10% cước</span>
+            </div>
+            <div class="p-3 rounded-xl bg-slate-900/50 border border-slate-800 text-center">
+              <span class="text-blue-300 font-semibold block text-[10px]">PRO → PREMIUM</span>
+              <span class="text-emerald-400 font-bold text-xs mt-0.5 block">Giảm 20% cước</span>
+            </div>
+            <div class="p-3 rounded-xl bg-slate-900/50 border border-slate-800 text-center">
+              <span class="text-purple-300 font-semibold block text-[10px]">PREMIUM → ELITE</span>
+              <span class="text-emerald-400 font-bold text-xs mt-0.5 block">Giảm 30% cước</span>
+            </div>
+            <div class="p-3 rounded-xl bg-amber-500/10 border border-amber-500/30 text-center">
+              <span class="text-amber-300 font-semibold block text-[10px]">VIP ELITE → ELITE+</span>
+              <span class="text-amber-300 font-bold text-xs mt-0.5 block">Tăng 15 ngày nợ</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
     </div>
       </div>
 
@@ -796,7 +900,7 @@
           Vòng Quay Tri Ân
         </h2>
         <p class="text-slate-300 text-sm max-w-2xl mx-auto mb-6">
-          Vòng quay số may mắn chọn ra <strong>Mã Booking</strong> trúng giải thưởng tri ân. Quay định kỳ <strong>mùng 05 hàng tháng</strong> từ tháng 11/2026 đến 01/2027. Mỗi kỳ quay <strong>3 lần</strong>, mã voucher có thể <strong>cộng dồn</strong> hoặc sử dụng riêng lẻ.
+          Vòng quay số may mắn chọn ra <strong>Mã Booking</strong> trúng giải thưởng tri ân. Áp dụng cho các đơn hàng hoàn tất <strong>Kỳ Tháng 10, Tháng 11 và Tháng 12/2026</strong> (quay thưởng định kỳ vào <strong>Mùng 05/11, 05/12/2026 và 05/01/2027</strong>). Mỗi kỳ quay <strong>3 lần</strong>, mã voucher có thể <strong>cộng dồn</strong> hoặc sử dụng riêng lẻ.
         </p>
 
         <!-- Current Prize & Booking Pool Badges -->
@@ -883,9 +987,9 @@
               </div>
               <div class="flex flex-wrap gap-2">
                 <select id="m05-period-select" class="bg-slate-900 border border-slate-700 text-white rounded-lg px-3 py-2 text-xs flex-1 min-w-[180px]">
-                  <option value="Kỳ Tháng 11/2026 (Mùng 05/12)">Kỳ Tháng 11/2026 (Mùng 05/12)</option>
-                  <option value="Kỳ Tháng 12/2026 (Mùng 05/01)">Kỳ Tháng 12/2026 (Mùng 05/01)</option>
-                  <option value="Kỳ Tháng 01/2027 (Mùng 05/02)">Kỳ Tháng 01/2027 (Mùng 05/02)</option>
+                  <option value="Kỳ Tháng 10/2026 (Quay Mùng 05/11)">Kỳ Tháng 10/2026 (Quay Mùng 05/11)</option>
+                  <option value="Kỳ Tháng 11/2026 (Quay Mùng 05/12)">Kỳ Tháng 11/2026 (Quay Mùng 05/12)</option>
+                  <option value="Kỳ Tháng 12/2026 (Quay Mùng 05/01)">Kỳ Tháng 12/2026 (Quay Mùng 05/01)</option>
                 </select>
                 <button onclick="spinM05Admin()" class="px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow transition-colors">
                   QUAY BOOKING NGAY
@@ -942,12 +1046,12 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       
       <div class="text-center max-w-3xl mx-auto mb-14">
-        <span class="text-xs font-bold uppercase tracking-widest text-brand-400">ĐÒN BẨY KINH DOANH DÀNH CHO 100% DOANH NGHIỆP</span>
+        <span class="text-xs font-bold uppercase tracking-widest text-brand-400">CHÍNH SÁCH NHIỆM VỤ HỆ THỐNG DÀNH CHO 100% DOANH NGHIỆP</span>
         <h2 class="text-3xl sm:text-5xl font-extrabold text-white mt-2 mb-4">
-          3 Cột Mốc Chặng & Đặc Quyền VIP+1
+          Nhiệm Vụ Hệ Thống
         </h2>
         <p class="text-slate-300 text-sm sm:text-base">
-          Không cần phải dẫn đầu doanh số tiền tỷ! Chỉ cần chốt đơn sớm đúng hạn trước ngày 20 hàng tháng, doanh nghiệp của bạn tự động được nâng cấp lên hạng VIP cao hơn với loạt đặc quyền vượt trội.
+          Không cần phải dẫn đầu doanh số tiền tỷ! Chỉ cần hoàn thành nhiệm vụ chốt đơn sớm đúng hạn trước ngày 20 hàng tháng, doanh nghiệp của bạn tự động được nâng cấp lên hạng VIP cao hơn với loạt đặc quyền vượt trội.
         </p>
       </div>
 
@@ -1153,7 +1257,7 @@
             <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-slate-400">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
             </span>
-            <input type="text" id="leaderboard-search" oninput="filterLeaderboard()" placeholder="Tìm tên KH hoặc mã khách (VD: ERK-KH-8891)..." class="w-full bg-slate-800/90 border border-slate-700 rounded-xl pl-9 pr-9 py-2.5 text-xs sm:text-sm text-white placeholder:text-slate-500 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 shadow-inner" />
+            <input type="text" id="leaderboard-search" oninput="filterLeaderboard()" onkeyup="filterLeaderboard()" onchange="filterLeaderboard()" onpaste="setTimeout(filterLeaderboard, 50)" placeholder="Tìm tên KH hoặc mã khách (VD: ERK-KH-8891, 8891, Châu, Minh)..." class="w-full bg-slate-800/90 border border-slate-700 rounded-xl pl-9 pr-9 py-2.5 text-xs sm:text-sm text-white placeholder:text-slate-500 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 shadow-inner" />
             <button id="leaderboard-search-clear" onclick="clearLeaderboardSearch()" class="absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400 hover:text-white hidden cursor-pointer" title="Xóa tìm kiếm">✕</button>
           </div>
           <div class="flex items-center gap-2">
@@ -1379,7 +1483,7 @@
           <li><a href="#tong-quan" class="hover:text-brand-400 transition-colors">Tổng quan giải thưởng</a></li>
           <li><a href="javascript:void(0)" onclick="openWelcomeWheelModal()" class="hover:text-brand-400 transition-colors cursor-pointer">Vòng quay trải nghiệm</a></li>
           <li><a href="#vong-quay-mung-05" class="hover:text-brand-400 transition-colors">Vòng Quay Tri Ân</a></li>
-          <li><a href="#cot-moc-vip" class="hover:text-brand-400 transition-colors">Đặc quyền VIP+1</a></li>
+          <li><a href="#cot-moc-vip" class="hover:text-brand-400 transition-colors">Nhiệm Vụ Hệ Thống</a></li>
           <li><a href="#bxh-truc-tuyen" class="hover:text-brand-400 transition-colors">Bảng xếp hạng 2026</a></li>
           <li><a href="#the-le" class="hover:text-brand-400 transition-colors">Thể lệ chương trình</a></li>
         </ul>

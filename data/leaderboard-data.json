@@ -2,6 +2,7 @@
   {
     "rank": 1,
     "customer_name": "Khách hàng T*** Đ*** XNK *** Châu",
+    "original_name": "Khách hàng Tập Đoàn XNK Toàn Châu",
     "customer_code": "ERK-KH-8891",
     "vip_tier": "VIP ELITE",
     "order_count": 48,
@@ -13,6 +14,7 @@
   {
     "rank": 2,
     "customer_name": "Khách hàng CP TM *** *** Minh",
+    "original_name": "Khách hàng CP TM Bình Minh",
     "customer_code": "ERK-KH-4432",
     "vip_tier": "VIP ELITE",
     "order_count": 35,
@@ -24,6 +26,7 @@
   {
     "rank": 3,
     "customer_name": "Khách hàng SX & PP *** *** An",
+    "original_name": "Khách hàng SX & PP Trường An",
     "customer_code": "ERK-KH-1205",
     "vip_tier": "VIP PREMIUM",
     "order_count": 29,
@@ -35,6 +38,7 @@
   {
     "rank": 4,
     "customer_name": "Khách hàng XNK Y Tế *** *** Long",
+    "original_name": "Khách hàng XNK Y Tế Hoàng Long",
     "customer_code": "ERK-KH-9012",
     "vip_tier": "VIP PREMIUM",
     "order_count": 22,
@@ -46,6 +50,7 @@
   {
     "rank": 5,
     "customer_name": "Khách hàng Hộ KD *** *** Hưng",
+    "original_name": "Khách hàng Hộ KD Hưng Phát",
     "customer_code": "ERK-KH-7731",
     "vip_tier": "VIP PRO",
     "order_count": 19,
@@ -57,6 +62,7 @@
   {
     "rank": 6,
     "customer_name": "Khách hàng Phụ Kiện *** *** Việt",
+    "original_name": "Khách hàng Phụ Kiện Đại Việt",
     "customer_code": "ERK-KH-5524",
     "vip_tier": "VIP PRO",
     "order_count": 26,
@@ -68,6 +74,7 @@
   {
     "rank": 7,
     "customer_name": "Khách hàng Đồ Chơi *** *** Tech",
+    "original_name": "Khách hàng Đồ Chơi Quang Tech",
     "customer_code": "ERK-KH-3198",
     "vip_tier": "KH MỚI",
     "order_count": 14,
@@ -79,6 +86,7 @@
   {
     "rank": 8,
     "customer_name": "Khách hàng Cơ Khí *** *** Trung",
+    "original_name": "Khách hàng Cơ Khí Thành Trung",
     "customer_code": "ERK-KH-6640",
     "vip_tier": "VIP PRO",
     "order_count": 11,
@@ -90,6 +98,7 @@
   {
     "rank": 9,
     "customer_name": "Khách hàng Tiêu Dùng *** *** Nam",
+    "original_name": "Khách hàng Tiêu Dùng Phương Nam",
     "customer_code": "ERK-KH-2287",
     "vip_tier": "KH CŨ",
     "order_count": 12,
@@ -101,6 +110,7 @@
   {
     "rank": 10,
     "customer_name": "Khách hàng Nội Thất *** *** Đô",
+    "original_name": "Khách hàng Nội Thất Hà Đô",
     "customer_code": "ERK-KH-9914",
     "vip_tier": "KH MỚI",
     "order_count": 9,
@@ -112,6 +122,7 @@
   {
     "rank": 11,
     "customer_name": "Khách hàng Gia Dụng *** *** Phát",
+    "original_name": "Khách hàng Gia Dụng Tấn Phát",
     "customer_code": "ERK-KH-1043",
     "vip_tier": "VIP PRO",
     "order_count": 15,
@@ -123,6 +134,7 @@
   {
     "rank": 12,
     "customer_name": "Khách hàng Thiết Bị *** *** Thắng",
+    "original_name": "Khách hàng Thiết Bị Quyết Thắng",
     "customer_code": "ERK-KH-8320",
     "vip_tier": "VIP PRO",
     "order_count": 13,
@@ -134,6 +146,7 @@
   {
     "rank": 13,
     "customer_name": "Khách hàng May Mặc *** *** Linh",
+    "original_name": "Khách hàng May Mặc Trúc Linh",
     "customer_code": "ERK-KH-4176",
     "vip_tier": "KH MỚI",
     "order_count": 10,
@@ -145,6 +158,7 @@
   {
     "rank": 14,
     "customer_name": "Khách hàng Hóa Mỹ Phẩm *** *** Hà",
+    "original_name": "Khách hàng Hóa Mỹ Phẩm Thu Hà",
     "customer_code": "ERK-KH-5902",
     "vip_tier": "VIP PRO",
     "order_count": 11,
@@ -156,6 +170,7 @@
   {
     "rank": 15,
     "customer_name": "Khách hàng Điện Tử *** *** Quang",
+    "original_name": "Khách hàng Điện Tử Nhật Quang",
     "customer_code": "ERK-KH-7241",
     "vip_tier": "VIP PREMIUM",
     "order_count": 8,
@@ -167,6 +182,7 @@
   {
     "rank": 16,
     "customer_name": "Khách hàng Bao Bì *** *** Hưng",
+    "original_name": "Khách hàng Bao Bì Gia Hưng",
     "customer_code": "ERK-KH-3819",
     "vip_tier": "BASIC",
     "order_count": 9,
@@ -178,6 +194,7 @@
   {
     "rank": 17,
     "customer_name": "Khách hàng Hộ KD Giày Dép *** *** Vy",
+    "original_name": "Khách hàng Hộ KD Giày Dép Thúy Vy",
     "customer_code": "ERK-KH-6055",
     "vip_tier": "BASIC",
     "order_count": 12,
@@ -189,6 +206,7 @@
   {
     "rank": 18,
     "customer_name": "Khách hàng Vật Liệu Xây Dựng *** *** Sơn",
+    "original_name": "Khách hàng Vật Liệu Xây Dựng Thái Sơn",
     "customer_code": "ERK-KH-2790",
     "vip_tier": "VIP PRO",
     "order_count": 6,
@@ -200,6 +218,7 @@
   {
     "rank": 19,
     "customer_name": "Khách hàng VPP & Quà Tặng *** *** Mai",
+    "original_name": "Khách hàng VPP & Quà Tặng Ban Mai",
     "customer_code": "ERK-KH-8411",
     "vip_tier": "KH MỚI",
     "order_count": 8,
@@ -211,6 +230,7 @@
   {
     "rank": 20,
     "customer_name": "Khách hàng Nông Sản Chế Biến *** *** Lộc",
+    "original_name": "Khách hàng Nông Sản Chế Biến Tấn Lộc",
     "customer_code": "ERK-KH-9533",
     "vip_tier": "KH CŨ",
     "order_count": 7,
@@ -222,6 +242,7 @@
   {
     "rank": 21,
     "customer_name": "Khách hàng Thủ Công Mỹ Nghệ *** *** Tâm",
+    "original_name": "Khách hàng Thủ Công Mỹ Nghệ Thành Tâm",
     "customer_code": "ERK-KH-1188",
     "vip_tier": "BASIC",
     "order_count": 6,
@@ -233,6 +254,7 @@
   {
     "rank": 22,
     "customer_name": "Khách hàng Phụ Tùng Xe Máy *** *** Dũng",
+    "original_name": "Khách hàng Phụ Tùng Xe Máy Tiến Dũng",
     "customer_code": "ERK-KH-7629",
     "vip_tier": "BASIC",
     "order_count": 5,
@@ -244,6 +266,7 @@
   {
     "rank": 23,
     "customer_name": "Khách hàng Hộ KD Mẹ & Bé *** *** Thảo",
+    "original_name": "Khách hàng Hộ KD Mẹ & Bé Phương Thảo",
     "customer_code": "ERK-KH-3341",
     "vip_tier": "KH MỚI",
     "order_count": 7,
@@ -255,6 +278,7 @@
   {
     "rank": 24,
     "customer_name": "Khách hàng Đèn Trang Trí *** *** Hoàng",
+    "original_name": "Khách hàng Đèn Trang Trí Huy Hoàng",
     "customer_code": "ERK-KH-5820",
     "vip_tier": "BASIC",
     "order_count": 4,
@@ -266,6 +290,7 @@
   {
     "rank": 25,
     "customer_name": "Khách hàng Dược Liệu Tự Nhiên *** *** Trúc",
+    "original_name": "Khách hàng Dược Liệu Tự Nhiên Thanh Trúc",
     "customer_code": "ERK-KH-9102",
     "vip_tier": "BASIC",
     "order_count": 4,
