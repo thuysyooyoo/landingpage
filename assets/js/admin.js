@@ -1594,16 +1594,25 @@ async function testBotNotification() {
 function switchAdminTab(tabName) {
   document.querySelectorAll('.admin-tab-content').forEach(el => el.classList.add('hidden'));
   document.querySelectorAll('.admin-tab-btn').forEach(btn => {
-    btn.classList.remove('bg-brand-600', 'text-white');
-    btn.classList.add('text-slate-400');
+    btn.classList.remove('bg-brand-600', 'bg-sky-600', 'text-white', 'shadow-lg');
+    if (btn.id === 'admin-btn-sheets-sync') {
+      btn.classList.add('text-sky-300', 'bg-sky-950/60');
+    } else {
+      btn.classList.add('text-slate-400');
+    }
   });
 
   const activeContent = document.getElementById(`admin-tab-${tabName}`);
   const activeBtn = document.getElementById(`admin-btn-${tabName}`);
   if (activeContent) activeContent.classList.remove('hidden');
   if (activeBtn) {
-    activeBtn.classList.add('bg-brand-600', 'text-white');
-    activeBtn.classList.remove('text-slate-400');
+    if (tabName === 'sheets-sync') {
+      activeBtn.classList.add('bg-sky-600', 'text-white', 'shadow-lg');
+      activeBtn.classList.remove('text-sky-300', 'bg-sky-950/60');
+    } else {
+      activeBtn.classList.add('bg-brand-600', 'text-white', 'shadow-lg');
+      activeBtn.classList.remove('text-slate-400');
+    }
   }
 
   if (tabName === 'spin-leads') {

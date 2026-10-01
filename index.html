@@ -2025,9 +2025,9 @@
           <div>
             <div class="flex flex-wrap items-center gap-2">
               <h3 class="text-base sm:text-xl font-black text-white">Bảng Quản Trị Sự Kiện (Admin Control Panel)</h3>
-              <span id="admin-cloud-sync-badge" class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 text-[10px] font-bold">
+              <button type="button" onclick="switchAdminTab('sheets-sync')" id="admin-cloud-sync-badge" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 text-[10px] font-bold hover:brightness-125 transition-all cursor-pointer shadow-sm" title="Bấm vào để mở cài đặt Google Sheets Cloud Database">
                 <span>🟡 Bộ nhớ:</span> <span>Cục bộ</span>
-              </span>
+              </button>
             </div>
             <span class="text-[11px] sm:text-xs text-emerald-400 font-semibold">Tài khoản Quản Trị Viên đang hoạt động</span>
           </div>
@@ -2038,28 +2038,29 @@
         </div>
       </div>
 
-      <!-- Admin Tab Switcher (Sleek Horizontal Segmented Strip on Mobile & Desktop) -->
-      <div class="flex overflow-x-auto no-scrollbar gap-1.5 sm:gap-2 mb-4 sm:mb-5 border-b border-slate-800 pb-2.5 -mx-1 px-1">
-        <button onclick="switchAdminTab('wheel-config')" id="admin-btn-wheel-config" class="admin-tab-btn px-3 sm:px-3.5 py-2 rounded-xl text-[11px] sm:text-xs font-bold bg-brand-600 text-white shrink-0 whitespace-nowrap">
+      <!-- Admin Tab Switcher (Flex Wrap - Hiển thị đủ 100% 6 Tab trên mọi màn hình, KHÔNG bị khuất) -->
+      <div class="flex flex-wrap items-center gap-1.5 sm:gap-2 mb-4 sm:mb-5 border-b border-slate-800 pb-3">
+        <button onclick="switchAdminTab('wheel-config')" id="admin-btn-wheel-config" class="admin-tab-btn px-3 sm:px-3.5 py-2 rounded-xl text-[11px] sm:text-xs font-bold bg-brand-600 text-white shrink-0 whitespace-nowrap transition-all shadow-sm">
           1. Cấu Hình Tỉ Lệ & Kho Quà
         </button>
-        <button onclick="switchAdminTab('spin-leads')" id="admin-btn-spin-leads" class="admin-tab-btn px-3 sm:px-3.5 py-2 rounded-xl text-[11px] sm:text-xs font-bold text-slate-400 hover:text-white flex items-center gap-1.5 shrink-0 whitespace-nowrap">
-          <span>2. Lịch Sử Khách Quay Voucher</span>
+        <button onclick="switchAdminTab('spin-leads')" id="admin-btn-spin-leads" class="admin-tab-btn px-3 sm:px-3.5 py-2 rounded-xl text-[11px] sm:text-xs font-bold text-slate-400 hover:text-white flex items-center gap-1.5 shrink-0 whitespace-nowrap transition-all shadow-sm">
+          <span>2. Lịch Sử Khách Quay</span>
           <span id="admin-leads-count" class="px-1.5 py-0.2 rounded-full bg-amber-400/20 text-amber-300 text-[10px] font-bold border border-amber-400/40">4 SĐT</span>
         </button>
-        <button onclick="switchAdminTab('monthly-winners')" id="admin-btn-monthly-winners" class="admin-tab-btn px-3 sm:px-3.5 py-2 rounded-xl text-[11px] sm:text-xs font-bold text-slate-400 hover:text-white flex items-center gap-1.5 shrink-0 whitespace-nowrap">
-          <span>3. Vòng Quay Booking & Upload DS (Mùng 05)</span>
+        <button onclick="switchAdminTab('monthly-winners')" id="admin-btn-monthly-winners" class="admin-tab-btn px-3 sm:px-3.5 py-2 rounded-xl text-[11px] sm:text-xs font-bold text-slate-400 hover:text-white flex items-center gap-1.5 shrink-0 whitespace-nowrap transition-all shadow-sm">
+          <span>3. Vòng Quay Mùng 05</span>
         </button>
-        <button onclick="switchAdminTab('leaderboard-manager')" id="admin-btn-leaderboard-manager" class="admin-tab-btn px-3 sm:px-3.5 py-2 rounded-xl text-[11px] sm:text-xs font-bold text-slate-400 hover:text-white flex items-center gap-1.5 shrink-0 whitespace-nowrap">
-          <span>4. Nạp BXH & Vinh Danh Top Tuần</span>
+        <button onclick="switchAdminTab('leaderboard-manager')" id="admin-btn-leaderboard-manager" class="admin-tab-btn px-3 sm:px-3.5 py-2 rounded-xl text-[11px] sm:text-xs font-bold text-slate-400 hover:text-white flex items-center gap-1.5 shrink-0 whitespace-nowrap transition-all shadow-sm">
+          <span>4. Nạp BXH & Vinh Danh</span>
         </button>
-        <button onclick="switchAdminTab('affiliate-contest')" id="admin-btn-affiliate-contest" class="admin-tab-btn px-3 sm:px-3.5 py-2 rounded-xl text-[11px] sm:text-xs font-bold text-slate-400 hover:text-white flex items-center gap-1.5 shrink-0 whitespace-nowrap">
-          <span>🏆 5. Thi Đua Nội Bộ (Ref Link)</span>
+        <button onclick="switchAdminTab('affiliate-contest')" id="admin-btn-affiliate-contest" class="admin-tab-btn px-3 sm:px-3.5 py-2 rounded-xl text-[11px] sm:text-xs font-bold text-slate-400 hover:text-white flex items-center gap-1.5 shrink-0 whitespace-nowrap transition-all shadow-sm">
+          <span>🏆 5. Thi Đua Tiếp Thị</span>
           <span id="admin-affiliate-badge" class="px-1.5 py-0.2 rounded-full bg-emerald-400/20 text-emerald-300 text-[10px] font-bold border border-emerald-400/40">3 NV</span>
         </button>
-        <button onclick="switchAdminTab('sheets-sync')" id="admin-btn-sheets-sync" class="admin-tab-btn px-3 sm:px-3.5 py-2 rounded-xl text-[11px] sm:text-xs font-bold text-slate-400 hover:text-white flex items-center gap-1.5 shrink-0 whitespace-nowrap">
-          <span>☁️ 6. Đồng Bộ Google Sheets (Cloud DB)</span>
-          <span id="admin-sheets-status-dot" class="w-2 h-2 rounded-full bg-amber-400"></span>
+        <button onclick="switchAdminTab('sheets-sync')" id="admin-btn-sheets-sync" class="admin-tab-btn px-3.5 sm:px-4 py-2 rounded-xl text-[11px] sm:text-xs font-extrabold text-sky-300 bg-sky-950/60 border border-sky-500/50 hover:bg-sky-900/60 flex items-center gap-2 shrink-0 whitespace-nowrap transition-all shadow-md">
+          <span class="text-sm">☁️</span>
+          <span>6. Đồng Bộ Google Sheets (Cloud DB)</span>
+          <span id="admin-sheets-status-dot" class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
         </button>
       </div>
 
