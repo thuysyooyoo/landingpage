@@ -104,6 +104,7 @@ function showAdminDashboard() {
   renderAdminM05BookingManager();
   renderAdminWinnersTable();
   renderAdminWeeklyWinnerForm();
+  renderAdminGalaToggle();
   renderAdminLeaderboardTable();
   renderAdminAffiliateContest();
 }
@@ -866,6 +867,79 @@ function disableAdminWeeklyWinner() {
   alert('🚫 Đã gỡ bỏ / ẩn khối vinh danh Chiến Tướng Top Tuần khỏi màn hình chính!');
 }
 
+// --- GALA AWARDS VISIBILITY TOGGLE ---
+function renderAdminGalaToggle() {
+  let galaConfig = null;
+  try {
+    const raw = localStorage.getItem('eureka_gala_awards_config');
+    if (raw) galaConfig = JSON.parse(raw);
+  } catch (e) {}
+
+  const activeCheck = document.getElementById('admin-gala-active');
+  const statusBadge = document.getElementById('admin-gala-status-badge');
+
+  if (galaConfig) {
+    if (activeCheck) activeCheck.checked = !!galaConfig.is_active;
+    if (statusBadge) {
+      if (galaConfig.is_active) {
+        statusBadge.textContent = '🟢 ĐANG HIỂN THỊ';
+        statusBadge.className = 'text-[11px] font-bold text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/30';
+      } else {
+        statusBadge.textContent = '⚪ ĐANG ẨN';
+        statusBadge.className = 'text-[11px] font-bold text-slate-400 bg-slate-800 px-2.5 py-1 rounded-full border border-slate-700';
+      }
+    }
+  } else {
+    // Default: visible
+    if (activeCheck) activeCheck.checked = true;
+    if (statusBadge) {
+      statusBadge.textContent = '🟢 ĐANG HIỂN THỊ (Mặc định)';
+      statusBadge.className = 'text-[11px] font-bold text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/30';
+    }
+  }
+
+  // Apply visibility to main page
+  applyGalaVisibility();
+}
+
+function saveAdminGalaToggle() {
+  const activeCheck = document.getElementById('admin-gala-active');
+  const isActive = activeCheck ? activeCheck.checked : true;
+
+  const config = {
+    is_active: isActive,
+    updated_at: new Date().toLocaleString('vi-VN')
+  };
+  localStorage.setItem('eureka_gala_awards_config', JSON.stringify(config));
+  applyGalaVisibility();
+  renderAdminGalaToggle();
+  alert(isActive ? '🟢 Đã BẬT hiển thị phần Vinh danh Đêm Gala trên trang chính!' : '⚪ Đã TẮT / ẨN phần Vinh danh Đêm Gala khỏi trang chính!');
+}
+
+function applyGalaVisibility() {
+  const section = document.getElementById('gala-awards-section');
+  if (!section) return;
+
+  let galaConfig = null;
+  try {
+    const raw = localStorage.getItem('eureka_gala_awards_config');
+    if (raw) galaConfig = JSON.parse(raw);
+  } catch (e) {}
+
+  if (galaConfig && galaConfig.is_active === false) {
+    section.style.display = 'none';
+  } else {
+    section.style.display = '';
+  }
+}
+
+// Apply on page load
+if (typeof document !== 'undefined') {
+  document.addEventListener('DOMContentLoaded', function() {
+    applyGalaVisibility();
+  });
+}
+
 // --- PHẦN 2: NẠP & QUẢN LÝ DANH SÁCH BẢNG XẾP HẠNG DOANH SỐ ---
 function getAdminLeaderboardList() {
   try {
@@ -989,6 +1063,7 @@ function saveAdminLeaderboardFromTable() {
     return {
       rank: rank,
       customer_name: maskName(rawName),
+      original_name: rawName,
       customer_code: rawCode,
       vip_tier: vip,
       order_count: orders,
@@ -1037,17 +1112,21 @@ function handleBxhFileUpload(event) {
       if (file.name.endsWith('.json')) {
         const parsed = JSON.parse(content);
         if (Array.isArray(parsed)) {
-          list = parsed.map((item, idx) => ({
-            rank: item.rank || (idx + 1),
-            customer_name: maskName(item.customer_name || item.name || 'Khách hàng Eureka'),
-            customer_code: (item.customer_code || item.code || ('ERK-KH-' + (8800 + idx))).toUpperCase(),
-            vip_tier: item.vip_tier || 'VIP PRO',
-            order_count: parseInt(item.order_count, 10) || 0,
-            volume_weight: item.volume_weight || '0 tấn | 0 m³',
-            service_fee: parseInt(item.service_fee, 10) || 0,
-            prize_tag: item.prize_tag || '',
-            prize_type: (item.rank === 1 || idx === 0) ? 'top1' : (item.rank === 2 || idx === 1) ? 'top2' : (item.rank === 3 || idx === 2) ? 'top3' : 'regular'
-          }));
+          list = parsed.map((item, idx) => {
+            const rawName = item.customer_name || item.name || 'Khách hàng Eureka';
+            return {
+              rank: item.rank || (idx + 1),
+              customer_name: maskName(rawName),
+              original_name: rawName,
+              customer_code: (item.customer_code || item.code || ('ERK-KH-' + (8800 + idx))).toUpperCase(),
+              vip_tier: item.vip_tier || 'VIP PRO',
+              order_count: parseInt(item.order_count, 10) || 0,
+              volume_weight: item.volume_weight || '0 tấn | 0 m³',
+              service_fee: parseInt(item.service_fee, 10) || 0,
+              prize_tag: item.prize_tag || '',
+              prize_type: (item.rank === 1 || idx === 0) ? 'top1' : (item.rank === 2 || idx === 1) ? 'top2' : (item.rank === 3 || idx === 2) ? 'top3' : 'regular'
+            };
+          });
         }
       } else {
         // Parse CSV
@@ -1057,9 +1136,11 @@ function handleBxhFileUpload(event) {
         for (let i = startIndex; i < lines.length; i++) {
           const cols = lines[i].split(',').map(c => c.trim().replace(/^["']+|["']+$/g, ''));
           if (cols.length >= 3) {
+            const rawName = cols[1] || 'Khách hàng Eureka';
             list.push({
               rank: parseInt(cols[0], 10) || (list.length + 1),
-              customer_name: maskName(cols[1] || 'Khách hàng Eureka'),
+              customer_name: maskName(rawName),
+              original_name: rawName,
               customer_code: (cols[2] || ('ERK-KH-' + (8800 + list.length))).toUpperCase(),
               vip_tier: cols[3] || 'VIP PRO',
               order_count: parseInt(cols[4], 10) || 0,
@@ -1276,6 +1357,7 @@ function switchAdminTab(tabName) {
   }
   if (tabName === 'leaderboard-manager') {
     renderAdminWeeklyWinnerForm();
+    renderAdminGalaToggle();
     renderAdminLeaderboardTable();
   }
   if (tabName === 'affiliate-contest') {

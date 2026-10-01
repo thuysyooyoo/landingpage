@@ -536,7 +536,7 @@ function updateM05PublicInfo() {
   if (adminSpinPrize) adminSpinPrize.textContent = currentPrize;
 }
 
-// ==================== WHEEL 2: VÒNG QUAY TRI ÂN MÙNG 05 HÀNG THÁNG ====================
+// ==================== WHEEL 2: VÒNG QUAY TRI ÂN ====================
 const m05Canvas = document.getElementById('m05-wheel-canvas');
 let m05Ctx = m05Canvas ? m05Canvas.getContext('2d') : null;
 
@@ -668,11 +668,34 @@ function spinM05Admin() {
   }
 
   const periodSelect = document.getElementById('m05-period-select');
-  const period = periodSelect ? periodSelect.value : 'Kỳ 10/2026 (Mùng 05/11)';
+  const period = periodSelect ? periodSelect.value : 'Kỳ Tháng 11/2026 (Mùng 05/12)';
   const currentPrize = getM05CurrentPrize();
 
-  // 1. Pick the winning booking code from 100% of the uploaded booking pool
-  const winningBooking = pool[Math.floor(Math.random() * pool.length)];
+  // Extract customer code prefix from booking code (e.g., 'A114-10' -> 'A114', 'ERK-BK-2026-8891' -> '8891')
+  function extractCustomerCode(bookingCode) {
+    if (!bookingCode) return bookingCode;
+    // Format: PREFIX-NUMBER (e.g., A114-10) -> take PREFIX
+    const parts = bookingCode.split('-');
+    if (parts.length >= 2 && /^[A-Z]+\d+$/i.test(parts[0])) return parts[0].toUpperCase();
+    // Format: ERK-BK-2026-XXXX -> take last segment
+    return parts[parts.length - 1];
+  }
+
+  // Get already-won customer codes in this period to ensure deduplication
+  const existingWinners = (typeof getMonthlyWinners === 'function') ? getMonthlyWinners() : [];
+  const wonCustomerCodes = existingWinners
+    .filter(w => w.period === period)
+    .map(w => extractCustomerCode(w.booking_code));
+
+  // Filter pool to exclude already-won customer codes
+  let eligiblePool = pool.filter(code => !wonCustomerCodes.includes(extractCustomerCode(code)));
+  if (eligiblePool.length === 0) {
+    alert('⚠️ Tất cả mã khách hàng trong kỳ "' + period + '" đã trúng thưởng!\nVui lòng chọn kỳ quay khác hoặc nạp thêm mã booking.');
+    return;
+  }
+
+  // 1. Pick the winning booking code ensuring unique customer code per spin
+  const winningBooking = eligiblePool[Math.floor(Math.random() * eligiblePool.length)];
 
   // 2. Select target segment and ensure its text displays the winning booking code
   const targetIndex = Math.floor(Math.random() * m05Segments.length);

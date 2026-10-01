@@ -453,6 +453,16 @@ function renderWeeklyWinnerSpotlight() {
 
     container.classList.remove('hidden');
     container.style.display = 'block';
+
+    // Also update Prize Tab "Giải Top Tuần" panel
+    const prizeTopName = document.getElementById('prize-top-tuan-name');
+    const prizeTopCode = document.getElementById('prize-top-tuan-code');
+    const prizeTopSpending = document.getElementById('prize-top-tuan-spending');
+    const prizeTopPrize = document.getElementById('prize-top-tuan-prize');
+    if (prizeTopName) prizeTopName.textContent = maskCustomerName(winner.customer_name);
+    if (prizeTopCode) prizeTopCode.textContent = 'MÃ: ' + (winner.customer_code || winner.code || 'ERK-KH-8891');
+    if (prizeTopSpending) prizeTopSpending.textContent = winner.weekly_spending.includes('đ') ? winner.weekly_spending : new Intl.NumberFormat('vi-VN').format(winner.weekly_spending) + ' đ';
+    if (prizeTopPrize) prizeTopPrize.textContent = '🎁 ' + (winner.prize_name || 'Voucher Tiền Mặt 2.000.000 đ + Cúp Chiến Tướng');
   } else {
     // Hidden when admin has not entered information
     container.classList.add('hidden');
@@ -520,7 +530,8 @@ function filterLeaderboard() {
   const filtered = leaderboardData.filter(item => {
     const name = (item.customer_name || item.company_name || '').toLowerCase();
     const code = (item.customer_code || item.code || '').toLowerCase();
-    return name.includes(query) || code.includes(query);
+    const originalName = (item.original_name || '').toLowerCase();
+    return name.includes(query) || code.includes(query) || originalName.includes(query);
   });
 
   renderLeaderboard(filtered);
