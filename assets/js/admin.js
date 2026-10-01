@@ -899,7 +899,7 @@ function disableAdminWeeklyWinner() {
   alert('🚫 Đã gỡ bỏ / ẩn khối vinh danh Chiến Tướng Top Tuần khỏi màn hình chính!');
 }
 
-// --- GALA AWARDS VISIBILITY TOGGLE ---
+// --- GALA AWARDS VISIBILITY & CELEBRATION MODE TOGGLE ---
 function renderAdminGalaToggle() {
   let galaConfig = null;
   try {
@@ -907,26 +907,30 @@ function renderAdminGalaToggle() {
     if (raw) galaConfig = JSON.parse(raw);
   } catch (e) {}
 
+  let celebrationModeSaved = null;
+  try {
+    celebrationModeSaved = localStorage.getItem('eureka_gala_celebration_mode');
+  } catch (e) {}
+
   const activeCheck = document.getElementById('admin-gala-active');
+  const celebrationCheck = document.getElementById('admin-gala-celebration-mode');
   const statusBadge = document.getElementById('admin-gala-status-badge');
 
-  if (galaConfig) {
-    if (activeCheck) activeCheck.checked = !!galaConfig.is_active;
-    if (statusBadge) {
-      if (galaConfig.is_active) {
-        statusBadge.textContent = '🟢 ĐANG HIỂN THỊ';
-        statusBadge.className = 'text-[11px] font-bold text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/30';
-      } else {
-        statusBadge.textContent = '⚪ ĐANG ẨN';
-        statusBadge.className = 'text-[11px] font-bold text-slate-400 bg-slate-800 px-2.5 py-1 rounded-full border border-slate-700';
-      }
-    }
-  } else {
-    // Default: visible
-    if (activeCheck) activeCheck.checked = true;
-    if (statusBadge) {
-      statusBadge.textContent = '🟢 ĐANG HIỂN THỊ (Mặc định)';
+  if (activeCheck) {
+    activeCheck.checked = galaConfig ? !!galaConfig.is_active : true;
+  }
+  if (celebrationCheck) {
+    celebrationCheck.checked = celebrationModeSaved === null ? true : celebrationModeSaved === '1';
+  }
+
+  if (statusBadge) {
+    const isActive = activeCheck ? activeCheck.checked : true;
+    if (isActive) {
+      statusBadge.textContent = '🟢 ĐANG HIỂN THỊ';
       statusBadge.className = 'text-[11px] font-bold text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/30';
+    } else {
+      statusBadge.textContent = '⚪ ĐANG ẨN';
+      statusBadge.className = 'text-[11px] font-bold text-slate-400 bg-slate-800 px-2.5 py-1 rounded-full border border-slate-700';
     }
   }
 
@@ -936,19 +940,28 @@ function renderAdminGalaToggle() {
 
 function saveAdminGalaToggle() {
   const activeCheck = document.getElementById('admin-gala-active');
+  const celebrationCheck = document.getElementById('admin-gala-celebration-mode');
   const isActive = activeCheck ? activeCheck.checked : true;
+  const isCelebration = celebrationCheck ? celebrationCheck.checked : true;
 
   const config = {
     is_active: isActive,
+    celebration_mode: isCelebration,
     updated_at: new Date().toLocaleString('vi-VN')
   };
   localStorage.setItem('eureka_gala_awards_config', JSON.stringify(config));
+  localStorage.setItem('eureka_gala_celebration_mode', isCelebration ? '1' : '0');
+
   if (typeof syncAdminConfigToCloud === 'function') {
     syncAdminConfigToCloud('eureka_gala_awards_config', config);
   }
+  
+  if (typeof applyGalaCelebrationState === 'function') {
+    applyGalaCelebrationState(isCelebration);
+  }
   applyGalaVisibility();
   renderAdminGalaToggle();
-  alert(isActive ? '🟢 Đã BẬT hiển thị phần Vinh danh Đêm Gala trên trang chính!' : '⚪ Đã TẮT / ẨN phần Vinh danh Đêm Gala khỏi trang chính!');
+  alert('✅ Đã lưu cài đặt Gala thành công!\n- Hiển thị khối Gala: ' + (isActive ? 'BẬT' : 'TẮT') + '\n- Chế độ Tổng kết Gala: ' + (isCelebration ? 'BẬT (chỉ giữ Tổng quan, Vinh danh & BXH)' : 'TẮT (hiện toàn bộ chương trình)'));
 }
 
 function applyGalaVisibility() {

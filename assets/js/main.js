@@ -949,3 +949,86 @@ function scrollToVongQuayTriAn(e) {
   }
 }
 window.scrollToVongQuayTriAn = scrollToVongQuayTriAn;
+
+// ==================== 8. CHẾ ĐỘ TỔNG KẾT & VINH DANH GALA 2026 ====================
+let isGalaCelebrationMode = true; // Mặc định mở chế độ tổng kết vinh danh đêm gala
+
+function applyGalaCelebrationState(active) {
+  isGalaCelebrationMode = active;
+  
+  const sectionGala = document.getElementById('gala-awards-section');
+  const sectionGiaiThuong = document.getElementById('giai-thuong');
+  const sectionTheLe = document.getElementById('the-le');
+  const sectionVongQuay = document.getElementById('vong-quay-mung-05');
+  const heroSpinBtn = document.getElementById('hero-spin-btn-wrapper');
+  const heroGalaBtn = document.getElementById('hero-gala-jump-btn');
+  const toggleBtnText = document.getElementById('gala-mode-text');
+  const toggleBtnIcon = document.getElementById('gala-mode-icon');
+  const navCampaignLinks = document.querySelectorAll('.nav-campaign-only');
+  const navGalaLink = document.getElementById('nav-gala-link');
+
+  if (active) {
+    // Ẩn tất cả những phần đang đua: vòng quay tri ân, nhiệm vụ hệ thống, cơ cấu giải thưởng, thể lệ
+    if (sectionGiaiThuong) sectionGiaiThuong.style.display = 'none';
+    if (sectionTheLe) sectionTheLe.style.display = 'none';
+    if (sectionVongQuay) sectionVongQuay.style.display = 'none';
+    if (heroSpinBtn) heroSpinBtn.style.display = 'none';
+    if (heroGalaBtn) heroGalaBtn.classList.remove('hidden');
+
+    // Chỉ để lại: Tổng quan, Vinh danh Gala, Bảng xếp hạng
+    if (sectionGala) sectionGala.style.display = 'block';
+
+    // Cập nhật Header Menu
+    navCampaignLinks.forEach(el => el.classList.add('hidden'));
+    if (navGalaLink) navGalaLink.classList.remove('hidden');
+
+    // Nút trạng thái
+    if (toggleBtnText) toggleBtnText.textContent = 'Chế Độ Vinh Danh Gala (Đang Bật) ⇋ Bấm xem Toàn Bộ';
+    if (toggleBtnIcon) toggleBtnIcon.textContent = '🏆';
+  } else {
+    // Hiện lại toàn bộ chương trình bình thường
+    if (sectionGiaiThuong) sectionGiaiThuong.style.display = '';
+    if (sectionTheLe) sectionTheLe.style.display = '';
+    if (sectionVongQuay) sectionVongQuay.style.display = '';
+    if (heroSpinBtn) heroSpinBtn.style.display = '';
+    if (heroGalaBtn) heroGalaBtn.classList.add('hidden');
+    if (sectionGala) sectionGala.style.display = 'block';
+
+    // Hiện lại Header Menu
+    navCampaignLinks.forEach(el => el.classList.remove('hidden'));
+
+    // Nút trạng thái
+    if (toggleBtnText) toggleBtnText.textContent = 'Bật Chế Độ Vinh Danh Gala (Chỉ Hiện Tổng Kết & BXH)';
+    if (toggleBtnIcon) toggleBtnIcon.textContent = '📋';
+  }
+
+  try {
+    localStorage.setItem('eureka_gala_celebration_mode', active ? '1' : '0');
+  } catch (e) {}
+}
+
+function toggleGalaCelebrationMode() {
+  applyGalaCelebrationState(!isGalaCelebrationMode);
+}
+
+window.applyGalaCelebrationState = applyGalaCelebrationState;
+window.toggleGalaCelebrationMode = toggleGalaCelebrationMode;
+
+// Tự động khởi chạy chế độ Gala khi load trang
+document.addEventListener('DOMContentLoaded', () => {
+  let saved = null;
+  try {
+    saved = localStorage.getItem('eureka_gala_celebration_mode');
+  } catch (e) {}
+  // Mặc định active = true (chế độ vinh danh đêm gala)
+  const shouldBeActive = saved === null ? true : saved === '1';
+  applyGalaCelebrationState(shouldBeActive);
+});
+if (document.readyState === 'complete' || document.readyState === 'interactive') {
+  let saved = null;
+  try {
+    saved = localStorage.getItem('eureka_gala_celebration_mode');
+  } catch (e) {}
+  const shouldBeActive = saved === null ? true : saved === '1';
+  applyGalaCelebrationState(shouldBeActive);
+}
