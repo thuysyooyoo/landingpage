@@ -9,7 +9,7 @@
 
 ## 🔒 1. Chính Sách Bảo Mật B2B & Chống Cào Dữ Liệu Đối Thủ
 
-Để bảo vệ tối đa dữ liệu kinh doanh của hàng trăm doanh nghiệp và hộ kinh doanh đối tác:
+Để bảo vệ tối đa dữ liệu kinh doanh của hàng trăm khách hàng và hộ kinh doanh đối tác:
 * **Che Tên Công Ty / Hộ Kinh Doanh (`***`):** Chỉ hiển thị tiền tố và hậu tố nhận diện (Ví dụ: `Tập Đoàn XNK *** Á Châu`, `Công Ty CP Thương Mại *** Minh`, `TNHH SX & PP Gia Dụng *** An`).
 * **Không Hiển Thị Mã Khách Hàng:** Tuyệt đối loại bỏ mã định danh khách hàng trên giao diện web công khai để ngăn chặn đối thủ cào dữ liệu (web scraping) hoặc dò tìm danh tính đối tác.
 * **Thay Bằng Số Điện Thoại Ẩn (`098***6789`):** Hiển thị số điện thoại đại diện được che 4 chữ số ở giữa, vừa tạo tính minh bạch và uy tín, vừa bảo đảm quyền riêng tư liên hệ của khách hàng.

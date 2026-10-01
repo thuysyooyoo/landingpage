@@ -257,7 +257,7 @@ function renderNhiemVuDisplay() {
             Tổng Kết 3 Chặng Nhiệm Vụ Hệ Thống
           </h3>
           <p class="text-xs sm:text-sm text-slate-300 mt-2">
-            Thống kê số lượng doanh nghiệp hoàn thành nhiệm vụ và được tự động nâng hạng VIP+1 qua từng cột mốc
+            Thống kê số lượng khách hàng hoàn thành nhiệm vụ và được tự động nâng hạng VIP+1 qua từng cột mốc
           </p>
         </div>
 
@@ -333,7 +333,7 @@ function renderNhiemVuDisplay() {
             <div>
               <h4 class="text-base sm:text-lg font-black text-amber-300 font-display">Chiến Binh Bứt Phá — Hoàn Thành Trọn Vẹn 3 Chặng</h4>
               <p class="text-xs sm:text-sm text-slate-300 mt-0.5 leading-relaxed">
-                Các doanh nghiệp xuất sắc hoàn thành liên tiếp cả 3 chặng được vinh danh tại Gala Year-End Party và duy trì đặc quyền VIP ELITE+ dài hạn!
+                Các khách hàng xuất sắc hoàn thành liên tiếp cả 3 chặng được vinh danh tại Gala Year-End Party và duy trì đặc quyền VIP ELITE+ dài hạn!
               </p>
             </div>
           </div>
@@ -430,7 +430,7 @@ function renderNhiemVuDisplay() {
                 👑 Danh Sách Mã KH Đạt Chuẩn
               </h3>
               <p class="text-xs text-slate-300 mt-0.5">
-                Các doanh nghiệp đã hoàn thành nhiệm vụ và được tự động nâng hạng VIP+1
+                Các khách hàng đã hoàn thành nhiệm vụ và được tự động nâng hạng VIP+1
               </p>
             </div>
             <span id="nhiem-vu-count-badge" class="px-3 py-1.5 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-xs font-black whitespace-nowrap self-start sm:self-center">

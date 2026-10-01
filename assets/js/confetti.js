@@ -79,7 +79,7 @@ function showWinningResult(prizeObj, orderCode) {
     newEntry.innerHTML = `
       <div class="flex items-center gap-2">
         <span class="text-amber-400 font-mono font-bold">${orderCode}</span>
-        <span class="text-white font-medium">Doanh nghiệp vừa quay</span>
+        <span class="text-white font-medium">Khách hàng vừa quay</span>
       </div>
       <span class="font-bold text-emerald-400">${prizeObj.text}</span>
     `;
