@@ -275,24 +275,30 @@ function closeAdminDashboard() {
   if (modal) modal.classList.add('hidden');
 }
 
-// ==================== TAB 1: WHEEL 1 CONFIG ====================
+// Default Wheel Segments (Fix cứng cấu hình trúng giải 10% cước theo chỉ đạo)
+const DEFAULT_WHEEL_SEGMENTS = [
+  { id: 1, text: 'GIẢM GIÁ 10% CƯỚC', color: '#ea580c', textColor: '#FFFFFF', prize: 'Giảm giá 10% chi phí vận chuyển', probability_weight: 100, stock_quantity: 9999 },
+  { id: 2, text: 'VOUCHER 300K', color: '#1e293b', textColor: '#FBBF24', prize: 'Voucher Chiết Khấu 300.000 đ', probability_weight: 0, stock_quantity: 25 },
+  { id: 3, text: 'ƯU TIÊN XẾP CONT', color: '#f59e0b', textColor: '#0F172A', prize: 'Vé Ưu Tiên Xếp Cont Sớm', probability_weight: 0, stock_quantity: 18 },
+  { id: 4, text: 'GIẢM 50% LƯU KHO', color: '#0f172a', textColor: '#FFFFFF', prize: 'Giảm 50% Phí Lưu Kho Bãi', probability_weight: 0, stock_quantity: 15 },
+  { id: 5, text: 'VOUCHER 300K', color: '#ea580c', textColor: '#FFFFFF', prize: 'Voucher Chiết Khấu 300.000 đ', probability_weight: 0, stock_quantity: 20 },
+  { id: 6, text: 'GÓI SQUAD 2-IN-1', color: '#1e293b', textColor: '#38BDF8', prize: 'Gói Hỗ Trợ Squad 2–in–1', probability_weight: 0, stock_quantity: 11 },
+  { id: 7, text: 'VOUCHER 400K', color: '#f59e0b', textColor: '#0F172A', prize: 'Voucher 400.000 đ Lộc Xuân', probability_weight: 0, stock_quantity: 10 },
+  { id: 8, text: 'MAY MẮN LẦN SAU', color: '#0f172a', textColor: '#94A3B8', prize: 'Vé Tích Lũy Quay Mùng 05', probability_weight: 0, stock_quantity: 999 }
+];
+window.DEFAULT_WHEEL_SEGMENTS = DEFAULT_WHEEL_SEGMENTS;
+
 function getActiveWheelSegments() {
   const saved = localStorage.getItem(STORAGE_KEY_WHEEL_CONFIG);
   if (saved) {
     try {
-      return JSON.parse(saved);
+      const parsed = JSON.parse(saved);
+      if (Array.isArray(parsed) && parsed.length === 8) {
+        return parsed;
+      }
     } catch (e) {}
   }
-  return [
-    { id: 1, text: 'VOUCHER 400K', color: '#ea580c', textColor: '#FFFFFF', prize: 'Voucher 400.000 đ Lộc Xuân', probability_weight: 10, stock_quantity: 8 },
-    { id: 2, text: 'VOUCHER 300K', color: '#1e293b', textColor: '#FBBF24', prize: 'Voucher Chiết Khấu 300.000 đ', probability_weight: 20, stock_quantity: 25 },
-    { id: 3, text: 'ƯU TIÊN XẾP CONT', color: '#f59e0b', textColor: '#0F172A', prize: 'Vé Ưu Tiên Xếp Cont Sớm', probability_weight: 15, stock_quantity: 18 },
-    { id: 4, text: 'GIẢM 50% LƯU KHO', color: '#0f172a', textColor: '#FFFFFF', prize: 'Giảm 50% Phí Lưu Kho Bãi', probability_weight: 15, stock_quantity: 15 },
-    { id: 5, text: 'VOUCHER 300K', color: '#ea580c', textColor: '#FFFFFF', prize: 'Voucher Chiết Khấu 300.000 đ', probability_weight: 15, stock_quantity: 20 },
-    { id: 6, text: 'GÓI SQUAD 2-IN-1', color: '#1e293b', textColor: '#38BDF8', prize: 'Gói Hỗ Trợ Squad 2-in-1', probability_weight: 10, stock_quantity: 12 },
-    { id: 7, text: 'VOUCHER 400K', color: '#f59e0b', textColor: '#0F172A', prize: 'Voucher 400.000 đ Lộc Xuân', probability_weight: 10, stock_quantity: 10 },
-    { id: 8, text: 'MAY MẮN LẦN SAU', color: '#0f172a', textColor: '#94A3B8', prize: 'Vé Tích Lũy Quay Mùng 05', probability_weight: 5, stock_quantity: 999 }
-  ];
+  return JSON.parse(JSON.stringify(DEFAULT_WHEEL_SEGMENTS));
 }
 
 function renderAdminWheelConfigTable() {
@@ -1176,6 +1182,21 @@ function renderAdminLeaderboardTable() {
   data.forEach((row, idx) => {
     const tr = document.createElement('tr');
     tr.className = 'border-b border-slate-700/60 hover:bg-slate-800/40 text-xs text-slate-200';
+
+    let rowWeight = 0;
+    if (row.weight_kg !== undefined && row.weight_kg !== null && !isNaN(parseFloat(row.weight_kg))) {
+      rowWeight = parseFloat(row.weight_kg);
+    } else if (typeof getCustomerWeightKg === 'function') {
+      rowWeight = getCustomerWeightKg(row);
+    }
+
+    let rowVol = 0;
+    if (row.volume_m3 !== undefined && row.volume_m3 !== null && !isNaN(parseFloat(row.volume_m3))) {
+      rowVol = parseFloat(row.volume_m3);
+    } else if (typeof getCustomerVolumeM3 === 'function') {
+      rowVol = getCustomerVolumeM3(row);
+    }
+
     tr.innerHTML = `
       <td class="py-2 px-2 text-center">
         <input type="number" min="1" max="999" value="${row.rank || (idx + 1)}" class="admin-bxh-rank w-12 bg-slate-900 border border-slate-700 rounded px-1.5 py-1 text-center font-bold text-amber-400">
@@ -1200,7 +1221,10 @@ function renderAdminLeaderboardTable() {
         <input type="number" min="0" value="${row.order_count || 0}" class="admin-bxh-orders w-16 bg-slate-900 border border-slate-700 rounded px-1.5 py-1 text-right font-bold text-white">
       </td>
       <td class="py-2 px-2">
-        <input type="text" value="${row.volume_weight || ''}" placeholder="142,5 tấn | 190 m³" class="admin-bxh-volume w-32 bg-slate-900 border border-slate-700 rounded px-2 py-1 text-slate-300 text-right">
+        <input type="number" min="0" step="any" value="${rowWeight}" placeholder="142500" class="admin-bxh-weight w-24 bg-slate-900 border border-slate-700 rounded px-1.5 py-1 text-amber-300 font-mono text-right" title="Tải trọng tính theo Kg">
+      </td>
+      <td class="py-2 px-2">
+        <input type="number" min="0" step="any" value="${rowVol}" placeholder="190" class="admin-bxh-volm3 w-20 bg-slate-900 border border-slate-700 rounded px-1.5 py-1 text-sky-300 font-mono text-right" title="Thể tích tính theo M³">
       </td>
       <td class="py-2 px-2">
         <input type="number" min="0" value="${row.service_fee || 0}" class="admin-bxh-fee w-32 bg-slate-900 border border-slate-700 rounded px-2 py-1 font-bold text-amber-300 text-right">
@@ -1226,6 +1250,8 @@ function addAdminLeaderboardRow() {
     customer_code: `ERK-KH-${randNum}`,
     vip_tier: "KH MỚI",
     order_count: 5,
+    weight_kg: 10000,
+    volume_m3: 25,
     volume_weight: "10,0 tấn | 25 m³",
     service_fee: 50000000,
     prize_tag: "Ứng viên Tiềm Năng",
@@ -1264,9 +1290,14 @@ function saveAdminLeaderboardFromTable() {
     const rawCode = tr.querySelector('.admin-bxh-code')?.value.trim().toUpperCase() || ('ERK-KH-' + (8800 + idx));
     const vip = tr.querySelector('.admin-bxh-vip')?.value || 'VIP PRO';
     const orders = parseInt(tr.querySelector('.admin-bxh-orders')?.value, 10) || 0;
-    const volume = tr.querySelector('.admin-bxh-volume')?.value.trim() || '0 tấn | 0 m³';
+    const weightKg = parseFloat(tr.querySelector('.admin-bxh-weight')?.value) || 0;
+    const volumeM3 = parseFloat(tr.querySelector('.admin-bxh-volm3')?.value) || 0;
     const fee = parseInt(tr.querySelector('.admin-bxh-fee')?.value, 10) || 0;
     const prize = tr.querySelector('.admin-bxh-prize')?.value.trim() || 'Bám đuổi Top 3';
+
+    const volWeight = (weightKg >= 1000
+      ? (weightKg / 1000).toLocaleString('vi-VN', { maximumFractionDigits: 1 }) + ' tấn'
+      : weightKg.toLocaleString('vi-VN') + ' kg') + ' | ' + volumeM3.toLocaleString('vi-VN') + ' m³';
 
     return {
       rank: rank,
@@ -1275,7 +1306,9 @@ function saveAdminLeaderboardFromTable() {
       customer_code: rawCode,
       vip_tier: vip,
       order_count: orders,
-      volume_weight: volume,
+      weight_kg: weightKg,
+      volume_m3: volumeM3,
+      volume_weight: volWeight,
       service_fee: fee,
       prize_tag: prize,
       prize_type: rank === 1 ? 'top1' : rank === 2 ? 'top2' : rank === 3 ? 'top3' : 'regular'
@@ -1294,7 +1327,7 @@ function saveAdminLeaderboardFromTable() {
   }
   renderAdminLeaderboardTable();
 
-  alert(`✅ Đã lưu thành công ${updatedList.length} khách hàng vào Bảng Xếp Hạng Doanh Số!\nDữ liệu đã được cập nhật trực tiếp lên màn hình chính.`);
+  alert(`✅ Đã lưu thành công ${updatedList.length} khách hàng vào Bảng Xếp Hạng Doanh Số!\nĐã cập nhật Tải Trọng (Kg) và Thể Tích (M³) độc lập.`);
 }
 
 function loadDemoLeaderboardToAdmin() {
@@ -1325,6 +1358,28 @@ function handleBxhFileUpload(event) {
         if (Array.isArray(parsed)) {
           list = parsed.map((item, idx) => {
             const rawName = item.customer_name || item.name || 'Khách hàng Eureka';
+            let w = 0;
+            if (item.weight_kg !== undefined && !isNaN(parseFloat(item.weight_kg))) {
+              w = parseFloat(item.weight_kg);
+            } else if (item.volume_weight) {
+              const p = item.volume_weight.split('|')[0] || '';
+              const m = p.replace(',', '.').match(/([\d.]+)\s*(tấn|kg|t)/i);
+              if (m) {
+                const num = parseFloat(m[1]);
+                w = m[2].toLowerCase().includes('t') ? Math.round(num * 1000) : Math.round(num);
+              }
+            }
+            let v = 0;
+            if (item.volume_m3 !== undefined && !isNaN(parseFloat(item.volume_m3))) {
+              v = parseFloat(item.volume_m3);
+            } else if (item.volume_weight) {
+              const p = item.volume_weight.split('|')[1] || item.volume_weight;
+              const m = p.replace(',', '.').match(/([\d.]+)\s*(m³|m3|cbm)/i);
+              if (m) v = parseFloat(m[1]);
+            }
+
+            const vw = (w >= 1000 ? (w / 1000).toLocaleString('vi-VN', { maximumFractionDigits: 1 }) + ' tấn' : w + ' kg') + ' | ' + v + ' m³';
+
             return {
               rank: item.rank || (idx + 1),
               customer_name: maskName(rawName),
@@ -1332,7 +1387,9 @@ function handleBxhFileUpload(event) {
               customer_code: (item.customer_code || item.code || ('ERK-KH-' + (8800 + idx))).toUpperCase(),
               vip_tier: item.vip_tier || 'VIP PRO',
               order_count: parseInt(item.order_count, 10) || 0,
-              volume_weight: item.volume_weight || '0 tấn | 0 m³',
+              weight_kg: w,
+              volume_m3: v,
+              volume_weight: item.volume_weight || vw,
               service_fee: parseInt(item.service_fee, 10) || 0,
               prize_tag: item.prize_tag || '',
               prize_type: (item.rank === 1 || idx === 0) ? 'top1' : (item.rank === 2 || idx === 1) ? 'top2' : (item.rank === 3 || idx === 2) ? 'top3' : 'regular'
@@ -1343,11 +1400,40 @@ function handleBxhFileUpload(event) {
         // Parse CSV
         const lines = content.split(/[\r\n]+/).filter(l => l.trim().length > 0);
         const startIndex = (lines[0].toLowerCase().includes('hạng') || lines[0].toLowerCase().includes('rank') || lines[0].toLowerCase().includes('khách')) ? 1 : 0;
-        
+
         for (let i = startIndex; i < lines.length; i++) {
           const cols = lines[i].split(',').map(c => c.trim().replace(/^["']+|["']+$/g, ''));
-          if (cols.length >= 3) {
+          if (cols.length >= 4) {
             const rawName = cols[1] || 'Khách hàng Eureka';
+            let w = 0;
+            let v = 0;
+            let fee = 0;
+            let prize = '';
+
+            // Nếu CSV có 9 cột trở lên: Hạng, Tên, Mã, VIP, Đơn, Kg, M3, Phí, Quà
+            if (cols.length >= 8 && !isNaN(parseFloat(cols[5])) && !isNaN(parseFloat(cols[6]))) {
+              w = parseFloat(cols[5]) || 0;
+              v = parseFloat(cols[6]) || 0;
+              fee = parseInt(cols[7], 10) || 0;
+              prize = cols[8] || '';
+            } else {
+              // CSV cũ: Hạng, Tên, Mã, VIP, Đơn, SảnLượng, Phí, Quà
+              const oldVw = cols[5] || '';
+              const p = oldVw.split('|')[0] || '';
+              const m = p.replace(',', '.').match(/([\d.]+)\s*(tấn|kg|t)/i);
+              if (m) {
+                const num = parseFloat(m[1]);
+                w = m[2].toLowerCase().includes('t') ? Math.round(num * 1000) : Math.round(num);
+              }
+              const p2 = oldVw.split('|')[1] || oldVw;
+              const m2 = p2.replace(',', '.').match(/([\d.]+)\s*(m³|m3|cbm)/i);
+              if (m2) v = parseFloat(m2[1]);
+              fee = parseInt(cols[6], 10) || 0;
+              prize = cols[7] || '';
+            }
+
+            const vw = (w >= 1000 ? (w / 1000).toLocaleString('vi-VN', { maximumFractionDigits: 1 }) + ' tấn' : w + ' kg') + ' | ' + v + ' m³';
+
             list.push({
               rank: parseInt(cols[0], 10) || (list.length + 1),
               customer_name: maskName(rawName),
@@ -1355,9 +1441,11 @@ function handleBxhFileUpload(event) {
               customer_code: (cols[2] || ('ERK-KH-' + (8800 + list.length))).toUpperCase(),
               vip_tier: cols[3] || 'VIP PRO',
               order_count: parseInt(cols[4], 10) || 0,
-              volume_weight: cols[5] || '0 tấn | 0 m³',
-              service_fee: parseInt(cols[6], 10) || 0,
-              prize_tag: cols[7] || '',
+              weight_kg: w,
+              volume_m3: v,
+              volume_weight: vw,
+              service_fee: fee,
+              prize_tag: prize,
               prize_type: list.length === 0 ? 'top1' : list.length === 1 ? 'top2' : list.length === 2 ? 'top3' : 'regular'
             });
           }
@@ -1392,6 +1480,40 @@ function exportLeaderboardJson() {
   const a = document.createElement('a');
   a.href = url;
   a.download = `Bang_Xep_Hang_Eureka_${new Date().toISOString().slice(0, 10)}.json`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+}
+
+function exportLeaderboardCsv() {
+  const list = getAdminLeaderboardList();
+  if (list.length === 0) {
+    alert('Bảng xếp hạng đang trống!');
+    return;
+  }
+  const headers = ['Hạng', 'Tên Khách Hàng', 'Mã Khách Hàng', 'Hạng VIP', 'Tổng Đơn', 'Tải Trọng (Kg)', 'Thể Tích (M³)', 'Phí Dịch Vụ (VNĐ)', 'Quà Tạm Tính'];
+  const rows = list.map(item => {
+    let w = item.weight_kg !== undefined ? item.weight_kg : 0;
+    let v = item.volume_m3 !== undefined ? item.volume_m3 : 0;
+    return [
+      item.rank,
+      `"${(item.original_name || item.customer_name || '').replace(/"/g, '""')}"`,
+      item.customer_code || item.code || '',
+      item.vip_tier || 'VIP PRO',
+      item.order_count || 0,
+      w,
+      v,
+      item.service_fee || 0,
+      `"${(item.prize_tag || '').replace(/"/g, '""')}"`
+    ];
+  });
+
+  const csvContent = '\uFEFF' + [headers.join(','), ...rows.map(r => r.join(','))].join('\r\n');
+  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `Bang_Xep_Hang_Eureka_${new Date().toISOString().slice(0, 10)}.csv`;
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
@@ -2179,43 +2301,51 @@ if (document.readyState === 'loading') {
 // ==================== TAB 6: GOOGLE SHEETS CLOUD DATABASE ====================
 
 const APPS_SCRIPT_SOURCE_CODE = `/**
+ * =========================================================================
  * GOOGLE APPS SCRIPT DATABASE - EUREKA CUSTOMER AWARDS 2026
  * Hướng dẫn:
  * 1. Mở một Google Spreadsheet mới trên Google Drive của bạn.
  * 2. Đặt tên file: "Eureka Customer Awards 2026 - Database"
- * 3. Trên menu: Tiện ích mở rộng (Extensions) -> Apps Script.
- * 4. Xóa hết code cũ trong Code.gs và dán toàn bộ đoạn mã này vào.
+ * 3. Trên thanh menu, chọn: Tiện ích mở rộng (Extensions) -> Apps Script.
+ * 4. Xóa hết code mặc định trong file Code.gs và DÁN TOÀN BỘ MÃ NÀY VÀO.
  * 5. Bấm nút "Lưu" (biểu tượng đĩa mềm 💾).
  * 6. Bấm "Triển khai" (Deploy) -> "Tùy chọn triển khai mới" (New deployment).
- *    - Loại: "Ứng dụng web" (Web app).
- *    - Mô tả: "v1.0 Eureka Cloud DB".
+ *    - Chọn loại: "Ứng dụng web" (Web app).
+ *    - Mô tả: "v2.0 Eureka Cloud DB - BangXepHang 2 Cot Can & Khoi".
  *    - Thực thi dưới dạng (Execute as): "Tôi" (Me).
  *    - Ai có quyền truy cập (Who has access): "Bất kỳ ai" (Anyone).
- * 7. Bấm "Triển khai" -> Chọn tài khoản Google -> Bấm "Nâng cao" (Advanced) -> "Đi tới ... (không an toàn)" -> Bấm "Cho phép" (Allow).
+ * 7. Bấm "Triển khai" -> Chọn tài khoản Google -> Chọn "Nâng cao" (Advanced) -> "Đi tới ... (không an toàn)" -> Bấm "Cho phép" (Allow).
  * 8. Copy đường dẫn "URL ứng dụng web" (kết thúc bằng /exec) và dán vào mục Quản Trị Website!
+ * =========================================================================
  */
 
 function doGet(e) {
   var action = (e && e.parameter && e.parameter.action) ? e.parameter.action : 'getAllData';
+  
   if (action === 'ping') {
-    return jsonOutput({ status: 'ok', message: 'Kết nối Google Sheets Cloud Database thành công!', timestamp: new Date().toISOString() });
+    return jsonOutput({
+      status: 'ok',
+      message: 'Kết nối Google Sheets Cloud Database thành công!',
+      timestamp: new Date().toISOString()
+    });
   }
 
+  // Mặc định: Lấy toàn bộ dữ liệu trả về cho Landing Page
   try {
     var ss = SpreadsheetApp.getActiveSpreadsheet();
     initDatabaseSheets(ss);
 
-    // 1. Leads & Phones
+    // 1. Lấy danh sách Spin Leads & Locked Phones
     var leadsSheet = ss.getSheetByName('VongQuayMayMan');
     var spinLeads = [];
     var lockedPhones = [];
     if (leadsSheet && leadsSheet.getLastRow() > 1) {
       var leadsData = leadsSheet.getRange(2, 1, leadsSheet.getLastRow() - 1, 6).getValues();
-      for (var i = leadsData.length - 1; i >= 0; i--) {
+      for (var i = leadsData.length - 1; i >= 0; i--) { // Đảo ngược để mới nhất lên đầu
         var row = leadsData[i];
         if (row[1]) {
           var phoneStr = String(row[1]).trim();
-          spinLeads.push({
+          var leadObj = {
             id: 'L-' + (i + 1),
             createdAt: formatDate(row[0]),
             phone: phoneStr,
@@ -2223,13 +2353,14 @@ function doGet(e) {
             prize: String(row[3]),
             ref: String(row[4] || 'direct'),
             status: String(row[5] || 'Chờ áp dụng')
-          });
+          };
+          spinLeads.push(leadObj);
           lockedPhones.push(phoneStr);
         }
       }
     }
 
-    // 2. M05 Winners
+    // 2. Lấy danh sách Trúng Thưởng M05
     var m05Sheet = ss.getSheetByName('VongQuayM05');
     var monthlyWinners = [];
     if (m05Sheet && m05Sheet.getLastRow() > 1) {
@@ -2249,7 +2380,7 @@ function doGet(e) {
       }
     }
 
-    // 3. Admin Configs
+    // 3. Lấy Cấu hình Admin từ Sheet AdminConfig
     var cfgSheet = ss.getSheetByName('AdminConfig');
     var configs = {};
     if (cfgSheet && cfgSheet.getLastRow() > 1) {
@@ -2258,9 +2389,48 @@ function doGet(e) {
         var key = String(cfgData[k][0]).trim();
         var valStr = String(cfgData[k][1]).trim();
         if (key && valStr) {
-          try { configs[key] = JSON.parse(valStr); } catch (err) { configs[key] = valStr; }
+          try {
+            configs[key] = JSON.parse(valStr);
+          } catch (err) {
+            configs[key] = valStr;
+          }
         }
       }
+    }
+
+    // 4. Lấy BẢNG XẾP HẠNG (Ưu tiên đọc trực tiếp từ Sheet BangXepHang với 2 cột Cân & Khối riêng)
+    var bxhSheet = ss.getSheetByName('BangXepHang');
+    var customLeaderboard = [];
+    if (bxhSheet && bxhSheet.getLastRow() > 1) {
+      var bxhData = bxhSheet.getRange(2, 1, bxhSheet.getLastRow() - 1, 11).getValues();
+      for (var b = 0; b < bxhData.length; b++) {
+        var r = bxhData[b];
+        if (r[1] || r[2]) {
+          var rank = Number(r[0]) || (b + 1);
+          var weightKg = Number(r[6]) || 0;
+          var volumeM3 = Number(r[7]) || 0;
+          var vwStr = (weightKg >= 1000 ? (weightKg / 1000).toFixed(1).replace('.', ',') + ' tấn' : weightKg + ' kg') + ' | ' + volumeM3 + ' m³';
+          customLeaderboard.push({
+            rank: rank,
+            customer_code: String(r[1] || '').trim().toUpperCase(),
+            customer_name: String(r[2] || '').trim(),
+            original_name: String(r[3] || r[2] || '').trim(),
+            vip_tier: String(r[4] || 'VIP PRO').trim(),
+            order_count: Number(r[5]) || 0,
+            weight_kg: weightKg,
+            volume_m3: volumeM3,
+            volume_weight: vwStr,
+            service_fee: Number(r[8]) || 0,
+            prize_tag: String(r[9] || '').trim(),
+            prize_type: rank === 1 ? 'top1' : rank === 2 ? 'top2' : rank === 3 ? 'top3' : 'regular'
+          });
+        }
+      }
+    }
+
+    // Fallback nếu Sheet BangXepHang chưa có dữ liệu thì lấy từ AdminConfig
+    if (customLeaderboard.length === 0 && configs['eureka_custom_leaderboard']) {
+      customLeaderboard = configs['eureka_custom_leaderboard'];
     }
 
     return jsonOutput({
@@ -2269,10 +2439,10 @@ function doGet(e) {
         spinLeads: spinLeads,
         lockedPhones: lockedPhones,
         monthlyWinners: monthlyWinners,
+        customLeaderboard: customLeaderboard && customLeaderboard.length > 0 ? customLeaderboard : null,
         nhiemVuConfig: configs['eureka_nhiem_vu_config'] || null,
         galaConfig: configs['eureka_gala_awards_config'] || null,
         weeklyWinner: configs['eureka_weekly_winner'] || null,
-        customLeaderboard: configs['eureka_custom_leaderboard'] || null,
         botConfig: configs['eureka_bot_config'] || null,
         wheelConfig: configs['eureka_welcome_wheel_config'] || null,
         m05BookingPool: configs['eureka_m05_booking_pool'] || null,
@@ -2282,7 +2452,10 @@ function doGet(e) {
       }
     });
   } catch (err) {
-    return jsonOutput({ status: 'error', message: err.toString() });
+    return jsonOutput({
+      status: 'error',
+      message: err.toString()
+    });
   }
 }
 
@@ -2290,63 +2463,119 @@ function doPost(e) {
   try {
     var ss = SpreadsheetApp.getActiveSpreadsheet();
     initDatabaseSheets(ss);
-    var payload = JSON.parse(e.postData.contents);
+
+    var raw = e.postData.contents;
+    var payload = JSON.parse(raw);
     var action = payload.action;
 
+    // 1. Ghi nhận lượt quay Voucher trải nghiệm của khách
     if (action === 'record_spin_lead') {
       var lead = payload.lead || {};
       var leadsSheet = ss.getSheetByName('VongQuayMayMan');
-      leadsSheet.appendRow([new Date(), "'" + String(lead.phone || '').trim(), lead.voucherCode || '', lead.prize || '', lead.ref || 'direct', lead.status || 'Chờ áp dụng qua Zalo']);
+      var phoneFormatted = "'" + String(lead.phone || '').trim(); // Dấu nháy đơn để giữ số 0 ở đầu
+      leadsSheet.appendRow([
+        new Date(),
+        phoneFormatted,
+        lead.voucherCode || '',
+        lead.prize || '',
+        lead.ref || 'direct',
+        lead.status || 'Chờ áp dụng qua Zalo'
+      ]);
       return jsonOutput({ status: 'success', message: 'Đã lưu lead' });
     }
 
+    // 2. Ghi nhận mã booking trúng thưởng Vòng Quay M05
     if (action === 'record_m05_winner') {
       var winner = payload.winner || {};
       var m05Sheet = ss.getSheetByName('VongQuayM05');
-      m05Sheet.appendRow([new Date(), winner.period || '', winner.booking_code || '', winner.prize || '', winner.status || '✅ Vừa quay trúng']);
+      m05Sheet.appendRow([
+        new Date(),
+        winner.period || '',
+        winner.booking_code || '',
+        winner.prize || '',
+        winner.status || '✅ Vừa quay trúng'
+      ]);
       return jsonOutput({ status: 'success', message: 'Đã lưu người trúng M05' });
     }
 
+    // 3. Đồng bộ riêng Bảng Xếp Hạng với 2 cột Cân & Khối
+    if (action === 'sync_leaderboard') {
+      var lbList = payload.leaderboard || payload.data || [];
+      if (Array.isArray(lbList)) {
+        writeLeaderboardToSheet(ss, lbList);
+        saveAdminConfigDirect(ss, 'eureka_custom_leaderboard', JSON.stringify(lbList));
+        return jsonOutput({ status: 'success', message: 'Đã đồng bộ ' + lbList.length + ' khách hàng vào Sheet BangXepHang' });
+      }
+    }
+
+    // 4. Lưu Cấu hình Admin (Nhiệm vụ, Gala, Top tuần...)
     if (action === 'save_config') {
       var cfgKey = payload.key;
       var cfgVal = JSON.stringify(payload.value);
-      var cfgSheet = ss.getSheetByName('AdminConfig');
-      var foundRow = -1;
-      if (cfgSheet.getLastRow() > 1) {
-        var keys = cfgSheet.getRange(2, 1, cfgSheet.getLastRow() - 1, 1).getValues();
-        for (var r = 0; r < keys.length; r++) {
-          if (keys[r][0] === cfgKey) { foundRow = r + 2; break; }
-        }
+      saveAdminConfigDirect(ss, cfgKey, cfgVal);
+
+      // Nếu cấu hình lưu là Bảng Xếp Hạng -> Đồng bộ luôn vào Sheet BangXepHang
+      if (cfgKey === 'eureka_custom_leaderboard' && Array.isArray(payload.value)) {
+        writeLeaderboardToSheet(ss, payload.value);
       }
-      if (foundRow > 0) {
-        cfgSheet.getRange(foundRow, 2).setValue(cfgVal);
-        cfgSheet.getRange(foundRow, 3).setValue(new Date());
-      } else {
-        cfgSheet.appendRow([cfgKey, cfgVal, new Date()]);
-      }
-      return jsonOutput({ status: 'success', message: 'Đã lưu cấu hình' });
+
+      return jsonOutput({ status: 'success', message: 'Đã lưu cấu hình ' + cfgKey });
     }
 
+    // 5. Đồng bộ toàn bộ dữ liệu máy lên Cloud (One-Click Backup)
     if (action === 'sync_all') {
       var all = payload.data || {};
+
+      // Đồng bộ leads
       if (all.spinLeads && Array.isArray(all.spinLeads)) {
         var lSheet = ss.getSheetByName('VongQuayMayMan');
-        if (lSheet.getLastRow() > 1) lSheet.getRange(2, 1, lSheet.getLastRow() - 1, 6).clearContent();
-        var leadRows = all.spinLeads.map(function(l) {
-          return [l.createdAt || new Date(), "'" + String(l.phone || ''), l.voucherCode || '', l.prize || '', l.ref || 'direct', l.status || 'Chờ áp dụng qua Zalo'];
+        if (lSheet.getLastRow() > 1) {
+          lSheet.getRange(2, 1, lSheet.getLastRow() - 1, 6).clearContent();
+        }
+        var leadRows = [];
+        all.spinLeads.forEach(function(l) {
+          leadRows.push([
+            l.createdAt || new Date(),
+            "'" + String(l.phone || ''),
+            l.voucherCode || '',
+            l.prize || '',
+            l.ref || 'direct',
+            l.status || 'Chờ áp dụng qua Zalo'
+          ]);
         });
-        if (leadRows.length > 0) lSheet.getRange(2, 1, leadRows.length, 6).setValues(leadRows);
+        if (leadRows.length > 0) {
+          lSheet.getRange(2, 1, leadRows.length, 6).setValues(leadRows);
+        }
       }
+
+      // Đồng bộ M05 winners
       if (all.monthlyWinners && Array.isArray(all.monthlyWinners)) {
         var mSheet = ss.getSheetByName('VongQuayM05');
-        if (mSheet.getLastRow() > 1) mSheet.getRange(2, 1, mSheet.getLastRow() - 1, 5).clearContent();
-        var mRows = all.monthlyWinners.map(function(w) {
-          return [w.draw_time || new Date(), w.period || '', w.booking_code || '', w.prize || '', w.status || '✅ Đã ghi nhận'];
+        if (mSheet.getLastRow() > 1) {
+          mSheet.getRange(2, 1, mSheet.getLastRow() - 1, 5).clearContent();
+        }
+        var mRows = [];
+        all.monthlyWinners.forEach(function(w) {
+          mRows.push([
+            w.draw_time || new Date(),
+            w.period || '',
+            w.booking_code || '',
+            w.prize || '',
+            w.status || '✅ Đã ghi nhận'
+          ]);
         });
-        if (mRows.length > 0) mSheet.getRange(2, 1, mRows.length, 5).setValues(mRows);
+        if (mRows.length > 0) {
+          mSheet.getRange(2, 1, mRows.length, 5).setValues(mRows);
+        }
       }
+
+      // Đồng bộ Bảng Xếp Hạng vào Sheet BangXepHang với 2 cột Cân & Khối
+      if (all.customLeaderboard && Array.isArray(all.customLeaderboard)) {
+        writeLeaderboardToSheet(ss, all.customLeaderboard);
+      }
+
+      // Đồng bộ Configs
       var cSheet = ss.getSheetByName('AdminConfig');
-      if (cSheet.getLastRow() > 1) cSheet.getRange(2, 1, cSheet.getLastRow() - 1, 3).clearContent();
       var configItems = [
         ['eureka_nhiem_vu_config', JSON.stringify(all.nhiemVuConfig || {})],
         ['eureka_gala_awards_config', JSON.stringify(all.galaConfig || {})],
@@ -2358,49 +2587,197 @@ function doPost(e) {
         ['eureka_m05_current_prize', JSON.stringify(all.m05CurrentPrize || '')],
         ['eureka_ref_clicks', JSON.stringify(all.refClicks || {})]
       ];
-      var cRows = configItems.map(function(item) { return [item[0], item[1], new Date()]; });
+      if (cSheet.getLastRow() > 1) {
+        cSheet.getRange(2, 1, cSheet.getLastRow() - 1, 3).clearContent();
+      }
+      var cRows = configItems.map(function(item) {
+        return [item[0], item[1], new Date()];
+      });
       cSheet.getRange(2, 1, cRows.length, 3).setValues(cRows);
-      return jsonOutput({ status: 'success', message: 'Đã đồng bộ toàn bộ' });
+
+      return jsonOutput({ status: 'success', message: 'Đã đồng bộ toàn bộ lên Sheets (kèm Sheet BangXepHang)' });
     }
 
-    return jsonOutput({ status: 'ignored' });
+    return jsonOutput({ status: 'ignored', message: 'Action không xác định' });
   } catch (err) {
     return jsonOutput({ status: 'error', message: err.toString() });
   }
 }
 
+// Ghi mảng khách hàng vào Sheet BangXepHang với 2 cột độc lập
+function writeLeaderboardToSheet(ss, list) {
+  if (!Array.isArray(list) || list.length === 0) return;
+  var bxhSheet = ss.getSheetByName('BangXepHang');
+  if (!bxhSheet) return;
+
+  // Xóa sạch nội dung cũ trừ hàng tiêu đề
+  if (bxhSheet.getLastRow() > 1) {
+    bxhSheet.getRange(2, 1, bxhSheet.getLastRow() - 1, 11).clearContent();
+  }
+
+  var rows = [];
+  for (var i = 0; i < list.length; i++) {
+    var item = list[i];
+    var rank = Number(item.rank) || (i + 1);
+    var code = String(item.customer_code || item.code || ('ERK-KH-' + (8800 + i))).trim().toUpperCase();
+    var name = String(item.customer_name || '').trim();
+    var origName = String(item.original_name || name).trim();
+    var vip = String(item.vip_tier || 'VIP PRO').trim();
+    var orders = Number(item.order_count) || 0;
+    var weightKg = Number(item.weight_kg) || 0;
+    var volM3 = Number(item.volume_m3) || 0;
+
+    // Fallback tự bóc tách nếu item chỉ có chuỗi volume_weight
+    if (weightKg === 0 && item.volume_weight) {
+      var p1 = String(item.volume_weight).split('|')[0] || '';
+      var m1 = p1.replace(',', '.').match(/([\\d.]+)\\s*(tấn|kg|t)/i);
+      if (m1) {
+        var num1 = parseFloat(m1[1]);
+        weightKg = m1[2].toLowerCase().includes('t') ? Math.round(num1 * 1000) : Math.round(num1);
+      }
+    }
+    if (volM3 === 0 && item.volume_weight) {
+      var p2 = String(item.volume_weight).split('|')[1] || String(item.volume_weight);
+      var m2 = p2.replace(',', '.').match(/([\\d.]+)\\s*(m³|m3|cbm)/i);
+      if (m2) volM3 = parseFloat(m2[1]);
+    }
+
+    var fee = Number(item.service_fee) || 0;
+    var prize = String(item.prize_tag || '').trim();
+
+    rows.push([
+      rank,
+      code,
+      name,
+      origName,
+      vip,
+      orders,
+      weightKg,
+      volM3,
+      fee,
+      prize,
+      formatDate(new Date())
+    ]);
+  }
+
+  if (rows.length > 0) {
+    bxhSheet.getRange(2, 1, rows.length, 11).setValues(rows);
+  }
+}
+
+// Lưu một cấu hình vào sheet AdminConfig
+function saveAdminConfigDirect(ss, cfgKey, cfgVal) {
+  var cfgSheet = ss.getSheetByName('AdminConfig');
+  if (!cfgSheet) return;
+  var foundRow = -1;
+  if (cfgSheet.getLastRow() > 1) {
+    var existingKeys = cfgSheet.getRange(2, 1, cfgSheet.getLastRow() - 1, 1).getValues();
+    for (var r = 0; r < existingKeys.length; r++) {
+      if (existingKeys[r][0] === cfgKey) {
+        foundRow = r + 2;
+        break;
+      }
+    }
+  }
+  if (foundRow > 0) {
+    cfgSheet.getRange(foundRow, 2).setValue(cfgVal);
+    cfgSheet.getRange(foundRow, 3).setValue(new Date());
+  } else {
+    cfgSheet.appendRow([cfgKey, cfgVal, new Date()]);
+  }
+}
+
+// Khởi tạo các Sheet và tiêu đề nếu chưa có
 function initDatabaseSheets(ss) {
+  // 1. Sheet VongQuayMayMan
   var sheet1 = ss.getSheetByName('VongQuayMayMan');
   if (!sheet1) {
     sheet1 = ss.insertSheet('VongQuayMayMan');
     sheet1.appendRow(['Thời Gian Quay', 'Số Điện Thoại', 'Mã Voucher', 'Giải Thưởng Trúng', 'Nguồn Giới Thiệu', 'Trạng Thái Chăm Sóc']);
-    sheet1.getRange(1, 1, 1, 6).setBackground('#1e293b').setFontColor('#38bdf8').setFontWeight('bold');
+    var h1 = sheet1.getRange(1, 1, 1, 6);
+    h1.setBackground('#1e293b').setFontColor('#38bdf8').setFontWeight('bold');
     sheet1.setFrozenRows(1);
+    sheet1.setColumnWidth(1, 160);
+    sheet1.setColumnWidth(2, 130);
+    sheet1.setColumnWidth(3, 130);
+    sheet1.setColumnWidth(4, 250);
+    sheet1.setColumnWidth(5, 140);
+    sheet1.setColumnWidth(6, 180);
   }
+
+  // 2. Sheet VongQuayM05
   var sheet2 = ss.getSheetByName('VongQuayM05');
   if (!sheet2) {
     sheet2 = ss.insertSheet('VongQuayM05');
     sheet2.appendRow(['Thời Gian Quay', 'Kỳ Quay Thưởng', 'Mã Booking Trúng Thưởng', 'Giải Thưởng Tri Ân', 'Trạng Thái']);
-    sheet2.getRange(1, 1, 1, 5).setBackground('#1e293b').setFontColor('#fbbf24').setFontWeight('bold');
+    var h2 = sheet2.getRange(1, 1, 1, 5);
+    h2.setBackground('#1e293b').setFontColor('#fbbf24').setFontWeight('bold');
     sheet2.setFrozenRows(1);
+    sheet2.setColumnWidth(1, 160);
+    sheet2.setColumnWidth(2, 180);
+    sheet2.setColumnWidth(3, 180);
+    sheet2.setColumnWidth(4, 250);
+    sheet2.setColumnWidth(5, 180);
   }
+
+  // 3. Sheet BangXepHang (Bảng Xếp Hạng Doanh Số với 2 cột Cân và Khối riêng biệt)
+  var sheet4 = ss.getSheetByName('BangXepHang');
+  if (!sheet4) {
+    sheet4 = ss.insertSheet('BangXepHang');
+    sheet4.appendRow([
+      'Hạng',
+      'Mã Khách Hàng',
+      'Tên Khách Hàng (Bảo Mật)',
+      'Tên Doanh Nghiệp Gốc',
+      'Hạng VIP',
+      'Tổng Đơn',
+      'Tải Trọng (Kg)',
+      'Thể Tích (M³)',
+      'Phí Dịch Vụ (VNĐ)',
+      'Quà Tạm Tính / Giải Thưởng',
+      'Thời Gian Cập Nhật'
+    ]);
+    var h4 = sheet4.getRange(1, 1, 1, 11);
+    h4.setBackground('#1e293b').setFontColor('#f59e0b').setFontWeight('bold');
+    sheet4.setFrozenRows(1);
+    sheet4.setColumnWidth(1, 70);   // Hạng
+    sheet4.setColumnWidth(2, 130);  // Mã
+    sheet4.setColumnWidth(3, 220);  // Tên Bảo Mật
+    sheet4.setColumnWidth(4, 220);  // Tên Doanh Nghiệp Gốc
+    sheet4.setColumnWidth(5, 120);  // VIP
+    sheet4.setColumnWidth(6, 100);  // Tổng Đơn
+    sheet4.setColumnWidth(7, 130);  // Tải Trọng (Kg)
+    sheet4.setColumnWidth(8, 130);  // Thể Tích (M³)
+    sheet4.setColumnWidth(9, 150);  // Phí Dịch Vụ
+    sheet4.setColumnWidth(10, 220); // Quà
+    sheet4.setColumnWidth(11, 170); // Thời Gian
+  }
+
+  // 4. Sheet AdminConfig
   var sheet3 = ss.getSheetByName('AdminConfig');
   if (!sheet3) {
     sheet3 = ss.insertSheet('AdminConfig');
     sheet3.appendRow(['Tên Cấu Hình (Key)', 'Dữ Liệu JSON (Value)', 'Thời Gian Cập Nhật']);
-    sheet3.getRange(1, 1, 1, 3).setBackground('#1e293b').setFontColor('#34d399').setFontWeight('bold');
+    var h3 = sheet3.getRange(1, 1, 1, 3);
+    h3.setBackground('#1e293b').setFontColor('#34d399').setFontWeight('bold');
     sheet3.setFrozenRows(1);
+    sheet3.setColumnWidth(1, 240);
+    sheet3.setColumnWidth(2, 450);
+    sheet3.setColumnWidth(3, 180);
   }
 }
 
 function formatDate(val) {
   if (!val) return '';
-  if (val instanceof Date) return Utilities.formatDate(val, Session.getScriptTimeZone() || 'Asia/Ho_Chi_Minh', 'HH:mm - dd/MM/yyyy');
+  if (val instanceof Date) {
+    return Utilities.formatDate(val, Session.getScriptTimeZone() || 'Asia/Ho_Chi_Minh', 'HH:mm - dd/MM/yyyy');
+  }
   return String(val);
 }
 
 function jsonOutput(obj) {
-  return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(ContentService.MimeType.JSON);
+  return ContentService.createTextOutput(JSON.stringify(obj))
+    .setMimeType(ContentService.MimeType.JSON);
 }
 `;
 

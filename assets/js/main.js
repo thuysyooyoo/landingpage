@@ -556,29 +556,50 @@ function filterNhiemVuCodes(query) {
 }
 
 // ==================== 7. HỆ THỐNG PHÂN PHỐI BẢNG XẾP HẠNG 05 GIẢI PHỤ CHUYÊN MÔN ====================
-function parseWeightKg(str) {
-  if (!str) return { kg: 0, label: '0 kg' };
+function parseWeightKg(val) {
+  if (val === undefined || val === null) return { kg: 0, label: '0 kg' };
+  if (typeof val === 'number') {
+    const ton = (val / 1000).toLocaleString('vi-VN', { maximumFractionDigits: 1 });
+    return { kg: val, label: `${ton} tấn (${val.toLocaleString('vi-VN')} kg)` };
+  }
+  if (typeof val === 'object') {
+    if (val.weight_kg !== undefined && !isNaN(parseFloat(val.weight_kg))) {
+      return parseWeightKg(parseFloat(val.weight_kg));
+    }
+    val = val.volume_weight || '';
+  }
+  const str = String(val);
   const part = str.split('|')[0] || '';
   const numStr = part.replace(',', '.').match(/([\d.]+)\s*(tấn|kg|t)/i);
   if (numStr) {
-    const val = parseFloat(numStr[1]);
+    const num = parseFloat(numStr[1]);
     const unit = numStr[2].toLowerCase();
     if (unit.includes('t')) {
-      return { kg: val * 1000, label: `${val.toLocaleString('vi-VN')} tấn (${(val * 1000).toLocaleString('vi-VN')} kg)` };
+      return { kg: Math.round(num * 1000), label: `${num.toLocaleString('vi-VN')} tấn (${(num * 1000).toLocaleString('vi-VN')} kg)` };
     }
-    return { kg: val, label: `${(val / 1000).toLocaleString('vi-VN')} tấn (${val.toLocaleString('vi-VN')} kg)` };
+    return { kg: Math.round(num), label: `${(num / 1000).toLocaleString('vi-VN')} tấn (${num.toLocaleString('vi-VN')} kg)` };
   }
   return { kg: 0, label: part.trim() || '0 kg' };
 }
 
-function parseVolumeM3(str) {
-  if (!str) return { m3: 0, label: '0 m³' };
+function parseVolumeM3(val) {
+  if (val === undefined || val === null) return { m3: 0, label: '0 m³' };
+  if (typeof val === 'number') {
+    return { m3: val, label: `${val.toLocaleString('vi-VN')} m³` };
+  }
+  if (typeof val === 'object') {
+    if (val.volume_m3 !== undefined && !isNaN(parseFloat(val.volume_m3))) {
+      return parseVolumeM3(parseFloat(val.volume_m3));
+    }
+    val = val.volume_weight || '';
+  }
+  const str = String(val);
   const parts = str.split('|');
   const part = parts[1] || parts[0] || '';
   const numStr = part.replace(',', '.').match(/([\d.]+)\s*(m³|m3|cbm)/i);
   if (numStr) {
-    const val = parseFloat(numStr[1]);
-    return { m3: val, label: `${val.toLocaleString('vi-VN')} m³` };
+    const num = parseFloat(numStr[1]);
+    return { m3: num, label: `${num.toLocaleString('vi-VN')} m³` };
   }
   return { m3: 0, label: part.trim() || '0 m³' };
 }
@@ -648,11 +669,15 @@ const GIAI_PHU_CONFIGS = {
     colMetric: 'Tổng Tải Trọng',
     filterAndSort: (data) => {
       return [...data].map(item => {
-        const p = parseWeightKg(item.volume_weight);
-        return { ...item, _metricValue: p.kg, _metricLabel: p.label };
+        let kg = (item.weight_kg !== undefined && item.weight_kg !== null && !isNaN(parseFloat(item.weight_kg)))
+          ? parseFloat(item.weight_kg)
+          : parseWeightKg(item.volume_weight).kg;
+        const ton = (kg / 1000).toLocaleString('vi-VN', { maximumFractionDigits: 1 });
+        const label = `${ton} tấn (${kg.toLocaleString('vi-VN')} kg)`;
+        return { ...item, _metricValue: kg, _metricLabel: label };
       }).sort((a, b) => b._metricValue - a._metricValue || (b.service_fee || 0) - (a.service_fee || 0));
     },
-    formatMetric: (item) => item._metricLabel || parseWeightKg(item.volume_weight).label
+    formatMetric: (item) => item._metricLabel || (item.weight_kg ? `${Number(item.weight_kg).toLocaleString('vi-VN')} kg` : parseWeightKg(item.volume_weight).label)
   },
   'vua-khoi-luong': {
     id: 'vua-khoi-luong',
@@ -664,11 +689,14 @@ const GIAI_PHU_CONFIGS = {
     colMetric: 'Tổng Thể Tích',
     filterAndSort: (data) => {
       return [...data].map(item => {
-        const p = parseVolumeM3(item.volume_weight);
-        return { ...item, _metricValue: p.m3, _metricLabel: p.label };
+        let m3 = (item.volume_m3 !== undefined && item.volume_m3 !== null && !isNaN(parseFloat(item.volume_m3)))
+          ? parseFloat(item.volume_m3)
+          : parseVolumeM3(item.volume_weight).m3;
+        const label = `${m3.toLocaleString('vi-VN')} m³`;
+        return { ...item, _metricValue: m3, _metricLabel: label };
       }).sort((a, b) => b._metricValue - a._metricValue || (b.service_fee || 0) - (a.service_fee || 0));
     },
-    formatMetric: (item) => item._metricLabel || parseVolumeM3(item.volume_weight).label
+    formatMetric: (item) => item._metricLabel || (item.volume_m3 ? `${Number(item.volume_m3).toLocaleString('vi-VN')} m³` : parseVolumeM3(item.volume_weight).label)
   }
 };
 
@@ -1194,8 +1222,8 @@ function renderGalaSummaryData() {
     const vEl = document.getElementById('gala-award-weight-val');
     if (cEl) cEl.textContent = w4.customer_code || '';
     if (nEl) nEl.textContent = w4.customer_name || w4.original_name || '';
-    const weightParsed = parseWeightKg(w4.volume_weight);
-    if (vEl) vEl.textContent = weightParsed.kg > 0 ? `${weightParsed.kg.toLocaleString('vi-VN')} kg` : (w4.volume_weight || '68.450 kg');
+    let kg = (w4.weight_kg !== undefined && !isNaN(parseFloat(w4.weight_kg))) ? parseFloat(w4.weight_kg) : parseWeightKg(w4.volume_weight).kg;
+    if (vEl) vEl.textContent = kg > 0 ? `${kg.toLocaleString('vi-VN')} kg` : (w4.volume_weight || '68.450 kg');
   }
 
   // Giải 5: Vua Khối Lượng (M³)
@@ -1206,8 +1234,8 @@ function renderGalaSummaryData() {
     const vEl = document.getElementById('gala-award-volume-val');
     if (cEl) cEl.textContent = w5.customer_code || '';
     if (nEl) nEl.textContent = w5.customer_name || w5.original_name || '';
-    const volParsed = parseVolumeM3(w5.volume_weight);
-    if (vEl) vEl.textContent = volParsed.m3 > 0 ? `${volParsed.m3.toLocaleString('vi-VN')} m³` : (w5.volume_weight || '215 m³');
+    let m3 = (w5.volume_m3 !== undefined && !isNaN(parseFloat(w5.volume_m3))) ? parseFloat(w5.volume_m3) : parseVolumeM3(w5.volume_weight).m3;
+    if (vEl) vEl.textContent = m3 > 0 ? `${m3.toLocaleString('vi-VN')} m³` : (w5.volume_weight || '215 m³');
   }
 }
 window.renderGalaSummaryData = renderGalaSummaryData;

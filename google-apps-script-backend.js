@@ -9,7 +9,7 @@
  * 5. Bấm nút "Lưu" (biểu tượng đĩa mềm 💾).
  * 6. Bấm "Triển khai" (Deploy) -> "Tùy chọn triển khai mới" (New deployment).
  *    - Chọn loại: "Ứng dụng web" (Web app).
- *    - Mô tả: "v1.0 Eureka Cloud DB".
+ *    - Mô tả: "v2.0 Eureka Cloud DB - BangXepHang 2 Cot Can & Khoi".
  *    - Thực thi dưới dạng (Execute as): "Tôi" (Me).
  *    - Ai có quyền truy cập (Who has access): "Bất kỳ ai" (Anyone).
  * 7. Bấm "Triển khai" -> Chọn tài khoản Google -> Chọn "Nâng cao" (Advanced) -> "Đi tới ... (không an toàn)" -> Bấm "Cho phép" (Allow).
@@ -78,7 +78,7 @@ function doGet(e) {
       }
     }
 
-    // 3. Lấy Cấu hình Admin
+    // 3. Lấy Cấu hình Admin từ Sheet AdminConfig
     var cfgSheet = ss.getSheetByName('AdminConfig');
     var configs = {};
     if (cfgSheet && cfgSheet.getLastRow() > 1) {
@@ -96,16 +96,51 @@ function doGet(e) {
       }
     }
 
+    // 4. Lấy BẢNG XẾP HẠNG (Ưu tiên đọc trực tiếp từ Sheet BangXepHang với 2 cột Cân & Khối riêng)
+    var bxhSheet = ss.getSheetByName('BangXepHang');
+    var customLeaderboard = [];
+    if (bxhSheet && bxhSheet.getLastRow() > 1) {
+      var bxhData = bxhSheet.getRange(2, 1, bxhSheet.getLastRow() - 1, 11).getValues();
+      for (var b = 0; b < bxhData.length; b++) {
+        var r = bxhData[b];
+        if (r[1] || r[2]) {
+          var rank = Number(r[0]) || (b + 1);
+          var weightKg = Number(r[6]) || 0;
+          var volumeM3 = Number(r[7]) || 0;
+          var vwStr = (weightKg >= 1000 ? (weightKg / 1000).toFixed(1).replace('.', ',') + ' tấn' : weightKg + ' kg') + ' | ' + volumeM3 + ' m³';
+          customLeaderboard.push({
+            rank: rank,
+            customer_code: String(r[1] || '').trim().toUpperCase(),
+            customer_name: String(r[2] || '').trim(),
+            original_name: String(r[3] || r[2] || '').trim(),
+            vip_tier: String(r[4] || 'VIP PRO').trim(),
+            order_count: Number(r[5]) || 0,
+            weight_kg: weightKg,
+            volume_m3: volumeM3,
+            volume_weight: vwStr,
+            service_fee: Number(r[8]) || 0,
+            prize_tag: String(r[9] || '').trim(),
+            prize_type: rank === 1 ? 'top1' : rank === 2 ? 'top2' : rank === 3 ? 'top3' : 'regular'
+          });
+        }
+      }
+    }
+
+    // Fallback nếu Sheet BangXepHang chưa có dữ liệu thì lấy từ AdminConfig
+    if (customLeaderboard.length === 0 && configs['eureka_custom_leaderboard']) {
+      customLeaderboard = configs['eureka_custom_leaderboard'];
+    }
+
     return jsonOutput({
       status: 'success',
       data: {
         spinLeads: spinLeads,
         lockedPhones: lockedPhones,
         monthlyWinners: monthlyWinners,
+        customLeaderboard: customLeaderboard && customLeaderboard.length > 0 ? customLeaderboard : null,
         nhiemVuConfig: configs['eureka_nhiem_vu_config'] || null,
         galaConfig: configs['eureka_gala_awards_config'] || null,
         weeklyWinner: configs['eureka_weekly_winner'] || null,
-        customLeaderboard: configs['eureka_custom_leaderboard'] || null,
         botConfig: configs['eureka_bot_config'] || null,
         wheelConfig: configs['eureka_welcome_wheel_config'] || null,
         m05BookingPool: configs['eureka_m05_booking_pool'] || null,
@@ -161,40 +196,37 @@ function doPost(e) {
       return jsonOutput({ status: 'success', message: 'Đã lưu người trúng M05' });
     }
 
-    // 3. Lưu Cấu hình Admin (Nhiệm vụ, Gala, Top tuần...)
+    // 3. Đồng bộ riêng Bảng Xếp Hạng với 2 cột Cân & Khối
+    if (action === 'sync_leaderboard') {
+      var lbList = payload.leaderboard || payload.data || [];
+      if (Array.isArray(lbList)) {
+        writeLeaderboardToSheet(ss, lbList);
+        saveAdminConfigDirect(ss, 'eureka_custom_leaderboard', JSON.stringify(lbList));
+        return jsonOutput({ status: 'success', message: 'Đã đồng bộ ' + lbList.length + ' khách hàng vào Sheet BangXepHang' });
+      }
+    }
+
+    // 4. Lưu Cấu hình Admin (Nhiệm vụ, Gala, Top tuần...)
     if (action === 'save_config') {
       var cfgKey = payload.key;
       var cfgVal = JSON.stringify(payload.value);
-      var cfgSheet = ss.getSheetByName('AdminConfig');
-      
-      var foundRow = -1;
-      if (cfgSheet.getLastRow() > 1) {
-        var existingKeys = cfgSheet.getRange(2, 1, cfgSheet.getLastRow() - 1, 1).getValues();
-        for (var r = 0; r < existingKeys.length; r++) {
-          if (existingKeys[r][0] === cfgKey) {
-            foundRow = r + 2;
-            break;
-          }
-        }
+      saveAdminConfigDirect(ss, cfgKey, cfgVal);
+
+      // Nếu cấu hình lưu là Bảng Xếp Hạng -> Đồng bộ luôn vào Sheet BangXepHang
+      if (cfgKey === 'eureka_custom_leaderboard' && Array.isArray(payload.value)) {
+        writeLeaderboardToSheet(ss, payload.value);
       }
 
-      if (foundRow > 0) {
-        cfgSheet.getRange(foundRow, 2).setValue(cfgVal);
-        cfgSheet.getRange(foundRow, 3).setValue(new Date());
-      } else {
-        cfgSheet.appendRow([cfgKey, cfgVal, new Date()]);
-      }
       return jsonOutput({ status: 'success', message: 'Đã lưu cấu hình ' + cfgKey });
     }
 
-    // 4. Đồng bộ toàn bộ dữ liệu máy lên Cloud
+    // 5. Đồng bộ toàn bộ dữ liệu máy lên Cloud (One-Click Backup)
     if (action === 'sync_all') {
       var all = payload.data || {};
 
       // Đồng bộ leads
       if (all.spinLeads && Array.isArray(all.spinLeads)) {
         var lSheet = ss.getSheetByName('VongQuayMayMan');
-        // Clear old rows except header
         if (lSheet.getLastRow() > 1) {
           lSheet.getRange(2, 1, lSheet.getLastRow() - 1, 6).clearContent();
         }
@@ -235,6 +267,11 @@ function doPost(e) {
         }
       }
 
+      // Đồng bộ Bảng Xếp Hạng vào Sheet BangXepHang với 2 cột Cân & Khối
+      if (all.customLeaderboard && Array.isArray(all.customLeaderboard)) {
+        writeLeaderboardToSheet(ss, all.customLeaderboard);
+      }
+
       // Đồng bộ Configs
       var cSheet = ss.getSheetByName('AdminConfig');
       var configItems = [
@@ -256,12 +293,95 @@ function doPost(e) {
       });
       cSheet.getRange(2, 1, cRows.length, 3).setValues(cRows);
 
-      return jsonOutput({ status: 'success', message: 'Đã đồng bộ toàn bộ lên Sheets' });
+      return jsonOutput({ status: 'success', message: 'Đã đồng bộ toàn bộ lên Sheets (kèm Sheet BangXepHang)' });
     }
 
     return jsonOutput({ status: 'ignored', message: 'Action không xác định' });
   } catch (err) {
     return jsonOutput({ status: 'error', message: err.toString() });
+  }
+}
+
+// Ghi mảng khách hàng vào Sheet BangXepHang với 2 cột độc lập
+function writeLeaderboardToSheet(ss, list) {
+  if (!Array.isArray(list) || list.length === 0) return;
+  var bxhSheet = ss.getSheetByName('BangXepHang');
+  if (!bxhSheet) return;
+
+  // Xóa sạch nội dung cũ trừ hàng tiêu đề
+  if (bxhSheet.getLastRow() > 1) {
+    bxhSheet.getRange(2, 1, bxhSheet.getLastRow() - 1, 11).clearContent();
+  }
+
+  var rows = [];
+  for (var i = 0; i < list.length; i++) {
+    var item = list[i];
+    var rank = Number(item.rank) || (i + 1);
+    var code = String(item.customer_code || item.code || ('ERK-KH-' + (8800 + i))).trim().toUpperCase();
+    var name = String(item.customer_name || '').trim();
+    var origName = String(item.original_name || name).trim();
+    var vip = String(item.vip_tier || 'VIP PRO').trim();
+    var orders = Number(item.order_count) || 0;
+    var weightKg = Number(item.weight_kg) || 0;
+    var volM3 = Number(item.volume_m3) || 0;
+
+    // Fallback tự bóc tách nếu item chỉ có chuỗi volume_weight
+    if (weightKg === 0 && item.volume_weight) {
+      var p1 = String(item.volume_weight).split('|')[0] || '';
+      var m1 = p1.replace(',', '.').match(/([\d.]+)\s*(tấn|kg|t)/i);
+      if (m1) {
+        var num1 = parseFloat(m1[1]);
+        weightKg = m1[2].toLowerCase().includes('t') ? Math.round(num1 * 1000) : Math.round(num1);
+      }
+    }
+    if (volM3 === 0 && item.volume_weight) {
+      var p2 = String(item.volume_weight).split('|')[1] || String(item.volume_weight);
+      var m2 = p2.replace(',', '.').match(/([\d.]+)\s*(m³|m3|cbm)/i);
+      if (m2) volM3 = parseFloat(m2[1]);
+    }
+
+    var fee = Number(item.service_fee) || 0;
+    var prize = String(item.prize_tag || '').trim();
+
+    rows.push([
+      rank,
+      code,
+      name,
+      origName,
+      vip,
+      orders,
+      weightKg,
+      volM3,
+      fee,
+      prize,
+      formatDate(new Date())
+    ]);
+  }
+
+  if (rows.length > 0) {
+    bxhSheet.getRange(2, 1, rows.length, 11).setValues(rows);
+  }
+}
+
+// Lưu một cấu hình vào sheet AdminConfig
+function saveAdminConfigDirect(ss, cfgKey, cfgVal) {
+  var cfgSheet = ss.getSheetByName('AdminConfig');
+  if (!cfgSheet) return;
+  var foundRow = -1;
+  if (cfgSheet.getLastRow() > 1) {
+    var existingKeys = cfgSheet.getRange(2, 1, cfgSheet.getLastRow() - 1, 1).getValues();
+    for (var r = 0; r < existingKeys.length; r++) {
+      if (existingKeys[r][0] === cfgKey) {
+        foundRow = r + 2;
+        break;
+      }
+    }
+  }
+  if (foundRow > 0) {
+    cfgSheet.getRange(foundRow, 2).setValue(cfgVal);
+    cfgSheet.getRange(foundRow, 3).setValue(new Date());
+  } else {
+    cfgSheet.appendRow([cfgKey, cfgVal, new Date()]);
   }
 }
 
@@ -298,7 +418,40 @@ function initDatabaseSheets(ss) {
     sheet2.setColumnWidth(5, 180);
   }
 
-  // 3. Sheet AdminConfig
+  // 3. Sheet BangXepHang (Bảng Xếp Hạng Doanh Số với 2 cột Cân và Khối riêng biệt)
+  var sheet4 = ss.getSheetByName('BangXepHang');
+  if (!sheet4) {
+    sheet4 = ss.insertSheet('BangXepHang');
+    sheet4.appendRow([
+      'Hạng',
+      'Mã Khách Hàng',
+      'Tên Khách Hàng (Bảo Mật)',
+      'Tên Doanh Nghiệp Gốc',
+      'Hạng VIP',
+      'Tổng Đơn',
+      'Tải Trọng (Kg)',
+      'Thể Tích (M³)',
+      'Phí Dịch Vụ (VNĐ)',
+      'Quà Tạm Tính / Giải Thưởng',
+      'Thời Gian Cập Nhật'
+    ]);
+    var h4 = sheet4.getRange(1, 1, 1, 11);
+    h4.setBackground('#1e293b').setFontColor('#f59e0b').setFontWeight('bold');
+    sheet4.setFrozenRows(1);
+    sheet4.setColumnWidth(1, 70);   // Hạng
+    sheet4.setColumnWidth(2, 130);  // Mã
+    sheet4.setColumnWidth(3, 220);  // Tên Bảo Mật
+    sheet4.setColumnWidth(4, 220);  // Tên Doanh Nghiệp Gốc
+    sheet4.setColumnWidth(5, 120);  // VIP
+    sheet4.setColumnWidth(6, 100);  // Tổng Đơn
+    sheet4.setColumnWidth(7, 130);  // Tải Trọng (Kg)
+    sheet4.setColumnWidth(8, 130);  // Thể Tích (M³)
+    sheet4.setColumnWidth(9, 150);  // Phí Dịch Vụ
+    sheet4.setColumnWidth(10, 220); // Quà
+    sheet4.setColumnWidth(11, 170); // Thời Gian
+  }
+
+  // 4. Sheet AdminConfig
   var sheet3 = ss.getSheetByName('AdminConfig');
   if (!sheet3) {
     sheet3 = ss.insertSheet('AdminConfig');

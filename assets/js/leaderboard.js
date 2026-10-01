@@ -19,7 +19,9 @@ const fallbackLeaderboardData = [
     "volume_weight": "142,5 tấn | 190 m³",
     "service_fee": 428650000,
     "prize_tag": "💻 Laptop Surface 35Tr",
-    "prize_type": "top1"
+    "prize_type": "top1",
+    "weight_kg": 142500,
+    "volume_m3": 190
   },
   {
     "rank": 2,
@@ -31,7 +33,9 @@ const fallbackLeaderboardData = [
     "volume_weight": "98,2 tấn | 135 m³",
     "service_fee": 312400000,
     "prize_tag": "📱 iPad Air M3 20Tr",
-    "prize_type": "top2"
+    "prize_type": "top2",
+    "weight_kg": 98200,
+    "volume_m3": 135
   },
   {
     "rank": 3,
@@ -43,7 +47,9 @@ const fallbackLeaderboardData = [
     "volume_weight": "76,0 tấn | 110 m³",
     "service_fee": 245900000,
     "prize_tag": "🌪️ Máy Lọc Dyson 10Tr",
-    "prize_type": "top3"
+    "prize_type": "top3",
+    "weight_kg": 76000,
+    "volume_m3": 110
   },
   {
     "rank": 4,
@@ -55,7 +61,9 @@ const fallbackLeaderboardData = [
     "volume_weight": "54,1 tấn | 68 m³",
     "service_fee": 188300000,
     "prize_tag": "Bám đuổi Top 3",
-    "prize_type": "regular"
+    "prize_type": "regular",
+    "weight_kg": 54100,
+    "volume_m3": 68
   },
   {
     "rank": 5,
@@ -67,7 +75,9 @@ const fallbackLeaderboardData = [
     "volume_weight": "42,8 tấn | 55 m³",
     "service_fee": 154200000,
     "prize_tag": "Cột mốc VIP+1",
-    "prize_type": "regular"
+    "prize_type": "regular",
+    "weight_kg": 42800,
+    "volume_m3": 55
   },
   {
     "rank": 6,
@@ -79,7 +89,9 @@ const fallbackLeaderboardData = [
     "volume_weight": "31,5 tấn | 45 m³",
     "service_fee": 141050000,
     "prize_tag": "Ứng viên Vua Số Đơn",
-    "prize_type": "regular"
+    "prize_type": "regular",
+    "weight_kg": 31500,
+    "volume_m3": 45
   },
   {
     "rank": 7,
@@ -91,7 +103,9 @@ const fallbackLeaderboardData = [
     "volume_weight": "18,2 tấn | 88 m³",
     "service_fee": 128900000,
     "prize_tag": "Dẫn đầu Tân Binh",
-    "prize_type": "regular"
+    "prize_type": "regular",
+    "weight_kg": 18200,
+    "volume_m3": 88
   },
   {
     "rank": 8,
@@ -103,7 +117,9 @@ const fallbackLeaderboardData = [
     "volume_weight": "85,6 tấn | 32 m³",
     "service_fee": 115400000,
     "prize_tag": "Ứng viên Vua Tải Trọng",
-    "prize_type": "regular"
+    "prize_type": "regular",
+    "weight_kg": 85600,
+    "volume_m3": 32
   },
   {
     "rank": 9,
@@ -115,7 +131,9 @@ const fallbackLeaderboardData = [
     "volume_weight": "24,0 tấn | 38 m³",
     "service_fee": 98700000,
     "prize_tag": "Sự Trở Lại Ấn Tượng",
-    "prize_type": "regular"
+    "prize_type": "regular",
+    "weight_kg": 24000,
+    "volume_m3": 38
   },
   {
     "rank": 10,
@@ -127,7 +145,9 @@ const fallbackLeaderboardData = [
     "volume_weight": "12,5 tấn | 72 m³",
     "service_fee": 86300000,
     "prize_tag": "Ứng viên Vua Thể Tích",
-    "prize_type": "regular"
+    "prize_type": "regular",
+    "weight_kg": 12500,
+    "volume_m3": 72
   },
   {
     "rank": 11,
@@ -139,7 +159,9 @@ const fallbackLeaderboardData = [
     "volume_weight": "21,4 tấn | 34 m³",
     "service_fee": 81200000,
     "prize_tag": "Cột mốc VIP+1",
-    "prize_type": "regular"
+    "prize_type": "regular",
+    "weight_kg": 21400,
+    "volume_m3": 34
   },
   {
     "rank": 12,
@@ -151,7 +173,9 @@ const fallbackLeaderboardData = [
     "volume_weight": "19,8 tấn | 28 m³",
     "service_fee": 76500000,
     "prize_tag": "Bám đuổi Top 10",
-    "prize_type": "regular"
+    "prize_type": "regular",
+    "weight_kg": 19800,
+    "volume_m3": 28
   },
   {
     "rank": 13,
@@ -163,7 +187,9 @@ const fallbackLeaderboardData = [
     "volume_weight": "15,2 tấn | 42 m³",
     "service_fee": 72100000,
     "prize_tag": "Ứng viên Tân Binh",
-    "prize_type": "regular"
+    "prize_type": "regular",
+    "weight_kg": 15200,
+    "volume_m3": 42
   },
   {
     "rank": 14,
@@ -175,7 +201,9 @@ const fallbackLeaderboardData = [
     "volume_weight": "14,0 tấn | 22 m³",
     "service_fee": 68400000,
     "prize_tag": "Cột mốc VIP+1",
-    "prize_type": "regular"
+    "prize_type": "regular",
+    "weight_kg": 14000,
+    "volume_m3": 22
   },
   {
     "rank": 15,
@@ -187,7 +215,9 @@ const fallbackLeaderboardData = [
     "volume_weight": "11,5 tấn | 19 m³",
     "service_fee": 64800000,
     "prize_tag": "Đặc quyền VIP",
-    "prize_type": "regular"
+    "prize_type": "regular",
+    "weight_kg": 11500,
+    "volume_m3": 19
   },
   {
     "rank": 16,
@@ -199,7 +229,9 @@ const fallbackLeaderboardData = [
     "volume_weight": "16,8 tấn | 31 m³",
     "service_fee": 59900000,
     "prize_tag": "Đua mốc VIP PRO",
-    "prize_type": "regular"
+    "prize_type": "regular",
+    "weight_kg": 16800,
+    "volume_m3": 31
   },
   {
     "rank": 17,
@@ -211,7 +243,9 @@ const fallbackLeaderboardData = [
     "volume_weight": "10,2 tấn | 29 m³",
     "service_fee": 56200000,
     "prize_tag": "Đua mốc VIP PRO",
-    "prize_type": "regular"
+    "prize_type": "regular",
+    "weight_kg": 10200,
+    "volume_m3": 29
   },
   {
     "rank": 18,
@@ -223,7 +257,9 @@ const fallbackLeaderboardData = [
     "volume_weight": "45,0 tấn | 18 m³",
     "service_fee": 52700000,
     "prize_tag": "Tải trọng bứt phá",
-    "prize_type": "regular"
+    "prize_type": "regular",
+    "weight_kg": 45000,
+    "volume_m3": 18
   },
   {
     "rank": 19,
@@ -235,7 +271,9 @@ const fallbackLeaderboardData = [
     "volume_weight": "8,5 tấn | 20 m³",
     "service_fee": 49100000,
     "prize_tag": "Ứng viên Tiềm Năng",
-    "prize_type": "regular"
+    "prize_type": "regular",
+    "weight_kg": 8500,
+    "volume_m3": 20
   },
   {
     "rank": 20,
@@ -247,7 +285,9 @@ const fallbackLeaderboardData = [
     "volume_weight": "13,2 tấn | 17 m³",
     "service_fee": 45800000,
     "prize_tag": "Tái kích hoạt",
-    "prize_type": "regular"
+    "prize_type": "regular",
+    "weight_kg": 13200,
+    "volume_m3": 17
   },
   {
     "rank": 21,
@@ -259,7 +299,9 @@ const fallbackLeaderboardData = [
     "volume_weight": "7,1 tấn | 24 m³",
     "service_fee": 42300000,
     "prize_tag": "Đua mốc VIP PRO",
-    "prize_type": "regular"
+    "prize_type": "regular",
+    "weight_kg": 7100,
+    "volume_m3": 24
   },
   {
     "rank": 22,
@@ -271,7 +313,9 @@ const fallbackLeaderboardData = [
     "volume_weight": "9,4 tấn | 15 m³",
     "service_fee": 38900000,
     "prize_tag": "Đua mốc VIP PRO",
-    "prize_type": "regular"
+    "prize_type": "regular",
+    "weight_kg": 9400,
+    "volume_m3": 15
   },
   {
     "rank": 23,
@@ -283,7 +327,9 @@ const fallbackLeaderboardData = [
     "volume_weight": "6,2 tấn | 19 m³",
     "service_fee": 35400000,
     "prize_tag": "Tân Binh Tiềm Năng",
-    "prize_type": "regular"
+    "prize_type": "regular",
+    "weight_kg": 6200,
+    "volume_m3": 19
   },
   {
     "rank": 24,
@@ -295,7 +341,9 @@ const fallbackLeaderboardData = [
     "volume_weight": "5,8 tấn | 18 m³",
     "service_fee": 31200000,
     "prize_tag": "Đua mốc VIP PRO",
-    "prize_type": "regular"
+    "prize_type": "regular",
+    "weight_kg": 5800,
+    "volume_m3": 18
   },
   {
     "rank": 25,
@@ -307,13 +355,58 @@ const fallbackLeaderboardData = [
     "volume_weight": "4,9 tấn | 12 m³",
     "service_fee": 28600000,
     "prize_tag": "Khởi động 2026",
-    "prize_type": "regular"
+    "prize_type": "regular",
+    "weight_kg": 4900,
+    "volume_m3": 12
   }
-]
+];
+
+
 ;
 
 function formatCurrency(num) {
   return new Intl.NumberFormat('vi-VN').format(num) + ' đ';
+}
+
+function getCustomerWeightKg(item) {
+  if (typeof item.weight_kg === 'number') return item.weight_kg;
+  if (item.weight_kg && !isNaN(parseFloat(item.weight_kg))) return parseFloat(item.weight_kg);
+  if (item.volume_weight) {
+    const part = item.volume_weight.split('|')[0] || '';
+    const match = part.replace(',', '.').match(/([\d.]+)\s*(tấn|kg|t)/i);
+    if (match) {
+      const val = parseFloat(match[1]);
+      const unit = match[2].toLowerCase();
+      return unit.includes('t') ? Math.round(val * 1000) : Math.round(val);
+    }
+  }
+  return 0;
+}
+
+function getCustomerVolumeM3(item) {
+  if (typeof item.volume_m3 === 'number') return item.volume_m3;
+  if (item.volume_m3 && !isNaN(parseFloat(item.volume_m3))) return parseFloat(item.volume_m3);
+  if (item.volume_weight) {
+    const parts = item.volume_weight.split('|');
+    const part = parts[1] || parts[0] || '';
+    const match = part.replace(',', '.').match(/([\d.]+)\s*(m³|m3|cbm)/i);
+    if (match) return parseFloat(match[1]);
+  }
+  return 0;
+}
+
+function formatWeightDisplay(kg) {
+  const num = typeof kg === 'number' ? kg : parseFloat(kg) || 0;
+  if (num >= 1000) {
+    const ton = (num / 1000).toLocaleString('vi-VN', { maximumFractionDigits: 1 });
+    return `<div class="font-bold text-amber-300 font-mono text-xs sm:text-sm">${num.toLocaleString('vi-VN')} kg</div><div class="text-[10px] text-slate-400 font-medium">(${ton} tấn)</div>`;
+  }
+  return `<div class="font-bold text-amber-300 font-mono text-xs sm:text-sm">${num.toLocaleString('vi-VN')} kg</div>`;
+}
+
+function formatVolumeDisplay(m3) {
+  const num = typeof m3 === 'number' ? m3 : parseFloat(m3) || 0;
+  return `<div class="font-bold text-sky-300 font-mono text-xs sm:text-sm">${num.toLocaleString('vi-VN')} m³</div>`;
 }
 
 function renderLeaderboard(data) {
@@ -326,7 +419,7 @@ function renderLeaderboard(data) {
   if (!data || data.length === 0) {
     const emptyTr = document.createElement('tr');
     emptyTr.innerHTML = `
-      <td colspan="7" class="py-12 text-center text-slate-400">
+      <td colspan="8" class="py-12 text-center text-slate-400">
         <div class="text-3xl mb-2">🔍</div>
         <div class="font-bold text-white text-sm sm:text-base">Không tìm thấy khách hàng nào khớp với từ khóa</div>
         <p class="text-xs text-slate-400 mt-1 max-w-md mx-auto">Vui lòng kiểm tra lại Tên khách hàng hoặc Mã khách (Ví dụ: ERK-KH-8891, Cty...).</p>
@@ -394,6 +487,8 @@ function renderLeaderboard(data) {
 
     const displayName = item.customer_name || item.company_name || 'Khách hàng Eureka';
     const customerCode = item.customer_code || item.code || ('ERK-KH-' + (1000 + item.rank));
+    const weightKg = getCustomerWeightKg(item);
+    const volumeM3 = getCustomerVolumeM3(item);
 
     tr.className = rowClass;
     tr.innerHTML = `
@@ -411,7 +506,7 @@ function renderLeaderboard(data) {
             <span class="text-[9px] opacity-75 text-slate-400">MÃ:</span>${customerCode}
           </span>
           <span class="md:hidden text-[10px] text-slate-400 font-medium">
-            · ${item.order_count} đơn (${item.volume_weight.split('|')[0].trim()})
+            · ${item.order_count} đơn · <span class="text-amber-300 font-bold">${weightKg.toLocaleString('vi-VN')} kg</span> · <span class="text-sky-300 font-bold">${volumeM3.toLocaleString('vi-VN')} m³</span>
           </span>
         </div>
         <div class="sm:hidden mt-1.5">
@@ -425,7 +520,8 @@ function renderLeaderboard(data) {
         </a>
       </td>
       <td class="py-3.5 px-3 text-right font-bold text-white whitespace-nowrap hidden md:table-cell">${item.order_count} đơn</td>
-      <td class="py-3.5 px-3 text-right text-slate-300 whitespace-nowrap hidden md:table-cell">${item.volume_weight}</td>
+      <td class="py-3.5 px-3 text-right whitespace-nowrap hidden md:table-cell">${formatWeightDisplay(weightKg)}</td>
+      <td class="py-3.5 px-3 text-right whitespace-nowrap hidden md:table-cell">${formatVolumeDisplay(volumeM3)}</td>
       <td class="py-3 sm:py-3.5 px-2 sm:px-3 text-right font-black whitespace-nowrap ${item.rank === 1 ? 'text-amber-400 text-sm sm:text-base' : item.rank === 2 ? 'text-slate-200 text-sm sm:text-base' : item.rank === 3 ? 'text-amber-500 text-sm sm:text-base' : 'text-slate-200 text-xs sm:text-sm'}">
         ${formatCurrency(item.service_fee)}
       </td>

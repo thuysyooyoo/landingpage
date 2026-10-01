@@ -136,15 +136,20 @@ async function fetchCloudData(silent = true) {
         } catch (e) {}
       }
 
-      // 6. Đồng bộ Bảng Xếp Hạng Custom
+      // 6. Đồng bộ Bảng Xếp Hạng Custom (Từ Sheet BangXepHang với 2 cột Cân & Khối)
       if (Array.isArray(data.customLeaderboard) && data.customLeaderboard.length > 0) {
         try {
           localStorage.setItem('eureka_custom_leaderboard', JSON.stringify(data.customLeaderboard));
-          if (typeof renderLeaderboardTable === 'function') {
-            renderLeaderboardTable();
+          if (typeof loadLeaderboardData === 'function') {
+            loadLeaderboardData();
+          } else if (typeof renderLeaderboard === 'function') {
+            renderLeaderboard(data.customLeaderboard);
           }
           if (typeof renderAdminLeaderboardTable === 'function') {
             renderAdminLeaderboardTable();
+          }
+          if (typeof renderGalaSummaryData === 'function') {
+            renderGalaSummaryData();
           }
           hasUpdates = true;
         } catch (e) {}
