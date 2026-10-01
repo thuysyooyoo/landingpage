@@ -281,7 +281,7 @@ const fallbackLeaderboardData = [
     "order_count": 4,
     "volume_weight": "4,9 tấn | 12 m³",
     "service_fee": 28600000,
-    "prize_tag": "Khởi động Q4",
+    "prize_tag": "Khởi động 2026",
     "prize_type": "regular"
   }
 ];
