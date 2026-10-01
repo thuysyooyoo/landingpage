@@ -360,17 +360,148 @@ function pickWinningIndexByWeight(segments) {
   return eligible[eligible.length - 1].index;
 }
 
+// ==================== PHONE VALIDATION & DUPLICATE LOCK ====================
+const VALID_VN_PHONE_PREFIXES = [
+  // Viettel
+  '086', '096', '097', '098', '032', '033', '034', '035', '036', '037', '038', '039',
+  // Mobifone
+  '089', '090', '093', '070', '076', '077', '078', '079',
+  // Vinaphone
+  '088', '091', '094', '081', '082', '083', '084', '085',
+  // Vietnamobile & các mạng ảo (Wintel, Itelecom...)
+  '092', '056', '058', '052', '059', '099', '087', '055'
+];
+
+function validateRealVietnamesePhone(phoneStr) {
+  if (!phoneStr || typeof phoneStr !== 'string') {
+    return { valid: false, message: 'Vui lòng nhập số điện thoại để tham gia quay thưởng!' };
+  }
+
+  // Bỏ khoảng trắng, dấu gạch nối, dấu chấm
+  let clean = phoneStr.replace(/[\s\.\-_]/g, '').trim();
+
+  // Chuẩn hóa +84 hoặc 84 về 0
+  if (clean.startsWith('+84')) clean = '0' + clean.slice(3);
+  else if (clean.startsWith('84') && clean.length === 11) clean = '0' + clean.slice(2);
+
+  // Phải đúng 10 chữ số
+  if (!/^[0-9]{10}$/.test(clean)) {
+    return { valid: false, message: 'Số điện thoại không đúng định dạng! Vui lòng nhập đúng 10 chữ số (Ví dụ: 0981234567).' };
+  }
+
+  // Kiểm tra đầu số di động thực tế tại Việt Nam
+  const prefix3 = clean.substring(0, 3);
+  if (!VALID_VN_PHONE_PREFIXES.includes(prefix3)) {
+    return { valid: false, message: `Đầu số "${prefix3}" không phải đầu số di động hợp lệ tại Việt Nam!` };
+  }
+
+  // Chống số ảo/số rác (dãy số trùng lặp 7 số cuối liên tiếp)
+  const last7 = clean.slice(3);
+  if (/^(\d)\1{6,}$/.test(last7) || /^(\d)\1+$/.test(clean)) {
+    return { valid: false, message: 'Số điện thoại không hợp lệ (trùng lặp liên tiếp)! Vui lòng nhập số điện thoại có thật.' };
+  }
+
+  // Chống số mẫu giả lập lộ liễu
+  if (clean === '0123456789' || clean === '0987654321' || clean === '0901234567') {
+    return { valid: false, message: 'Vui lòng nhập số điện thoại thực của bạn, không nhập dãy số mẫu thử nghiệm.' };
+  }
+
+  return { valid: true, normalizedPhone: clean };
+}
+
+function hasPhoneAlreadySpun(phone) {
+  const norm = phone.replace(/[\s\.\-_]/g, '').replace(/^\+?84/, '0');
+  
+  // 1. Kiểm tra trong danh sách Leads đã lưu
+  const leads = getSpinLeads();
+  const matchedLead = leads.find(l => {
+    const lNorm = (l.phone || '').replace(/[\s\.\-_]/g, '').replace(/^\+?84/, '0');
+    return lNorm === norm;
+  });
+  if (matchedLead) return matchedLead;
+
+  // 2. Kiểm tra trong danh sách khóa riêng biệt
+  try {
+    const lockedMap = JSON.parse(localStorage.getItem('eureka_locked_spun_phones') || '{}');
+    if (lockedMap[norm]) return lockedMap[norm];
+  } catch (e) {}
+
+  return null;
+}
+
+function markPhoneAsSpun(phone, prizeName, voucherCode) {
+  const norm = phone.replace(/[\s\.\-_]/g, '').replace(/^\+?84/, '0');
+  try {
+    const lockedMap = JSON.parse(localStorage.getItem('eureka_locked_spun_phones') || '{}');
+    lockedMap[norm] = {
+      phone: norm,
+      prize: prizeName,
+      voucherCode: voucherCode,
+      createdAt: new Date().toLocaleString('vi-VN')
+    };
+    localStorage.setItem('eureka_locked_spun_phones', JSON.stringify(lockedMap));
+  } catch (e) {}
+}
+
+function viewExistingVoucher(phone) {
+  const prev = hasPhoneAlreadySpun(phone);
+  if (!prev) return;
+
+  const maskedPhone = prev.phone.length >= 8 
+    ? prev.phone.slice(0, 3) + '*****' + prev.phone.slice(-2) 
+    : prev.phone.slice(0, 2) + '****' + prev.phone.slice(-2);
+
+  const fakeSeg = {
+    prize: prev.prize || 'Voucher Tri Ân',
+    text: prev.prize || 'VOUCHER'
+  };
+
+  if (typeof showWinningResult === 'function') {
+    showWinningResult(fakeSeg, maskedPhone, prev.phone, prev.voucherCode || 'ERK-VOUCHER');
+  }
+}
+
 function spinWheel() {
   if (isSpinning1) return;
 
   const input = document.getElementById('user-phone-input');
   const errorEl = document.getElementById('phone-error');
-  const phone = input ? input.value.trim() : '';
+  const rawPhone = input ? input.value.trim() : '';
 
-  const phoneRegex = /(84|0[3|5|7|8|9])+([0-9]{8})\b/;
-  if (!phoneRegex.test(phone)) {
+  // 1. Kiểm tra định dạng số điện thoại thực tế tại Việt Nam
+  const check = validateRealVietnamesePhone(rawPhone);
+  if (!check.valid) {
     if (errorEl) {
-      errorEl.textContent = 'Vui lòng nhập đúng số điện thoại (10 chữ số) để nhận voucher!';
+      errorEl.innerHTML = `⚠️ ${check.message}`;
+      errorEl.classList.remove('hidden');
+    }
+    if (input) input.focus();
+    return;
+  }
+
+  const validPhone = check.normalizedPhone;
+
+  // 2. KHÓA CHỐNG TRÙNG LẶP: Mỗi SĐT chỉ được tham gia 1 lần duy nhất
+  const prevSpin = hasPhoneAlreadySpun(validPhone);
+  if (prevSpin) {
+    if (errorEl) {
+      errorEl.innerHTML = `
+        <div class="p-3 rounded-xl bg-amber-500/15 border border-amber-500/40 text-amber-200 text-xs text-left space-y-1.5 mt-2">
+          <div class="font-bold flex items-center gap-1.5 text-amber-300">
+            <span>🔒</span> SĐT [${validPhone}] ĐÃ THAM GIA QUAY THƯỞNG!
+          </div>
+          <div class="text-[11px] leading-relaxed text-slate-300">
+            Mỗi số điện thoại chỉ được quay <strong>01 lần duy nhất</strong> trong chiến dịch.<br>
+            • Phần quà đã nhận: <strong class="text-emerald-300">${prevSpin.prize || 'Voucher chiết khấu'}</strong><br>
+            • Mã voucher: <code class="px-1.5 py-0.5 rounded bg-slate-900 font-mono text-amber-300 font-bold border border-slate-700">${prevSpin.voucherCode || 'ERK-VOUCHER'}</code>
+          </div>
+          <div class="pt-1">
+            <button type="button" onclick="viewExistingVoucher('${validPhone}')" class="text-[11px] text-sky-400 hover:text-sky-300 font-bold underline cursor-pointer">
+              👉 Bấm để xem lại & lấy lại mã Voucher đã trúng
+            </button>
+          </div>
+        </div>
+      `;
       errorEl.classList.remove('hidden');
     }
     if (input) input.focus();
@@ -379,10 +510,8 @@ function spinWheel() {
 
   if (errorEl) errorEl.classList.add('hidden');
 
-  // Privacy 50% mask for ticker: e.g. 098*****89 (5 out of 10 digits masked)
-  const maskedPhone = phone.length >= 8 
-    ? phone.slice(0, 3) + '*****' + phone.slice(-2) 
-    : phone.slice(0, 2) + '****' + phone.slice(-2);
+  // Privacy 50% mask for ticker: e.g. 098*****89
+  const maskedPhone = validPhone.slice(0, 3) + '*****' + validPhone.slice(-2);
 
   const targetIndex = pickWinningIndexByWeight(welcomeSegments);
   const numSegments = welcomeSegments.length;
@@ -431,13 +560,14 @@ function spinWheel() {
 
       // Generate Voucher Code
       const voucherCode = 'ERK-' + Math.floor(100000 + Math.random() * 900000);
+      const prizeName = winningSeg.prize || winningSeg.text;
 
       // SAVE LEAD SĐT VÀO ADMIN DATABASE
       const newLead = {
         id: 'LEAD-' + Date.now(),
-        phone: phone, // SĐT thật không che dành cho Admin liên hệ
+        phone: validPhone, // SĐT thật không che dành cho Admin liên hệ
         voucherCode: voucherCode,
-        prize: winningSeg.prize || winningSeg.text,
+        prize: prizeName,
         createdAt: new Date().toLocaleString('vi-VN', {
           hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit', year: 'numeric'
         }),
@@ -445,8 +575,11 @@ function spinWheel() {
       };
       saveSpinLead(newLead);
 
+      // KHÓA SĐT KHÔNG CHO QUAY LẠI
+      markPhoneAsSpun(validPhone, prizeName, voucherCode);
+
       if (typeof showWinningResult === 'function') {
-        showWinningResult(winningSeg, maskedPhone, phone, voucherCode);
+        showWinningResult(winningSeg, maskedPhone, validPhone, voucherCode);
       }
     }
   }
@@ -455,11 +588,18 @@ function spinWheel() {
 }
 
 function fillDemoPhone() {
-  const prefixes = ['098', '091', '090', '097', '088'];
-  const p = prefixes[Math.floor(Math.random() * prefixes.length)];
-  const randomPhone = p + Math.floor(1000000 + Math.random() * 9000000);
+  const demoPrefixes = ['098', '097', '096', '090', '093', '091', '088', '086', '038', '079'];
+  let candidate = '';
+  for (let i = 0; i < 50; i++) {
+    const p = demoPrefixes[Math.floor(Math.random() * demoPrefixes.length)];
+    candidate = p + Math.floor(1000000 + Math.random() * 9000000);
+    if (!hasPhoneAlreadySpun(candidate)) break;
+  }
+
   const input = document.getElementById('user-phone-input');
-  if (input) input.value = randomPhone;
+  const errorEl = document.getElementById('phone-error');
+  if (input) input.value = candidate;
+  if (errorEl) errorEl.classList.add('hidden');
 }
 
 // Modal open/close controls for Welcome Wheel Popup

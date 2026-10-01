@@ -259,16 +259,16 @@
       <nav class="hidden md:flex items-center gap-1 lg:gap-2">
         <a href="#tong-quan" class="px-3 py-2 text-sm font-medium text-slate-300 hover:text-brand-400 transition-colors">Tổng Quan</a>
         <a href="#giai-thuong" class="px-3 py-2 text-sm font-medium text-slate-300 hover:text-brand-400 transition-colors">Cơ Cấu Giải Thưởng</a>
+        <a href="#the-le" class="px-3 py-2 text-sm font-medium text-slate-300 hover:text-brand-400 transition-colors">Thể Lệ</a>
         <a href="javascript:void(0)" onclick="openWelcomeWheelModal()" class="px-3 py-2 text-sm font-medium text-amber-300 hover:text-amber-200 flex items-center gap-1.5 transition-colors cursor-pointer">
           <span class="inline-block w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
           Vòng Quay Trải Nghiệm
         </a>
         <a href="#vong-quay-mung-05" class="px-3 py-2 text-sm font-medium text-sky-400 hover:text-sky-300 transition-colors">
-          Tri Ân Mùng 05
+          Vòng Quay Tri Ân
         </a>
         <a href="#cot-moc-vip" class="px-3 py-2 text-sm font-medium text-slate-300 hover:text-brand-400 transition-colors">Nhiệm Vụ Hệ Thống</a>
         <a href="#bxh-truc-tuyen" class="px-3 py-2 text-sm font-medium text-slate-300 hover:text-brand-400 transition-colors">Bảng Xếp Hạng</a>
-        <a href="#the-le" class="px-3 py-2 text-sm font-medium text-slate-300 hover:text-brand-400 transition-colors">Thể Lệ</a>
       </nav>
 
       <!-- Header Actions -->
@@ -1356,6 +1356,57 @@
           </div>
         </div>
 
+        <!-- FAQ 5 -->
+        <div class="glass-card rounded-2xl border border-slate-700/80 overflow-hidden">
+          <button onclick="toggleFaq(5)" class="w-full px-6 py-4.5 text-left flex items-center justify-between text-white font-bold text-sm sm:text-base hover:text-brand-400 transition-colors">
+            <span>5. Giải Chiến Tướng Top Tuần được xét duyệt như thế nào và có bị trừ điểm đua Top năm không?</span>
+            <span id="faq-icon-5" class="text-brand-500 font-bold text-xl transition-transform duration-200">+</span>
+          </button>
+          <div id="faq-content-5" class="hidden px-6 pb-5 text-xs sm:text-sm text-slate-300 leading-relaxed border-t border-slate-800/60 pt-3">
+            Giải thưởng <strong>Chiến Tướng Top Tuần</strong> diễn ra liên tục từ <strong>Tuần 4 Tháng 10/2026 đến hết Tuần 02 Tháng 01/2027</strong>. Mỗi tuần, hệ thống tự động chốt doanh số và trao <strong>Voucher Tiền Mặt 1.000.000 đ</strong> cho khách hàng có chi tiêu dịch vụ cao nhất tuần đó.<br>
+            <strong>Đặc biệt:</strong> Toàn bộ doanh số tuần đó của khách hàng <em>vẫn được giữ nguyên 100%</em> để cộng dồn đua giải thưởng Chung cuộc (Surface Pro 11, iPad Air M3, Dyson...). Khách hàng có thể thắng giải Top Tuần nhiều lần nếu liên tục dẫn đầu!
+          </div>
+        </div>
+
+        <!-- FAQ 6 -->
+        <div class="glass-card rounded-2xl border border-slate-700/80 overflow-hidden">
+          <button onclick="toggleFaq(6)" class="w-full px-6 py-4.5 text-left flex items-center justify-between text-white font-bold text-sm sm:text-base hover:text-brand-400 transition-colors">
+            <span>6. Vòng Quay Tri Ân Mùng 05 hàng tháng quay vào lúc nào và mã voucher có được cộng dồn không?</span>
+            <span id="faq-icon-6" class="text-brand-500 font-bold text-xl transition-transform duration-200">+</span>
+          </button>
+          <div id="faq-content-6" class="hidden px-6 pb-5 text-xs sm:text-sm text-slate-300 leading-relaxed border-t border-slate-800/60 pt-3">
+            Sự kiện quay thưởng chính thức diễn ra định kỳ vào ngày <strong>05/11, 05/12/2026 và 05/01/2027</strong> dành cho các đơn hàng hoàn tất của <strong>Kỳ Tháng 10, Tháng 11 và Tháng 12/2026</strong>. Mỗi kỳ sẽ quay <strong>3 lần</strong>. Hệ thống thiết lập ngầm đảm bảo mỗi lần quay chỉ trúng <strong>01 mã Khách hàng duy nhất</strong>.<br>
+            Khách hàng may mắn trúng giải có quyền <strong>áp dụng mã cộng dồn</strong> cho một đơn hàng lớn hoặc tách riêng để sử dụng cho nhiều đơn hàng tiếp theo.
+          </div>
+        </div>
+
+        <!-- FAQ 7 -->
+        <div class="glass-card rounded-2xl border border-slate-700/80 overflow-hidden">
+          <button onclick="toggleFaq(7)" class="w-full px-6 py-4.5 text-left flex items-center justify-between text-white font-bold text-sm sm:text-base hover:text-brand-400 transition-colors">
+            <span>7. Doanh nghiệp nhỏ có cơ hội nhận quà không? Nhiệm Vụ Hệ Thống VIP+1 xét ra sao?</span>
+            <span id="faq-icon-7" class="text-brand-500 font-bold text-xl transition-transform duration-200">+</span>
+          </button>
+          <div id="faq-content-7" class="hidden px-6 pb-5 text-xs sm:text-sm text-slate-300 leading-relaxed border-t border-slate-800/60 pt-3">
+            <strong>100% doanh nghiệp đều có quà!</strong> Không cần dẫn đầu doanh số tiền tỷ, chương trình thiết kế <strong>Nhiệm Vụ Hệ Thống</strong> theo 3 chặng công bố hàng tháng:<br>
+            • <strong>Chặng 1 (Tháng 10):</strong> Chỉ cần tối thiểu 01 đơn booking (tạo từ 01/10 đến 30/10, hoàn thành trước 15/01/2027) là được tự động nâng <strong>VIP+1 trọn tháng 11</strong>.<br>
+            • <strong>Chặng 2 (Tháng 11):</strong> 02 đơn booking (ít nhất 01 đơn trước 20/11) -> nhận <strong>VIP+1 trọn tháng 12</strong>.<br>
+            • <strong>Chặng 3 (Tháng 12):</strong> Tối thiểu 01 đơn trước 20/12 -> nhận <strong>VIP+1 trọn tháng 01/2027</strong>.<br>
+            Các doanh nghiệp hoàn thành cả 3 chặng sẽ được vinh danh là <strong>Chiến Binh Bứt Phá</strong> tại Đêm Gala Year-End Party.
+          </div>
+        </div>
+
+        <!-- FAQ 8 -->
+        <div class="glass-card rounded-2xl border border-slate-700/80 overflow-hidden">
+          <button onclick="toggleFaq(8)" class="w-full px-6 py-4.5 text-left flex items-center justify-between text-white font-bold text-sm sm:text-base hover:text-brand-400 transition-colors">
+            <span>8. Mỗi số điện thoại được quay Vòng Quay May Mắn mấy lần? Áp dụng Voucher thế nào?</span>
+            <span id="faq-icon-8" class="text-brand-500 font-bold text-xl transition-transform duration-200">+</span>
+          </button>
+          <div id="faq-content-8" class="hidden px-6 pb-5 text-xs sm:text-sm text-slate-300 leading-relaxed border-t border-slate-800/60 pt-3">
+            Để đảm bảo tính minh bạch và công bằng cho toàn thể cộng đồng xuất nhập khẩu, <strong>mỗi số điện thoại chỉ được tham gia quay thưởng 01 lần duy nhất</strong>.<br>
+            Sau khi quay trúng thưởng, quý khách chỉ cần nhấn nút <em>"Áp Dụng Mã Ngay Qua Zalo Hotline"</em> hoặc gửi mã cho CSKH Eureka (Hotline/Zalo: <strong>0898.586.622</strong>). Voucher có hiệu lực trừ trực tiếp vào cước vận chuyển các lô hàng phát sinh trong suốt thời gian chiến dịch đến hết ngày <strong>15/01/2027</strong>.
+          </div>
+        </div>
+
       </div>
 
     </div>
@@ -1406,12 +1457,13 @@
       <div>
         <h4 class="text-white font-bold text-sm uppercase tracking-wider mb-3">Liên Kết Chiến Dịch</h4>
         <ul class="space-y-2">
-          <li><a href="#tong-quan" class="hover:text-brand-400 transition-colors">Tổng quan giải thưởng</a></li>
+          <li><a href="#tong-quan" class="hover:text-brand-400 transition-colors">Tổng quan chiến dịch</a></li>
+          <li><a href="#giai-thuong" class="hover:text-brand-400 transition-colors">Cơ cấu giải thưởng</a></li>
+          <li><a href="#the-le" class="hover:text-brand-400 transition-colors">Thể lệ chương trình</a></li>
           <li><a href="javascript:void(0)" onclick="openWelcomeWheelModal()" class="hover:text-brand-400 transition-colors cursor-pointer">Vòng quay trải nghiệm</a></li>
           <li><a href="#vong-quay-mung-05" class="hover:text-brand-400 transition-colors">Vòng Quay Tri Ân</a></li>
           <li><a href="#cot-moc-vip" class="hover:text-brand-400 transition-colors">Nhiệm Vụ Hệ Thống</a></li>
           <li><a href="#bxh-truc-tuyen" class="hover:text-brand-400 transition-colors">Bảng xếp hạng 2026</a></li>
-          <li><a href="#the-le" class="hover:text-brand-400 transition-colors">Thể lệ chương trình</a></li>
         </ul>
       </div>
 
@@ -1505,16 +1557,21 @@
         <div class="md:col-span-5 space-y-4">
           <!-- Phone Entry Box -->
           <div class="p-5 rounded-2xl bg-slate-800/80 backdrop-blur-md border border-brand-500/40 shadow-xl">
-            <label class="block text-xs font-black text-slate-200 uppercase tracking-wider mb-2 font-display">
-              Nhập Số Điện Thoại Để Nhận Quà:
-            </label>
+            <div class="flex items-center justify-between mb-2">
+              <label class="block text-xs font-black text-slate-200 uppercase tracking-wider font-display">
+                Nhập Số Điện Thoại Nhận Quà:
+              </label>
+              <span class="text-[10px] font-bold text-amber-400 bg-amber-400/10 px-2 py-0.5 rounded border border-amber-400/25">
+                🔒 1 SĐT / 1 Lượt Quay
+              </span>
+            </div>
             <div class="flex gap-2">
               <input type="tel" id="user-phone-input" placeholder="Ví dụ: 0987654321" class="flex-1 bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-white focus:outline-none focus:border-brand-500 font-semibold tracking-wider placeholder:font-normal placeholder:text-slate-500" />
               <button onclick="spinWheel()" id="spin-action-btn" class="px-5 py-2.5 rounded-xl btn-gala-shimmer text-white font-black text-xs uppercase tracking-wider shadow-lg transition-all flex items-center gap-1 whitespace-nowrap cursor-pointer">
                 <span>Quay</span>
               </button>
             </div>
-            <p id="phone-error" class="text-xs text-red-400 mt-2 hidden font-semibold"></p>
+            <div id="phone-error" class="hidden"></div>
             <div class="flex items-center justify-between mt-3 text-[11px] text-slate-400">
               <span>Bảo mật SĐT: Che ***</span>
               <button onclick="fillDemoPhone()" class="text-amber-400 hover:underline font-bold cursor-pointer">Điền số mẫu</button>
