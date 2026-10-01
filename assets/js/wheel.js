@@ -96,11 +96,16 @@ function forwardLeadToBotWebhook(newLead) {
 👉 *[BẤM ĐÂY CHAT ZALO VỚI KHÁCH](${zaloChatLink})*
 📞 *Gọi điện ngay:* tel:${newLead.phone}`;
 
+      let tgChatId = config.telegram_chat_id ? String(config.telegram_chat_id).trim() : '';
+      if (tgChatId && /^[0-9]{10,}$/.test(tgChatId)) {
+        tgChatId = '-' + tgChatId;
+      }
+
       fetch(`https://api.telegram.org/bot${config.telegram_token}/sendMessage`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          chat_id: config.telegram_chat_id,
+          chat_id: tgChatId,
           text: tgText,
           parse_mode: 'Markdown',
           disable_web_page_preview: false

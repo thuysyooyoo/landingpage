@@ -1020,9 +1020,16 @@ function loadBotConfigToAdminForm() {
 function saveBotConfig() {
   const tgActive = document.getElementById('admin-bot-tg-active')?.checked || false;
   const tgToken = document.getElementById('admin-bot-tg-token')?.value.trim() || '';
-  const tgChatId = document.getElementById('admin-bot-tg-chatid')?.value.trim() || '';
+  let tgChatId = document.getElementById('admin-bot-tg-chatid')?.value.trim() || '';
   const whActive = document.getElementById('admin-bot-webhook-active')?.checked || false;
   const whUrl = document.getElementById('admin-bot-webhook-url')?.value.trim() || '';
+
+  // Auto-normalize: If Chat ID is a supergroup ID (>= 10 digits starting with 100) but missing leading '-'
+  if (tgChatId && /^[0-9]{10,}$/.test(tgChatId)) {
+    tgChatId = '-' + tgChatId;
+    const input = document.getElementById('admin-bot-tg-chatid');
+    if (input) input.value = tgChatId;
+  }
 
   const config = {
     telegram_enabled: tgActive,
@@ -1040,10 +1047,17 @@ function saveBotConfig() {
 
 async function testBotNotification() {
   const tgToken = document.getElementById('admin-bot-tg-token')?.value.trim();
-  const tgChatId = document.getElementById('admin-bot-tg-chatid')?.value.trim();
+  let tgChatId = document.getElementById('admin-bot-tg-chatid')?.value.trim();
   const whUrl = document.getElementById('admin-bot-webhook-url')?.value.trim();
   const tgActive = document.getElementById('admin-bot-tg-active')?.checked;
   const whActive = document.getElementById('admin-bot-webhook-active')?.checked;
+
+  // Auto-normalize: If Chat ID is a supergroup ID (>= 10 digits starting with 100) but missing leading '-'
+  if (tgChatId && /^[0-9]{10,}$/.test(tgChatId)) {
+    tgChatId = '-' + tgChatId;
+    const input = document.getElementById('admin-bot-tg-chatid');
+    if (input) input.value = tgChatId;
+  }
 
   if (!tgActive && !whActive) {
     alert('⚠️ Vui lòng tích chọn Kích hoạt ít nhất 01 kênh (Telegram Bot hoặc Webhook) để thử nghiệm!');
@@ -1072,7 +1086,11 @@ async function testBotNotification() {
       if (data.ok) {
         results.push('✅ Telegram Bot: Gửi tin nhắn thử nghiệm thành công! Hãy kiểm tra ứng dụng Telegram của bạn.');
       } else {
-        results.push(`❌ Telegram Bot thất bại: ${data.description || 'Lỗi Token hoặc Chat ID'}`);
+        let errDesc = data.description || 'Lỗi Token hoặc Chat ID';
+        if (errDesc.includes('chat not found')) {
+          errDesc += '\n\n💡 HƯỚNG DẪN XỬ LÝ:\n1. Bạn ĐÃ THÊM BOT VÀO NHÓM CHƯA? Bắt buộc phải thêm Bot vào làm thành viên nhóm thì bot mới gửi tin được.\n2. Chat ID của nhóm phải có dấu trừ (-) ở đầu (ví dụ: -' + tgChatId.replace(/^-/, '') + ').';
+        }
+        results.push(`❌ Telegram Bot thất bại: ${errDesc}`);
       }
     } catch (e) {
       results.push(`❌ Lỗi kết nối Telegram: ${e.message}`);
