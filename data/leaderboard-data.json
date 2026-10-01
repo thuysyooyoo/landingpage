@@ -2,7 +2,7 @@
   {
     "rank": 1,
     "customer_name": "Khách hàng T*** Đ*** XNK *** Châu",
-    "phone_masked": "098*****89",
+    "customer_code": "ERK-KH-8891",
     "vip_tier": "VIP ELITE",
     "order_count": 48,
     "volume_weight": "142,5 tấn | 190 m³",
@@ -13,7 +13,7 @@
   {
     "rank": 2,
     "customer_name": "Khách hàng CP TM *** *** Minh",
-    "phone_masked": "091*****21",
+    "customer_code": "ERK-KH-4432",
     "vip_tier": "VIP ELITE",
     "order_count": 35,
     "volume_weight": "98,2 tấn | 135 m³",
@@ -24,7 +24,7 @@
   {
     "rank": 3,
     "customer_name": "Khách hàng SX & PP *** *** An",
-    "phone_masked": "090*****27",
+    "customer_code": "ERK-KH-1205",
     "vip_tier": "VIP PREMIUM",
     "order_count": 29,
     "volume_weight": "76,0 tấn | 110 m³",
@@ -35,7 +35,7 @@
   {
     "rank": 4,
     "customer_name": "Khách hàng XNK Y Tế *** *** Long",
-    "phone_masked": "093*****52",
+    "customer_code": "ERK-KH-9012",
     "vip_tier": "VIP PREMIUM",
     "order_count": 22,
     "volume_weight": "54,1 tấn | 68 m³",
@@ -46,7 +46,7 @@
   {
     "rank": 5,
     "customer_name": "Khách hàng Hộ KD *** *** Hưng",
-    "phone_masked": "097*****19",
+    "customer_code": "ERK-KH-7731",
     "vip_tier": "VIP PRO",
     "order_count": 19,
     "volume_weight": "42,8 tấn | 55 m³",
@@ -57,7 +57,7 @@
   {
     "rank": 6,
     "customer_name": "Khách hàng Phụ Kiện *** *** Việt",
-    "phone_masked": "096*****74",
+    "customer_code": "ERK-KH-5524",
     "vip_tier": "VIP PRO",
     "order_count": 26,
     "volume_weight": "31,5 tấn | 45 m³",
@@ -68,7 +68,7 @@
   {
     "rank": 7,
     "customer_name": "Khách hàng Đồ Chơi *** *** Tech",
-    "phone_masked": "088*****89",
+    "customer_code": "ERK-KH-3198",
     "vip_tier": "KH MỚI",
     "order_count": 14,
     "volume_weight": "18,2 tấn | 88 m³",
@@ -79,7 +79,7 @@
   {
     "rank": 8,
     "customer_name": "Khách hàng Cơ Khí *** *** Trung",
-    "phone_masked": "094*****15",
+    "customer_code": "ERK-KH-6640",
     "vip_tier": "VIP PRO",
     "order_count": 11,
     "volume_weight": "85,6 tấn | 32 m³",
@@ -90,7 +90,7 @@
   {
     "rank": 9,
     "customer_name": "Khách hàng Tiêu Dùng *** *** Nam",
-    "phone_masked": "091*****88",
+    "customer_code": "ERK-KH-2287",
     "vip_tier": "KH CŨ",
     "order_count": 12,
     "volume_weight": "24,0 tấn | 38 m³",
@@ -101,12 +101,177 @@
   {
     "rank": 10,
     "customer_name": "Khách hàng Nội Thất *** *** Đô",
-    "phone_masked": "098*****22",
+    "customer_code": "ERK-KH-9914",
     "vip_tier": "KH MỚI",
     "order_count": 9,
     "volume_weight": "12,5 tấn | 72 m³",
     "service_fee": 86300000,
     "prize_tag": "Ứng viên Vua Thể Tích",
+    "prize_type": "regular"
+  },
+  {
+    "rank": 11,
+    "customer_name": "Khách hàng Gia Dụng *** *** Phát",
+    "customer_code": "ERK-KH-1043",
+    "vip_tier": "VIP PRO",
+    "order_count": 15,
+    "volume_weight": "21,4 tấn | 34 m³",
+    "service_fee": 81200000,
+    "prize_tag": "Cột mốc VIP+1",
+    "prize_type": "regular"
+  },
+  {
+    "rank": 12,
+    "customer_name": "Khách hàng Thiết Bị *** *** Thắng",
+    "customer_code": "ERK-KH-8320",
+    "vip_tier": "VIP PRO",
+    "order_count": 13,
+    "volume_weight": "19,8 tấn | 28 m³",
+    "service_fee": 76500000,
+    "prize_tag": "Bám đuổi Top 10",
+    "prize_type": "regular"
+  },
+  {
+    "rank": 13,
+    "customer_name": "Khách hàng May Mặc *** *** Linh",
+    "customer_code": "ERK-KH-4176",
+    "vip_tier": "KH MỚI",
+    "order_count": 10,
+    "volume_weight": "15,2 tấn | 42 m³",
+    "service_fee": 72100000,
+    "prize_tag": "Ứng viên Tân Binh",
+    "prize_type": "regular"
+  },
+  {
+    "rank": 14,
+    "customer_name": "Khách hàng Hóa Mỹ Phẩm *** *** Hà",
+    "customer_code": "ERK-KH-5902",
+    "vip_tier": "VIP PRO",
+    "order_count": 11,
+    "volume_weight": "14,0 tấn | 22 m³",
+    "service_fee": 68400000,
+    "prize_tag": "Cột mốc VIP+1",
+    "prize_type": "regular"
+  },
+  {
+    "rank": 15,
+    "customer_name": "Khách hàng Điện Tử *** *** Quang",
+    "customer_code": "ERK-KH-7241",
+    "vip_tier": "VIP PREMIUM",
+    "order_count": 8,
+    "volume_weight": "11,5 tấn | 19 m³",
+    "service_fee": 64800000,
+    "prize_tag": "Đặc quyền VIP",
+    "prize_type": "regular"
+  },
+  {
+    "rank": 16,
+    "customer_name": "Khách hàng Bao Bì *** *** Hưng",
+    "customer_code": "ERK-KH-3819",
+    "vip_tier": "BASIC",
+    "order_count": 9,
+    "volume_weight": "16,8 tấn | 31 m³",
+    "service_fee": 59900000,
+    "prize_tag": "Đua mốc VIP PRO",
+    "prize_type": "regular"
+  },
+  {
+    "rank": 17,
+    "customer_name": "Khách hàng Hộ KD Giày Dép *** *** Vy",
+    "customer_code": "ERK-KH-6055",
+    "vip_tier": "BASIC",
+    "order_count": 12,
+    "volume_weight": "10,2 tấn | 29 m³",
+    "service_fee": 56200000,
+    "prize_tag": "Đua mốc VIP PRO",
+    "prize_type": "regular"
+  },
+  {
+    "rank": 18,
+    "customer_name": "Khách hàng Vật Liệu Xây Dựng *** *** Sơn",
+    "customer_code": "ERK-KH-2790",
+    "vip_tier": "VIP PRO",
+    "order_count": 6,
+    "volume_weight": "45,0 tấn | 18 m³",
+    "service_fee": 52700000,
+    "prize_tag": "Tải trọng bứt phá",
+    "prize_type": "regular"
+  },
+  {
+    "rank": 19,
+    "customer_name": "Khách hàng VPP & Quà Tặng *** *** Mai",
+    "customer_code": "ERK-KH-8411",
+    "vip_tier": "KH MỚI",
+    "order_count": 8,
+    "volume_weight": "8,5 tấn | 20 m³",
+    "service_fee": 49100000,
+    "prize_tag": "Ứng viên Tiềm Năng",
+    "prize_type": "regular"
+  },
+  {
+    "rank": 20,
+    "customer_name": "Khách hàng Nông Sản Chế Biến *** *** Lộc",
+    "customer_code": "ERK-KH-9533",
+    "vip_tier": "KH CŨ",
+    "order_count": 7,
+    "volume_weight": "13,2 tấn | 17 m³",
+    "service_fee": 45800000,
+    "prize_tag": "Tái kích hoạt",
+    "prize_type": "regular"
+  },
+  {
+    "rank": 21,
+    "customer_name": "Khách hàng Thủ Công Mỹ Nghệ *** *** Tâm",
+    "customer_code": "ERK-KH-1188",
+    "vip_tier": "BASIC",
+    "order_count": 6,
+    "volume_weight": "7,1 tấn | 24 m³",
+    "service_fee": 42300000,
+    "prize_tag": "Đua mốc VIP PRO",
+    "prize_type": "regular"
+  },
+  {
+    "rank": 22,
+    "customer_name": "Khách hàng Phụ Tùng Xe Máy *** *** Dũng",
+    "customer_code": "ERK-KH-7629",
+    "vip_tier": "BASIC",
+    "order_count": 5,
+    "volume_weight": "9,4 tấn | 15 m³",
+    "service_fee": 38900000,
+    "prize_tag": "Đua mốc VIP PRO",
+    "prize_type": "regular"
+  },
+  {
+    "rank": 23,
+    "customer_name": "Khách hàng Hộ KD Mẹ & Bé *** *** Thảo",
+    "customer_code": "ERK-KH-3341",
+    "vip_tier": "KH MỚI",
+    "order_count": 7,
+    "volume_weight": "6,2 tấn | 19 m³",
+    "service_fee": 35400000,
+    "prize_tag": "Tân Binh Tiềm Năng",
+    "prize_type": "regular"
+  },
+  {
+    "rank": 24,
+    "customer_name": "Khách hàng Đèn Trang Trí *** *** Hoàng",
+    "customer_code": "ERK-KH-5820",
+    "vip_tier": "BASIC",
+    "order_count": 4,
+    "volume_weight": "5,8 tấn | 18 m³",
+    "service_fee": 31200000,
+    "prize_tag": "Đua mốc VIP PRO",
+    "prize_type": "regular"
+  },
+  {
+    "rank": 25,
+    "customer_name": "Khách hàng Dược Liệu Tự Nhiên *** *** Trúc",
+    "customer_code": "ERK-KH-9102",
+    "vip_tier": "BASIC",
+    "order_count": 4,
+    "volume_weight": "4,9 tấn | 12 m³",
+    "service_fee": 28600000,
+    "prize_tag": "Khởi động Q4",
     "prize_type": "regular"
   }
 ]

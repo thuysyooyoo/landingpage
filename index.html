@@ -1118,23 +1118,32 @@
   <section id="bxh-truc-tuyen" class="py-20 relative bg-slate-900/40 border-t border-slate-800">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       
-      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
         <div>
           <span class="text-xs font-bold uppercase tracking-widest text-brand-400">CÔNG BỐ MINH BẠCH & BẢO MẬT DANH TÍNH</span>
-          <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-1">
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-1 font-display">
             Bảng Xếp Hạng Doanh Số Q4/2026
           </h2>
-          <p class="text-slate-400 text-xs sm:text-sm mt-1">Dữ liệu được cập nhật định kỳ mỗi Thứ Hai hàng tuần từ hệ thống Eureka (Tên và SĐT che *** để chống sao chép dữ liệu)</p>
+          <p class="text-slate-400 text-xs sm:text-sm mt-1">Dữ liệu được cập nhật định kỳ mỗi Thứ Hai hàng tuần từ hệ thống Eureka (Bảo mật thông tin: Hiển thị Tên kèm Mã Khách Hàng chính thức)</p>
         </div>
 
         <!-- Search & Filter Controls -->
-        <div class="flex items-center gap-2">
-          <div class="relative">
-            <input type="text" id="leaderboard-search" oninput="filterLeaderboard()" placeholder="Tìm tên khách hàng / SĐT..." class="bg-slate-800 border border-slate-700 rounded-xl px-3.5 py-2 text-xs sm:text-sm text-white placeholder:text-slate-500 focus:outline-none focus:border-brand-500 w-56 sm:w-72" />
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5">
+          <div class="relative flex-1 sm:w-80">
+            <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-slate-400">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+            </span>
+            <input type="text" id="leaderboard-search" oninput="filterLeaderboard()" placeholder="Tìm tên KH hoặc mã khách (VD: ERK-KH-8891)..." class="w-full bg-slate-800/90 border border-slate-700 rounded-xl pl-9 pr-9 py-2.5 text-xs sm:text-sm text-white placeholder:text-slate-500 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 shadow-inner" />
+            <button id="leaderboard-search-clear" onclick="clearLeaderboardSearch()" class="absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400 hover:text-white hidden cursor-pointer" title="Xóa tìm kiếm">✕</button>
           </div>
-          <button onclick="refreshLeaderboardData()" class="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition-colors" title="Làm mới dữ liệu">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
-          </button>
+          <div class="flex items-center gap-2">
+            <span id="leaderboard-search-count" class="px-3 py-2 rounded-xl bg-slate-800/80 border border-slate-700/60 text-slate-300 text-xs font-semibold whitespace-nowrap">
+              Hiển thị 25 khách hàng
+            </span>
+            <button onclick="refreshLeaderboardData()" class="p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition-colors cursor-pointer" title="Làm mới dữ liệu">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+            </button>
+          </div>
         </div>
       </div>
 
@@ -1157,11 +1166,11 @@
               
               <h3 class="text-2xl sm:text-3xl font-black text-white flex flex-wrap items-center justify-center lg:justify-start gap-2">
                 <span>Chúc Mừng:</span>
-                <span id="spotlight-customer-name" class="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-yellow-200 to-amber-400">
+                <span id="spotlight-customer-name" class="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-yellow-200 to-amber-400 font-display">
                   Khách hàng T*** Đ*** XNK *** Châu
                 </span>
-                <span id="spotlight-customer-phone" class="font-mono text-sm px-2.5 py-0.5 rounded-lg bg-slate-800 text-amber-300 border border-amber-400/30">
-                  098*****89
+                <span id="spotlight-customer-code" class="font-mono text-sm px-2.5 py-0.5 rounded-lg bg-slate-800 text-amber-300 border border-amber-400/30">
+                  MÃ: ERK-KH-8891
                 </span>
               </h3>
 
@@ -1197,26 +1206,36 @@
         </div>
       </div>
 
-      <!-- Leaderboard Table Container -->
-      <div class="glass-card rounded-3xl p-4 sm:p-6 border border-white/10 overflow-hidden">
-        <div class="overflow-x-auto">
+      <!-- Leaderboard Table Container (Scrollable 10 rows upfront + full participant scroll) -->
+      <div class="glass-card rounded-3xl p-4 sm:p-6 border border-white/10 shadow-2xl relative">
+        <div class="overflow-x-auto max-h-[620px] overflow-y-auto rounded-2xl border border-slate-800/80 scroll-smooth">
           <table class="w-full text-left text-xs sm:text-sm" id="leaderboard-table">
-            <thead>
-              <tr class="text-slate-400 border-b border-slate-800 text-[11px] uppercase tracking-wider">
-                <th class="py-3 px-3">Hạng</th>
-                <th class="py-3 px-3">Khách Hàng</th>
-                <th class="py-3 px-3">Số Điện Thoại</th>
-                <th class="py-3 px-3">Hạng VIP</th>
-                <th class="py-3 px-3 text-right">Tổng Đơn</th>
-                <th class="py-3 px-3 text-right">Tổng Sản Lượng</th>
-                <th class="py-3 px-3 text-right">Phí Dịch Vụ</th>
-                <th class="py-3 px-3 text-center">Quà Tạm Tính</th>
+            <thead class="sticky top-0 bg-slate-900/95 backdrop-blur-md border-b border-slate-700 z-10 shadow-md">
+              <tr class="text-slate-400 text-[11px] uppercase tracking-wider">
+                <th class="py-3.5 px-3 whitespace-nowrap">Hạng</th>
+                <th class="py-3.5 px-3 min-w-[210px]">Khách Hàng & Mã Khách</th>
+                <th class="py-3.5 px-3 whitespace-nowrap">Hạng VIP</th>
+                <th class="py-3.5 px-3 text-right whitespace-nowrap">Tổng Đơn</th>
+                <th class="py-3.5 px-3 text-right whitespace-nowrap">Tổng Sản Lượng</th>
+                <th class="py-3.5 px-3 text-right whitespace-nowrap">Phí Dịch Vụ</th>
+                <th class="py-3.5 px-3 text-center min-w-[130px]">Quà Tạm Tính</th>
               </tr>
             </thead>
             <tbody class="divide-y divide-slate-800/60" id="leaderboard-body">
               <!-- Rendered dynamically by assets/js/leaderboard.js -->
             </tbody>
           </table>
+        </div>
+
+        <!-- Table Footer Helper Note -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pt-3.5 px-2 text-[11px] text-slate-400">
+          <span class="flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            Hiển thị chính Top 10 khách hàng dẫn đầu. Cuộn bảng xuống để xem toàn bộ danh sách tham gia hoặc nhập ô tìm kiếm.
+          </span>
+          <span class="text-slate-500 italic">
+            Cập nhật đối soát định kỳ hàng tuần · Bản quyền © Eureka Logistics
+          </span>
         </div>
       </div>
 
@@ -1843,8 +1862,8 @@
               <input type="text" id="admin-weekly-name" placeholder="Ví dụ: Khách hàng T*** Đ*** XNK *** Châu" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs font-bold text-amber-300 focus:outline-none focus:border-amber-400">
             </div>
             <div>
-              <label class="block text-[11px] font-semibold text-slate-400 mb-1">Số điện thoại:</label>
-              <input type="text" id="admin-weekly-phone" placeholder="098*****89" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs font-mono text-slate-200 focus:outline-none focus:border-amber-400">
+              <label class="block text-[11px] font-semibold text-slate-400 mb-1">Mã khách hàng:</label>
+              <input type="text" id="admin-weekly-code" placeholder="Ví dụ: ERK-KH-8891" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs font-mono text-amber-300 focus:outline-none focus:border-amber-400">
             </div>
             <div>
               <label class="block text-[11px] font-semibold text-slate-400 mb-1">Số tiền chi tiêu dịch vụ tuần đó:</label>
@@ -1884,7 +1903,7 @@
                 <span>📊</span> DANH SÁCH KHÁCH HÀNG BẢNG XẾP HẠNG DOANH SỐ (Q4/2026)
               </h4>
               <p class="text-[11px] text-slate-400 mt-0.5">
-                Chỉnh sửa trực tiếp từng dòng hoặc tải file danh sách. Hệ thống tự động che *** tên và SĐT bảo mật.
+                Chỉnh sửa trực tiếp từng dòng hoặc tải file danh sách. Hệ thống tự động che *** tên và bảo mật mã khách.
               </p>
             </div>
             <div class="flex items-center gap-2">
@@ -1906,7 +1925,7 @@
                 ➕ Thêm Khách Hàng
               </button>
               <button type="button" onclick="loadDemoLeaderboardToAdmin()" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold text-xs border border-slate-700 transition-colors">
-                📋 Nạp Top 10 Mẫu Chuẩn
+                📋 Nạp 25 Khách Hàng Mẫu Chuẩn
               </button>
               <button type="button" onclick="exportLeaderboardJson()" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold text-xs border border-slate-700 transition-colors">
                 📥 Xuất File (.json)
@@ -1924,7 +1943,7 @@
                 <tr>
                   <th class="py-2.5 px-2 text-center">Hạng</th>
                   <th class="py-2.5 px-2">Khách Hàng (Tên)</th>
-                  <th class="py-2.5 px-2">Số Điện Thoại</th>
+                  <th class="py-2.5 px-2">Mã Khách Hàng</th>
                   <th class="py-2.5 px-2">Hạng VIP</th>
                   <th class="py-2.5 px-2 text-right">Tổng Đơn</th>
                   <th class="py-2.5 px-2 text-right">Sản Lượng</th>

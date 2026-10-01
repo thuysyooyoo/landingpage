@@ -608,7 +608,7 @@ function renderAdminWeeklyWinnerForm() {
   const activeCheck = document.getElementById('admin-weekly-active');
   const titleInput = document.getElementById('admin-weekly-title');
   const nameInput = document.getElementById('admin-weekly-name');
-  const phoneInput = document.getElementById('admin-weekly-phone');
+  const codeInput = document.getElementById('admin-weekly-code');
   const spendInput = document.getElementById('admin-weekly-spending');
   const prizeInput = document.getElementById('admin-weekly-prize');
   const msgInput = document.getElementById('admin-weekly-msg');
@@ -618,7 +618,7 @@ function renderAdminWeeklyWinnerForm() {
     if (activeCheck) activeCheck.checked = !!winner.is_active;
     if (titleInput) titleInput.value = winner.week_title || '';
     if (nameInput) nameInput.value = winner.customer_name || '';
-    if (phoneInput) phoneInput.value = winner.phone_masked || '';
+    if (codeInput) codeInput.value = winner.customer_code || winner.code || '';
     if (spendInput) spendInput.value = winner.weekly_spending || '';
     if (prizeInput) prizeInput.value = winner.prize_name || '';
     if (msgInput) msgInput.value = winner.congrats_message || '';
@@ -645,7 +645,7 @@ function saveAdminWeeklyWinner() {
   const activeCheck = document.getElementById('admin-weekly-active');
   const titleInput = document.getElementById('admin-weekly-title');
   const nameInput = document.getElementById('admin-weekly-name');
-  const phoneInput = document.getElementById('admin-weekly-phone');
+  const codeInput = document.getElementById('admin-weekly-code');
   const spendInput = document.getElementById('admin-weekly-spending');
   const prizeInput = document.getElementById('admin-weekly-prize');
   const msgInput = document.getElementById('admin-weekly-msg');
@@ -661,13 +661,12 @@ function saveAdminWeeklyWinner() {
 
   // Helper mask functions
   const maskName = (typeof maskCustomerName === 'function') ? maskCustomerName : (n => n);
-  const maskPhone = (typeof maskPhoneNumber === 'function') ? maskPhoneNumber : (p => p);
 
   const winnerData = {
     is_active: isActive,
     week_title: titleInput ? titleInput.value.trim() : 'Tuần Chiến Dịch',
     customer_name: maskName(nameVal),
-    phone_masked: maskPhone(phoneInput ? phoneInput.value.trim() : ''),
+    customer_code: codeInput ? codeInput.value.trim().toUpperCase() : 'ERK-KH-8891',
     weekly_spending: spendVal,
     prize_name: prizeInput ? prizeInput.value.trim() : 'Voucher Tiền Mặt 2.000.000 đ',
     congrats_message: msgInput ? msgInput.value.trim() : '',
@@ -682,7 +681,7 @@ function saveAdminWeeklyWinner() {
   renderAdminWeeklyWinnerForm();
 
   if (isActive) {
-    alert(`🎉 ĐÃ CÔNG BỐ THÀNH CÔNG LÊN MÀN HÌNH CHÍNH!\n\n👑 Khách Hàng: ${winnerData.customer_name}\n💰 Doanh Số Dịch Vụ Tuần: ${winnerData.weekly_spending}\n🎁 Phần Thưởng: ${winnerData.prize_name}`);
+    alert(`🎉 ĐÃ CÔNG BỐ THÀNH CÔNG LÊN MÀN HÌNH CHÍNH!\n\n👑 Khách Hàng: ${winnerData.customer_name}\n🏷️ Mã: ${winnerData.customer_code}\n💰 Doanh Số Dịch Vụ Tuần: ${winnerData.weekly_spending}\n🎁 Phần Thưởng: ${winnerData.prize_name}`);
   } else {
     alert('✅ Đã lưu cấu hình (Đang ở trạng thái TẮT hiển thị trên trang chủ).');
   }
@@ -693,7 +692,7 @@ function loadDemoWeeklyWinner() {
     is_active: true,
     week_title: 'Tuần 42 (05/10 - 11/10/2026)',
     customer_name: 'Khách hàng T*** Đ*** XNK *** Châu',
-    phone_masked: '098*****89',
+    customer_code: 'ERK-KH-8891',
     weekly_spending: '148.650.000 đ',
     prize_name: 'Voucher Tiền Mặt 2.000.000 đ + Cúp Chiến Tướng Tuần',
     congrats_message: 'Nhiệt liệt chúc mừng Quý khách đã xuất sắc dẫn đầu bảng vàng chi tiêu dịch vụ tuần qua, bứt phá tiến độ vận chuyển vượt bậc!',
@@ -765,7 +764,7 @@ function renderAdminLeaderboardTable() {
         <input type="text" value="${row.customer_name || ''}" placeholder="Tên khách hàng..." class="admin-bxh-name w-full min-w-[170px] bg-slate-900 border border-slate-700 rounded px-2 py-1 text-white font-semibold">
       </td>
       <td class="py-2 px-2">
-        <input type="text" value="${row.phone_masked || ''}" placeholder="098*****89" class="admin-bxh-phone w-28 bg-slate-900 border border-slate-700 rounded px-2 py-1 font-mono text-amber-300">
+        <input type="text" value="${row.customer_code || row.code || ('ERK-KH-' + (8800 + idx))}" placeholder="ERK-KH-8891" class="admin-bxh-code w-28 bg-slate-900 border border-slate-700 rounded px-2 py-1 font-mono text-amber-300 font-bold uppercase">
       </td>
       <td class="py-2 px-2">
         <select class="admin-bxh-vip bg-slate-900 border border-slate-700 rounded px-2 py-1 text-xs text-slate-200">
@@ -774,6 +773,7 @@ function renderAdminLeaderboardTable() {
           <option value="VIP PRO" ${row.vip_tier === 'VIP PRO' ? 'selected' : ''}>VIP PRO</option>
           <option value="KH MỚI" ${row.vip_tier === 'KH MỚI' ? 'selected' : ''}>KH MỚI</option>
           <option value="KH CŨ" ${row.vip_tier === 'KH CŨ' ? 'selected' : ''}>KH CŨ</option>
+          <option value="BASIC" ${row.vip_tier === 'BASIC' ? 'selected' : ''}>BASIC</option>
         </select>
       </td>
       <td class="py-2 px-2">
@@ -799,15 +799,17 @@ function renderAdminLeaderboardTable() {
 function addAdminLeaderboardRow() {
   const current = getAdminLeaderboardList();
   const nextRank = current.length + 1;
+  const randNum = Math.floor(1000 + Math.random() * 8999);
   current.push({
     rank: nextRank,
     customer_name: "Khách hàng Mới *** ***",
-    phone_masked: "090*****" + Math.floor(10 + Math.random() * 89),
+    customer_code: `ERK-KH-${randNum}`,
     vip_tier: "KH MỚI",
     order_count: 5,
     volume_weight: "10,0 tấn | 25 m³",
     service_fee: 50000000,
-    prize_tag: "Ứng viên Tiềm Năng"
+    prize_tag: "Ứng viên Tiềm Năng",
+    prize_type: "regular"
   });
   localStorage.setItem('eureka_custom_leaderboard', JSON.stringify(current));
   renderAdminLeaderboardTable();
@@ -835,12 +837,11 @@ function saveAdminLeaderboardFromTable() {
   }
 
   const maskName = (typeof maskCustomerName === 'function') ? maskCustomerName : (n => n);
-  const maskPhone = (typeof maskPhoneNumber === 'function') ? maskPhoneNumber : (p => p);
 
   const updatedList = rows.map((tr, idx) => {
     const rank = parseInt(tr.querySelector('.admin-bxh-rank')?.value, 10) || (idx + 1);
     const rawName = tr.querySelector('.admin-bxh-name')?.value.trim() || 'Khách hàng Eureka';
-    const rawPhone = tr.querySelector('.admin-bxh-phone')?.value.trim() || '098*****89';
+    const rawCode = tr.querySelector('.admin-bxh-code')?.value.trim().toUpperCase() || ('ERK-KH-' + (8800 + idx));
     const vip = tr.querySelector('.admin-bxh-vip')?.value || 'VIP PRO';
     const orders = parseInt(tr.querySelector('.admin-bxh-orders')?.value, 10) || 0;
     const volume = tr.querySelector('.admin-bxh-volume')?.value.trim() || '0 tấn | 0 m³';
@@ -850,7 +851,7 @@ function saveAdminLeaderboardFromTable() {
     return {
       rank: rank,
       customer_name: maskName(rawName),
-      phone_masked: maskPhone(rawPhone),
+      customer_code: rawCode,
       vip_tier: vip,
       order_count: orders,
       volume_weight: volume,
@@ -873,13 +874,13 @@ function saveAdminLeaderboardFromTable() {
 }
 
 function loadDemoLeaderboardToAdmin() {
-  if (confirm('Đặt lại toàn bộ Bảng Xếp Hạng về 10 khách hàng dẫn đầu chuẩn ban đầu?')) {
+  if (confirm('Đặt lại toàn bộ Bảng Xếp Hạng về 25 khách hàng tham gia mẫu chuẩn ban đầu?')) {
     if (typeof fallbackLeaderboardData !== 'undefined') {
       localStorage.setItem('eureka_custom_leaderboard', JSON.stringify(fallbackLeaderboardData));
     }
     renderAdminLeaderboardTable();
     if (typeof loadLeaderboardData === 'function') loadLeaderboardData();
-    alert('✅ Đã nạp lại dữ liệu Top 10 mẫu chuẩn!');
+    alert('✅ Đã nạp lại dữ liệu 25 khách hàng mẫu chuẩn!');
   }
 }
 
@@ -893,7 +894,6 @@ function handleBxhFileUpload(event) {
     let list = [];
 
     const maskName = (typeof maskCustomerName === 'function') ? maskCustomerName : (n => n);
-    const maskPhone = (typeof maskPhoneNumber === 'function') ? maskPhoneNumber : (p => p);
 
     try {
       if (file.name.endsWith('.json')) {
@@ -902,7 +902,7 @@ function handleBxhFileUpload(event) {
           list = parsed.map((item, idx) => ({
             rank: item.rank || (idx + 1),
             customer_name: maskName(item.customer_name || item.name || 'Khách hàng Eureka'),
-            phone_masked: maskPhone(item.phone_masked || item.phone || '098*****89'),
+            customer_code: (item.customer_code || item.code || ('ERK-KH-' + (8800 + idx))).toUpperCase(),
             vip_tier: item.vip_tier || 'VIP PRO',
             order_count: parseInt(item.order_count, 10) || 0,
             volume_weight: item.volume_weight || '0 tấn | 0 m³',
@@ -922,7 +922,7 @@ function handleBxhFileUpload(event) {
             list.push({
               rank: parseInt(cols[0], 10) || (list.length + 1),
               customer_name: maskName(cols[1] || 'Khách hàng Eureka'),
-              phone_masked: maskPhone(cols[2] || '098*****89'),
+              customer_code: (cols[2] || ('ERK-KH-' + (8800 + list.length))).toUpperCase(),
               vip_tier: cols[3] || 'VIP PRO',
               order_count: parseInt(cols[4], 10) || 0,
               volume_weight: cols[5] || '0 tấn | 0 m³',
