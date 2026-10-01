@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Eureka Customer Awards 2026 — Chương Trình Tri Ân Khách Hàng 2026</title>
   <link rel="icon" type="image/png" href="https://erktransport.com/logo.png" />
-  <meta name="description" content="Chiến dịch tri ân lớn nhất năm 2026 từ Eureka Logistics - Chương trình tri ân khách hàng 2026 rinh Laptop Surface Pro 11, iPad Air M3, Dyson. Vòng quay may mắn & đặc quyền VIP+1." />
+  <meta name="description" content="Chương trình tri ân lớn nhất năm 2026 từ Eureka Logistics - Chương trình tri ân khách hàng 2026 rinh Laptop Surface Pro 11, iPad Air M3, Dyson. Vòng quay may mắn & đặc quyền VIP+1." />
   
   <!-- Font đồng bộ 100% với erktransport.com: Plus Jakarta Sans & Google Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -302,7 +302,7 @@
       <!-- Top Campaign Ribbon -->
       <div class="glass-ultra inline-flex items-center gap-2.5 px-6 py-2.5 rounded-full shadow-lg text-brand-600 text-xs font-black tracking-widest uppercase mb-8 hover:scale-105 transition-all">
         <span class="text-brand-500 text-sm">✦</span>
-        <span>CHIẾN DỊCH TRI ÂN KHÁCH HÀNG & ĐUA TOP CAO ĐIỂM QUÝ 4/2026</span>
+        <span>CHƯƠNG TRÌNH TRI ÂN KHÁCH HÀNG & ĐUA TOP CAO ĐIỂM QUÝ 4/2026</span>
         <span class="text-brand-500 text-sm">✦</span>
       </div>
 
@@ -588,82 +588,87 @@
       <!-- Tab 2: 05 Giải Phụ Chuyên Môn -->
       <div id="tab-content-giai-phu" class="prize-tab-content hidden grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
         <!-- Vua Số Lượng Đơn -->
-        <div class="rounded-2xl p-5 flex flex-col justify-between text-left group bg-slate-800/40 backdrop-blur-xl border border-white/10 hover:border-brand-500/60 hover:shadow-xl hover:shadow-brand-500/10 transition-all duration-300 hover:-translate-y-1">
-          <div>
+        <div onclick="openGiaiPhuModal('vua-so-luong-don')" class="cursor-pointer rounded-2xl p-5 flex flex-col justify-between text-left group bg-slate-800/40 backdrop-blur-xl border border-white/10 hover:border-amber-400/80 hover:shadow-xl hover:shadow-amber-500/20 transition-all duration-300 hover:-translate-y-1.5 relative overflow-hidden">
+          <div class="absolute inset-0 bg-gradient-to-br from-amber-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          <div class="relative z-10">
             <div class="w-12 h-12 rounded-xl bg-slate-700/50 border border-white/10 flex items-center justify-center text-2xl mb-3 group-hover:scale-110 transition-transform">
               📦
             </div>
-            <h4 class="font-bold text-white text-sm mb-1">Vua Số Lượng Đơn</h4>
+            <h4 class="font-bold text-white text-sm mb-1 group-hover:text-amber-300 transition-colors">Vua Số Lượng Đơn</h4>
             <div class="text-lg font-black text-amber-400 mb-2 font-display">3.000.000 đ</div>
             <p class="text-[11px] text-slate-300 leading-relaxed font-normal">Khách hàng có tổng số đơn booking hoàn tất nhiều nhất trong chương trình.</p>
           </div>
-          <div class="pt-3 mt-3 border-t border-slate-700/50 flex items-center justify-between text-[11px] font-bold text-brand-400 group-hover:text-brand-300">
-            <span>Tiêu chí đơn hàng</span>
-            <span>Chi tiết →</span>
+          <div class="pt-3 mt-3 border-t border-slate-700/50 flex items-center justify-between text-[11px] font-bold text-brand-400 group-hover:text-brand-300 relative z-10">
+            <span class="text-slate-400 group-hover:text-slate-200">Tiêu chí đơn hàng</span>
+            <span class="px-2 py-0.5 rounded-lg bg-amber-500/15 border border-amber-500/30 text-amber-300 group-hover:bg-amber-400 group-hover:text-slate-950 transition-all">Chi tiết →</span>
           </div>
         </div>
 
         <!-- Tân Binh Xuất Sắc -->
-        <div class="rounded-2xl p-5 flex flex-col justify-between text-left group bg-slate-800/40 backdrop-blur-xl border border-white/10 hover:border-brand-500/60 hover:shadow-xl hover:shadow-brand-500/10 transition-all duration-300 hover:-translate-y-1">
-          <div>
+        <div onclick="openGiaiPhuModal('tan-binh-xuat-sac')" class="cursor-pointer rounded-2xl p-5 flex flex-col justify-between text-left group bg-slate-800/40 backdrop-blur-xl border border-white/10 hover:border-amber-400/80 hover:shadow-xl hover:shadow-amber-500/20 transition-all duration-300 hover:-translate-y-1.5 relative overflow-hidden">
+          <div class="absolute inset-0 bg-gradient-to-br from-amber-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          <div class="relative z-10">
             <div class="w-12 h-12 rounded-xl bg-slate-700/50 border border-white/10 flex items-center justify-center text-2xl mb-3 group-hover:scale-110 transition-transform">
               🌟
             </div>
-            <h4 class="font-bold text-white text-sm mb-1">Tân Binh Xuất Sắc</h4>
+            <h4 class="font-bold text-white text-sm mb-1 group-hover:text-amber-300 transition-colors">Tân Binh Xuất Sắc</h4>
             <div class="text-lg font-black text-amber-400 mb-2 font-display">3.000.000 đ</div>
             <p class="text-[11px] text-slate-300 leading-relaxed font-normal">Khách hàng Mới (tạo tài khoản từ 01/10) có Phí Dịch Vụ cao nhất.</p>
           </div>
-          <div class="pt-3 mt-3 border-t border-slate-700/50 flex items-center justify-between text-[11px] font-bold text-brand-400 group-hover:text-brand-300">
-            <span>Khách hàng mới</span>
-            <span>Chi tiết →</span>
+          <div class="pt-3 mt-3 border-t border-slate-700/50 flex items-center justify-between text-[11px] font-bold text-brand-400 group-hover:text-brand-300 relative z-10">
+            <span class="text-slate-400 group-hover:text-slate-200">Khách hàng mới</span>
+            <span class="px-2 py-0.5 rounded-lg bg-amber-500/15 border border-amber-500/30 text-amber-300 group-hover:bg-amber-400 group-hover:text-slate-950 transition-all">Chi tiết →</span>
           </div>
         </div>
 
         <!-- Sự Trở Lại Ấn Tượng -->
-        <div class="rounded-2xl p-5 flex flex-col justify-between text-left group bg-slate-800/40 backdrop-blur-xl border border-white/10 hover:border-brand-500/60 hover:shadow-xl hover:shadow-brand-500/10 transition-all duration-300 hover:-translate-y-1">
-          <div>
+        <div onclick="openGiaiPhuModal('su-tro-lai-an-tuong')" class="cursor-pointer rounded-2xl p-5 flex flex-col justify-between text-left group bg-slate-800/40 backdrop-blur-xl border border-white/10 hover:border-amber-400/80 hover:shadow-xl hover:shadow-amber-500/20 transition-all duration-300 hover:-translate-y-1.5 relative overflow-hidden">
+          <div class="absolute inset-0 bg-gradient-to-br from-amber-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          <div class="relative z-10">
             <div class="w-12 h-12 rounded-xl bg-slate-700/50 border border-white/10 flex items-center justify-center text-2xl mb-3 group-hover:scale-110 transition-transform">
               🔄
             </div>
-            <h4 class="font-bold text-white text-sm mb-1">Sự Trở Lại Ấn Tượng</h4>
+            <h4 class="font-bold text-white text-sm mb-1 group-hover:text-amber-300 transition-colors">Sự Trở Lại Ấn Tượng</h4>
             <div class="text-lg font-black text-amber-400 mb-2 font-display">3.000.000 đ</div>
             <p class="text-[11px] text-slate-300 leading-relaxed font-normal">Khách hàng cũ (từ đầu năm chưa đi) quay lại gửi hàng bứt phá nhất.</p>
           </div>
-          <div class="pt-3 mt-3 border-t border-slate-700/50 flex items-center justify-between text-[11px] font-bold text-brand-400 group-hover:text-brand-300">
-            <span>Tái kích hoạt</span>
-            <span>Chi tiết →</span>
+          <div class="pt-3 mt-3 border-t border-slate-700/50 flex items-center justify-between text-[11px] font-bold text-brand-400 group-hover:text-brand-300 relative z-10">
+            <span class="text-slate-400 group-hover:text-slate-200">Tái kích hoạt</span>
+            <span class="px-2 py-0.5 rounded-lg bg-amber-500/15 border border-amber-500/30 text-amber-300 group-hover:bg-amber-400 group-hover:text-slate-950 transition-all">Chi tiết →</span>
           </div>
         </div>
 
         <!-- Vua Tải Trọng (Kg) -->
-        <div class="rounded-2xl p-5 flex flex-col justify-between text-left group bg-slate-800/40 backdrop-blur-xl border border-white/10 hover:border-brand-500/60 hover:shadow-xl hover:shadow-brand-500/10 transition-all duration-300 hover:-translate-y-1">
-          <div>
+        <div onclick="openGiaiPhuModal('vua-tai-trong')" class="cursor-pointer rounded-2xl p-5 flex flex-col justify-between text-left group bg-slate-800/40 backdrop-blur-xl border border-white/10 hover:border-amber-400/80 hover:shadow-xl hover:shadow-amber-500/20 transition-all duration-300 hover:-translate-y-1.5 relative overflow-hidden">
+          <div class="absolute inset-0 bg-gradient-to-br from-amber-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          <div class="relative z-10">
             <div class="w-12 h-12 rounded-xl bg-slate-700/50 border border-white/10 flex items-center justify-center text-2xl mb-3 group-hover:scale-110 transition-transform">
               ⚓
             </div>
-            <h4 class="font-bold text-white text-sm mb-1">Vua Tải Trọng (Kg)</h4>
+            <h4 class="font-bold text-white text-sm mb-1 group-hover:text-amber-300 transition-colors">Vua Tải Trọng (Kg)</h4>
             <div class="text-lg font-black text-amber-400 mb-2 font-display">3.000.000 đ</div>
             <p class="text-[11px] text-slate-300 leading-relaxed font-normal">Tổng khối lượng kg cao nhất (áp dụng lô hàng đi term E & F quốc tế).</p>
           </div>
-          <div class="pt-3 mt-3 border-t border-slate-700/50 flex items-center justify-between text-[11px] font-bold text-brand-400 group-hover:text-brand-300">
-            <span>Tổng khối lượng</span>
-            <span>Chi tiết →</span>
+          <div class="pt-3 mt-3 border-t border-slate-700/50 flex items-center justify-between text-[11px] font-bold text-brand-400 group-hover:text-brand-300 relative z-10">
+            <span class="text-slate-400 group-hover:text-slate-200">Tổng khối lượng</span>
+            <span class="px-2 py-0.5 rounded-lg bg-amber-500/15 border border-amber-500/30 text-amber-300 group-hover:bg-amber-400 group-hover:text-slate-950 transition-all">Chi tiết →</span>
           </div>
         </div>
 
         <!-- Vua Khối Lượng (M³) -->
-        <div class="rounded-2xl p-5 flex flex-col justify-between text-left group bg-slate-800/40 backdrop-blur-xl border border-white/10 hover:border-brand-500/60 hover:shadow-xl hover:shadow-brand-500/10 transition-all duration-300 hover:-translate-y-1">
-          <div>
+        <div onclick="openGiaiPhuModal('vua-khoi-luong')" class="cursor-pointer rounded-2xl p-5 flex flex-col justify-between text-left group bg-slate-800/40 backdrop-blur-xl border border-white/10 hover:border-amber-400/80 hover:shadow-xl hover:shadow-amber-500/20 transition-all duration-300 hover:-translate-y-1.5 relative overflow-hidden">
+          <div class="absolute inset-0 bg-gradient-to-br from-amber-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          <div class="relative z-10">
             <div class="w-12 h-12 rounded-xl bg-slate-700/50 border border-white/10 flex items-center justify-center text-2xl mb-3 group-hover:scale-110 transition-transform">
               🚛
             </div>
-            <h4 class="font-bold text-white text-sm mb-1">Vua Khối Lượng (M³)</h4>
+            <h4 class="font-bold text-white text-sm mb-1 group-hover:text-amber-300 transition-colors">Vua Khối Lượng (M³)</h4>
             <div class="text-lg font-black text-amber-400 mb-2 font-display">3.000.000 đ</div>
             <p class="text-[11px] text-slate-300 leading-relaxed font-normal">Tổng thể tích m³ cao nhất (áp dụng lô hàng gom cont chính ngạch).</p>
           </div>
-          <div class="pt-3 mt-3 border-t border-slate-700/50 flex items-center justify-between text-[11px] font-bold text-brand-400 group-hover:text-brand-300">
-            <span>Tổng thể tích</span>
-            <span>Chi tiết →</span>
+          <div class="pt-3 mt-3 border-t border-slate-700/50 flex items-center justify-between text-[11px] font-bold text-brand-400 group-hover:text-brand-300 relative z-10">
+            <span class="text-slate-400 group-hover:text-slate-200">Tổng thể tích</span>
+            <span class="px-2 py-0.5 rounded-lg bg-amber-500/15 border border-amber-500/30 text-amber-300 group-hover:bg-amber-400 group-hover:text-slate-950 transition-all">Chi tiết →</span>
           </div>
         </div>
       </div>
@@ -671,56 +676,68 @@
       <!-- Tab 3: Vòng Quay Tri Ân Mùng 05 -->
       <div id="tab-content-m05-tri-an" class="prize-tab-content hidden grid grid-cols-1 md:grid-cols-3 gap-6">
         <!-- Tháng 10 -->
-        <div class="rounded-3xl p-6 flex flex-col justify-between text-left group bg-slate-800/40 backdrop-blur-xl border border-sky-400/30 hover:border-sky-400/70 hover:shadow-xl hover:shadow-sky-500/10 transition-all duration-300 hover:-translate-y-1">
-          <div>
+        <div onclick="scrollToVongQuayTriAn(event)" class="cursor-pointer rounded-3xl p-6 flex flex-col justify-between text-left group bg-slate-800/40 backdrop-blur-xl border border-sky-400/30 hover:border-sky-400/80 hover:shadow-2xl hover:shadow-sky-500/20 transition-all duration-300 hover:-translate-y-1.5 relative overflow-hidden">
+          <div class="absolute inset-0 bg-gradient-to-br from-sky-500/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          <div class="relative z-10">
             <div class="flex items-center justify-between mb-4">
               <span class="text-xs font-black text-sky-300 bg-sky-500/20 border border-sky-400/40 px-3 py-1 rounded-xl tracking-wider">KỲ QUAY THÁNG 10 (05/11)</span>
               <span class="text-xl">🗓️</span>
             </div>
-            <h3 class="text-xl font-black text-white mb-2 font-display">03 Giải Voucher 300.000 đ</h3>
+            <h3 class="text-xl font-black text-white mb-2 font-display group-hover:text-sky-200 transition-colors">03 Giải Voucher 300.000 đ</h3>
             <p class="text-xs text-slate-300 mb-4 leading-relaxed font-normal">
               Dành cho tất cả các đơn hàng hoàn tất từ 01/10 đến 31/10. Tự động cấp mã dự thưởng theo số đơn.
             </p>
           </div>
-          <div class="pt-4 border-t border-slate-700/60 flex items-center justify-between">
+          <div class="pt-4 border-t border-slate-700/60 flex items-center justify-between relative z-10">
             <span class="inline-block px-3 py-1 rounded-lg bg-sky-500/15 text-sky-300 text-[11px] font-bold border border-sky-500/30">Trừ cước đơn tháng 11</span>
-            <span class="text-xs font-black text-sky-400 flex items-center gap-1 group-hover:translate-x-1 transition-transform">Xem thể lệ →</span>
+            <a href="#vong-quay-mung-05" onclick="scrollToVongQuayTriAn(event)" class="text-xs font-black text-sky-400 hover:text-sky-200 flex items-center gap-1.5 group-hover:translate-x-1 transition-all underline decoration-sky-400/40">
+              <span>Xem thể lệ & quay số</span>
+              <span>↓</span>
+            </a>
           </div>
         </div>
 
         <!-- Tháng 11 -->
-        <div class="rounded-3xl p-6 flex flex-col justify-between text-left group bg-slate-800/40 backdrop-blur-xl border border-sky-400/30 hover:border-sky-400/70 hover:shadow-xl hover:shadow-sky-500/10 transition-all duration-300 hover:-translate-y-1">
-          <div>
+        <div onclick="scrollToVongQuayTriAn(event)" class="cursor-pointer rounded-3xl p-6 flex flex-col justify-between text-left group bg-slate-800/40 backdrop-blur-xl border border-sky-400/30 hover:border-sky-400/80 hover:shadow-2xl hover:shadow-sky-500/20 transition-all duration-300 hover:-translate-y-1.5 relative overflow-hidden">
+          <div class="absolute inset-0 bg-gradient-to-br from-sky-500/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          <div class="relative z-10">
             <div class="flex items-center justify-between mb-4">
               <span class="text-xs font-black text-sky-300 bg-sky-500/20 border border-sky-400/40 px-3 py-1 rounded-xl tracking-wider">KỲ QUAY THÁNG 11 (05/12)</span>
               <span class="text-xl">🏷️</span>
             </div>
-            <h3 class="text-xl font-black text-white mb-2 font-display">03 Giải Voucher 300.000 đ</h3>
+            <h3 class="text-xl font-black text-white mb-2 font-display group-hover:text-sky-200 transition-colors">03 Giải Voucher 300.000 đ</h3>
             <p class="text-xs text-slate-300 mb-4 leading-relaxed font-normal">
               Dành cho tất cả các đơn hàng hoàn tất từ 01/11 đến 30/11 trong đợt cao điểm Black Friday.
             </p>
           </div>
-          <div class="pt-4 border-t border-slate-700/60 flex items-center justify-between">
+          <div class="pt-4 border-t border-slate-700/60 flex items-center justify-between relative z-10">
             <span class="inline-block px-3 py-1 rounded-lg bg-sky-500/15 text-sky-300 text-[11px] font-bold border border-sky-500/30">Trừ cước đơn tháng 12</span>
-            <span class="text-xs font-black text-sky-400 flex items-center gap-1 group-hover:translate-x-1 transition-transform">Xem thể lệ →</span>
+            <a href="#vong-quay-mung-05" onclick="scrollToVongQuayTriAn(event)" class="text-xs font-black text-sky-400 hover:text-sky-200 flex items-center gap-1.5 group-hover:translate-x-1 transition-all underline decoration-sky-400/40">
+              <span>Xem thể lệ & quay số</span>
+              <span>↓</span>
+            </a>
           </div>
         </div>
 
         <!-- Tháng 12 Lộc Xuân -->
-        <div class="rounded-3xl p-6 flex flex-col justify-between text-left group bg-slate-800/40 backdrop-blur-xl border border-amber-400/40 hover:border-amber-400/80 hover:shadow-xl hover:shadow-amber-500/10 transition-all duration-300 hover:-translate-y-1">
-          <div>
+        <div onclick="scrollToVongQuayTriAn(event)" class="cursor-pointer rounded-3xl p-6 flex flex-col justify-between text-left group bg-slate-800/40 backdrop-blur-xl border border-amber-400/40 hover:border-amber-400/90 hover:shadow-2xl hover:shadow-amber-500/20 transition-all duration-300 hover:-translate-y-1.5 relative overflow-hidden">
+          <div class="absolute inset-0 bg-gradient-to-br from-amber-500/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          <div class="relative z-10">
             <div class="flex items-center justify-between mb-4">
               <span class="text-xs font-black text-amber-300 bg-amber-500/20 border border-amber-400/50 px-3 py-1 rounded-xl tracking-wider">KỲ THÁNG 12 — LỘC XUÂN (05/01)</span>
               <span class="text-xl">🧧</span>
             </div>
-            <h3 class="text-xl font-black text-white mb-2 font-display">03 Giải Voucher 400.000 đ</h3>
+            <h3 class="text-xl font-black text-white mb-2 font-display group-hover:text-amber-200 transition-colors">03 Giải Voucher 400.000 đ</h3>
             <p class="text-xs text-slate-300 mb-4 leading-relaxed font-normal">
               Kỳ quay đặc biệt chào đón Tết Nguyên Đán với voucher 400k chúc mừng năm mới.
             </p>
           </div>
-          <div class="pt-4 border-t border-slate-700/60 flex items-center justify-between">
+          <div class="pt-4 border-t border-slate-700/60 flex items-center justify-between relative z-10">
             <span class="inline-block px-3 py-1 rounded-lg bg-amber-500/20 text-amber-300 text-[11px] font-bold border border-amber-400/40">Lộc Xuân May Mắn</span>
-            <span class="text-xs font-black text-amber-300 flex items-center gap-1 group-hover:translate-x-1 transition-transform">Xem thể lệ →</span>
+            <a href="#vong-quay-mung-05" onclick="scrollToVongQuayTriAn(event)" class="text-xs font-black text-amber-300 hover:text-amber-100 flex items-center gap-1.5 group-hover:translate-x-1 transition-all underline decoration-amber-300/40">
+              <span>Xem thể lệ & quay số</span>
+              <span>↓</span>
+            </a>
           </div>
         </div>
       </div>
@@ -733,7 +750,7 @@
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-4 border-b border-slate-700 relative z-10">
             <div>
               <h3 class="text-xl sm:text-2xl font-black text-white font-display">🏆 Giải Top Tuần — Chiến Tướng Doanh Số</h3>
-              <p class="text-xs sm:text-sm text-slate-300 mt-1">Vinh danh khách hàng có chi tiêu dịch vụ cao nhất mỗi tuần trong Chiến dịch Tri Ân 2026</p>
+              <p class="text-xs sm:text-sm text-slate-300 mt-1">Vinh danh khách hàng có chi tiêu dịch vụ cao nhất mỗi tuần trong Chương Trình Tri Ân 2026</p>
             </div>
             <a href="#bxh-truc-tuyen" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-amber-500/20 border border-amber-500/40 text-amber-300 text-xs font-black shadow-inner cursor-pointer hover:bg-amber-500/30 transition-all">
               📊 Xem Bảng Xếp Hạng Chi Tiết
@@ -1403,7 +1420,7 @@
           </button>
           <div id="faq-content-8" class="hidden px-6 pb-5 text-xs sm:text-sm text-slate-300 leading-relaxed border-t border-slate-800/60 pt-3">
             Để đảm bảo tính minh bạch và công bằng cho toàn thể cộng đồng xuất nhập khẩu, <strong>mỗi số điện thoại chỉ được tham gia quay thưởng 01 lần duy nhất</strong>.<br>
-            Sau khi quay trúng thưởng, quý khách chỉ cần nhấn nút <em>"Áp Dụng Mã Ngay Qua Zalo Hotline"</em> hoặc gửi mã cho CSKH Eureka (Hotline/Zalo: <strong>0898.586.622</strong>). Voucher có hiệu lực trừ trực tiếp vào cước vận chuyển các lô hàng phát sinh trong suốt thời gian chiến dịch đến hết ngày <strong>15/01/2027</strong>.
+            Sau khi quay trúng thưởng, quý khách chỉ cần nhấn nút <em>"Áp Dụng Mã Ngay Qua Zalo Hotline"</em> hoặc gửi mã cho CSKH Eureka (Hotline/Zalo: <strong>0898.586.622</strong>). Voucher có hiệu lực trừ trực tiếp vào cước vận chuyển các lô hàng phát sinh trong suốt thời gian chương trình đến hết ngày <strong>15/01/2027</strong>.
           </div>
         </div>
 
@@ -1455,9 +1472,9 @@
 
       <!-- Col 2: Quick Links -->
       <div>
-        <h4 class="text-white font-bold text-sm uppercase tracking-wider mb-3">Liên Kết Chiến Dịch</h4>
+        <h4 class="text-white font-bold text-sm uppercase tracking-wider mb-3">Liên Kết Chương Trình</h4>
         <ul class="space-y-2">
-          <li><a href="#tong-quan" class="hover:text-brand-400 transition-colors">Tổng quan chiến dịch</a></li>
+          <li><a href="#tong-quan" class="hover:text-brand-400 transition-colors">Tổng quan chương trình</a></li>
           <li><a href="#giai-thuong" class="hover:text-brand-400 transition-colors">Cơ cấu giải thưởng</a></li>
           <li><a href="#the-le" class="hover:text-brand-400 transition-colors">Thể lệ chương trình</a></li>
           <li><a href="javascript:void(0)" onclick="openWelcomeWheelModal()" class="hover:text-brand-400 transition-colors cursor-pointer">Vòng quay trải nghiệm</a></li>
@@ -1483,7 +1500,7 @@
     </div>
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between text-slate-500 text-[11px]">
-      <p>© 2026 Eureka Logistics. All rights reserved. Chiến dịch Eureka Customer Awards 2026.</p>
+      <p>© 2026 Eureka Logistics. All rights reserved. Chương trình Eureka Customer Awards 2026.</p>
       <p>Thiết kế chuẩn HTML Native · Tối ưu tải nhanh & bảo mật danh tính kinh doanh</p>
     </div>
   </footer>
@@ -1628,7 +1645,7 @@
       <span class="text-xs font-bold text-brand-400 uppercase tracking-widest block mb-1">XIN CHÚC MỪNG QUÝ KHÁCH!</span>
       <h3 class="text-2xl font-black text-white mb-2" id="modal-prize-title">VOUCHER 400.000 Đ</h3>
       <p class="text-xs text-slate-300 mb-4" id="modal-prize-desc">
-        Chúc mừng bạn đã may mắn nhận phần quà khởi động chiến dịch từ Eureka Logistics!
+        Chúc mừng bạn đã may mắn nhận phần quà khởi động chương trình từ Eureka Logistics!
       </p>
 
       <div class="p-3 rounded-xl bg-slate-800/90 border border-amber-400/40 font-mono text-base font-black text-amber-300 tracking-wider mb-4" id="modal-voucher-code">
@@ -2339,7 +2356,7 @@
           <div>
             <div class="flex items-center gap-2">
               <span class="text-lg">🏆</span>
-              <h4 class="text-sm font-black uppercase text-emerald-400 tracking-wider font-display">CHƯƠNG TRÌNH THI ĐUA NỘI BỘ — CHIẾN DỊCH 2026</h4>
+              <h4 class="text-sm font-black uppercase text-emerald-400 tracking-wider font-display">CHƯƠNG TRÌNH THI ĐUA NỘI BỘ — QUÝ 4/2026</h4>
             </div>
             <p class="text-xs text-slate-300 mt-1 max-w-2xl leading-relaxed">
               Hệ thống tự động nhận diện mã tiếp thị (URL <code>?ref=tên_nhân_viên</code>), đếm số lượt click và cộng điểm thi đua khi khách hàng quay thưởng để lại số điện thoại.
@@ -2607,6 +2624,101 @@
         <span class="relative inline-flex rounded-full h-3.5 w-3.5 bg-amber-400"></span>
       </span>
     </button>
+  </div>
+
+  <!-- ==================== MODAL: CHI TIẾT BẢNG XẾP HẠNG GIẢI PHỤ CHUYÊN MÔN ==================== -->
+  <div id="giai-phu-modal" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/85 backdrop-blur-xl hidden transition-all duration-300">
+    <div class="relative bg-slate-900/95 backdrop-blur-2xl rounded-3xl border-2 border-amber-400/50 shadow-2xl max-w-4xl w-full p-5 sm:p-7 z-10 overflow-hidden max-h-[92vh] flex flex-col">
+      <!-- Glow ambient -->
+      <div class="absolute -top-24 -left-24 w-60 h-60 bg-amber-500/15 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute -bottom-24 -right-24 w-60 h-60 bg-brand-500/15 rounded-full blur-3xl pointer-events-none"></div>
+
+      <!-- Close Button -->
+      <button onclick="closeGiaiPhuModal()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white flex items-center justify-center font-bold text-lg transition-all cursor-pointer z-30" title="Đóng">✕</button>
+
+      <!-- Modal Header -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4 pb-4 border-b border-slate-700/80 pr-10">
+        <div>
+          <div class="flex items-center gap-2 mb-1">
+            <span class="text-xs font-black uppercase text-amber-400 tracking-wider">HẠNG MỤC VINH DANH CHUYÊN MÔN</span>
+            <span class="px-2 py-0.5 rounded-full bg-amber-400/20 text-amber-300 text-[10px] font-extrabold border border-amber-400/30">🏆 3.000.000 đ Gala</span>
+          </div>
+          <h3 id="giai-phu-modal-title" class="text-xl sm:text-2xl font-black text-white font-display flex items-center gap-2">
+            <span id="giai-phu-modal-icon">📦</span>
+            <span id="giai-phu-modal-name">Vua Số Lượng Đơn</span>
+          </h3>
+          <p id="giai-phu-modal-desc" class="text-xs text-slate-300 mt-1">
+            Khách hàng có tổng số đơn booking hoàn tất nhiều nhất trong chương trình.
+          </p>
+        </div>
+      </div>
+
+      <!-- Quick Switch Tabs (5 giải phụ) -->
+      <div class="flex items-center gap-1.5 overflow-x-auto pb-2 mb-4 scrollbar-thin">
+        <button type="button" onclick="switchGiaiPhuTab('vua-so-luong-don')" id="tab-btn-vua-so-luong-don" class="giai-phu-tab-btn px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all bg-amber-400 text-slate-950 shadow">
+          📦 Vua Số Lượng Đơn
+        </button>
+        <button type="button" onclick="switchGiaiPhuTab('tan-binh-xuat-sac')" id="tab-btn-tan-binh-xuat-sac" class="giai-phu-tab-btn px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all bg-slate-800 text-slate-300 hover:text-white hover:bg-slate-700">
+          🌟 Tân Binh Xuất Sắc
+        </button>
+        <button type="button" onclick="switchGiaiPhuTab('su-tro-lai-an-tuong')" id="tab-btn-su-tro-lai-an-tuong" class="giai-phu-tab-btn px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all bg-slate-800 text-slate-300 hover:text-white hover:bg-slate-700">
+          🔄 Sự Trở Lại Ấn Tượng
+        </button>
+        <button type="button" onclick="switchGiaiPhuTab('vua-tai-trong')" id="tab-btn-vua-tai-trong" class="giai-phu-tab-btn px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all bg-slate-800 text-slate-300 hover:text-white hover:bg-slate-700">
+          ⚓ Vua Tải Trọng (Kg)
+        </button>
+        <button type="button" onclick="switchGiaiPhuTab('vua-khoi-luong')" id="tab-btn-vua-khoi-luong" class="giai-phu-tab-btn px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all bg-slate-800 text-slate-300 hover:text-white hover:bg-slate-700">
+          🚛 Vua Khối Lượng (M³)
+        </button>
+      </div>
+
+      <!-- Search Box & User Position Card -->
+      <div class="space-y-2.5 mb-4">
+        <div class="relative">
+          <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-slate-400">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+          </span>
+          <input type="text" id="giai-phu-search-input" oninput="handleGiaiPhuSearch(this.value)" placeholder="Tra cứu mã khách hàng của bạn để xem thứ hạng (VD: ERK-KH-8891, 8891)..." class="w-full bg-slate-950/80 border border-slate-700 rounded-xl pl-9 pr-8 py-2.5 text-xs sm:text-sm text-white placeholder:text-slate-500 focus:outline-none focus:border-amber-400 shadow-inner" />
+          <button type="button" id="giai-phu-search-clear" onclick="clearGiaiPhuSearch()" class="absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400 hover:text-white hidden">✕</button>
+        </div>
+
+        <!-- Banner thông báo vị trí của khách hàng khi tìm kiếm -->
+        <div id="giai-phu-search-banner" class="hidden p-3 rounded-xl bg-gradient-to-r from-amber-500/20 via-slate-800 to-amber-500/10 border border-amber-400/40 text-xs text-slate-200 flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <span class="text-xl">🎯</span>
+            <div id="giai-phu-search-banner-text">
+              <!-- Nội dung kết quả tìm kiếm -->
+            </div>
+          </div>
+          <span class="text-[10px] text-amber-300 font-bold uppercase tracking-wider bg-amber-400/20 px-2 py-0.5 rounded border border-amber-400/30">Vị trí của bạn</span>
+        </div>
+      </div>
+
+      <!-- Bảng xếp hạng cuộn -->
+      <div class="flex-1 overflow-y-auto rounded-2xl border border-slate-800 bg-slate-950/60 p-1">
+        <table class="w-full text-left text-xs sm:text-sm">
+          <thead class="sticky top-0 bg-slate-900/95 backdrop-blur-md text-slate-400 border-b border-slate-800 z-10">
+            <tr>
+              <th class="py-3 px-3 sm:px-4 font-semibold text-center w-14">Hạng</th>
+              <th class="py-3 px-3 sm:px-4 font-semibold">Mã Khách Hàng</th>
+              <th class="py-3 px-3 sm:px-4 font-semibold">Khách Hàng</th>
+              <th id="giai-phu-col-metric" class="py-3 px-3 sm:px-4 font-semibold text-right text-amber-300">Tổng Đơn</th>
+              <th class="py-3 px-3 sm:px-4 font-semibold text-right hidden sm:table-cell">Phí Dịch Vụ</th>
+              <th class="py-3 px-3 sm:px-4 font-semibold text-center w-28">Trạng Thái</th>
+            </tr>
+          </thead>
+          <tbody id="giai-phu-table-body" class="divide-y divide-slate-800/60 text-slate-200">
+            <!-- Render động bằng JS -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Footer Modal -->
+      <div class="pt-3 mt-3 border-t border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-[11px] text-slate-400">
+        <span>⚡ Dữ liệu tự động phân phối từ Bảng Xếp Hạng Tổng, cập nhật định kỳ từ Eureka ERP.</span>
+        <span class="text-emerald-400 font-bold">✓ Đối soát thời gian thực</span>
+      </div>
+    </div>
   </div>
 
   <!-- Confetti Canvas overlay -->

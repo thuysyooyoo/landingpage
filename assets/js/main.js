@@ -154,6 +154,7 @@ document.addEventListener('keydown', (e) => {
     if (typeof closeWelcomeWheelModal === 'function') closeWelcomeWheelModal();
     if (typeof closeAdminLoginModal === 'function') closeAdminLoginModal();
     if (typeof closeAdminDashboard === 'function') closeAdminDashboard();
+    if (typeof closeGiaiPhuModal === 'function') closeGiaiPhuModal();
   }
 });
 
@@ -359,16 +360,53 @@ function renderNhiemVuDisplay() {
 
   container.innerHTML = `
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
-      <!-- Cột Trái (lg:col-span-5): Thông tin chặng đang công bố -->
-      <div class="lg:col-span-5 flex flex-col justify-between rounded-3xl p-6 sm:p-8 bg-slate-800/50 backdrop-blur-2xl border-2 ${themeColors.border} shadow-2xl relative overflow-hidden group">
+      <!-- Cột Trái (lg:col-span-7 xl:col-span-8): BẢNG THỂ HIỆN CHẶNG THI ĐUA NỔI BẬT & TIẾN TRÌNH -->
+      <div class="lg:col-span-7 xl:col-span-8 flex flex-col justify-between rounded-3xl p-6 sm:p-8 bg-slate-800/50 backdrop-blur-2xl border-2 ${themeColors.border} shadow-2xl relative overflow-hidden group">
         <div class="absolute -top-24 -left-24 w-60 h-60 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
         <div class="relative z-10">
-          <div class="flex items-center justify-between mb-4">
+          <!-- Mini 3-Chặng Progress Roadmap -->
+          <div class="grid grid-cols-3 gap-2 p-1.5 rounded-2xl bg-slate-900/90 border border-slate-700/80 mb-5">
+            <div class="p-2 sm:p-2.5 rounded-xl border text-center transition-all ${mode === 'chang-1' ? 'bg-amber-500/20 border-amber-400 text-amber-300 font-bold shadow-md ring-1 ring-amber-400/50' : 'bg-slate-900/60 border-slate-800 text-slate-400'}">
+              <div class="flex items-center justify-center gap-1 text-[11px] font-black uppercase">
+                <span>Chặng 1</span>
+                ${mode === 'chang-1' ? '<span class="inline-block w-1.5 h-1.5 rounded-full bg-amber-400 animate-ping"></span>' : '<span class="text-emerald-400">✓</span>'}
+              </div>
+              <div class="text-[10px] text-slate-400 mt-0.5 font-medium">01/10 – 30/10</div>
+              <div class="text-[9px] ${mode === 'chang-1' ? 'text-amber-300 font-bold' : 'text-emerald-400 font-semibold'} mt-0.5">
+                ${mode === 'chang-1' ? '⚡ Đang công bố' : 'Hoàn thành'}
+              </div>
+            </div>
+
+            <div class="p-2 sm:p-2.5 rounded-xl border text-center transition-all ${mode === 'chang-2' ? 'bg-orange-500/20 border-orange-400 text-orange-300 font-bold shadow-md ring-1 ring-orange-400/50' : 'bg-slate-900/60 border-slate-800 text-slate-400'}">
+              <div class="flex items-center justify-center gap-1 text-[11px] font-black uppercase">
+                <span>Chặng 2</span>
+                ${mode === 'chang-2' ? '<span class="inline-block w-1.5 h-1.5 rounded-full bg-orange-400 animate-ping"></span>' : ''}
+              </div>
+              <div class="text-[10px] text-slate-400 mt-0.5 font-medium">01/11 – 20/11</div>
+              <div class="text-[9px] ${mode === 'chang-2' ? 'text-orange-300 font-bold' : 'text-slate-500'} mt-0.5">
+                ${mode === 'chang-2' ? '⚡ Đang công bố' : 'Kế tiếp'}
+              </div>
+            </div>
+
+            <div class="p-2 sm:p-2.5 rounded-xl border text-center transition-all ${mode === 'chang-3' ? 'bg-blue-500/20 border-blue-400 text-blue-300 font-bold shadow-md ring-1 ring-blue-400/50' : 'bg-slate-900/60 border-slate-800 text-slate-400'}">
+              <div class="flex items-center justify-center gap-1 text-[11px] font-black uppercase">
+                <span>Chặng 3</span>
+                ${mode === 'chang-3' ? '<span class="inline-block w-1.5 h-1.5 rounded-full bg-blue-400 animate-ping"></span>' : ''}
+              </div>
+              <div class="text-[10px] text-slate-400 mt-0.5 font-medium">01/12 – 20/12</div>
+              <div class="text-[9px] ${mode === 'chang-3' ? 'text-blue-300 font-bold' : 'text-slate-500'} mt-0.5">
+                ${mode === 'chang-3' ? '⚡ Đang công bố' : 'Về đích Gala'}
+              </div>
+            </div>
+          </div>
+
+          <!-- Header chặng đang diễn ra -->
+          <div class="flex items-center justify-between mb-3">
             <span class="px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider border ${themeColors.badge}">
               ${curChang.period_title}
             </span>
-            <span class="text-xs font-bold text-slate-300 bg-slate-900/60 px-2.5 py-1 rounded-lg border border-slate-700">
+            <span class="text-xs font-bold text-slate-300 bg-slate-900/60 px-3 py-1 rounded-lg border border-slate-700">
               📅 ${curChang.time_range}
             </span>
           </div>
@@ -376,89 +414,93 @@ function renderNhiemVuDisplay() {
           <h3 class="text-2xl sm:text-3xl font-black text-white mb-2 font-display">
             "${curChang.title}"
           </h3>
-          <p class="text-xs sm:text-sm text-slate-300 mb-6 leading-relaxed">
+          <p class="text-xs sm:text-sm text-slate-300 mb-5 leading-relaxed">
             ${curChang.desc}
           </p>
 
-          <!-- Điều kiện xét giải -->
-          <div class="p-4 rounded-2xl bg-slate-900/80 border border-slate-700/80 mb-5">
-            <span class="block text-[11px] font-bold text-slate-400 uppercase tracking-wide mb-1">
-              📋 Điều kiện xét giải:
-            </span>
-            <span class="text-base font-extrabold ${themeColors.text} block">
-              ${curChang.condition}
-            </span>
-            <span class="block text-xs text-slate-400 mt-1 leading-snug">
-              ${curChang.condition_detail}
-            </span>
-          </div>
+          <!-- 2 Cột: Điều kiện & Phần thưởng đặt song song -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+            <!-- Điều kiện xét giải -->
+            <div class="p-4 rounded-2xl bg-slate-900/85 border border-slate-700/80 flex flex-col justify-between">
+              <div>
+                <span class="block text-[11px] font-bold text-slate-400 uppercase tracking-wide mb-1">
+                  📋 Thể Lệ & Điều Kiện:
+                </span>
+                <span class="text-base font-extrabold ${themeColors.text} block">
+                  ${curChang.condition}
+                </span>
+              </div>
+              <span class="block text-xs text-slate-400 mt-2 leading-snug pt-2 border-t border-slate-800">
+                ${curChang.condition_detail}
+              </span>
+            </div>
 
-          <!-- Phần thưởng -->
-          <div class="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 mb-4">
-            <span class="block text-[11px] font-bold text-emerald-400 uppercase tracking-wide mb-1">
-              🎁 Quyền lợi đạt được:
-            </span>
-            <span class="text-base font-black text-emerald-300 block">
-              ${curChang.reward}
-            </span>
-            <span class="block text-xs text-slate-300 mt-1 leading-snug">
-              ${curChang.reward_desc || 'Tự động nâng hạng VIP lên cấp cao hơn, giảm cước vận chuyển.'}
-            </span>
+            <!-- Phần thưởng -->
+            <div class="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex flex-col justify-between">
+              <div>
+                <span class="block text-[11px] font-bold text-emerald-400 uppercase tracking-wide mb-1">
+                  🎁 Quyền Lợi Đạt Chuẩn:
+                </span>
+                <span class="text-base font-black text-emerald-300 block">
+                  ${curChang.reward}
+                </span>
+              </div>
+              <span class="block text-xs text-slate-300 mt-2 leading-snug pt-2 border-t border-emerald-500/20">
+                ${curChang.reward_desc || 'Tự động nâng hạng VIP lên cấp cao hơn, giảm cước vận chuyển.'}
+              </span>
+            </div>
           </div>
         </div>
 
         <div class="pt-4 border-t border-slate-700/80 flex items-center justify-between relative z-10 mt-2">
           <span class="inline-flex items-center gap-1.5 text-xs text-emerald-400 font-bold">
             <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-            ĐANG CÔNG BỐ KẾT QUẢ
+            ĐANG CÔNG BỐ KẾT QUẢ CHÍNH THỨC
           </span>
-          <a href="#cot-moc-vip" class="text-xs font-bold text-slate-400 hover:text-white transition-colors">
-            Xem khung quyền lợi ↓
+          <a href="#cot-moc-vip" class="text-xs font-bold text-amber-300 hover:text-white transition-colors flex items-center gap-1">
+            <span>Khung đặc quyền VIP</span>
+            <span>↓</span>
           </a>
         </div>
       </div>
 
-      <!-- Cột Phải (lg:col-span-7): Danh sách mã KH đạt chuẩn chặng này -->
-      <div class="lg:col-span-7 flex flex-col justify-between rounded-3xl p-6 sm:p-8 bg-slate-800/40 backdrop-blur-2xl border border-white/15 shadow-2xl relative overflow-hidden">
-        <div class="absolute -top-24 -right-24 w-60 h-60 bg-brand-500/10 rounded-full blur-3xl pointer-events-none"></div>
+      <!-- Cột Phải (lg:col-span-5 xl:col-span-4): DANH SÁCH MÃ KH ĐẠT CHUẨN THU NHỎ GỌN GÀNG -->
+      <div class="lg:col-span-5 xl:col-span-4 flex flex-col justify-between rounded-3xl p-5 sm:p-6 bg-slate-800/40 backdrop-blur-2xl border border-white/15 shadow-2xl relative overflow-hidden">
+        <div class="absolute -top-24 -right-24 w-52 h-52 bg-brand-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
         <div class="relative z-10">
-          <!-- Header danh sách -->
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5 pb-4 border-b border-slate-700">
+          <!-- Header danh sách thu gọn -->
+          <div class="flex items-center justify-between gap-2 mb-3.5 pb-3 border-b border-slate-700">
             <div>
-              <h3 class="text-lg sm:text-xl font-black text-white font-display flex items-center gap-2">
-                👑 Danh Sách Mã KH Đạt Chuẩn
+              <h3 class="text-base font-black text-white font-display flex items-center gap-1.5">
+                <span>👑</span> Mã KH Đạt Chuẩn
               </h3>
-              <p class="text-xs text-slate-300 mt-0.5">
-                Các khách hàng đã hoàn thành nhiệm vụ và được tự động nâng hạng VIP+1
-              </p>
+              <p class="text-[11px] text-slate-300">Đã nâng hạng VIP+1</p>
             </div>
-            <span id="nhiem-vu-count-badge" class="px-3 py-1.5 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-xs font-black whitespace-nowrap self-start sm:self-center">
-              🎉 ${codes.length} Khách hàng đạt chuẩn
+            <span id="nhiem-vu-count-badge" class="px-2.5 py-1 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-xs font-black whitespace-nowrap">
+              🎉 ${codes.length} Mã KH
             </span>
           </div>
 
-          <!-- Quick Filter Input -->
-          <div class="relative mb-4">
-            <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-slate-400">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+          <!-- Quick Filter Input Compact -->
+          <div class="relative mb-3">
+            <span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-slate-400">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
             </span>
-            <input type="text" id="nhiem-vu-code-filter" oninput="filterNhiemVuCodes(this.value)" placeholder="Tra cứu nhanh mã khách hàng (VD: ERK-KH-8891, 8891)..." class="w-full bg-slate-900/90 border border-slate-700 rounded-xl pl-9 pr-3 py-2 text-xs text-white placeholder:text-slate-500 focus:outline-none focus:border-amber-400 shadow-inner" />
+            <input type="text" id="nhiem-vu-code-filter" oninput="filterNhiemVuCodes(this.value)" placeholder="Tra cứu mã nhanh (VD: 8891)..." class="w-full bg-slate-900/90 border border-slate-700 rounded-xl pl-8 pr-3 py-1.5 text-xs text-white placeholder:text-slate-500 focus:outline-none focus:border-amber-400 shadow-inner" />
           </div>
 
-          <!-- Codes Badges Grid -->
-          <div id="nhiem-vu-codes-list" class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 max-h-[300px] overflow-y-auto pr-1">
+          <!-- Codes Badges Grid: 2 cột compact, chiều cao vừa vặn -->
+          <div id="nhiem-vu-codes-list" class="grid grid-cols-2 gap-2 max-h-[220px] overflow-y-auto pr-1">
             ${renderNhiemVuCodeBadges(codes)}
           </div>
         </div>
 
-        <!-- Footer Notice -->
-        <div class="pt-4 border-t border-slate-700/80 mt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs relative z-10">
-          <span class="text-slate-400">
-            ⚡ Hệ thống Eureka tự động nâng cấp hạn mức & chiết khấu cước cho các mã trên.
-          </span>
+        <!-- Footer Notice Compact -->
+        <div class="pt-3 border-t border-slate-700/80 mt-3 flex items-center justify-between text-[11px] relative z-10 text-slate-400">
+          <span>⚡ Hệ thống nâng cấp tự động</span>
           <span class="text-emerald-400 font-bold whitespace-nowrap">
-            ✓ Đối soát tự động
+            ✓ Đối soát hợp lệ
           </span>
         </div>
       </div>
@@ -468,15 +510,15 @@ function renderNhiemVuDisplay() {
 
 function renderNhiemVuCodeBadges(codes) {
   if (!codes || codes.length === 0) {
-    return `<div class="col-span-full py-8 text-center text-xs text-slate-400">Chưa có mã khách hàng nào trong danh sách.</div>`;
+    return `<div class="col-span-full py-6 text-center text-xs text-slate-400">Chưa có mã khách hàng nào đạt chuẩn.</div>`;
   }
   return codes.map(code => `
-    <div class="p-2.5 rounded-xl bg-slate-900/80 border border-slate-700/80 hover:border-amber-400/50 transition-all flex items-center justify-between gap-2 group">
-      <span class="font-mono text-xs font-black text-amber-300 tracking-wider group-hover:text-amber-200">
+    <div class="py-1.5 px-2.5 rounded-lg bg-slate-900/85 border border-slate-700/70 hover:border-amber-400/50 transition-all flex items-center justify-between gap-1.5 group">
+      <span class="font-mono text-xs font-bold text-amber-300 tracking-wider group-hover:text-amber-200 truncate">
         ${code}
       </span>
-      <span class="text-[10px] font-bold text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded border border-emerald-500/25">
-        ✓ VIP+1
+      <span class="text-[9px] font-bold text-emerald-300 bg-emerald-500/15 px-1 py-0.2 rounded border border-emerald-500/30 shrink-0">
+        VIP+1
       </span>
     </div>
   `).join('');
@@ -496,6 +538,305 @@ function filterNhiemVuCodes(query) {
 
   container.innerHTML = renderNhiemVuCodeBadges(filtered);
 }
+
+// ==================== 7. HỆ THỐNG PHÂN PHỐI BẢNG XẾP HẠNG 05 GIẢI PHỤ CHUYÊN MÔN ====================
+function parseWeightKg(str) {
+  if (!str) return { kg: 0, label: '0 kg' };
+  const part = str.split('|')[0] || '';
+  const numStr = part.replace(',', '.').match(/([\d.]+)\s*(tấn|kg|t)/i);
+  if (numStr) {
+    const val = parseFloat(numStr[1]);
+    const unit = numStr[2].toLowerCase();
+    if (unit.includes('t')) {
+      return { kg: val * 1000, label: `${val.toLocaleString('vi-VN')} tấn (${(val * 1000).toLocaleString('vi-VN')} kg)` };
+    }
+    return { kg: val, label: `${(val / 1000).toLocaleString('vi-VN')} tấn (${val.toLocaleString('vi-VN')} kg)` };
+  }
+  return { kg: 0, label: part.trim() || '0 kg' };
+}
+
+function parseVolumeM3(str) {
+  if (!str) return { m3: 0, label: '0 m³' };
+  const parts = str.split('|');
+  const part = parts[1] || parts[0] || '';
+  const numStr = part.replace(',', '.').match(/([\d.]+)\s*(m³|m3|cbm)/i);
+  if (numStr) {
+    const val = parseFloat(numStr[1]);
+    return { m3: val, label: `${val.toLocaleString('vi-VN')} m³` };
+  }
+  return { m3: 0, label: part.trim() || '0 m³' };
+}
+
+function formatVND(num) {
+  if (typeof num !== 'number') num = parseFloat(num) || 0;
+  return new Intl.NumberFormat('vi-VN').format(num) + ' đ';
+}
+
+const GIAI_PHU_CONFIGS = {
+  'vua-so-luong-don': {
+    id: 'vua-so-luong-don',
+    name: 'Vua Số Lượng Đơn',
+    icon: '📦',
+    prize: '3.000.000 đ',
+    badge: 'Tiêu chí đơn hàng',
+    criterion: 'Khách hàng có tổng số đơn booking hoàn tất nhiều nhất trong chương trình.',
+    colMetric: 'Tổng Đơn',
+    filterAndSort: (data) => {
+      return [...data].sort((a, b) => (b.order_count || 0) - (a.order_count || 0) || (b.service_fee || 0) - (a.service_fee || 0));
+    },
+    formatMetric: (item) => `${item.order_count || 0} đơn`
+  },
+  'tan-binh-xuat-sac': {
+    id: 'tan-binh-xuat-sac',
+    name: 'Tân Binh Xuất Sắc',
+    icon: '🌟',
+    prize: '3.000.000 đ',
+    badge: 'Khách hàng mới',
+    criterion: 'Khách hàng Mới (tạo tài khoản từ 01/10) có Phí Dịch Vụ tích lũy cao nhất.',
+    colMetric: 'Phí Dịch Vụ Mới',
+    filterAndSort: (data) => {
+      const filtered = data.filter(item => {
+        const tier = (item.vip_tier || '').toUpperCase();
+        const tag = (item.prize_tag || '').toLowerCase();
+        return tier.includes('MỚI') || tag.includes('tân binh');
+      });
+      return filtered.sort((a, b) => (b.service_fee || 0) - (a.service_fee || 0));
+    },
+    formatMetric: (item) => formatVND(item.service_fee)
+  },
+  'su-tro-lai-an-tuong': {
+    id: 'su-tro-lai-an-tuong',
+    name: 'Sự Trở Lại Ấn Tượng',
+    icon: '🔄',
+    prize: '3.000.000 đ',
+    badge: 'Tái kích hoạt',
+    criterion: 'Khách hàng cũ (từ đầu năm chưa gửi hàng) quay lại gửi hàng bứt phá nhất.',
+    colMetric: 'Doanh Số Bứt Phá',
+    filterAndSort: (data) => {
+      const filtered = data.filter(item => {
+        const tier = (item.vip_tier || '').toUpperCase();
+        const tag = (item.prize_tag || '').toLowerCase();
+        return tier.includes('CŨ') || tag.includes('trở lại') || tag.includes('tái kích hoạt');
+      });
+      return filtered.sort((a, b) => (b.service_fee || 0) - (a.service_fee || 0));
+    },
+    formatMetric: (item) => formatVND(item.service_fee)
+  },
+  'vua-tai-trong': {
+    id: 'vua-tai-trong',
+    name: 'Vua Tải Trọng (Kg)',
+    icon: '⚓',
+    prize: '3.000.000 đ',
+    badge: 'Tổng khối lượng',
+    criterion: 'Tổng khối lượng kg cao nhất (áp dụng lô hàng đi term E & F quốc tế).',
+    colMetric: 'Tổng Tải Trọng',
+    filterAndSort: (data) => {
+      return [...data].map(item => {
+        const p = parseWeightKg(item.volume_weight);
+        return { ...item, _metricValue: p.kg, _metricLabel: p.label };
+      }).sort((a, b) => b._metricValue - a._metricValue || (b.service_fee || 0) - (a.service_fee || 0));
+    },
+    formatMetric: (item) => item._metricLabel || parseWeightKg(item.volume_weight).label
+  },
+  'vua-khoi-luong': {
+    id: 'vua-khoi-luong',
+    name: 'Vua Khối Lượng (M³)',
+    icon: '🚛',
+    prize: '3.000.000 đ',
+    badge: 'Tổng thể tích',
+    criterion: 'Tổng thể tích m³ cao nhất (áp dụng lô hàng gom cont chính ngạch).',
+    colMetric: 'Tổng Thể Tích',
+    filterAndSort: (data) => {
+      return [...data].map(item => {
+        const p = parseVolumeM3(item.volume_weight);
+        return { ...item, _metricValue: p.m3, _metricLabel: p.label };
+      }).sort((a, b) => b._metricValue - a._metricValue || (b.service_fee || 0) - (a.service_fee || 0));
+    },
+    formatMetric: (item) => item._metricLabel || parseVolumeM3(item.volume_weight).label
+  }
+};
+
+let currentGiaiPhuKey = 'vua-so-luong-don';
+let currentGiaiPhuList = [];
+
+function openGiaiPhuModal(awardKey = 'vua-so-luong-don') {
+  currentGiaiPhuKey = awardKey;
+  const modal = document.getElementById('giai-phu-modal');
+  if (!modal) return;
+
+  const searchInput = document.getElementById('giai-phu-search-input');
+  if (searchInput) searchInput.value = '';
+
+  switchGiaiPhuTab(awardKey);
+  modal.classList.remove('hidden');
+  document.body.classList.add('overflow-hidden');
+}
+
+function closeGiaiPhuModal() {
+  const modal = document.getElementById('giai-phu-modal');
+  if (modal) {
+    modal.classList.add('hidden');
+    document.body.classList.remove('overflow-hidden');
+  }
+}
+
+function switchGiaiPhuTab(awardKey) {
+  currentGiaiPhuKey = awardKey;
+  const cfg = GIAI_PHU_CONFIGS[awardKey];
+  if (!cfg) return;
+
+  // Cập nhật Active Tab buttons
+  document.querySelectorAll('.giai-phu-tab-btn').forEach(btn => {
+    btn.className = 'giai-phu-tab-btn px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all bg-slate-800 text-slate-300 hover:text-white hover:bg-slate-700';
+  });
+  const activeBtn = document.getElementById(`tab-btn-${awardKey}`);
+  if (activeBtn) {
+    activeBtn.className = 'giai-phu-tab-btn px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all bg-amber-400 text-slate-950 shadow';
+  }
+
+  // Header info
+  const iconEl = document.getElementById('giai-phu-modal-icon');
+  const nameEl = document.getElementById('giai-phu-modal-name');
+  const descEl = document.getElementById('giai-phu-modal-desc');
+  const colMetricEl = document.getElementById('giai-phu-col-metric');
+  if (iconEl) iconEl.textContent = cfg.icon;
+  if (nameEl) nameEl.textContent = cfg.name;
+  if (descEl) descEl.textContent = cfg.criterion;
+  if (colMetricEl) colMetricEl.textContent = cfg.colMetric;
+
+  // Lấy dữ liệu từ leaderboard
+  const rawData = (typeof getLeaderboardData === 'function') ? getLeaderboardData() : (window.leaderboardData || []);
+  currentGiaiPhuList = cfg.filterAndSort(rawData);
+
+  // Render bảng
+  const searchInput = document.getElementById('giai-phu-search-input');
+  const query = searchInput ? searchInput.value.trim() : '';
+  renderGiaiPhuTable(currentGiaiPhuList, query);
+}
+
+function renderGiaiPhuTable(list, query = '') {
+  const tbody = document.getElementById('giai-phu-table-body');
+  const banner = document.getElementById('giai-phu-search-banner');
+  const bannerText = document.getElementById('giai-phu-search-banner-text');
+  if (!tbody) return;
+
+  tbody.innerHTML = '';
+  const q = (query || '').toLowerCase().trim();
+  const qClean = q.replace(/[^a-z0-9]/g, '');
+
+  let userFoundItem = null;
+  let userFoundRank = null;
+
+  if (!list || list.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="6" class="py-10 text-center text-xs text-slate-400">Chưa có khách hàng nào trong nhóm tiêu chí này.</td></tr>`;
+    if (banner) banner.classList.add('hidden');
+    return;
+  }
+
+  list.forEach((item, index) => {
+    const rank = index + 1;
+    const cfg = GIAI_PHU_CONFIGS[currentGiaiPhuKey];
+    const metricStr = cfg.formatMetric(item);
+    const code = item.customer_code || 'ERK-KH-XXXX';
+    const codeClean = code.toLowerCase().replace(/[^a-z0-9]/g, '');
+    const name = item.customer_name || item.original_name || 'Khách hàng';
+
+    const isMatch = q && (code.toLowerCase().includes(q) || (qClean && codeClean.includes(qClean)) || name.toLowerCase().includes(q));
+    if (isMatch && !userFoundItem) {
+      userFoundItem = item;
+      userFoundRank = rank;
+    }
+
+    let rankBadge = '';
+    let rowBg = 'hover:bg-slate-800/40 transition-colors';
+    if (rank === 1) {
+      rankBadge = `<span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 font-black text-xs shadow-md">🥇 1</span>`;
+      rowBg = 'bg-amber-500/10 hover:bg-amber-500/15';
+    } else if (rank === 2) {
+      rankBadge = `<span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-slate-300 text-slate-950 font-black text-xs shadow">🥈 2</span>`;
+    } else if (rank === 3) {
+      rankBadge = `<span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-amber-700 text-white font-black text-xs shadow">🥉 3</span>`;
+    } else {
+      rankBadge = `<span class="font-mono text-xs font-bold text-slate-400">#${rank}</span>`;
+    }
+
+    let highlightClass = '';
+    if (isMatch) {
+      highlightClass = 'ring-2 ring-amber-400 bg-amber-500/20';
+    }
+
+    const tr = document.createElement('tr');
+    tr.className = `${rowBg} ${highlightClass} border-b border-slate-800/60 transition-all`;
+    tr.id = `giai-phu-row-${code}`;
+    tr.innerHTML = `
+      <td class="py-3 px-3 sm:px-4 text-center">${rankBadge}</td>
+      <td class="py-3 px-3 sm:px-4 font-mono font-bold text-amber-300 text-xs sm:text-sm whitespace-nowrap">
+        ${code}
+      </td>
+      <td class="py-3 px-3 sm:px-4 font-medium text-slate-200">
+        <div>${name}</div>
+        <div class="text-[10px] text-slate-400 mt-0.5 sm:hidden">${metricStr}</div>
+      </td>
+      <td class="py-3 px-3 sm:px-4 text-right font-black text-amber-300 font-mono text-xs sm:text-sm whitespace-nowrap">
+        ${metricStr}
+      </td>
+      <td class="py-3 px-3 sm:px-4 text-right font-mono text-xs text-slate-300 hidden sm:table-cell whitespace-nowrap">
+        ${formatVND(item.service_fee || 0)}
+      </td>
+      <td class="py-3 px-3 sm:px-4 text-center">
+        ${rank <= 3 ? '<span class="px-2 py-0.5 rounded-full bg-amber-400/20 text-amber-300 text-[10px] font-black border border-amber-400/30">Top Xét Giải</span>' : '<span class="px-2 py-0.5 rounded-full bg-slate-800 text-slate-400 text-[10px] font-semibold">Ứng viên</span>'}
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+
+  // Cập nhật banner tìm kiếm vị trí
+  if (banner && bannerText) {
+    if (q) {
+      if (userFoundItem) {
+        banner.classList.remove('hidden');
+        bannerText.innerHTML = `
+          <span>Mã <strong>${userFoundItem.customer_code}</strong> hiện đang xếp hạng <strong class="text-amber-300 text-sm">#${userFoundRank}</strong> trong giải này với chỉ số <strong class="text-emerald-300">${GIAI_PHU_CONFIGS[currentGiaiPhuKey].formatMetric(userFoundItem)}</strong>!</span>
+        `;
+        // Tự động cuộn tới dòng
+        setTimeout(() => {
+          const matchedRow = document.getElementById(`giai-phu-row-${userFoundItem.customer_code}`);
+          if (matchedRow) matchedRow.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }, 100);
+      } else {
+        banner.classList.remove('hidden');
+        bannerText.innerHTML = `<span>Không tìm thấy mã khách hàng khớp với từ khóa "<strong>${query}</strong>" trong giải này.</span>`;
+      }
+    } else {
+      banner.classList.add('hidden');
+    }
+  }
+}
+
+function handleGiaiPhuSearch(query) {
+  const clearBtn = document.getElementById('giai-phu-search-clear');
+  if (clearBtn) {
+    if (query) clearBtn.classList.remove('hidden');
+    else clearBtn.classList.add('hidden');
+  }
+  renderGiaiPhuTable(currentGiaiPhuList, query);
+}
+
+function clearGiaiPhuSearch() {
+  const input = document.getElementById('giai-phu-search-input');
+  if (input) {
+    input.value = '';
+    input.focus();
+  }
+  handleGiaiPhuSearch('');
+}
+
+window.openGiaiPhuModal = openGiaiPhuModal;
+window.closeGiaiPhuModal = closeGiaiPhuModal;
+window.switchGiaiPhuTab = switchGiaiPhuTab;
+window.handleGiaiPhuSearch = handleGiaiPhuSearch;
+window.clearGiaiPhuSearch = clearGiaiPhuSearch;
+
 
 // ==================== 6. LIVE VOUCHER FLOATING TOAST TICKER ====================
 let liveToastTimer = null;
@@ -578,3 +919,17 @@ if (document.readyState === 'complete' || document.readyState === 'interactive')
   initLiveVoucherToast();
 }
 
+function scrollToVongQuayTriAn(e) {
+  if (e && typeof e.preventDefault === 'function') {
+    e.preventDefault();
+  }
+  const target = document.getElementById('vong-quay-mung-05');
+  if (target) {
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    target.classList.add('transition-all', 'duration-500', 'ring-4', 'ring-sky-400/80', 'ring-offset-4', 'ring-offset-slate-900');
+    setTimeout(() => {
+      target.classList.remove('ring-4', 'ring-sky-400/80', 'ring-offset-4', 'ring-offset-slate-900');
+    }, 2500);
+  }
+}
+window.scrollToVongQuayTriAn = scrollToVongQuayTriAn;

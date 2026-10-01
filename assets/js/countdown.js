@@ -1,6 +1,6 @@
 /**
  * Countdown Timer Engine
- * Target: 31/12/2026 23:59:59 (Đóng sổ nhận đơn chiến dịch)
+ * Target: 31/12/2026 23:59:59 (Đóng sổ nhận đơn chương trình)
  */
 function initCountdown(targetIsoDate = '2026-12-31T23:59:59') {
   const targetDate = new Date(targetIsoDate).getTime();

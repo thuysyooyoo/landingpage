@@ -510,6 +510,7 @@ function loadLeaderboardData() {
       const parsed = JSON.parse(custom);
       if (Array.isArray(parsed) && parsed.length > 0) {
         leaderboardData = parsed;
+        window.leaderboardData = parsed;
         renderLeaderboard(parsed);
         updateSearchCounter(parsed.length, parsed.length);
         return;
@@ -522,15 +523,21 @@ function loadLeaderboardData() {
     .then(res => res.json())
     .then(data => {
       leaderboardData = data;
+      window.leaderboardData = data;
       renderLeaderboard(data);
       updateSearchCounter(data.length, data.length);
     })
     .catch(() => {
       leaderboardData = fallbackLeaderboardData;
+      window.leaderboardData = fallbackLeaderboardData;
       renderLeaderboard(fallbackLeaderboardData);
       updateSearchCounter(fallbackLeaderboardData.length, fallbackLeaderboardData.length);
     });
 }
+
+window.getLeaderboardData = function() {
+  return (leaderboardData && leaderboardData.length > 0) ? leaderboardData : fallbackLeaderboardData;
+};
 
 function updateSearchCounter(currentCount, totalCount) {
   const counterEl = document.getElementById('leaderboard-search-count');
