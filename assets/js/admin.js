@@ -257,12 +257,18 @@ function renderAdminSpinLeadsTable() {
         </span>
       </td>
       <td class="py-2.5 px-3 text-center space-x-1 whitespace-nowrap">
-        <a href="https://zalo.me/${item.phone}" target="_blank" class="px-2.5 py-1 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-bold text-[10px] inline-flex items-center gap-1 shadow transition-colors" title="Chat Zalo với số ${item.phone}">
-          💬 Chat Zalo
-        </a>
-        <a href="tel:${item.phone}" class="px-2.5 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-[10px] inline-flex items-center gap-1 shadow transition-colors" title="Gọi trực tiếp số ${item.phone}">
-          📞 Gọi
-        </a>
+        ${(() => {
+          const rawDigits = (item.phone || '').replace(/\D/g, '');
+          const zaloPhone = rawDigits.startsWith('0') ? '84' + rawDigits.slice(1) : (rawDigits.startsWith('84') ? rawDigits : ('84' + rawDigits));
+          return `
+            <a href="https://zalo.me/${zaloPhone}" target="_blank" class="px-2.5 py-1 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-bold text-[10px] inline-flex items-center gap-1 shadow transition-colors" title="Chat Zalo với số ${item.phone}">
+              💬 Chat Zalo
+            </a>
+            <a href="tel:${item.phone}" class="px-2.5 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-[10px] inline-flex items-center gap-1 shadow transition-colors" title="Gọi trực tiếp số ${item.phone}">
+              📞 Gọi
+            </a>
+          `;
+        })()}
         <button onclick="deleteSpinLead(${idx})" class="p-1 text-rose-400 hover:text-rose-300 text-xs font-semibold" title="Xóa">
           ✕
         </button>
@@ -970,6 +976,134 @@ function exportLeaderboardJson() {
   document.body.removeChild(a);
 }
 
+// ==================== CẤU HÌNH BOT & WEBHOOK THÔNG BÁO TỰ ĐỘNG ====================
+function getBotConfig() {
+  try {
+    const raw = localStorage.getItem('eureka_bot_config');
+    if (raw) return JSON.parse(raw);
+  } catch (e) {}
+  return {
+    telegram_enabled: false,
+    telegram_token: '',
+    telegram_chat_id: '',
+    webhook_enabled: false,
+    webhook_url: ''
+  };
+}
+
+function loadBotConfigToAdminForm() {
+  const config = getBotConfig();
+  const tgActive = document.getElementById('admin-bot-tg-active');
+  const tgToken = document.getElementById('admin-bot-tg-token');
+  const tgChatId = document.getElementById('admin-bot-tg-chatid');
+  const whActive = document.getElementById('admin-bot-webhook-active');
+  const whUrl = document.getElementById('admin-bot-webhook-url');
+  const statusBadge = document.getElementById('bot-status-badge');
+
+  if (tgActive) tgActive.checked = !!config.telegram_enabled;
+  if (tgToken) tgToken.value = config.telegram_token || '';
+  if (tgChatId) tgChatId.value = config.telegram_chat_id || '';
+  if (whActive) whActive.checked = !!config.webhook_enabled;
+  if (whUrl) whUrl.value = config.webhook_url || '';
+
+  if (statusBadge) {
+    if (config.telegram_enabled || config.webhook_enabled) {
+      statusBadge.textContent = '🟢 ĐANG BẬT BẮN TIN TỰ ĐỘNG';
+      statusBadge.className = 'px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-[10px] font-bold shrink-0';
+    } else {
+      statusBadge.textContent = '⚪ CHƯA KÍCH HOẠT';
+      statusBadge.className = 'px-2.5 py-1 rounded-full bg-slate-800 text-slate-400 border border-slate-700 text-[10px] font-bold shrink-0';
+    }
+  }
+}
+
+function saveBotConfig() {
+  const tgActive = document.getElementById('admin-bot-tg-active')?.checked || false;
+  const tgToken = document.getElementById('admin-bot-tg-token')?.value.trim() || '';
+  const tgChatId = document.getElementById('admin-bot-tg-chatid')?.value.trim() || '';
+  const whActive = document.getElementById('admin-bot-webhook-active')?.checked || false;
+  const whUrl = document.getElementById('admin-bot-webhook-url')?.value.trim() || '';
+
+  const config = {
+    telegram_enabled: tgActive,
+    telegram_token: tgToken,
+    telegram_chat_id: tgChatId,
+    webhook_enabled: whActive,
+    webhook_url: whUrl,
+    updated_at: new Date().toLocaleString('vi-VN')
+  };
+
+  localStorage.setItem('eureka_bot_config', JSON.stringify(config));
+  loadBotConfigToAdminForm();
+  alert('💾 Đã lưu thành công cấu hình Bot & Webhook!\nHệ thống sẽ tự động chuyển dữ liệu khách quay thưởng theo cấu hình này.');
+}
+
+async function testBotNotification() {
+  const tgToken = document.getElementById('admin-bot-tg-token')?.value.trim();
+  const tgChatId = document.getElementById('admin-bot-tg-chatid')?.value.trim();
+  const whUrl = document.getElementById('admin-bot-webhook-url')?.value.trim();
+  const tgActive = document.getElementById('admin-bot-tg-active')?.checked;
+  const whActive = document.getElementById('admin-bot-webhook-active')?.checked;
+
+  if (!tgActive && !whActive) {
+    alert('⚠️ Vui lòng tích chọn Kích hoạt ít nhất 01 kênh (Telegram Bot hoặc Webhook) để thử nghiệm!');
+    return;
+  }
+
+  let results = [];
+
+  if (tgActive) {
+    if (!tgToken || !tgChatId) {
+      alert('⚠️ Vui lòng điền đủ Bot Token và Chat ID của Telegram để test!');
+      return;
+    }
+    try {
+      const testMsg = `🧪 *[EUREKA LOGISTICS - TEST KẾT NỐI BOT]*\n━━━━━━━━━━━━━━━━━━\n✅ *Kết nối Telegram Bot thành công!*\n⏰ Thời gian: ${new Date().toLocaleString('vi-VN')}\n👉 Sẵn sàng nhận thông báo khi khách quay thưởng!\n━━━━━━━━━━━━━━━━━━`;
+      const res = await fetch(`https://api.telegram.org/bot${tgToken}/sendMessage`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          chat_id: tgChatId,
+          text: testMsg,
+          parse_mode: 'Markdown'
+        })
+      });
+      const data = await res.json();
+      if (data.ok) {
+        results.push('✅ Telegram Bot: Gửi tin nhắn thử nghiệm thành công! Hãy kiểm tra ứng dụng Telegram của bạn.');
+      } else {
+        results.push(`❌ Telegram Bot thất bại: ${data.description || 'Lỗi Token hoặc Chat ID'}`);
+      }
+    } catch (e) {
+      results.push(`❌ Lỗi kết nối Telegram: ${e.message}`);
+    }
+  }
+
+  if (whActive) {
+    if (!whUrl) {
+      alert('⚠️ Vui lòng nhập Webhook URL để test!');
+      return;
+    }
+    try {
+      await fetch(whUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          event: 'test_connection',
+          message: 'Test webhook connection from Eureka Logistics',
+          time: new Date().toLocaleString('vi-VN')
+        }),
+        mode: 'no-cors'
+      });
+      results.push('✅ Webhook: Đã gửi payload thử nghiệm đến URL!');
+    } catch (e) {
+      results.push(`❌ Lỗi gửi Webhook: ${e.message}`);
+    }
+  }
+
+  alert(results.join('\n\n'));
+}
+
 // Admin Tab switcher in modal
 function switchAdminTab(tabName) {
   document.querySelectorAll('.admin-tab-content').forEach(el => el.classList.add('hidden'));
@@ -986,6 +1120,10 @@ function switchAdminTab(tabName) {
     activeBtn.classList.remove('text-slate-400');
   }
 
+  if (tabName === 'spin-leads') {
+    renderAdminLeadsTable();
+    loadBotConfigToAdminForm();
+  }
   if (tabName === 'monthly-winners') {
     renderAdminM05BookingManager();
   }

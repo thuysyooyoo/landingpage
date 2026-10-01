@@ -1321,7 +1321,7 @@
         Mở mã ngay hôm nay để nhận bảng báo giá cước chính ngạch ưu đãi đầu mùa và bắt đầu tích lũy điểm số xét quà Laptop Surface Pro 11, iPad M3 và Dyson!
       </p>
       <div class="flex flex-wrap items-center justify-center gap-4">
-        <a href="https://zalo.me/0898586622" target="_blank" class="px-8 py-3.5 rounded-xl bg-white text-brand-700 font-black text-sm sm:text-base shadow-xl hover:bg-amber-50 transition-all hover:scale-105 flex items-center gap-2">
+        <a href="https://zalo.me/84898586622" target="_blank" class="px-8 py-3.5 rounded-xl bg-white text-brand-700 font-black text-sm sm:text-base shadow-xl hover:bg-amber-50 transition-all hover:scale-105 flex items-center gap-2">
           <span>Nhắn Zalo Nhận Tư Vấn Mở Mã</span>
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
         </a>
@@ -1529,7 +1529,7 @@
       </div>
 
       <!-- Direct Apply to Zalo Hotline -->
-      <a href="https://zalo.me/0898586622" target="_blank" onclick="handleApplyZaloVoucher(event)" id="modal-zalo-apply-btn" class="w-full mb-2 py-3 px-4 rounded-xl bg-gradient-to-r from-blue-600 via-sky-500 to-blue-600 hover:from-blue-500 hover:to-sky-400 text-white font-extrabold text-xs sm:text-sm uppercase tracking-wider transition-all shadow-lg shadow-blue-500/30 flex items-center justify-center gap-2 cursor-pointer group">
+      <a href="https://zalo.me/84898586622" target="_blank" onclick="handleApplyZaloVoucher(event)" id="modal-zalo-apply-btn" class="w-full mb-2 py-3 px-4 rounded-xl bg-gradient-to-r from-blue-600 via-sky-500 to-blue-600 hover:from-blue-500 hover:to-sky-400 text-white font-extrabold text-xs sm:text-sm uppercase tracking-wider transition-all shadow-lg shadow-blue-500/30 flex items-center justify-center gap-2 cursor-pointer group">
         <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.03 2 11c0 2.87 1.5 5.43 3.84 7.07l-.97 3.55 3.73-1.63C9.57 20.67 10.76 21 12 21c5.52 0 10-4.03 10-9s-4.48-9-10-9z"/></svg>
         <span id="modal-zalo-btn-text">Áp Dụng Mã Ngay Qua Zalo Hotline</span>
         <span class="text-xs opacity-80 font-normal">→</span>
@@ -1706,6 +1706,79 @@
               <!-- Rendered dynamically by assets/js/admin.js -->
             </tbody>
           </table>
+        </div>
+
+        <!-- Block: Cấu hình Bot & Webhook Tự Động Bắn Tin Nhắn Báo Động Realtime -->
+        <div class="p-4 rounded-2xl bg-slate-900/90 border border-slate-700/80 space-y-3.5 mt-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2.5 border-b border-slate-800">
+            <div>
+              <h4 class="text-xs font-black uppercase text-amber-400 flex items-center gap-1.5">
+                <span>🤖</span> CẤU HÌNH ĐẨY DỮ LIỆU TỰ ĐỘNG VỀ TELEGRAM BOT & WEBHOOK / ZALO
+              </h4>
+              <p class="text-[11px] text-slate-400 mt-0.5">
+                Mỗi khi khách hàng bấm Quay trên website, hệ thống tự động bắn tin nhắn báo động tức thì (kèm link mở Zalo khách 1 chạm).
+              </p>
+            </div>
+            <span id="bot-status-badge" class="px-2.5 py-1 rounded-full bg-slate-800 border border-slate-700 text-[10px] font-bold text-slate-400 shrink-0">
+              ⚪ CHƯA KÍCH HOẠT
+            </span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+            <!-- Kênh 1: Telegram Bot -->
+            <div class="p-3.5 rounded-xl bg-slate-950/80 border border-sky-500/30 space-y-2.5">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-sky-400 flex items-center gap-1.5">
+                  <span>✈️</span> Kênh 1: Telegram Bot (Báo về nhóm/cá nhân)
+                </span>
+                <label class="inline-flex items-center gap-1.5 cursor-pointer">
+                  <input type="checkbox" id="admin-bot-tg-active" class="w-3.5 h-3.5 text-sky-500 rounded focus:ring-0">
+                  <span class="text-[11px] font-semibold text-slate-300">Kích hoạt</span>
+                </label>
+              </div>
+              <div>
+                <label class="block text-[11px] text-slate-400 mb-1">Bot Token:</label>
+                <input type="text" id="admin-bot-tg-token" placeholder="Ví dụ: 7123456789:AAHkL789..." class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white font-mono focus:outline-none focus:border-sky-400">
+              </div>
+              <div>
+                <label class="block text-[11px] text-slate-400 mb-1">Chat ID (ID nhóm Sales hoặc ID cá nhân):</label>
+                <input type="text" id="admin-bot-tg-chatid" placeholder="Ví dụ: -1001234567890 hoặc 987654321" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white font-mono focus:outline-none focus:border-sky-400">
+              </div>
+              <p class="text-[10px] text-slate-400 leading-relaxed">
+                💡 <em>Cách tạo nhanh: Vào Telegram chat @BotFather tạo bot lấy Token, thêm bot vào nhóm và lấy Chat ID qua @userinfobot.</em>
+              </p>
+            </div>
+
+            <!-- Kênh 2: Webhook URL (Zalo Bot / Google Sheets / CRM) -->
+            <div class="p-3.5 rounded-xl bg-slate-950/80 border border-amber-500/30 space-y-2.5">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-amber-400 flex items-center gap-1.5">
+                  <span>🌐</span> Kênh 2: Webhook Tùy Biến (Google Sheets / Zalo / CRM)
+                </span>
+                <label class="inline-flex items-center gap-1.5 cursor-pointer">
+                  <input type="checkbox" id="admin-bot-webhook-active" class="w-3.5 h-3.5 text-amber-500 rounded focus:ring-0">
+                  <span class="text-[11px] font-semibold text-slate-300">Kích hoạt</span>
+                </label>
+              </div>
+              <div>
+                <label class="block text-[11px] text-slate-400 mb-1">Webhook URL Endpoint:</label>
+                <input type="text" id="admin-bot-webhook-url" placeholder="https://script.google.com/macros/s/.../exec hoặc webhook CRM" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white font-mono focus:outline-none focus:border-amber-400">
+              </div>
+              <p class="text-[10px] text-slate-400 leading-relaxed pt-3">
+                💡 <em>Hệ thống sẽ tự động POST dữ liệu JSON <code>{ phone, voucher_code, prize, created_at, zalo_link }</code> vào webhook mỗi khi có khách quay trúng.</em>
+              </p>
+            </div>
+          </div>
+
+          <!-- Bot Action Buttons -->
+          <div class="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-slate-800">
+            <button type="button" onclick="testBotNotification()" class="px-3.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-sky-300 border border-slate-700 font-bold text-xs flex items-center gap-1.5 transition-colors">
+              🧪 Gửi Thử Tin Nhắn Báo Động (Test Bot)
+            </button>
+            <button type="button" onclick="saveBotConfig()" class="px-5 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-slate-950 font-black text-xs uppercase tracking-wider shadow-lg transition-all">
+              💾 LƯU CẤU HÌNH BOT & WEBHOOK
+            </button>
+          </div>
         </div>
       </div>
 

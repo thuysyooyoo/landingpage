@@ -74,6 +74,62 @@ function getSpinLeads() {
   ];
 }
 
+function forwardLeadToBotWebhook(newLead) {
+  try {
+    const rawConfig = localStorage.getItem('eureka_bot_config');
+    if (!rawConfig) return;
+    const config = JSON.parse(rawConfig);
+
+    const rawDigits = (newLead.phone || '').replace(/\D/g, '');
+    const zaloPhone = rawDigits.startsWith('0') ? '84' + rawDigits.slice(1) : (rawDigits.startsWith('84') ? rawDigits : ('84' + rawDigits));
+    const zaloChatLink = `https://zalo.me/${zaloPhone}`;
+
+    // 1. Forward to Telegram Bot if configured and active
+    if (config.telegram_enabled && config.telegram_token && config.telegram_chat_id) {
+      const tgText = `🔔 *[EUREKA LOGISTICS] KHÁCH HÀNG MỚI VỪA QUAY THƯỞNG!*
+━━━━━━━━━━━━━━━━━━
+📱 *Số Điện Thoại:* \`${newLead.phone}\`
+🎁 *Phần Quà:* *${newLead.prize}*
+🎟 *Mã Voucher:* \`${newLead.voucherCode}\`
+⏰ *Thời Gian:* ${newLead.createdAt}
+━━━━━━━━━━━━━━━━━━
+👉 *[BẤM ĐÂY CHAT ZALO VỚI KHÁCH](${zaloChatLink})*
+📞 *Gọi điện ngay:* tel:${newLead.phone}`;
+
+      fetch(`https://api.telegram.org/bot${config.telegram_token}/sendMessage`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          chat_id: config.telegram_chat_id,
+          text: tgText,
+          parse_mode: 'Markdown',
+          disable_web_page_preview: false
+        })
+      }).catch(err => console.log('Telegram forward error:', err));
+    }
+
+    // 2. Forward to Custom Webhook URL (Google Sheets / Zalo Bot / CRM / Lark)
+    if (config.webhook_enabled && config.webhook_url) {
+      fetch(config.webhook_url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          event: 'new_wheel_spin',
+          phone: newLead.phone,
+          voucher_code: newLead.voucherCode,
+          prize: newLead.prize,
+          created_at: newLead.createdAt,
+          zalo_link: zaloChatLink,
+          hotline: '84898586622'
+        }),
+        mode: 'no-cors'
+      }).catch(err => console.log('Custom webhook error:', err));
+    }
+  } catch (e) {
+    console.log('Error forwarding lead to bot:', e);
+  }
+}
+
 function saveSpinLead(newLead) {
   const leads = getSpinLeads();
   leads.unshift(newLead);
@@ -81,6 +137,8 @@ function saveSpinLead(newLead) {
   if (typeof renderAdminSpinLeadsTable === 'function') {
     renderAdminSpinLeadsTable();
   }
+  // Tự động đẩy dữ liệu sang Telegram Bot / Webhook nếu có cấu hình
+  forwardLeadToBotWebhook(newLead);
 }
 
 // ==================== WHEEL 1: VÒNG QUAY TRẢI NGHIỆM KHÁCH HÀNG ====================
