@@ -107,6 +107,7 @@ function showAdminDashboard() {
   renderAdminGalaToggle();
   renderAdminLeaderboardTable();
   renderAdminAffiliateContest();
+  renderAdminNhiemVuManager();
 }
 
 function closeAdminDashboard() {
@@ -1186,6 +1187,207 @@ function exportLeaderboardJson() {
   document.body.removeChild(a);
 }
 
+// ==================== SUB-PANEL 3: CẤU HÌNH CÔNG BỐ NHIỆM VỤ HỆ THỐNG ====================
+let adminSelectedNhiemVuMode = 'chang-1'; // Selected tab in editor: 'chang-1' | 'chang-2' | 'chang-3' | 'tong-ket'
+
+function getAdminNhiemVuConfig() {
+  if (typeof getNhiemVuConfig === 'function') {
+    return getNhiemVuConfig();
+  }
+  try {
+    const raw = localStorage.getItem('eureka_nhiem_vu_config');
+    if (raw) return JSON.parse(raw);
+  } catch (e) {}
+  return (typeof DEFAULT_NHIEM_VU_CONFIG !== 'undefined') ? JSON.parse(JSON.stringify(DEFAULT_NHIEM_VU_CONFIG)) : {};
+}
+
+function renderAdminNhiemVuManager() {
+  const cfg = getAdminNhiemVuConfig();
+  if (!cfg) return;
+
+  adminSelectedNhiemVuMode = cfg.active_mode || 'chang-1';
+  updateAdminNhiemVuUI();
+}
+
+function setAdminNhiemVuMode(mode) {
+  adminSelectedNhiemVuMode = mode;
+  updateAdminNhiemVuUI();
+}
+
+function updateAdminNhiemVuUI() {
+  const cfg = getAdminNhiemVuConfig();
+  const currentMode = adminSelectedNhiemVuMode;
+
+  // 1. Update Mode Buttons
+  ['chang-1', 'chang-2', 'chang-3', 'tong-ket'].forEach(m => {
+    const btn = document.getElementById(`btn-mode-${m}`);
+    if (btn) {
+      if (m === currentMode) {
+        btn.className = 'admin-nhiemvu-mode-btn p-2.5 rounded-xl border text-left transition-all bg-cyan-500/20 border-cyan-400 text-cyan-300 font-bold text-xs ring-1 ring-cyan-400/50';
+      } else {
+        btn.className = 'admin-nhiemvu-mode-btn p-2.5 rounded-xl border text-left transition-all bg-slate-900 border-slate-700 text-slate-400 hover:text-white font-bold text-xs';
+      }
+    }
+  });
+
+  // 2. Status Badge
+  const statusBadge = document.getElementById('admin-nhiemvu-status-badge');
+  if (statusBadge) {
+    if (currentMode === 'tong-ket') {
+      statusBadge.textContent = '📊 ĐANG CÔNG BỐ: TỔNG KẾT 3 CHẶNG';
+      statusBadge.className = 'px-2.5 py-1 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/40 text-[10px] font-bold shrink-0';
+    } else if (currentMode === 'chang-1') {
+      statusBadge.textContent = '⚡ ĐANG CÔNG BỐ: CHẶNG 1 (THÁNG 10)';
+      statusBadge.className = 'px-2.5 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 text-[10px] font-bold shrink-0';
+    } else if (currentMode === 'chang-2') {
+      statusBadge.textContent = '⚡ ĐANG CÔNG BỐ: CHẶNG 2 (THÁNG 11)';
+      statusBadge.className = 'px-2.5 py-1 rounded-full bg-orange-500/20 text-orange-300 border border-orange-500/40 text-[10px] font-bold shrink-0';
+    } else if (currentMode === 'chang-3') {
+      statusBadge.textContent = '⚡ ĐANG CÔNG BỐ: CHẶNG 3 (THÁNG 12)';
+      statusBadge.className = 'px-2.5 py-1 rounded-full bg-blue-500/20 text-blue-300 border border-blue-500/40 text-[10px] font-bold shrink-0';
+    }
+  }
+
+  // 3. Show/hide editor vs summary
+  const singleEditor = document.getElementById('admin-nhiemvu-single-editor');
+  const tongKetInfo = document.getElementById('admin-nhiemvu-tongket-info');
+
+  if (currentMode === 'tong-ket') {
+    if (singleEditor) singleEditor.classList.add('hidden');
+    if (tongKetInfo) tongKetInfo.classList.remove('hidden');
+
+    // Populate counts in summary box
+    const c1El = document.getElementById('admin-tongket-c1-count');
+    const c2El = document.getElementById('admin-tongket-c2-count');
+    const c3El = document.getElementById('admin-tongket-c3-count');
+    const c1List = cfg.chang_1?.customer_codes || cfg.chang_1?.codes || [];
+    const c2List = cfg.chang_2?.customer_codes || cfg.chang_2?.codes || [];
+    const c3List = cfg.chang_3?.customer_codes || cfg.chang_3?.codes || [];
+    if (c1El) c1El.textContent = `${c1List.length} mã`;
+    if (c2El) c2El.textContent = `${c2List.length} mã`;
+    if (c3El) c3El.textContent = `${c3List.length} mã`;
+  } else {
+    if (singleEditor) singleEditor.classList.remove('hidden');
+    if (tongKetInfo) tongKetInfo.classList.add('hidden');
+
+    const changKey = currentMode.replace('-', '_'); // e.g. chang_1
+    const changData = cfg[changKey] || {};
+
+    const tagEl = document.getElementById('admin-nhiemvu-editor-tag');
+    const titleEl = document.getElementById('admin-nhiemvu-editor-title');
+    const timeInput = document.getElementById('admin-nhiemvu-time');
+    const rewardInput = document.getElementById('admin-nhiemvu-reward');
+    const condInput = document.getElementById('admin-nhiemvu-condition');
+    const codesTextarea = document.getElementById('admin-nhiemvu-codes-input');
+    const countEl = document.getElementById('admin-nhiemvu-editor-count');
+
+    const periodTitle = changData.period_title || changData.title || currentMode.toUpperCase();
+    const subTitle = changData.title ? `"${changData.title}"` : (changData.subtitle ? `"${changData.subtitle}"` : '');
+    if (tagEl) tagEl.textContent = periodTitle;
+    if (titleEl) titleEl.textContent = `${periodTitle} ${subTitle}`.trim();
+    if (timeInput) timeInput.value = changData.time_range || changData.time_window || '';
+    if (rewardInput) rewardInput.value = changData.reward || '';
+    if (condInput) condInput.value = changData.condition || '';
+
+    const codes = changData.customer_codes || changData.codes || [];
+    if (codesTextarea) codesTextarea.value = codes.join('\n');
+    if (countEl) countEl.textContent = `${codes.length} mã`;
+
+    updateAdminNhiemVuPreview();
+  }
+}
+
+function updateAdminNhiemVuPreview() {
+  const textarea = document.getElementById('admin-nhiemvu-codes-input');
+  const preview = document.getElementById('admin-nhiemvu-preview-chips');
+  const countEl = document.getElementById('admin-nhiemvu-editor-count');
+  if (!textarea || !preview) return;
+
+  const raw = textarea.value;
+  const codes = raw.split(/[\r\n,]+/).map(s => s.trim().toUpperCase()).filter(s => s.length > 0);
+
+  if (countEl) countEl.textContent = `${codes.length} mã`;
+  preview.innerHTML = '';
+
+  if (codes.length === 0) {
+    preview.innerHTML = '<span class="text-xs text-slate-500 italic">Chưa có mã nào trong danh sách. Hãy nhập hoặc nhấn "Nạp mã mẫu".</span>';
+    return;
+  }
+
+  codes.forEach(code => {
+    const chip = document.createElement('span');
+    chip.className = 'px-2 py-0.5 rounded bg-slate-800 text-amber-300 font-mono text-[11px] font-bold border border-slate-700';
+    chip.textContent = code;
+    preview.appendChild(chip);
+  });
+}
+
+function loadDemoNhiemVuCurrentChang() {
+  const changKey = adminSelectedNhiemVuMode.replace('-', '_');
+  let defaultChang = (typeof DEFAULT_NHIEM_VU_CONFIG !== 'undefined') ? DEFAULT_NHIEM_VU_CONFIG[changKey] : null;
+  if (!defaultChang) return;
+
+  const codes = defaultChang.customer_codes || defaultChang.codes || [];
+  const textarea = document.getElementById('admin-nhiemvu-codes-input');
+  if (textarea) {
+    textarea.value = codes.join('\n');
+    updateAdminNhiemVuPreview();
+  }
+}
+
+function saveAdminNhiemVuConfig() {
+  const cfg = getAdminNhiemVuConfig();
+  cfg.active_mode = adminSelectedNhiemVuMode;
+
+  if (adminSelectedNhiemVuMode !== 'tong-ket') {
+    const changKey = adminSelectedNhiemVuMode.replace('-', '_');
+    if (!cfg[changKey]) cfg[changKey] = {};
+
+    const timeInput = document.getElementById('admin-nhiemvu-time');
+    const rewardInput = document.getElementById('admin-nhiemvu-reward');
+    const condInput = document.getElementById('admin-nhiemvu-condition');
+    const codesTextarea = document.getElementById('admin-nhiemvu-codes-input');
+
+    if (timeInput) {
+      cfg[changKey].time_range = timeInput.value.trim();
+      cfg[changKey].time_window = timeInput.value.trim();
+    }
+    if (rewardInput) cfg[changKey].reward = rewardInput.value.trim();
+    if (condInput) cfg[changKey].condition = condInput.value.trim();
+
+    if (codesTextarea) {
+      const parsedCodes = codesTextarea.value.split(/[\r\n,]+/).map(s => s.trim().toUpperCase()).filter(s => s.length > 0);
+      cfg[changKey].customer_codes = parsedCodes;
+      cfg[changKey].codes = parsedCodes;
+    }
+  }
+
+  localStorage.setItem('eureka_nhiem_vu_config', JSON.stringify(cfg));
+
+  // Sync to frontend display
+  if (typeof renderNhiemVuDisplay === 'function') {
+    renderNhiemVuDisplay();
+  }
+
+  updateAdminNhiemVuUI();
+
+  let modeLabel = 'Chặng 1 (Tháng 10)';
+  if (cfg.active_mode === 'chang-2') modeLabel = 'Chặng 2 (Tháng 11)';
+  if (cfg.active_mode === 'chang-3') modeLabel = 'Chặng 3 (Tháng 12)';
+  if (cfg.active_mode === 'tong-ket') modeLabel = 'Bản Tổng Kết 3 Chặng';
+
+  alert(`✅ ĐÃ LƯU & CẬP NHẬT CÔNG BỐ NHIỆM VỤ HỆ THỐNG!\n\nChế độ hiển thị: ${modeLabel}\nTrang chủ đã được tự động làm mới ngay lập tức.`);
+}
+
+function resetAdminNhiemVuConfig() {
+  if (confirm('Khôi phục cấu hình Nhiệm Vụ Hệ Thống về mặc định của chiến dịch?')) {
+    localStorage.removeItem('eureka_nhiem_vu_config');
+    renderAdminNhiemVuManager();
+    if (typeof renderNhiemVuDisplay === 'function') renderNhiemVuDisplay();
+    alert('✅ Đã khôi phục cài đặt mặc định!');
+  }
+}
+
 // ==================== CẤU HÌNH BOT & WEBHOOK THÔNG BÁO TỰ ĐỘNG ====================
 function getBotConfig() {
   try {
@@ -1359,6 +1561,7 @@ function switchAdminTab(tabName) {
     renderAdminWeeklyWinnerForm();
     renderAdminGalaToggle();
     renderAdminLeaderboardTable();
+    renderAdminNhiemVuManager();
   }
   if (tabName === 'affiliate-contest') {
     renderAdminAffiliateContest();
