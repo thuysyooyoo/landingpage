@@ -765,20 +765,23 @@ function renderPublicMonthlyWinners() {
     const tr = document.createElement('tr');
     tr.className = 'border-b border-slate-800 hover:bg-slate-800/40 text-xs text-slate-300 transition-colors';
     tr.innerHTML = `
-      <td class="py-3 px-3">
+      <td class="py-3 px-3 hidden sm:table-cell">
         <span class="px-2 py-0.5 rounded bg-blue-500/10 text-blue-300 font-bold border border-blue-500/20 text-[11px]">${w.period}</span>
       </td>
-      <td class="py-3 px-3">
-        <span class="font-mono font-black text-amber-300 tracking-wider text-sm bg-slate-800/80 px-2 py-1 rounded border border-amber-400/30">
+      <td class="py-2.5 sm:py-3 px-2 sm:px-3">
+        <span class="font-mono font-black text-amber-300 tracking-wider text-xs sm:text-sm bg-slate-800/80 px-2 py-0.5 sm:py-1 rounded border border-amber-400/30 inline-block">
           ${w.booking_code || w.order_masked || 'ERK-BK-' + Math.floor(1000 + Math.random() * 9000)}
         </span>
+        <div class="sm:hidden text-[10px] text-sky-400 mt-1 font-semibold">
+          Kỳ: ${w.period}
+        </div>
       </td>
-      <td class="py-3 px-3 font-bold text-white">${w.prize}</td>
-      <td class="py-3 px-3 text-slate-400 font-mono text-[11px]">${w.draw_time || '10h00 - Mùng 05'}</td>
-      <td class="py-3 px-3">
-        <span class="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-300 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
+      <td class="py-2.5 sm:py-3 px-2 sm:px-3 font-bold text-white text-xs">${w.prize}</td>
+      <td class="py-3 px-3 text-slate-400 font-mono text-[11px] hidden md:table-cell">${w.draw_time || '10h00 - Mùng 05'}</td>
+      <td class="py-2.5 sm:py-3 px-2 sm:px-3 text-center">
+        <span class="inline-flex items-center gap-1 text-[10px] sm:text-[11px] font-semibold text-emerald-300 bg-emerald-500/10 px-1.5 sm:px-2 py-0.5 rounded border border-emerald-500/20 whitespace-nowrap">
           <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-          ${w.status || 'Đã ghi nhận hệ thống'}
+          <span>${w.status || 'Đã ghi nhận'}</span>
         </span>
       </td>
     `;

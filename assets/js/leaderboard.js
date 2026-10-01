@@ -371,27 +371,39 @@ function renderLeaderboard(data) {
 
     tr.className = rowClass;
     tr.innerHTML = `
-      <td class="py-3.5 px-3 whitespace-nowrap">${rankBadge}</td>
-      <td class="py-3.5 px-3 min-w-[210px]">
-        <span class="font-bold text-white block text-xs sm:text-sm leading-snug">${displayName}</span>
-        <div class="flex items-center gap-1.5 mt-1">
-          <span class="font-mono text-[11px] font-semibold text-amber-300 bg-amber-400/10 border border-amber-400/25 px-2 py-0.5 rounded tracking-wider inline-flex items-center gap-1">
+      <td class="py-3 sm:py-3.5 px-2 sm:px-3 whitespace-nowrap">${rankBadge}</td>
+      <td class="py-3 sm:py-3.5 px-2 sm:px-3">
+        <div class="flex items-center gap-1.5 flex-wrap">
+          <span class="font-bold text-white text-xs sm:text-sm leading-snug">${displayName}</span>
+          <a href="https://www.erktransport.com/pricing" target="_blank" rel="noopener noreferrer" class="sm:hidden px-1.5 py-0.2 rounded text-[10px] font-bold ${vipBadgeClass} inline-flex items-center gap-0.5" title="Chi tiết gói ${item.vip_tier}">
+            <span>${item.vip_tier}</span>
+            <span class="text-[8px] opacity-70">↗</span>
+          </a>
+        </div>
+        <div class="flex items-center gap-1.5 mt-1 flex-wrap">
+          <span class="font-mono text-[10px] sm:text-[11px] font-semibold text-amber-300 bg-amber-400/10 border border-amber-400/25 px-1.5 sm:px-2 py-0.5 rounded tracking-wider inline-flex items-center gap-1">
             <span class="text-[9px] opacity-75 text-slate-400">MÃ:</span>${customerCode}
           </span>
+          <span class="md:hidden text-[10px] text-slate-400 font-medium">
+            · ${item.order_count} đơn (${item.volume_weight.split('|')[0].trim()})
+          </span>
+        </div>
+        <div class="sm:hidden mt-1.5">
+          ${prizeBadge}
         </div>
       </td>
-      <td class="py-3.5 px-3 whitespace-nowrap">
+      <td class="py-3.5 px-3 whitespace-nowrap hidden sm:table-cell">
         <a href="https://www.erktransport.com/pricing" target="_blank" rel="noopener noreferrer" class="px-2 py-0.5 rounded text-[11px] font-bold ${vipBadgeClass} hover:scale-105 transition-transform inline-flex items-center gap-1 cursor-pointer" title="Bấm để xem chi tiết quyền lợi gói ${item.vip_tier} tại bảng giá Eureka Logistics">
           <span>${item.vip_tier}</span>
           <span class="text-[9px] opacity-70">↗</span>
         </a>
       </td>
-      <td class="py-3.5 px-3 text-right font-bold text-white whitespace-nowrap">${item.order_count} đơn</td>
-      <td class="py-3.5 px-3 text-right text-slate-300 whitespace-nowrap">${item.volume_weight}</td>
-      <td class="py-3.5 px-3 text-right font-black whitespace-nowrap ${item.rank === 1 ? 'text-amber-400 text-base' : item.rank === 2 ? 'text-slate-200 text-base' : item.rank === 3 ? 'text-amber-500 text-base' : 'text-slate-200'}">
+      <td class="py-3.5 px-3 text-right font-bold text-white whitespace-nowrap hidden md:table-cell">${item.order_count} đơn</td>
+      <td class="py-3.5 px-3 text-right text-slate-300 whitespace-nowrap hidden md:table-cell">${item.volume_weight}</td>
+      <td class="py-3 sm:py-3.5 px-2 sm:px-3 text-right font-black whitespace-nowrap ${item.rank === 1 ? 'text-amber-400 text-sm sm:text-base' : item.rank === 2 ? 'text-slate-200 text-sm sm:text-base' : item.rank === 3 ? 'text-amber-500 text-sm sm:text-base' : 'text-slate-200 text-xs sm:text-sm'}">
         ${formatCurrency(item.service_fee)}
       </td>
-      <td class="py-3.5 px-3 text-center min-w-[130px]">${prizeBadge}</td>
+      <td class="py-3.5 px-3 text-center whitespace-nowrap hidden sm:table-cell">${prizeBadge}</td>
     `;
     tbody.appendChild(tr);
   });

@@ -899,12 +899,12 @@
         <div class="overflow-x-auto">
           <table class="w-full text-left text-xs">
             <thead>
-              <tr class="text-slate-400 border-b border-slate-800 text-[11px] uppercase tracking-wider">
-                <th class="py-2.5 px-3">Kỳ Quay</th>
-                <th class="py-2.5 px-3">Mã Booking Trúng Thưởng</th>
-                <th class="py-2.5 px-3">Giải Thưởng Tri Ân</th>
-                <th class="py-2.5 px-3">Thời Điểm Quay</th>
-                <th class="py-2.5 px-3">Trạng Thái Trao Quà</th>
+              <tr class="text-slate-400 border-b border-slate-800 text-[10px] sm:text-[11px] uppercase tracking-wider">
+                <th class="py-2.5 px-3 whitespace-nowrap hidden sm:table-cell">Kỳ Quay</th>
+                <th class="py-2.5 px-2 sm:px-3">Mã Booking Trúng Thưởng</th>
+                <th class="py-2.5 px-2 sm:px-3">Giải Thưởng Tri Ân</th>
+                <th class="py-2.5 px-3 hidden md:table-cell">Thời Điểm Quay</th>
+                <th class="py-2.5 px-2 sm:px-3 text-center whitespace-nowrap">Trạng Thái</th>
               </tr>
             </thead>
             <tbody id="public-m05-winners-body" class="divide-y divide-slate-800/60">
@@ -1211,14 +1211,14 @@
         <div class="overflow-x-auto max-h-[620px] overflow-y-auto rounded-2xl border border-slate-800/80 scroll-smooth">
           <table class="w-full text-left text-xs sm:text-sm" id="leaderboard-table">
             <thead class="sticky top-0 bg-slate-900/95 backdrop-blur-md border-b border-slate-700 z-10 shadow-md">
-              <tr class="text-slate-400 text-[11px] uppercase tracking-wider">
-                <th class="py-3.5 px-3 whitespace-nowrap">Hạng</th>
-                <th class="py-3.5 px-3 min-w-[210px]">Khách Hàng & Mã Khách</th>
-                <th class="py-3.5 px-3 whitespace-nowrap">Hạng VIP</th>
-                <th class="py-3.5 px-3 text-right whitespace-nowrap">Tổng Đơn</th>
-                <th class="py-3.5 px-3 text-right whitespace-nowrap">Tổng Sản Lượng</th>
-                <th class="py-3.5 px-3 text-right whitespace-nowrap">Phí Dịch Vụ</th>
-                <th class="py-3.5 px-3 text-center min-w-[130px]">Quà Tạm Tính</th>
+              <tr class="text-slate-400 text-[10px] sm:text-[11px] uppercase tracking-wider">
+                <th class="py-3 px-2 sm:px-3 whitespace-nowrap w-12 sm:w-16">Hạng</th>
+                <th class="py-3 px-2 sm:px-3">Khách Hàng & Mã Khách</th>
+                <th class="py-3 px-3 whitespace-nowrap hidden sm:table-cell">Hạng VIP</th>
+                <th class="py-3 px-3 text-right whitespace-nowrap hidden md:table-cell">Tổng Đơn</th>
+                <th class="py-3 px-3 text-right whitespace-nowrap hidden md:table-cell">Tổng Sản Lượng</th>
+                <th class="py-3 px-2 sm:px-3 text-right whitespace-nowrap">Phí Dịch Vụ</th>
+                <th class="py-3 px-3 text-center whitespace-nowrap hidden sm:table-cell">Quà Tạm Tính</th>
               </tr>
             </thead>
             <tbody class="divide-y divide-slate-800/60" id="leaderboard-body">
@@ -1603,39 +1603,39 @@
   </div>
 
   <!-- ==================== MODAL 4: BẢNG ĐIỀU KHIỂN ADMIN (ADMIN DASHBOARD) ==================== -->
-  <div id="admin-dashboard-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-md hidden transition-opacity duration-300">
-    <div class="glass-card rounded-3xl p-6 sm:p-8 max-w-3xl w-full border border-amber-400/50 relative max-h-[90vh] overflow-y-auto glow-gold">
+  <div id="admin-dashboard-modal" class="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/90 backdrop-blur-md hidden transition-opacity duration-300">
+    <div class="glass-card rounded-2xl sm:rounded-3xl p-3.5 sm:p-6 lg:p-8 w-full max-w-[96vw] lg:max-w-6xl xl:max-w-7xl border border-amber-400/50 relative max-h-[94vh] overflow-y-auto glow-gold">
       
-      <div class="flex items-center justify-between pb-4 border-b border-slate-700 mb-5">
-        <div class="flex items-center gap-3">
-          <span class="text-2xl">⚙️</span>
+      <div class="flex items-center justify-between pb-3 sm:pb-4 border-b border-slate-700 mb-4 sm:mb-5">
+        <div class="flex items-center gap-2.5 sm:gap-3">
+          <span class="text-xl sm:text-2xl">⚙️</span>
           <div>
-            <h3 class="text-xl font-black text-white">Bảng Quản Trị Sự Kiện (Admin Control Panel)</h3>
-            <span class="text-xs text-emerald-400 font-semibold">Tài khoản Quản Trị Viên đang hoạt động</span>
+            <h3 class="text-base sm:text-xl font-black text-white">Bảng Quản Trị Sự Kiện (Admin Control Panel)</h3>
+            <span class="text-[11px] sm:text-xs text-emerald-400 font-semibold">Tài khoản Quản Trị Viên đang hoạt động</span>
           </div>
         </div>
         <div class="flex items-center gap-2">
-          <button onclick="adminLogout()" class="px-3 py-1.5 rounded-lg bg-rose-500/20 text-rose-300 border border-rose-500/30 text-xs font-bold hover:bg-rose-500/30">Đăng Xuất</button>
-          <button onclick="closeAdminDashboard()" class="text-slate-400 hover:text-white text-xl font-bold w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center">✕</button>
+          <button onclick="adminLogout()" class="px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg bg-rose-500/20 text-rose-300 border border-rose-500/30 text-[11px] sm:text-xs font-bold hover:bg-rose-500/30">Đăng Xuất</button>
+          <button onclick="closeAdminDashboard()" class="text-slate-400 hover:text-white text-lg sm:text-xl font-bold w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-slate-800 flex items-center justify-center">✕</button>
         </div>
       </div>
 
-      <!-- Admin Tab Switcher -->
-      <div class="flex flex-wrap gap-2 mb-5 border-b border-slate-800 pb-2">
-        <button onclick="switchAdminTab('wheel-config')" id="admin-btn-wheel-config" class="admin-tab-btn px-3.5 py-2 rounded-xl text-xs font-bold bg-brand-600 text-white">
+      <!-- Admin Tab Switcher (Sleek Horizontal Segmented Strip on Mobile & Desktop) -->
+      <div class="flex overflow-x-auto no-scrollbar gap-1.5 sm:gap-2 mb-4 sm:mb-5 border-b border-slate-800 pb-2.5 -mx-1 px-1">
+        <button onclick="switchAdminTab('wheel-config')" id="admin-btn-wheel-config" class="admin-tab-btn px-3 sm:px-3.5 py-2 rounded-xl text-[11px] sm:text-xs font-bold bg-brand-600 text-white shrink-0 whitespace-nowrap">
           1. Cấu Hình Tỉ Lệ & Kho Quà
         </button>
-        <button onclick="switchAdminTab('spin-leads')" id="admin-btn-spin-leads" class="admin-tab-btn px-3.5 py-2 rounded-xl text-xs font-bold text-slate-400 hover:text-white flex items-center gap-1.5">
+        <button onclick="switchAdminTab('spin-leads')" id="admin-btn-spin-leads" class="admin-tab-btn px-3 sm:px-3.5 py-2 rounded-xl text-[11px] sm:text-xs font-bold text-slate-400 hover:text-white flex items-center gap-1.5 shrink-0 whitespace-nowrap">
           <span>2. Lịch Sử Khách Quay Voucher</span>
           <span id="admin-leads-count" class="px-1.5 py-0.2 rounded-full bg-amber-400/20 text-amber-300 text-[10px] font-bold border border-amber-400/40">4 SĐT</span>
         </button>
-        <button onclick="switchAdminTab('monthly-winners')" id="admin-btn-monthly-winners" class="admin-tab-btn px-3.5 py-2 rounded-xl text-xs font-bold text-slate-400 hover:text-white flex items-center gap-1.5">
+        <button onclick="switchAdminTab('monthly-winners')" id="admin-btn-monthly-winners" class="admin-tab-btn px-3 sm:px-3.5 py-2 rounded-xl text-[11px] sm:text-xs font-bold text-slate-400 hover:text-white flex items-center gap-1.5 shrink-0 whitespace-nowrap">
           <span>3. Vòng Quay Booking & Upload DS (Mùng 05)</span>
         </button>
-        <button onclick="switchAdminTab('leaderboard-manager')" id="admin-btn-leaderboard-manager" class="admin-tab-btn px-3.5 py-2 rounded-xl text-xs font-bold text-slate-400 hover:text-white flex items-center gap-1.5">
+        <button onclick="switchAdminTab('leaderboard-manager')" id="admin-btn-leaderboard-manager" class="admin-tab-btn px-3 sm:px-3.5 py-2 rounded-xl text-[11px] sm:text-xs font-bold text-slate-400 hover:text-white flex items-center gap-1.5 shrink-0 whitespace-nowrap">
           <span>4. Nạp BXH & Vinh Danh Top Tuần</span>
         </button>
-        <button onclick="switchAdminTab('affiliate-contest')" id="admin-btn-affiliate-contest" class="admin-tab-btn px-3.5 py-2 rounded-xl text-xs font-bold text-slate-400 hover:text-white flex items-center gap-1.5">
+        <button onclick="switchAdminTab('affiliate-contest')" id="admin-btn-affiliate-contest" class="admin-tab-btn px-3 sm:px-3.5 py-2 rounded-xl text-[11px] sm:text-xs font-bold text-slate-400 hover:text-white flex items-center gap-1.5 shrink-0 whitespace-nowrap">
           <span>🏆 5. Thi Đua Nội Bộ (Ref Link)</span>
           <span id="admin-affiliate-badge" class="px-1.5 py-0.2 rounded-full bg-emerald-400/20 text-emerald-300 text-[10px] font-bold border border-emerald-400/40">3 NV</span>
         </button>
@@ -1647,7 +1647,8 @@
           💡 <strong>Hướng dẫn:</strong> Điều chỉnh tỉ lệ trúng (%) và số lượng quà trong kho cho từng ô. Khi người dùng quay trúng, số lượng quà sẽ tự động giảm trừ. Dữ liệu được lưu ngay vào bộ nhớ trình duyệt!
         </div>
 
-        <div class="overflow-x-auto">
+        <!-- Desktop Table (hidden on mobile) -->
+        <div class="hidden sm:block overflow-x-auto border border-slate-800 rounded-xl">
           <table class="w-full text-left text-xs">
             <thead>
               <tr class="text-slate-400 border-b border-slate-700 text-[11px] uppercase tracking-wider">
@@ -1662,6 +1663,11 @@
               <!-- Rendered dynamically by assets/js/admin.js -->
             </tbody>
           </table>
+        </div>
+
+        <!-- Mobile Cards View (sm:hidden - Không cuộn ngang) -->
+        <div id="admin-wheel-config-mobile" class="sm:hidden space-y-3">
+          <!-- Rendered dynamically by assets/js/admin.js -->
         </div>
 
         <div class="flex items-center justify-between pt-4 border-t border-slate-800">
@@ -1693,7 +1699,8 @@
           </div>
         </div>
 
-        <div class="overflow-x-auto max-h-[50vh]">
+        <!-- Desktop Table (hidden on mobile) -->
+        <div class="hidden sm:block overflow-x-auto max-h-[50vh] rounded-xl border border-slate-800">
           <table class="w-full text-left text-xs">
             <thead class="sticky top-0 bg-slate-900 border-b border-slate-700">
               <tr class="text-slate-400 text-[11px] uppercase tracking-wider">
@@ -1711,6 +1718,11 @@
               <!-- Rendered dynamically by assets/js/admin.js -->
             </tbody>
           </table>
+        </div>
+
+        <!-- Mobile Card List (sm:hidden - Không cần cuộn ngang, xem trọn vẹn 100%) -->
+        <div id="admin-leads-cards-mobile" class="sm:hidden space-y-2.5 max-h-[50vh] overflow-y-auto pr-1">
+          <!-- Rendered dynamically by assets/js/admin.js -->
         </div>
 
         <!-- Block: Cấu hình Bot & Webhook Tự Động Bắn Tin Nhắn Báo Động Realtime -->
@@ -1884,7 +1896,8 @@
             </button>
           </div>
 
-          <div class="overflow-x-auto max-h-[35vh]">
+          <!-- Desktop Table (hidden on mobile) -->
+          <div class="hidden sm:block overflow-x-auto max-h-[35vh]">
             <table class="w-full text-left text-xs">
               <thead class="sticky top-0 bg-slate-900 border-b border-slate-700">
                 <tr class="text-slate-400 text-[11px] uppercase tracking-wider">
@@ -1900,6 +1913,11 @@
                 <!-- Rendered dynamically by assets/js/admin.js -->
               </tbody>
             </table>
+          </div>
+
+          <!-- Mobile Cards View (sm:hidden - Không cuộn ngang) -->
+          <div id="admin-winners-cards-mobile" class="sm:hidden space-y-2.5 max-h-[40vh] overflow-y-auto">
+            <!-- Rendered dynamically by assets/js/admin.js -->
           </div>
         </div>
 
@@ -2120,7 +2138,8 @@
             <span class="text-[11px] text-slate-400">Tự động sắp xếp theo điểm số</span>
           </div>
 
-          <div class="overflow-x-auto border border-slate-800 rounded-2xl bg-slate-950/60">
+          <!-- Desktop Table (hidden on mobile) -->
+          <div class="hidden sm:block overflow-x-auto border border-slate-800 rounded-2xl bg-slate-950/60">
             <table class="w-full text-left text-xs">
               <thead>
                 <tr class="text-slate-400 border-b border-slate-800 text-[11px] uppercase tracking-wider bg-slate-900/80">
@@ -2138,10 +2157,15 @@
               </tbody>
             </table>
           </div>
+
+          <!-- Mobile Cards View (sm:hidden - Không cần cuộn ngang) -->
+          <div id="admin-affiliate-cards-mobile" class="sm:hidden space-y-2.5">
+            <!-- Rendered dynamically by assets/js/admin.js -->
+          </div>
         </div>
 
         <!-- Block 3: Xem chi tiết danh sách khách của từng nhân viên -->
-        <div id="affiliate-leads-detail-container" class="hidden p-4 rounded-2xl bg-slate-900/95 border border-slate-700/80 space-y-3">
+        <div id="affiliate-leads-detail-container" class="hidden p-3.5 sm:p-4 rounded-2xl bg-slate-900/95 border border-slate-700/80 space-y-3">
           <div class="flex items-center justify-between pb-2 border-b border-slate-800">
             <h5 class="text-xs font-bold text-amber-300 flex items-center gap-1.5" id="affiliate-detail-title">
               <span>📋</span> Danh sách khách hàng của nhân viên: 
@@ -2150,7 +2174,8 @@
               ✕ Đóng chi tiết
             </button>
           </div>
-          <div class="overflow-x-auto max-h-60 overflow-y-auto">
+          <!-- Desktop table -->
+          <div class="hidden sm:block overflow-x-auto max-h-60 overflow-y-auto">
             <table class="w-full text-left text-xs">
               <thead>
                 <tr class="text-slate-400 border-b border-slate-800 text-[10px] uppercase bg-slate-950">
@@ -2164,6 +2189,9 @@
               <tbody id="affiliate-detail-table-body" class="divide-y divide-slate-800/60 font-mono text-[11px]">
               </tbody>
             </table>
+          </div>
+          <!-- Mobile Cards -->
+          <div id="affiliate-detail-cards-mobile" class="sm:hidden space-y-2 max-h-60 overflow-y-auto">
           </div>
         </div>
       </div>

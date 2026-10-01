@@ -135,34 +135,76 @@ function getActiveWheelSegments() {
 
 function renderAdminWheelConfigTable() {
   const container = document.getElementById('admin-wheel-config-body');
-  if (!container) return;
-
+  const mobileContainer = document.getElementById('admin-wheel-config-mobile');
   const currentSegments = getActiveWheelSegments();
-  container.innerHTML = '';
+
+  if (container) container.innerHTML = '';
+  if (mobileContainer) mobileContainer.innerHTML = '';
 
   currentSegments.forEach((seg, idx) => {
-    const tr = document.createElement('tr');
-    tr.className = 'border-b border-slate-700/60 hover:bg-slate-800/40 text-xs text-slate-200';
-    tr.innerHTML = `
-      <td class="py-2.5 px-3 font-bold text-amber-400">Ô số ${idx + 1}</td>
-      <td class="py-2.5 px-3">
-        <input type="text" value="${seg.text}" id="seg-text-${idx}" class="w-full bg-slate-900 border border-slate-700 rounded px-2 py-1 text-white font-bold text-xs" />
-      </td>
-      <td class="py-2.5 px-3">
-        <input type="text" value="${seg.prize}" id="seg-prize-${idx}" class="w-full bg-slate-900 border border-slate-700 rounded px-2 py-1 text-slate-200 text-xs" />
-      </td>
-      <td class="py-2.5 px-3 text-center">
-        <div class="flex items-center justify-center gap-1">
-          <input type="number" min="0" max="100" value="${seg.probability_weight}" id="seg-prob-${idx}" class="w-16 bg-slate-900 border border-slate-700 rounded px-2 py-1 text-amber-300 font-bold text-center text-xs" />
-          <span class="text-slate-400">%</span>
+    // 1. Desktop table row
+    if (container) {
+      const tr = document.createElement('tr');
+      tr.className = 'border-b border-slate-700/60 hover:bg-slate-800/40 text-xs text-slate-200';
+      tr.innerHTML = `
+        <td class="py-2.5 px-3 font-bold text-amber-400">Ô số ${idx + 1}</td>
+        <td class="py-2.5 px-3">
+          <input type="text" value="${seg.text}" id="seg-text-${idx}" oninput="syncWheelInput('text', ${idx}, this.value)" class="w-full bg-slate-900 border border-slate-700 rounded px-2 py-1 text-white font-bold text-xs" />
+        </td>
+        <td class="py-2.5 px-3">
+          <input type="text" value="${seg.prize}" id="seg-prize-${idx}" oninput="syncWheelInput('prize', ${idx}, this.value)" class="w-full bg-slate-900 border border-slate-700 rounded px-2 py-1 text-slate-200 text-xs" />
+        </td>
+        <td class="py-2.5 px-3 text-center">
+          <div class="flex items-center justify-center gap-1">
+            <input type="number" min="0" max="100" value="${seg.probability_weight}" id="seg-prob-${idx}" oninput="syncWheelInput('prob', ${idx}, this.value)" class="w-16 bg-slate-900 border border-slate-700 rounded px-2 py-1 text-amber-300 font-bold text-center text-xs" />
+            <span class="text-slate-400">%</span>
+          </div>
+        </td>
+        <td class="py-2.5 px-3 text-center">
+          <input type="number" min="0" max="9999" value="${seg.stock_quantity}" id="seg-stock-${idx}" oninput="syncWheelInput('stock', ${idx}, this.value)" class="w-16 bg-slate-900 border border-slate-700 rounded px-2 py-1 text-emerald-400 font-bold text-center text-xs" />
+        </td>
+      `;
+      container.appendChild(tr);
+    }
+
+    // 2. Mobile card view (Zero horizontal scroll)
+    if (mobileContainer) {
+      const card = document.createElement('div');
+      card.className = 'p-3 rounded-xl bg-slate-900/90 border border-slate-800 space-y-2.5 shadow';
+      card.innerHTML = `
+        <div class="flex items-center justify-between">
+          <span class="font-bold text-amber-400 text-xs">Ô số ${idx + 1}</span>
+          <div class="flex items-center gap-2">
+            <div class="flex items-center gap-1 text-[11px] text-slate-400">
+              <span>Tỉ lệ:</span>
+              <input type="number" min="0" max="100" value="${seg.probability_weight}" id="seg-prob-m-${idx}" oninput="syncWheelInput('prob', ${idx}, this.value)" class="w-14 bg-slate-950 border border-slate-700 rounded px-1.5 py-0.5 text-amber-300 font-bold text-center text-xs" />
+              <span>%</span>
+            </div>
+            <div class="flex items-center gap-1 text-[11px] text-slate-400">
+              <span>Kho:</span>
+              <input type="number" min="0" max="9999" value="${seg.stock_quantity}" id="seg-stock-m-${idx}" oninput="syncWheelInput('stock', ${idx}, this.value)" class="w-14 bg-slate-950 border border-slate-700 rounded px-1.5 py-0.5 text-emerald-400 font-bold text-center text-xs" />
+            </div>
+          </div>
         </div>
-      </td>
-      <td class="py-2.5 px-3 text-center">
-        <input type="number" min="0" max="9999" value="${seg.stock_quantity}" id="seg-stock-${idx}" class="w-16 bg-slate-900 border border-slate-700 rounded px-2 py-1 text-emerald-400 font-bold text-center text-xs" />
-      </td>
-    `;
-    container.appendChild(tr);
+        <div class="space-y-1">
+          <label class="block text-[10px] uppercase font-bold text-slate-500">Nhãn hiển thị:</label>
+          <input type="text" value="${seg.text}" id="seg-text-m-${idx}" oninput="syncWheelInput('text', ${idx}, this.value)" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1 text-white font-bold text-xs" />
+        </div>
+        <div class="space-y-1">
+          <label class="block text-[10px] uppercase font-bold text-slate-500">Tên phần thưởng:</label>
+          <input type="text" value="${seg.prize}" id="seg-prize-m-${idx}" oninput="syncWheelInput('prize', ${idx}, this.value)" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1 text-slate-200 text-xs" />
+        </div>
+      `;
+      mobileContainer.appendChild(card);
+    }
   });
+}
+
+function syncWheelInput(field, idx, val) {
+  const deskEl = document.getElementById(`seg-${field}-${idx}`);
+  const mobEl = document.getElementById(`seg-${field}-m-${idx}`);
+  if (deskEl && deskEl.value !== val) deskEl.value = val;
+  if (mobEl && mobEl.value !== val) mobEl.value = val;
 }
 
 function saveAdminWheelConfig() {
@@ -170,10 +212,10 @@ function saveAdminWheelConfig() {
   let totalProb = 0;
 
   for (let idx = 0; idx < currentSegments.length; idx++) {
-    const textInput = document.getElementById(`seg-text-${idx}`);
-    const prizeInput = document.getElementById(`seg-prize-${idx}`);
-    const probInput = document.getElementById(`seg-prob-${idx}`);
-    const stockInput = document.getElementById(`seg-stock-${idx}`);
+    const textInput = document.getElementById(`seg-text-m-${idx}`) || document.getElementById(`seg-text-${idx}`);
+    const prizeInput = document.getElementById(`seg-prize-m-${idx}`) || document.getElementById(`seg-prize-${idx}`);
+    const probInput = document.getElementById(`seg-prob-m-${idx}`) || document.getElementById(`seg-prob-${idx}`);
+    const stockInput = document.getElementById(`seg-stock-m-${idx}`) || document.getElementById(`seg-stock-${idx}`);
 
     if (textInput) currentSegments[idx].text = textInput.value.trim();
     if (prizeInput) currentSegments[idx].prize = prizeInput.value.trim();
@@ -218,73 +260,115 @@ function getSpinLeadsList() {
 
 function renderAdminSpinLeadsTable() {
   const container = document.getElementById('admin-leads-body');
+  const mobileContainer = document.getElementById('admin-leads-cards-mobile');
   const countBadge = document.getElementById('admin-leads-count');
-  if (!container) return;
-
   const leads = getSpinLeadsList();
-  if (countBadge) countBadge.textContent = `${leads.length} SĐT`;
 
-  container.innerHTML = '';
+  if (countBadge) countBadge.textContent = `${leads.length} SĐT`;
+  if (container) container.innerHTML = '';
+  if (mobileContainer) mobileContainer.innerHTML = '';
 
   if (leads.length === 0) {
-    container.innerHTML = `
-      <tr>
-        <td colspan="7" class="py-6 text-center text-slate-500 text-xs">
+    if (container) {
+      container.innerHTML = `
+        <tr>
+          <td colspan="8" class="py-6 text-center text-slate-500 text-xs">
+            Chưa có khách hàng nào quay voucher.
+          </td>
+        </tr>
+      `;
+    }
+    if (mobileContainer) {
+      mobileContainer.innerHTML = `
+        <div class="py-6 text-center text-slate-500 text-xs italic">
           Chưa có khách hàng nào quay voucher.
-        </td>
-      </tr>
-    `;
+        </div>
+      `;
+    }
     return;
   }
 
   leads.forEach((item, idx) => {
-    const tr = document.createElement('tr');
-    tr.className = 'border-b border-slate-700/60 hover:bg-slate-800/40 text-xs text-slate-200 transition-colors';
-    tr.innerHTML = `
-      <td class="py-2.5 px-3 text-slate-400 font-bold">${idx + 1}</td>
-      <td class="py-2.5 px-3 text-slate-300 font-mono text-[11px]">${item.createdAt || 'Hôm nay'}</td>
-      <td class="py-2.5 px-3 font-mono font-black text-amber-300 text-sm tracking-wider">
-        ${item.phone}
-      </td>
-      <td class="py-2.5 px-3 font-mono font-bold text-white bg-slate-900/60 px-2 py-1 rounded">
-        ${item.voucherCode || 'ERK-VOUCHER'}
-      </td>
-      <td class="py-2.5 px-3 font-bold text-emerald-400">
-        ${item.prize}
-      </td>
-      <td class="py-2.5 px-3">
-        ${(() => {
-          const ref = (item.ref && item.ref !== 'direct') ? item.ref.toUpperCase() : null;
-          if (ref) {
-            return `<span class="px-2 py-0.5 rounded text-[11px] font-bold bg-amber-500/15 text-amber-300 border border-amber-500/30">👤 ${ref}</span>`;
-          }
-          return `<span class="px-2 py-0.5 rounded text-[10px] font-medium bg-slate-800 text-slate-400">🌐 Trực tiếp</span>`;
-        })()}
-      </td>
-      <td class="py-2.5 px-3">
-        <span class="px-2 py-0.5 rounded text-[11px] font-semibold bg-sky-500/10 text-sky-300 border border-sky-500/20">
-          ${item.status || 'Chờ áp dụng'}
-        </span>
-      </td>
-      <td class="py-2.5 px-3 text-center space-x-1 whitespace-nowrap">
-        ${(() => {
-          const rawDigits = (item.phone || '').replace(/\D/g, '');
-          const zaloPhone = rawDigits.startsWith('0') ? '84' + rawDigits.slice(1) : (rawDigits.startsWith('84') ? rawDigits : ('84' + rawDigits));
-          return `
-            <a href="https://zalo.me/${zaloPhone}" target="_blank" class="px-2.5 py-1 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-bold text-[10px] inline-flex items-center gap-1 shadow transition-colors" title="Chat Zalo với số ${item.phone}">
-              💬 Chat Zalo
+    const rawDigits = (item.phone || '').replace(/\D/g, '');
+    const zaloPhone = rawDigits.startsWith('0') ? '84' + rawDigits.slice(1) : (rawDigits.startsWith('84') ? rawDigits : ('84' + rawDigits));
+    const ref = (item.ref && item.ref !== 'direct') ? item.ref.toUpperCase() : null;
+    const refBadge = ref 
+      ? `<span class="px-2 py-0.5 rounded text-[11px] font-bold bg-amber-500/15 text-amber-300 border border-amber-500/30">👤 ${ref}</span>`
+      : `<span class="px-2 py-0.5 rounded text-[10px] font-medium bg-slate-800 text-slate-400">🌐 Trực tiếp</span>`;
+
+    // 1. Desktop table row
+    if (container) {
+      const tr = document.createElement('tr');
+      tr.className = 'border-b border-slate-700/60 hover:bg-slate-800/40 text-xs text-slate-200 transition-colors';
+      tr.innerHTML = `
+        <td class="py-2.5 px-3 text-slate-400 font-bold">${idx + 1}</td>
+        <td class="py-2.5 px-3 text-slate-300 font-mono text-[11px]">${item.createdAt || 'Hôm nay'}</td>
+        <td class="py-2.5 px-3 font-mono font-black text-amber-300 text-sm tracking-wider">
+          ${item.phone}
+        </td>
+        <td class="py-2.5 px-3 font-mono font-bold text-white bg-slate-900/60 px-2 py-1 rounded">
+          ${item.voucherCode || 'ERK-VOUCHER'}
+        </td>
+        <td class="py-2.5 px-3 font-bold text-emerald-400">
+          ${item.prize}
+        </td>
+        <td class="py-2.5 px-3">
+          ${refBadge}
+        </td>
+        <td class="py-2.5 px-3">
+          <span class="px-2 py-0.5 rounded text-[11px] font-semibold bg-sky-500/10 text-sky-300 border border-sky-500/20">
+            ${item.status || 'Chờ áp dụng'}
+          </span>
+        </td>
+        <td class="py-2.5 px-3 text-center space-x-1 whitespace-nowrap">
+          <a href="https://zalo.me/${zaloPhone}" target="_blank" class="px-2.5 py-1 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-bold text-[10px] inline-flex items-center gap-1 shadow transition-colors" title="Chat Zalo với số ${item.phone}">
+            💬 Chat Zalo
+          </a>
+          <a href="tel:${item.phone}" class="px-2.5 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-[10px] inline-flex items-center gap-1 shadow transition-colors" title="Gọi trực tiếp số ${item.phone}">
+            📞 Gọi
+          </a>
+          <button onclick="deleteSpinLead(${idx})" class="p-1 text-rose-400 hover:text-rose-300 text-xs font-semibold cursor-pointer" title="Xóa">
+            ✕
+          </button>
+        </td>
+      `;
+      container.appendChild(tr);
+    }
+
+    // 2. Mobile card view (Zero horizontal scroll!)
+    if (mobileContainer) {
+      const card = document.createElement('div');
+      card.className = 'p-3 rounded-xl bg-slate-900/90 border border-slate-800 space-y-2 shadow';
+      card.innerHTML = `
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-[10px] text-slate-300 font-bold">${idx + 1}</span>
+            <span class="font-mono font-black text-amber-300 text-sm tracking-wider">${item.phone}</span>
+          </div>
+          <span class="text-[10px] text-slate-400 font-mono">${item.createdAt || 'Hôm nay'}</span>
+        </div>
+        <div class="flex items-center justify-between text-xs pt-1 border-t border-slate-800/80">
+          <span class="font-bold text-emerald-400 text-xs">${item.prize}</span>
+          <span class="font-mono text-[10px] text-white bg-slate-800 px-1.5 py-0.5 rounded border border-slate-700">${item.voucherCode || 'ERK-VOUCHER'}</span>
+        </div>
+        <div class="flex items-center justify-between pt-1 border-t border-slate-800/40">
+          <div class="flex items-center gap-1.5">
+            ${refBadge}
+            <span class="px-1.5 py-0.5 rounded text-[10px] font-semibold bg-sky-500/10 text-sky-300 border border-sky-500/20">${item.status || 'Chờ áp dụng'}</span>
+          </div>
+          <div class="flex items-center gap-1.5">
+            <a href="https://zalo.me/${zaloPhone}" target="_blank" class="px-2.5 py-1 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-bold text-[10px] inline-flex items-center gap-1 shadow">
+              💬 Zalo
             </a>
-            <a href="tel:${item.phone}" class="px-2.5 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-[10px] inline-flex items-center gap-1 shadow transition-colors" title="Gọi trực tiếp số ${item.phone}">
+            <a href="tel:${item.phone}" class="px-2.5 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-[10px] inline-flex items-center gap-1 shadow">
               📞 Gọi
             </a>
-          `;
-        })()}
-        <button onclick="deleteSpinLead(${idx})" class="p-1 text-rose-400 hover:text-rose-300 text-xs font-semibold" title="Xóa">
-          ✕
-        </button>
-      </td>
-    `;
-    container.appendChild(tr);
+            <button onclick="deleteSpinLead(${idx})" class="p-1 text-rose-400 hover:text-rose-300 text-xs">✕</button>
+          </div>
+        </div>
+      `;
+      mobileContainer.appendChild(card);
+    }
   });
 }
 
@@ -547,38 +631,72 @@ function getMonthlyWinners() {
 
 function renderAdminWinnersTable() {
   const container = document.getElementById('admin-winners-body');
-  if (!container) return;
+  const mobileContainer = document.getElementById('admin-winners-cards-mobile');
 
   const winners = getMonthlyWinners();
-  container.innerHTML = '';
+  if (container) container.innerHTML = '';
+  if (mobileContainer) mobileContainer.innerHTML = '';
 
   if (winners.length === 0) {
-    container.innerHTML = `
-      <tr>
-        <td colspan="6" class="py-6 text-center text-slate-500 text-xs">
+    if (container) {
+      container.innerHTML = `
+        <tr>
+          <td colspan="6" class="py-6 text-center text-slate-500 text-xs">
+            Chưa có lượt quay trúng thưởng nào.
+          </td>
+        </tr>
+      `;
+    }
+    if (mobileContainer) {
+      mobileContainer.innerHTML = `
+        <div class="py-6 text-center text-slate-500 text-xs italic">
           Chưa có lượt quay trúng thưởng nào.
-        </td>
-      </tr>
-    `;
+        </div>
+      `;
+    }
     return;
   }
 
   winners.forEach((w, idx) => {
-    const tr = document.createElement('tr');
-    tr.className = 'border-b border-slate-700/60 hover:bg-slate-800/40 text-xs text-slate-200';
-    tr.innerHTML = `
-      <td class="py-2.5 px-3 text-slate-400">${w.period}</td>
-      <td class="py-2.5 px-3 font-mono font-black text-amber-300 text-sm tracking-wider">
-        ${w.booking_code || w.order_masked || 'ERK-BK-' + (1000 + idx)}
-      </td>
-      <td class="py-2.5 px-3 font-bold text-emerald-400">${w.prize}</td>
-      <td class="py-2.5 px-3 text-slate-400 font-mono text-[11px]">${w.draw_time || '10h00 - Mùng 05'}</td>
-      <td class="py-2.5 px-3 text-slate-300">${w.status || 'Đã ghi nhận'}</td>
-      <td class="py-2.5 px-3 text-center">
-        <button onclick="deleteMonthlyWinner(${idx})" class="text-rose-400 hover:text-rose-300 font-bold text-[11px]">Xóa</button>
-      </td>
-    `;
-    container.appendChild(tr);
+    // 1. Desktop table row
+    if (container) {
+      const tr = document.createElement('tr');
+      tr.className = 'border-b border-slate-700/60 hover:bg-slate-800/40 text-xs text-slate-200';
+      tr.innerHTML = `
+        <td class="py-2.5 px-3 text-slate-400">${w.period}</td>
+        <td class="py-2.5 px-3 font-mono font-black text-amber-300 text-sm tracking-wider">
+          ${w.booking_code || w.order_masked || 'ERK-BK-' + (1000 + idx)}
+        </td>
+        <td class="py-2.5 px-3 font-bold text-emerald-400">${w.prize}</td>
+        <td class="py-2.5 px-3 text-slate-400 font-mono text-[11px]">${w.draw_time || '10h00 - Mùng 05'}</td>
+        <td class="py-2.5 px-3 text-slate-300">${w.status || 'Đã ghi nhận'}</td>
+        <td class="py-2.5 px-3 text-center">
+          <button onclick="deleteMonthlyWinner(${idx})" class="text-rose-400 hover:text-rose-300 font-bold text-[11px]">Xóa</button>
+        </td>
+      `;
+      container.appendChild(tr);
+    }
+
+    // 2. Mobile card view (Zero horizontal scroll)
+    if (mobileContainer) {
+      const card = document.createElement('div');
+      card.className = 'p-3 rounded-xl bg-slate-900 border border-slate-800 space-y-1.5 text-xs shadow';
+      card.innerHTML = `
+        <div class="flex items-center justify-between">
+          <span class="text-amber-400 font-mono font-bold text-sm tracking-wide">${w.booking_code || w.order_masked || 'ERK-BK-' + (1000 + idx)}</span>
+          <span class="text-[10px] text-slate-400 font-mono">${w.period}</span>
+        </div>
+        <div class="flex items-center justify-between text-[11px]">
+          <span class="font-bold text-emerald-400">${w.prize}</span>
+          <span class="text-slate-400 text-[10px]">${w.draw_time || '10h00 - Mùng 05'}</span>
+        </div>
+        <div class="flex items-center justify-between pt-1 border-t border-slate-800/60">
+          <span class="text-[10px] text-slate-300">${w.status || 'Đã ghi nhận'}</span>
+          <button onclick="deleteMonthlyWinner(${idx})" class="text-rose-400 hover:text-rose-300 font-bold text-[11px]">✕ Xóa</button>
+        </div>
+      `;
+      mobileContainer.appendChild(card);
+    }
   });
 }
 
@@ -1150,7 +1268,7 @@ function switchAdminTab(tabName) {
   }
 
   if (tabName === 'spin-leads') {
-    renderAdminLeadsTable();
+    renderAdminSpinLeadsTable();
     loadBotConfigToAdminForm();
   }
   if (tabName === 'monthly-winners') {
@@ -1230,22 +1348,33 @@ function renderAdminAffiliateContest() {
   const kpiLeads = document.getElementById('kpi-affiliate-leads');
   const badge = document.getElementById('admin-affiliate-badge');
 
+  const mobileContainer = document.getElementById('admin-affiliate-cards-mobile');
+
   if (kpiMembers) kpiMembers.textContent = staffList.length;
   if (kpiClicks) kpiClicks.textContent = totalClicks;
   if (kpiLeads) kpiLeads.textContent = totalLeadsCount;
   if (badge) badge.textContent = `${staffList.length} NV`;
 
-  if (!container) return;
-  container.innerHTML = '';
+  if (container) container.innerHTML = '';
+  if (mobileContainer) mobileContainer.innerHTML = '';
 
   if (staffList.length === 0) {
-    container.innerHTML = `
-      <tr>
-        <td colspan="7" class="py-6 text-center text-slate-500 italic text-xs">
+    if (container) {
+      container.innerHTML = `
+        <tr>
+          <td colspan="7" class="py-6 text-center text-slate-500 italic text-xs">
+            Chưa có dữ liệu thi đua. Hãy tạo link cho nhân viên bên trên để bắt đầu!
+          </td>
+        </tr>
+      `;
+    }
+    if (mobileContainer) {
+      mobileContainer.innerHTML = `
+        <div class="py-6 text-center text-slate-500 italic text-xs">
           Chưa có dữ liệu thi đua. Hãy tạo link cho nhân viên bên trên để bắt đầu!
-        </td>
-      </tr>
-    `;
+        </div>
+      `;
+    }
     return;
   }
 
@@ -1260,40 +1389,73 @@ function renderAdminAffiliateContest() {
       ? ((staff.leads.length / staff.clicks) * 100).toFixed(1) + '%' 
       : (staff.leads.length > 0 ? '100%' : '0%');
 
-    const tr = document.createElement('tr');
-    tr.className = 'border-b border-slate-800/80 hover:bg-slate-900/50 text-xs transition-colors';
-    tr.innerHTML = `
-      <td class="py-3 px-3.5 text-center font-bold">${rankBadge}</td>
-      <td class="py-3 px-3.5 font-bold text-white flex items-center gap-2">
-        <span class="w-7 h-7 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-[11px] text-amber-400 uppercase font-mono font-black shrink-0">
-          ${staff.ref.slice(0, 2)}
-        </span>
-        <div>
-          <div class="text-amber-300 font-bold uppercase tracking-wider font-mono">${staff.ref}</div>
-          <div class="text-[10px] text-slate-400">Nhân viên thi đua</div>
+    // 1. Desktop table row
+    if (container) {
+      const tr = document.createElement('tr');
+      tr.className = 'border-b border-slate-800/80 hover:bg-slate-900/50 text-xs transition-colors';
+      tr.innerHTML = `
+        <td class="py-3 px-3.5 text-center font-bold">${rankBadge}</td>
+        <td class="py-3 px-3.5 font-bold text-white flex items-center gap-2">
+          <span class="w-7 h-7 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-[11px] text-amber-400 uppercase font-mono font-black shrink-0">
+            ${staff.ref.slice(0, 2)}
+          </span>
+          <div>
+            <div class="text-amber-300 font-bold uppercase tracking-wider font-mono">${staff.ref}</div>
+            <div class="text-[10px] text-slate-400">Nhân viên thi đua</div>
+          </div>
+        </td>
+        <td class="py-3 px-3.5 text-center font-mono font-bold text-slate-300">
+          ${staff.clicks}
+        </td>
+        <td class="py-3 px-3.5 text-center font-mono font-black text-emerald-400 text-sm">
+          ${staff.leads.length} SĐT
+        </td>
+        <td class="py-3 px-3.5 text-center font-mono font-bold text-sky-400">
+          ${convRate}
+        </td>
+        <td class="py-3 px-3.5 text-center font-mono text-[11px] text-slate-300">
+          <button type="button" onclick="copyAffiliateDirectLink('${staff.ref}')" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-amber-300 border border-slate-700 font-semibold text-[11px] inline-flex items-center gap-1 transition-all cursor-pointer" title="Sao chép link tiếp thị của ${staff.ref}">
+            <span>🔗</span> ?ref=${staff.ref}
+          </button>
+        </td>
+        <td class="py-3 px-3.5 text-center">
+          <button type="button" onclick="viewAffiliateLeads('${staff.ref}')" class="px-2.5 py-1 rounded-lg bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-300 border border-emerald-500/30 font-bold text-[11px] inline-flex items-center gap-1 transition-all cursor-pointer">
+            <span>👁️</span> Xem ${staff.leads.length} SĐT
+          </button>
+        </td>
+      `;
+      container.appendChild(tr);
+    }
+
+    // 2. Mobile card view (Zero horizontal scroll)
+    if (mobileContainer) {
+      const card = document.createElement('div');
+      card.className = 'p-3 rounded-xl bg-slate-900/90 border border-slate-800 space-y-2.5 shadow';
+      card.innerHTML = `
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <span class="w-6 h-6 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-xs font-bold shrink-0">${rankBadge}</span>
+            <div>
+              <div class="text-amber-300 font-bold uppercase tracking-wider font-mono text-xs">${staff.ref}</div>
+              <div class="text-[10px] text-slate-400">Nhân viên thi đua</div>
+            </div>
+          </div>
+          <div class="text-right">
+            <span class="font-mono font-black text-emerald-400 text-sm">${staff.leads.length} SĐT</span>
+            <div class="text-[10px] text-slate-400 font-mono">${staff.clicks} clicks (${convRate})</div>
+          </div>
         </div>
-      </td>
-      <td class="py-3 px-3.5 text-center font-mono font-bold text-slate-300">
-        ${staff.clicks}
-      </td>
-      <td class="py-3 px-3.5 text-center font-mono font-black text-emerald-400 text-sm">
-        ${staff.leads.length} SĐT
-      </td>
-      <td class="py-3 px-3.5 text-center font-mono font-bold text-sky-400">
-        ${convRate}
-      </td>
-      <td class="py-3 px-3.5 text-center font-mono text-[11px] text-slate-300">
-        <button type="button" onclick="copyAffiliateDirectLink('${staff.ref}')" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-amber-300 border border-slate-700 font-semibold text-[11px] inline-flex items-center gap-1 transition-all cursor-pointer" title="Sao chép link tiếp thị của ${staff.ref}">
-          <span>🔗</span> ?ref=${staff.ref}
-        </button>
-      </td>
-      <td class="py-3 px-3.5 text-center">
-        <button type="button" onclick="viewAffiliateLeads('${staff.ref}')" class="px-2.5 py-1 rounded-lg bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-300 border border-emerald-500/30 font-bold text-[11px] inline-flex items-center gap-1 transition-all cursor-pointer">
-          <span>👁️</span> Xem ${staff.leads.length} SĐT
-        </button>
-      </td>
-    `;
-    container.appendChild(tr);
+        <div class="flex items-center justify-between gap-2 pt-2 border-t border-slate-800/80">
+          <button type="button" onclick="copyAffiliateDirectLink('${staff.ref}')" class="flex-1 py-1.5 px-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-amber-300 border border-slate-700 font-semibold text-[11px] inline-flex items-center justify-center gap-1">
+            <span>🔗</span> ?ref=${staff.ref}
+          </button>
+          <button type="button" onclick="viewAffiliateLeads('${staff.ref}')" class="py-1.5 px-3 rounded-lg bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-300 border border-emerald-500/30 font-bold text-[11px] inline-flex items-center justify-center gap-1">
+            <span>👁️</span> Xem ${staff.leads.length} SĐT
+          </button>
+        </div>
+      `;
+      mobileContainer.appendChild(card);
+    }
   });
 }
 
@@ -1371,31 +1533,60 @@ function viewAffiliateLeads(refCode) {
   const container = document.getElementById('affiliate-leads-detail-container');
   const title = document.getElementById('affiliate-detail-title');
   const tbody = document.getElementById('affiliate-detail-table-body');
+  const mobileCards = document.getElementById('affiliate-detail-cards-mobile');
 
-  if (!container || !tbody) return;
-  title.innerHTML = `<span>📋</span> Danh sách ${matched.length} khách hàng do nhân viên <strong class="text-amber-400 uppercase font-mono">[${refCode}]</strong> mang về:`;
-  tbody.innerHTML = '';
+  if (!container) return;
+  if (title) title.innerHTML = `<span>📋</span> Danh sách ${matched.length} khách hàng do nhân viên <strong class="text-amber-400 uppercase font-mono">[${refCode}]</strong> mang về:`;
+  if (tbody) tbody.innerHTML = '';
+  if (mobileCards) mobileCards.innerHTML = '';
 
   if (matched.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="5" class="py-4 text-center text-slate-500 italic">Nhân viên này chưa mang về số điện thoại nào.</td></tr>`;
+    if (tbody) tbody.innerHTML = `<tr><td colspan="5" class="py-4 text-center text-slate-500 italic">Nhân viên này chưa mang về số điện thoại nào.</td></tr>`;
+    if (mobileCards) mobileCards.innerHTML = `<div class="py-4 text-center text-slate-500 italic text-xs">Nhân viên này chưa mang về số điện thoại nào.</div>`;
   } else {
     matched.forEach((item, idx) => {
       const rawDigits = (item.phone || '').replace(/\D/g, '');
       const zaloPhone = rawDigits.startsWith('0') ? '84' + rawDigits.slice(1) : (rawDigits.startsWith('84') ? rawDigits : ('84' + rawDigits));
-      const tr = document.createElement('tr');
-      tr.className = 'border-b border-slate-800/60 hover:bg-slate-900/40 text-xs';
-      tr.innerHTML = `
-        <td class="py-2 px-3 text-slate-400">${item.createdAt || 'Hôm nay'}</td>
-        <td class="py-2 px-3 font-mono font-bold text-amber-300">${item.phone}</td>
-        <td class="py-2 px-3 text-emerald-400 font-semibold">${item.prize}</td>
-        <td class="py-2 px-3 text-white">${item.voucherCode || 'ERK-VOUCHER'}</td>
-        <td class="py-2 px-3 text-center">
-          <a href="https://zalo.me/${zaloPhone}" target="_blank" class="px-2 py-0.5 rounded bg-blue-600 hover:bg-blue-500 text-white font-bold text-[10px] inline-flex items-center gap-1">
-            💬 Chat
-          </a>
-        </td>
-      `;
-      tbody.appendChild(tr);
+      
+      // Desktop row
+      if (tbody) {
+        const tr = document.createElement('tr');
+        tr.className = 'border-b border-slate-800/60 hover:bg-slate-900/40 text-xs';
+        tr.innerHTML = `
+          <td class="py-2 px-3 text-slate-400">${item.createdAt || 'Hôm nay'}</td>
+          <td class="py-2 px-3 font-mono font-bold text-amber-300">${item.phone}</td>
+          <td class="py-2 px-3 text-emerald-400 font-semibold">${item.prize}</td>
+          <td class="py-2 px-3 text-white">${item.voucherCode || 'ERK-VOUCHER'}</td>
+          <td class="py-2 px-3 text-center">
+            <a href="https://zalo.me/${zaloPhone}" target="_blank" class="px-2 py-0.5 rounded bg-blue-600 hover:bg-blue-500 text-white font-bold text-[10px] inline-flex items-center gap-1">
+              💬 Chat
+            </a>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      }
+
+      // Mobile card
+      if (mobileCards) {
+        const mcard = document.createElement('div');
+        mcard.className = 'p-2.5 rounded-xl bg-slate-950 border border-slate-800 space-y-1.5 text-xs';
+        mcard.innerHTML = `
+          <div class="flex items-center justify-between">
+            <span class="font-mono font-bold text-amber-300">${item.phone}</span>
+            <span class="text-[10px] text-slate-400">${item.createdAt || 'Hôm nay'}</span>
+          </div>
+          <div class="flex items-center justify-between text-[11px]">
+            <span class="text-emerald-400 font-semibold">${item.prize}</span>
+            <span class="text-white font-mono bg-slate-900 px-1.5 py-0.5 rounded border border-slate-800">${item.voucherCode || 'ERK-VOUCHER'}</span>
+          </div>
+          <div class="pt-1 border-t border-slate-800/80 flex justify-end">
+            <a href="https://zalo.me/${zaloPhone}" target="_blank" class="px-2.5 py-1 rounded bg-blue-600 hover:bg-blue-500 text-white font-bold text-[10px] inline-flex items-center gap-1">
+              💬 Chat Zalo
+            </a>
+          </div>
+        `;
+        mobileCards.appendChild(mcard);
+      }
     });
   }
 

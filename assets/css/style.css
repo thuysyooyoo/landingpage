@@ -120,3 +120,12 @@ body {
 .animate-spin-slow {
   animation: spinSlow 20s linear infinite;
 }
+
+/* Hide scrollbar utility */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
