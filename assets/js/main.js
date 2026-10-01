@@ -672,6 +672,92 @@ const GIAI_PHU_CONFIGS = {
   }
 };
 
+// ==================== QUY TẮC PHÂN BỔ 8 GIẢI THƯỞNG GALA (MỖI KHÁCH DUY NHẤT 1 GIẢI) ====================
+// 3 Giải Chính (Top 1, 2, 3) + 5 Giải Phụ Chuyên Môn = 8 Khách hàng độc lập khác nhau
+function getGalaAwardsAllocation(data) {
+  if (!data || !Array.isArray(data) || data.length === 0) return null;
+
+  const awardedCodes = new Set();
+  const allocation = {
+    top1: null,
+    top2: null,
+    top3: null,
+    sideAwards: {},
+    allAwardedMap: {} // code -> { key, name, type, badgeText }
+  };
+
+  // 1. TOP 3 CHUNG CUỘC (3 Giải Chính Doanh Số Cao Nhất)
+  const sortedRank = [...data].sort((a, b) => (b.service_fee || 0) - (a.service_fee || 0) || (b.order_count || 0) - (a.order_count || 0));
+
+  if (sortedRank[0]) {
+    allocation.top1 = sortedRank[0];
+    awardedCodes.add(sortedRank[0].customer_code);
+    allocation.allAwardedMap[sortedRank[0].customer_code] = {
+      key: 'top1',
+      name: 'Quán Quân Toàn Đoàn (Laptop Surface Pro 11)',
+      type: 'main',
+      badgeText: 'Quán Quân'
+    };
+  }
+
+  if (sortedRank[1]) {
+    allocation.top2 = sortedRank[1];
+    awardedCodes.add(sortedRank[1].customer_code);
+    allocation.allAwardedMap[sortedRank[1].customer_code] = {
+      key: 'top2',
+      name: 'Á Quân 1 Toàn Đoàn (iPad Air M3)',
+      type: 'main',
+      badgeText: 'Á Quân 1'
+    };
+  }
+
+  if (sortedRank[2]) {
+    allocation.top3 = sortedRank[2];
+    awardedCodes.add(sortedRank[2].customer_code);
+    allocation.allAwardedMap[sortedRank[2].customer_code] = {
+      key: 'top3',
+      name: 'Á Quân 2 Toàn Đoàn (Máy Lọc Dyson)',
+      type: 'main',
+      badgeText: 'Á Quân 2'
+    };
+  }
+
+  // 2. 05 GIẢI PHỤ CHUYÊN MÔN (3.000.000 đ / giải)
+  // Nguyên tắc: Mỗi khách chỉ được 1 giải. Nếu đã đạt giải chính thì giải phụ dành cho người tiếp theo đạt tiêu chí; giữa các giải phụ cũng không trùng khách hàng.
+  const sideConfigList = [
+    { key: 'vua-so-luong-don', name: 'Vua Số Lượng Đơn' },
+    { key: 'tan-binh-xuat-sac', name: 'Tân Binh Xuất Sắc' },
+    { key: 'su-tro-lai-an-tuong', name: 'Sự Trở Lại Ấn Tượng' },
+    { key: 'vua-tai-trong', name: 'Vua Tải Trọng (Kg)' },
+    { key: 'vua-khoi-luong', name: 'Vua Khối Lượng (M³)' }
+  ];
+
+  sideConfigList.forEach(cfg => {
+    const list = GIAI_PHU_CONFIGS[cfg.key].filterAndSort(data);
+    // Tìm người đầu tiên trong danh sách tiêu chí chưa nhận bất kỳ giải nào trong 8 giải Gala
+    let winner = list.find(item => item && item.customer_code && !awardedCodes.has(item.customer_code));
+    
+    // Fallback: nếu danh sách lọc tiêu chí đã hết người đủ điều kiện, lấy người kế tiếp trong bảng tổng sắp chưa nhận giải
+    if (!winner) {
+      winner = sortedRank.find(item => item && item.customer_code && !awardedCodes.has(item.customer_code));
+    }
+
+    if (winner) {
+      allocation.sideAwards[cfg.key] = winner;
+      awardedCodes.add(winner.customer_code);
+      allocation.allAwardedMap[winner.customer_code] = {
+        key: cfg.key,
+        name: cfg.name,
+        type: 'side',
+        badgeText: cfg.name
+      };
+    }
+  });
+
+  return allocation;
+}
+window.getGalaAwardsAllocation = getGalaAwardsAllocation;
+
 let currentGiaiPhuKey = 'vua-so-luong-don';
 let currentGiaiPhuList = [];
 
@@ -749,6 +835,10 @@ function renderGiaiPhuTable(list, query = '') {
     return;
   }
 
+  const rawData = (typeof getLeaderboardData === 'function') ? getLeaderboardData() : (window.leaderboardData || []);
+  const alloc = getGalaAwardsAllocation(rawData);
+  const awardWinner = alloc && alloc.sideAwards ? alloc.sideAwards[currentGiaiPhuKey] : null;
+
   list.forEach((item, index) => {
     const rank = index + 1;
     const cfg = GIAI_PHU_CONFIGS[currentGiaiPhuKey];
@@ -763,17 +853,32 @@ function renderGiaiPhuTable(list, query = '') {
       userFoundRank = rank;
     }
 
+    const isWinnerThisAward = awardWinner && awardWinner.customer_code === code;
+    const otherAward = alloc && alloc.allAwardedMap ? alloc.allAwardedMap[code] : null;
+
     let rankBadge = '';
-    let rowBg = 'hover:bg-slate-800/40 transition-colors';
     if (rank === 1) {
       rankBadge = `<span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 font-black text-xs shadow-md">🥇 1</span>`;
-      rowBg = 'bg-amber-500/10 hover:bg-amber-500/15';
     } else if (rank === 2) {
       rankBadge = `<span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-slate-300 text-slate-950 font-black text-xs shadow">🥈 2</span>`;
     } else if (rank === 3) {
       rankBadge = `<span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-amber-700 text-white font-black text-xs shadow">🥉 3</span>`;
     } else {
-      rankBadge = `<span class="font-mono text-xs font-bold text-slate-400">#${rank}</span>`;
+      rankBadge = `<span class="text-xs font-bold text-slate-400">#${rank}</span>`;
+    }
+
+    let statusBadge = '';
+    let rowBg = 'hover:bg-slate-800/40 transition-colors';
+
+    if (isWinnerThisAward) {
+      statusBadge = `<span class="px-2.5 py-1 rounded-full bg-emerald-500/25 text-emerald-300 text-[10px] font-black border border-emerald-500/50 shadow-sm animate-pulse">🏆 ĐẠT GIẢI 3TR</span>`;
+      rowBg = 'bg-emerald-500/15 hover:bg-emerald-500/20 border-emerald-500/40';
+    } else if (otherAward && otherAward.type === 'main') {
+      statusBadge = `<span class="px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 text-[10px] font-bold border border-amber-500/35" title="${otherAward.name}">Đã đạt Giải Chính</span>`;
+    } else if (otherAward && otherAward.type === 'side') {
+      statusBadge = `<span class="px-2 py-0.5 rounded-full bg-purple-500/20 text-purple-300 text-[10px] font-bold border border-purple-500/35" title="${otherAward.name}">Đạt giải phụ khác</span>`;
+    } else {
+      statusBadge = `<span class="px-2 py-0.5 rounded-full bg-slate-800 text-slate-400 text-[10px] font-medium">Ứng viên</span>`;
     }
 
     let highlightClass = '';
@@ -786,21 +891,21 @@ function renderGiaiPhuTable(list, query = '') {
     tr.id = `giai-phu-row-${code}`;
     tr.innerHTML = `
       <td class="py-3 px-3 sm:px-4 text-center">${rankBadge}</td>
-      <td class="py-3 px-3 sm:px-4 font-mono font-bold text-amber-300 text-xs sm:text-sm whitespace-nowrap">
+      <td class="py-3 px-3 sm:px-4 font-bold text-amber-300 text-xs sm:text-sm whitespace-nowrap">
         ${code}
       </td>
       <td class="py-3 px-3 sm:px-4 font-medium text-slate-200">
         <div>${name}</div>
         <div class="text-[10px] text-slate-400 mt-0.5 sm:hidden">${metricStr}</div>
       </td>
-      <td class="py-3 px-3 sm:px-4 text-right font-black text-amber-300 font-mono text-xs sm:text-sm whitespace-nowrap">
+      <td class="py-3 px-3 sm:px-4 text-right font-black text-amber-300 text-xs sm:text-sm whitespace-nowrap">
         ${metricStr}
       </td>
-      <td class="py-3 px-3 sm:px-4 text-right font-mono text-xs text-slate-300 hidden sm:table-cell whitespace-nowrap">
+      <td class="py-3 px-3 sm:px-4 text-right text-xs text-slate-300 hidden sm:table-cell whitespace-nowrap">
         ${formatVND(item.service_fee || 0)}
       </td>
       <td class="py-3 px-3 sm:px-4 text-center">
-        ${rank <= 3 ? '<span class="px-2 py-0.5 rounded-full bg-amber-400/20 text-amber-300 text-[10px] font-black border border-amber-400/30">Top Xét Giải</span>' : '<span class="px-2 py-0.5 rounded-full bg-slate-800 text-slate-400 text-[10px] font-semibold">Ứng viên</span>'}
+        ${statusBadge}
       </td>
     `;
     tbody.appendChild(tr);
@@ -811,10 +916,22 @@ function renderGiaiPhuTable(list, query = '') {
     if (q) {
       if (userFoundItem) {
         banner.classList.remove('hidden');
-        bannerText.innerHTML = `
-          <span>Mã <strong>${userFoundItem.customer_code}</strong> hiện đang xếp hạng <strong class="text-amber-300 text-sm">#${userFoundRank}</strong> trong giải này với chỉ số <strong class="text-emerald-300">${GIAI_PHU_CONFIGS[currentGiaiPhuKey].formatMetric(userFoundItem)}</strong>!</span>
-        `;
-        // Tự động cuộn tới dòng
+        const code = userFoundItem.customer_code;
+        const otherAward = alloc && alloc.allAwardedMap ? alloc.allAwardedMap[code] : null;
+        const isWinnerThisAward = awardWinner && awardWinner.customer_code === code;
+        
+        let statusHtml = '';
+        if (isWinnerThisAward) {
+          statusHtml = `<span class="text-emerald-300 font-black">🎉 Xin chúc mừng! Mã <strong>${code}</strong> là Khách hàng Đạt Giải 3.000.000 đ của danh hiệu này!</span>`;
+        } else if (otherAward && otherAward.type === 'main') {
+          statusHtml = `<span>Mã <strong>${code}</strong> xếp hạng <strong>#${userFoundRank}</strong> tiêu chí này, nhưng đã được vinh danh tại <strong>${otherAward.name}</strong> (nhường quyền xét giải phụ cho ứng viên kế tiếp).</span>`;
+        } else if (otherAward && otherAward.type === 'side') {
+          statusHtml = `<span>Mã <strong>${code}</strong> xếp hạng <strong>#${userFoundRank}</strong> tiêu chí này, và đã được trao danh hiệu <strong>${otherAward.name}</strong>.</span>`;
+        } else {
+          statusHtml = `<span>Mã <strong>${code}</strong> hiện đang xếp hạng <strong class="text-amber-300 text-sm">#${userFoundRank}</strong> trong danh sách với chỉ số <strong class="text-emerald-300">${GIAI_PHU_CONFIGS[currentGiaiPhuKey].formatMetric(userFoundItem)}</strong>.</span>`;
+        }
+        bannerText.innerHTML = statusHtml;
+
         setTimeout(() => {
           const matchedRow = document.getElementById(`giai-phu-row-${userFoundItem.customer_code}`);
           if (matchedRow) matchedRow.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -992,11 +1109,12 @@ function renderGalaSummaryData() {
     elTotalVol.textContent = `${kgStr} & ${m3Str}`;
   }
 
-  // 2. TỔNG SẮP TOP 3 CHUNG CUỘC (Sắp xếp theo service_fee giảm dần)
-  const sortedByRank = [...data].sort((a, b) => (b.service_fee || 0) - (a.service_fee || 0) || (b.order_count || 0) - (a.order_count || 0));
+  // 2. TỔNG SẮP 8 GIẢI THƯỞNG GALA (ĐẢM BẢO MỖI KHÁCH DUY NHẤT 1 GIẢI)
+  const alloc = getGalaAwardsAllocation(data);
+  if (!alloc) return;
 
   // Top 1 - Quán Quân
-  const top1 = sortedByRank[0];
+  const top1 = alloc.top1;
   if (top1) {
     const t1Code = document.getElementById('gala-top1-code');
     const t1Name = document.getElementById('gala-top1-name');
@@ -1009,7 +1127,7 @@ function renderGalaSummaryData() {
   }
 
   // Top 2 - Á Quân 1
-  const top2 = sortedByRank[1];
+  const top2 = alloc.top2;
   if (top2) {
     const t2Code = document.getElementById('gala-top2-code');
     const t2Name = document.getElementById('gala-top2-name');
@@ -1022,7 +1140,7 @@ function renderGalaSummaryData() {
   }
 
   // Top 3 - Á Quân 2
-  const top3 = sortedByRank[2];
+  const top3 = alloc.top3;
   if (top3) {
     const t3Code = document.getElementById('gala-top3-code');
     const t3Name = document.getElementById('gala-top3-name');
@@ -1034,11 +1152,10 @@ function renderGalaSummaryData() {
     if (t3Orders) t3Orders.textContent = `✓ ${top3.order_count || 0} Đơn hoàn tất`;
   }
 
-  // 3. TỰ ĐỘNG PHÂN PHỐI 05 GIẢI PHỤ CHUYÊN MÔN THEO TIÊU CHÍ BXH
+  // 3. TỰ ĐỘNG PHÂN PHỐI 05 GIẢI PHỤ CHUYÊN MÔN (ĐỘC QUYỀN KHÔNG TRÙNG LẶP KHÁCH HÀNG)
   // Giải 1: Vua Số Lượng Đơn
-  const listDon = GIAI_PHU_CONFIGS['vua-so-luong-don'].filterAndSort(data);
-  if (listDon && listDon.length > 0) {
-    const w1 = listDon[0];
+  const w1 = alloc.sideAwards['vua-so-luong-don'];
+  if (w1) {
     const cEl = document.getElementById('gala-award-don-code');
     const nEl = document.getElementById('gala-award-don-name');
     const vEl = document.getElementById('gala-award-don-val');
@@ -1048,8 +1165,7 @@ function renderGalaSummaryData() {
   }
 
   // Giải 2: Tân Binh Xuất Sắc
-  const listNew = GIAI_PHU_CONFIGS['tan-binh-xuat-sac'].filterAndSort(data);
-  const w2 = (listNew && listNew.length > 0) ? listNew[0] : sortedByRank.find(x => (x.vip_tier || '').toLowerCase().includes('mới')) || sortedByRank[3];
+  const w2 = alloc.sideAwards['tan-binh-xuat-sac'];
   if (w2) {
     const cEl = document.getElementById('gala-award-new-code');
     const nEl = document.getElementById('gala-award-new-name');
@@ -1060,21 +1176,19 @@ function renderGalaSummaryData() {
   }
 
   // Giải 3: Sự Trở Lại Ấn Tượng
-  const listReturn = GIAI_PHU_CONFIGS['su-tro-lai-an-tuong'].filterAndSort(data);
-  const w3 = (listReturn && listReturn.length > 0) ? listReturn[0] : sortedByRank.find(x => (x.prize_tag || '').toLowerCase().includes('trở lại')) || sortedByRank[4];
+  const w3 = alloc.sideAwards['su-tro-lai-an-tuong'];
   if (w3) {
     const cEl = document.getElementById('gala-award-return-code');
     const nEl = document.getElementById('gala-award-return-name');
     const vEl = document.getElementById('gala-award-return-val');
     if (cEl) cEl.textContent = w3.customer_code || '';
     if (nEl) nEl.textContent = w3.customer_name || w3.original_name || '';
-    if (vEl) vEl.textContent = `${w3.order_count || 18} Đơn Tái Xuất`;
+    if (vEl) vEl.textContent = `${w3.order_count || 0} Đơn Tái Xuất`;
   }
 
   // Giải 4: Vua Tải Trọng (Kg)
-  const listWeight = GIAI_PHU_CONFIGS['vua-tai-trong'].filterAndSort(data);
-  if (listWeight && listWeight.length > 0) {
-    const w4 = listWeight[0];
+  const w4 = alloc.sideAwards['vua-tai-trong'];
+  if (w4) {
     const cEl = document.getElementById('gala-award-weight-code');
     const nEl = document.getElementById('gala-award-weight-name');
     const vEl = document.getElementById('gala-award-weight-val');
@@ -1085,9 +1199,8 @@ function renderGalaSummaryData() {
   }
 
   // Giải 5: Vua Khối Lượng (M³)
-  const listVol = GIAI_PHU_CONFIGS['vua-khoi-luong'].filterAndSort(data);
-  if (listVol && listVol.length > 0) {
-    const w5 = listVol[0];
+  const w5 = alloc.sideAwards['vua-khoi-luong'];
+  if (w5) {
     const cEl = document.getElementById('gala-award-volume-code');
     const nEl = document.getElementById('gala-award-volume-name');
     const vEl = document.getElementById('gala-award-volume-val');

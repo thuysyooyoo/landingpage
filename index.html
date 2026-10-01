@@ -409,14 +409,6 @@
                 Công bố chính thức danh sách khách hàng, doanh nghiệp và hộ kinh doanh bứt phá xuất sắc nhất trong Chương trình Tri Ân Eureka 2026.
               </p>
             </div>
-
-            <!-- Nút Chuyển Đổi Chế Độ Xem (Toggle Gala / Full Mode) -->
-            <div class="flex items-center gap-2 self-start lg:self-center">
-              <button id="btn-toggle-gala-mode" onclick="toggleGalaCelebrationMode()" class="px-5 py-3 rounded-2xl bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-500 hover:from-amber-400 hover:to-yellow-400 text-slate-950 font-black text-xs sm:text-sm shadow-xl hover:scale-105 active:scale-95 transition-all flex items-center gap-2 cursor-pointer">
-                <span id="gala-mode-icon">🏆</span>
-                <span id="gala-mode-text">Chế Độ Vinh Danh Gala (Đang Bật)</span>
-              </button>
-            </div>
           </div>
 
           <!-- 4 Thẻ Chỉ Số Tổng Kết Chương Trình (Tự Động Tính Từ BXH) -->
@@ -545,14 +537,21 @@
 
         <!-- 2. VINH DANH 05 KHÁCH HÀNG ĐẠT 05 GIẢI PHỤ CHUYÊN MÔN -->
         <div class="mb-12">
-          <div class="flex items-center justify-between mb-6 px-1">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3 px-1">
             <div class="text-left">
               <span class="text-xs font-black uppercase text-amber-400 tracking-wider">05 DANH HIỆU CHUYÊN SÂU</span>
               <h3 class="text-xl sm:text-2xl font-black text-white">Vinh Danh 05 Khách Hàng Đạt Giải Phụ Chuyên Môn</h3>
             </div>
-            <span class="px-3 py-1 rounded-full bg-slate-800 text-slate-300 text-xs font-bold border border-slate-700">
+            <span class="px-3 py-1 rounded-full bg-slate-800 text-slate-300 text-xs font-bold border border-slate-700 self-start sm:self-auto">
               3.000.000 đ Tiền mặt / Giải
             </span>
+          </div>
+          <!-- Quy tắc mỗi khách 1 giải Gala -->
+          <div class="mb-5 p-3 rounded-2xl bg-slate-900/80 border border-amber-400/20 text-xs text-slate-300 flex items-start gap-2.5">
+            <span class="text-amber-400 text-base leading-none mt-0.5">⚖️</span>
+            <div>
+              <strong class="text-amber-300">Nguyên tắc trao giải Gala:</strong> Mỗi khách hàng nhận tối đa 01 giải trong 8 giải thưởng Gala (3 giải chính & 5 giải phụ). Khách hàng đã đạt Top 1, Top 2, Top 3 sẽ nhường quyền xét giải phụ cho khách hàng đạt chuẩn kế tiếp.
+            </div>
           </div>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 text-left">
@@ -2975,6 +2974,10 @@
           <p id="giai-phu-modal-desc" class="text-xs text-slate-300 mt-1">
             Khách hàng có tổng số đơn booking hoàn tất nhiều nhất trong chương trình.
           </p>
+          <div class="mt-2 text-[11px] text-amber-300/90 bg-amber-500/10 border border-amber-400/20 px-2.5 py-1 rounded-lg inline-flex items-center gap-1.5">
+            <span>⚖️</span>
+            <span>Nguyên tắc: Mỗi khách chỉ nhận 01 giải Gala (3 giải chính & 5 giải phụ). Người đã đạt giải trước sẽ nhường quyền cho ứng viên kế tiếp.</span>
+          </div>
         </div>
       </div>
 
