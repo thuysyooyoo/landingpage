@@ -476,8 +476,12 @@
   </section>
 
   <!-- ==================== CƠ CẤU GIẢI THƯỞNG ==================== -->
-  <section id="giai-thuong" class="py-20 relative bg-slate-900/60 border-t border-b border-white/5">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <section id="giai-thuong" class="py-20 relative bg-slate-900/80 border-t border-b border-white/5 overflow-hidden">
+    <!-- Nền ảnh cảng biển logistics đêm với blur đen cao cấp -->
+    <div class="absolute inset-0 -z-10 bg-cover bg-center bg-no-repeat opacity-20 scale-105 pointer-events-none" style="background-image: url('assets/images/bg-giai-thuong-port.jpg'); filter: blur(8px);"></div>
+    <div class="absolute inset-0 -z-10 bg-gradient-to-b from-[#0b1120] via-slate-950/80 to-[#0b1120] pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
       
       <div class="text-center max-w-3xl mx-auto mb-12">
         <span class="text-xs font-bold uppercase tracking-widest text-brand-400">HỆ THỐNG GIẢI THƯỞNG CHÍNH THỨC</span>
@@ -588,14 +592,17 @@
       <!-- Tab 2: 05 Giải Phụ Chuyên Môn -->
       <div id="tab-content-giai-phu" class="prize-tab-content hidden grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
         <!-- Vua Số Lượng Đơn -->
-        <div onclick="openGiaiPhuModal('vua-so-luong-don')" class="cursor-pointer rounded-2xl p-5 flex flex-col justify-between text-left group bg-slate-800/40 backdrop-blur-xl border border-white/10 hover:border-amber-400/80 hover:shadow-xl hover:shadow-amber-500/20 transition-all duration-300 hover:-translate-y-1.5 relative overflow-hidden">
+        <div onclick="openGiaiPhuModal('vua-so-luong-don')" class="cursor-pointer rounded-2xl p-4 flex flex-col justify-between text-left group bg-slate-800/40 backdrop-blur-xl border border-white/10 hover:border-amber-400/80 hover:shadow-xl hover:shadow-amber-500/20 transition-all duration-300 hover:-translate-y-1.5 relative overflow-hidden">
           <div class="absolute inset-0 bg-gradient-to-br from-amber-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
           <div class="relative z-10">
-            <div class="w-12 h-12 rounded-xl bg-slate-700/50 border border-white/10 flex items-center justify-center text-2xl mb-3 group-hover:scale-110 transition-transform">
-              📦
+            <!-- Thumbnail Visual Image -->
+            <div class="relative h-28 rounded-xl overflow-hidden mb-3 border border-white/10 group-hover:border-amber-400/40 transition-colors shadow-inner">
+              <img src="assets/images/award-so-luong-don.jpg" alt="Vua Số Lượng Đơn" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 brightness-90" />
+              <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
+              <span class="absolute top-2 left-2 px-2 py-0.5 rounded-md bg-amber-500/90 text-slate-950 text-[10px] font-black uppercase tracking-wider">📦 Kỷ Lục Đơn</span>
             </div>
             <h4 class="font-bold text-white text-sm mb-1 group-hover:text-amber-300 transition-colors">Vua Số Lượng Đơn</h4>
-            <div class="text-lg font-black text-amber-400 mb-2 font-display">3.000.000 đ</div>
+            <div class="text-lg font-black text-amber-400 mb-1.5 font-display">3.000.000 đ</div>
             <p class="text-[11px] text-slate-300 leading-relaxed font-normal">Khách hàng có tổng số đơn booking hoàn tất nhiều nhất trong chương trình.</p>
           </div>
           <div class="pt-3 mt-3 border-t border-slate-700/50 flex items-center justify-between text-[11px] font-bold text-brand-400 group-hover:text-brand-300 relative z-10">
@@ -605,14 +612,17 @@
         </div>
 
         <!-- Tân Binh Xuất Sắc -->
-        <div onclick="openGiaiPhuModal('tan-binh-xuat-sac')" class="cursor-pointer rounded-2xl p-5 flex flex-col justify-between text-left group bg-slate-800/40 backdrop-blur-xl border border-white/10 hover:border-amber-400/80 hover:shadow-xl hover:shadow-amber-500/20 transition-all duration-300 hover:-translate-y-1.5 relative overflow-hidden">
+        <div onclick="openGiaiPhuModal('tan-binh-xuat-sac')" class="cursor-pointer rounded-2xl p-4 flex flex-col justify-between text-left group bg-slate-800/40 backdrop-blur-xl border border-white/10 hover:border-amber-400/80 hover:shadow-xl hover:shadow-amber-500/20 transition-all duration-300 hover:-translate-y-1.5 relative overflow-hidden">
           <div class="absolute inset-0 bg-gradient-to-br from-amber-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
           <div class="relative z-10">
-            <div class="w-12 h-12 rounded-xl bg-slate-700/50 border border-white/10 flex items-center justify-center text-2xl mb-3 group-hover:scale-110 transition-transform">
-              🌟
+            <!-- Thumbnail Visual Image -->
+            <div class="relative h-28 rounded-xl overflow-hidden mb-3 border border-white/10 group-hover:border-amber-400/40 transition-colors shadow-inner">
+              <img src="assets/images/award-tan-binh.jpg" alt="Tân Binh Xuất Sắc" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 brightness-90" />
+              <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
+              <span class="absolute top-2 left-2 px-2 py-0.5 rounded-md bg-amber-500/90 text-slate-950 text-[10px] font-black uppercase tracking-wider">🌟 Tân Binh Q4</span>
             </div>
             <h4 class="font-bold text-white text-sm mb-1 group-hover:text-amber-300 transition-colors">Tân Binh Xuất Sắc</h4>
-            <div class="text-lg font-black text-amber-400 mb-2 font-display">3.000.000 đ</div>
+            <div class="text-lg font-black text-amber-400 mb-1.5 font-display">3.000.000 đ</div>
             <p class="text-[11px] text-slate-300 leading-relaxed font-normal">Khách hàng Mới (tạo tài khoản từ 01/10) có Phí Dịch Vụ cao nhất.</p>
           </div>
           <div class="pt-3 mt-3 border-t border-slate-700/50 flex items-center justify-between text-[11px] font-bold text-brand-400 group-hover:text-brand-300 relative z-10">
@@ -622,14 +632,17 @@
         </div>
 
         <!-- Sự Trở Lại Ấn Tượng -->
-        <div onclick="openGiaiPhuModal('su-tro-lai-an-tuong')" class="cursor-pointer rounded-2xl p-5 flex flex-col justify-between text-left group bg-slate-800/40 backdrop-blur-xl border border-white/10 hover:border-amber-400/80 hover:shadow-xl hover:shadow-amber-500/20 transition-all duration-300 hover:-translate-y-1.5 relative overflow-hidden">
+        <div onclick="openGiaiPhuModal('su-tro-lai-an-tuong')" class="cursor-pointer rounded-2xl p-4 flex flex-col justify-between text-left group bg-slate-800/40 backdrop-blur-xl border border-white/10 hover:border-amber-400/80 hover:shadow-xl hover:shadow-amber-500/20 transition-all duration-300 hover:-translate-y-1.5 relative overflow-hidden">
           <div class="absolute inset-0 bg-gradient-to-br from-amber-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
           <div class="relative z-10">
-            <div class="w-12 h-12 rounded-xl bg-slate-700/50 border border-white/10 flex items-center justify-center text-2xl mb-3 group-hover:scale-110 transition-transform">
-              🔄
+            <!-- Thumbnail Visual Image -->
+            <div class="relative h-28 rounded-xl overflow-hidden mb-3 border border-white/10 group-hover:border-amber-400/40 transition-colors shadow-inner">
+              <img src="assets/images/award-tro-lai.jpg" alt="Sự Trở Lại Ấn Tượng" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 brightness-90" />
+              <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
+              <span class="absolute top-2 left-2 px-2 py-0.5 rounded-md bg-amber-500/90 text-slate-950 text-[10px] font-black uppercase tracking-wider">🔄 Tái Khởi Động</span>
             </div>
             <h4 class="font-bold text-white text-sm mb-1 group-hover:text-amber-300 transition-colors">Sự Trở Lại Ấn Tượng</h4>
-            <div class="text-lg font-black text-amber-400 mb-2 font-display">3.000.000 đ</div>
+            <div class="text-lg font-black text-amber-400 mb-1.5 font-display">3.000.000 đ</div>
             <p class="text-[11px] text-slate-300 leading-relaxed font-normal">Khách hàng cũ (từ đầu năm chưa đi) quay lại gửi hàng bứt phá nhất.</p>
           </div>
           <div class="pt-3 mt-3 border-t border-slate-700/50 flex items-center justify-between text-[11px] font-bold text-brand-400 group-hover:text-brand-300 relative z-10">
@@ -639,14 +652,17 @@
         </div>
 
         <!-- Vua Tải Trọng (Kg) -->
-        <div onclick="openGiaiPhuModal('vua-tai-trong')" class="cursor-pointer rounded-2xl p-5 flex flex-col justify-between text-left group bg-slate-800/40 backdrop-blur-xl border border-white/10 hover:border-amber-400/80 hover:shadow-xl hover:shadow-amber-500/20 transition-all duration-300 hover:-translate-y-1.5 relative overflow-hidden">
+        <div onclick="openGiaiPhuModal('vua-tai-trong')" class="cursor-pointer rounded-2xl p-4 flex flex-col justify-between text-left group bg-slate-800/40 backdrop-blur-xl border border-white/10 hover:border-amber-400/80 hover:shadow-xl hover:shadow-amber-500/20 transition-all duration-300 hover:-translate-y-1.5 relative overflow-hidden">
           <div class="absolute inset-0 bg-gradient-to-br from-amber-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
           <div class="relative z-10">
-            <div class="w-12 h-12 rounded-xl bg-slate-700/50 border border-white/10 flex items-center justify-center text-2xl mb-3 group-hover:scale-110 transition-transform">
-              ⚓
+            <!-- Thumbnail Visual Image -->
+            <div class="relative h-28 rounded-xl overflow-hidden mb-3 border border-white/10 group-hover:border-amber-400/40 transition-colors shadow-inner">
+              <img src="assets/images/award-tai-trong.jpg" alt="Vua Tải Trọng (Kg)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 brightness-90" />
+              <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
+              <span class="absolute top-2 left-2 px-2 py-0.5 rounded-md bg-amber-500/90 text-slate-950 text-[10px] font-black uppercase tracking-wider">⚓ Tải Trọng Kg</span>
             </div>
             <h4 class="font-bold text-white text-sm mb-1 group-hover:text-amber-300 transition-colors">Vua Tải Trọng (Kg)</h4>
-            <div class="text-lg font-black text-amber-400 mb-2 font-display">3.000.000 đ</div>
+            <div class="text-lg font-black text-amber-400 mb-1.5 font-display">3.000.000 đ</div>
             <p class="text-[11px] text-slate-300 leading-relaxed font-normal">Tổng khối lượng kg cao nhất (áp dụng lô hàng đi term E & F quốc tế).</p>
           </div>
           <div class="pt-3 mt-3 border-t border-slate-700/50 flex items-center justify-between text-[11px] font-bold text-brand-400 group-hover:text-brand-300 relative z-10">
@@ -656,14 +672,17 @@
         </div>
 
         <!-- Vua Khối Lượng (M³) -->
-        <div onclick="openGiaiPhuModal('vua-khoi-luong')" class="cursor-pointer rounded-2xl p-5 flex flex-col justify-between text-left group bg-slate-800/40 backdrop-blur-xl border border-white/10 hover:border-amber-400/80 hover:shadow-xl hover:shadow-amber-500/20 transition-all duration-300 hover:-translate-y-1.5 relative overflow-hidden">
+        <div onclick="openGiaiPhuModal('vua-khoi-luong')" class="cursor-pointer rounded-2xl p-4 flex flex-col justify-between text-left group bg-slate-800/40 backdrop-blur-xl border border-white/10 hover:border-amber-400/80 hover:shadow-xl hover:shadow-amber-500/20 transition-all duration-300 hover:-translate-y-1.5 relative overflow-hidden">
           <div class="absolute inset-0 bg-gradient-to-br from-amber-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
           <div class="relative z-10">
-            <div class="w-12 h-12 rounded-xl bg-slate-700/50 border border-white/10 flex items-center justify-center text-2xl mb-3 group-hover:scale-110 transition-transform">
-              🚛
+            <!-- Thumbnail Visual Image -->
+            <div class="relative h-28 rounded-xl overflow-hidden mb-3 border border-white/10 group-hover:border-amber-400/40 transition-colors shadow-inner">
+              <img src="assets/images/award-khoi-luong.jpg" alt="Vua Khối Lượng (M³)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 brightness-90" />
+              <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
+              <span class="absolute top-2 left-2 px-2 py-0.5 rounded-md bg-amber-500/90 text-slate-950 text-[10px] font-black uppercase tracking-wider">🚛 Thể Tích M³</span>
             </div>
             <h4 class="font-bold text-white text-sm mb-1 group-hover:text-amber-300 transition-colors">Vua Khối Lượng (M³)</h4>
-            <div class="text-lg font-black text-amber-400 mb-2 font-display">3.000.000 đ</div>
+            <div class="text-lg font-black text-amber-400 mb-1.5 font-display">3.000.000 đ</div>
             <p class="text-[11px] text-slate-300 leading-relaxed font-normal">Tổng thể tích m³ cao nhất (áp dụng lô hàng gom cont chính ngạch).</p>
           </div>
           <div class="pt-3 mt-3 border-t border-slate-700/50 flex items-center justify-between text-[11px] font-bold text-brand-400 group-hover:text-brand-300 relative z-10">
@@ -679,9 +698,13 @@
         <div onclick="scrollToVongQuayTriAn(event)" class="cursor-pointer rounded-3xl p-6 flex flex-col justify-between text-left group bg-slate-800/40 backdrop-blur-xl border border-sky-400/30 hover:border-sky-400/80 hover:shadow-2xl hover:shadow-sky-500/20 transition-all duration-300 hover:-translate-y-1.5 relative overflow-hidden">
           <div class="absolute inset-0 bg-gradient-to-br from-sky-500/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
           <div class="relative z-10">
-            <div class="flex items-center justify-between mb-4">
-              <span class="text-xs font-black text-sky-300 bg-sky-500/20 border border-sky-400/40 px-3 py-1 rounded-xl tracking-wider">KỲ QUAY THÁNG 10 (05/11)</span>
-              <span class="text-xl">🗓️</span>
+            <!-- Voucher Image Banner -->
+            <div class="relative h-36 rounded-2xl overflow-hidden mb-4 border border-sky-500/30 shadow-lg">
+              <img src="assets/images/voucher-t10.jpg" alt="Voucher 300K Tháng 10" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+              <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent"></div>
+              <span class="absolute top-2.5 left-2.5 px-2.5 py-1 rounded-lg bg-sky-500/90 text-slate-950 text-[10px] font-black uppercase tracking-wider">
+                🗓️ KỲ QUAY 05/11
+              </span>
             </div>
             <h3 class="text-xl font-black text-white mb-2 font-display group-hover:text-sky-200 transition-colors">03 Giải Voucher 300.000 đ</h3>
             <p class="text-xs text-slate-300 mb-4 leading-relaxed font-normal">
@@ -701,9 +724,13 @@
         <div onclick="scrollToVongQuayTriAn(event)" class="cursor-pointer rounded-3xl p-6 flex flex-col justify-between text-left group bg-slate-800/40 backdrop-blur-xl border border-sky-400/30 hover:border-sky-400/80 hover:shadow-2xl hover:shadow-sky-500/20 transition-all duration-300 hover:-translate-y-1.5 relative overflow-hidden">
           <div class="absolute inset-0 bg-gradient-to-br from-sky-500/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
           <div class="relative z-10">
-            <div class="flex items-center justify-between mb-4">
-              <span class="text-xs font-black text-sky-300 bg-sky-500/20 border border-sky-400/40 px-3 py-1 rounded-xl tracking-wider">KỲ QUAY THÁNG 11 (05/12)</span>
-              <span class="text-xl">🏷️</span>
+            <!-- Voucher Image Banner -->
+            <div class="relative h-36 rounded-2xl overflow-hidden mb-4 border border-sky-500/30 shadow-lg">
+              <img src="assets/images/voucher-t11.jpg" alt="Voucher 300K Tháng 11" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+              <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent"></div>
+              <span class="absolute top-2.5 left-2.5 px-2.5 py-1 rounded-lg bg-sky-500/90 text-slate-950 text-[10px] font-black uppercase tracking-wider">
+                🏷️ KỲ QUAY 05/12
+              </span>
             </div>
             <h3 class="text-xl font-black text-white mb-2 font-display group-hover:text-sky-200 transition-colors">03 Giải Voucher 300.000 đ</h3>
             <p class="text-xs text-slate-300 mb-4 leading-relaxed font-normal">
@@ -723,9 +750,13 @@
         <div onclick="scrollToVongQuayTriAn(event)" class="cursor-pointer rounded-3xl p-6 flex flex-col justify-between text-left group bg-slate-800/40 backdrop-blur-xl border border-amber-400/40 hover:border-amber-400/90 hover:shadow-2xl hover:shadow-amber-500/20 transition-all duration-300 hover:-translate-y-1.5 relative overflow-hidden">
           <div class="absolute inset-0 bg-gradient-to-br from-amber-500/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
           <div class="relative z-10">
-            <div class="flex items-center justify-between mb-4">
-              <span class="text-xs font-black text-amber-300 bg-amber-500/20 border border-amber-400/50 px-3 py-1 rounded-xl tracking-wider">KỲ THÁNG 12 — LỘC XUÂN (05/01)</span>
-              <span class="text-xl">🧧</span>
+            <!-- Voucher Image Banner -->
+            <div class="relative h-36 rounded-2xl overflow-hidden mb-4 border border-amber-400/40 shadow-lg">
+              <img src="assets/images/voucher-t12.jpg" alt="Voucher 400K Tháng 12" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+              <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent"></div>
+              <span class="absolute top-2.5 left-2.5 px-2.5 py-1 rounded-lg bg-amber-500 text-slate-950 text-[10px] font-black uppercase tracking-wider">
+                🧧 LỘC XUÂN 05/01
+              </span>
             </div>
             <h3 class="text-xl font-black text-white mb-2 font-display group-hover:text-amber-200 transition-colors">03 Giải Voucher 400.000 đ</h3>
             <p class="text-xs text-slate-300 mb-4 leading-relaxed font-normal">
@@ -1182,8 +1213,12 @@
   </section>
 
   <!-- ==================== BẢNG XẾP HẠNG TRỰC TUYẾN (BẢO MẬT TÊN & SĐT) ==================== -->
-  <section id="bxh-truc-tuyen" class="py-20 relative bg-slate-900/40 border-t border-slate-800">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <section id="bxh-truc-tuyen" class="py-20 relative bg-slate-900/70 border-t border-slate-800 overflow-hidden">
+    <!-- Nền ảnh đoàn xe logistics cao tốc đêm với blur đen cao cấp -->
+    <div class="absolute inset-0 -z-10 bg-cover bg-center bg-no-repeat opacity-15 scale-105 pointer-events-none" style="background-image: url('assets/images/bg-bxh-fleet.jpg'); filter: blur(8px);"></div>
+    <div class="absolute inset-0 -z-10 bg-gradient-to-b from-[#0b1120] via-slate-950/85 to-[#0b1120] pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
       
       <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
         <div>
@@ -1310,10 +1345,10 @@
   </section>
 
   <!-- ==================== THỂ LỆ & CÂU HỎI THƯỜNG GẶP (FAQ ACCORDION) ==================== -->
-  <section id="the-le" class="py-20 relative border-t border-slate-800">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+  <section id="the-le" class="py-20 relative border-t border-slate-800 bg-slate-900/30 overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
       
-      <div class="text-center mb-12">
+      <div class="text-center max-w-3xl mx-auto mb-14">
         <span class="text-xs font-bold uppercase tracking-widest text-brand-400">QUY CHẾ THAM GIA MINH BẠCH</span>
         <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-2 mb-3">
           Thể Lệ & Giải Đáp Thắc Mắc
@@ -1323,7 +1358,55 @@
         </p>
       </div>
 
-      <div class="space-y-4">
+      <!-- Layout 2 Cột: Cột Trái Visual Gala YEP, Cột Phải FAQ -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        <!-- Cột Trái: Poster Gala Year-End Party & 3 Cam Kết Vàng -->
+        <div class="lg:col-span-5 lg:sticky lg:top-24 space-y-5">
+          <div class="relative rounded-3xl overflow-hidden border border-amber-500/30 shadow-2xl bg-slate-950 group">
+            <div class="relative h-64 sm:h-72 overflow-hidden">
+              <img src="assets/images/bg-gala-awards.jpg" alt="Đêm Gala Vinh Danh YEP 2026" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 brightness-90" />
+              <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-transparent"></div>
+              <div class="absolute top-4 left-4 px-3 py-1 rounded-full bg-amber-500/90 text-slate-950 text-xs font-black uppercase tracking-wider shadow-lg">
+                🏆 ĐÊM GALA VINH DANH 2026
+              </div>
+              <div class="absolute bottom-4 left-4 right-4 text-white">
+                <h3 class="text-xl font-black font-display text-amber-300 mb-1">Year-End Party Eureka 2026</h3>
+                <p class="text-xs text-slate-300 leading-relaxed">
+                  Lễ trao cúp vàng, quà tặng công nghệ cao cấp và tri ân các đối tác gắn bó.
+                </p>
+              </div>
+            </div>
+
+            <!-- 3 Cam kết cốt lõi -->
+            <div class="p-5 space-y-3.5 bg-slate-900/90 border-t border-slate-800">
+              <div class="flex items-start gap-3">
+                <div class="w-7 h-7 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">✓</div>
+                <div>
+                  <h4 class="text-xs font-bold text-white">Ghi nhận tự động 100%</h4>
+                  <p class="text-[11px] text-slate-400">Không cần đăng ký form, hệ thống tự động ghi nhận theo mã tài khoản.</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-3">
+                <div class="w-7 h-7 rounded-lg bg-sky-500/20 text-sky-400 flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">🔒</div>
+                <div>
+                  <h4 class="text-xs font-bold text-white">Bảo mật thông tin tối đa</h4>
+                  <p class="text-[11px] text-slate-400">Ẩn tên công ty và số điện thoại, bảo vệ đối tác khỏi các hành vi cào data.</p>
+                </div>
+              </div>
+              <div class="flex items-start gap-3">
+                <div class="w-7 h-7 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">🎁</div>
+                <div>
+                  <h4 class="text-xs font-bold text-white">100% Khách hàng có quà</h4>
+                  <p class="text-[11px] text-slate-400">Từ Top Chung cuộc, 5 Giải Phụ, Vòng Quay Tri Ân đến Nhiệm Vụ VIP+1.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cột Phải: FAQ Accordion -->
+        <div class="lg:col-span-7 space-y-3.5">
         
         <!-- FAQ 1 -->
         <div class="glass-card rounded-2xl border border-slate-700/80 overflow-hidden">
@@ -1424,9 +1507,10 @@
           </div>
         </div>
 
-      </div>
+        </div><!-- /col-span-7 -->
+      </div><!-- /grid-2-cols -->
 
-    </div>
+    </div><!-- /max-w-7xl -->
   </section>
 
   <!-- ==================== CALL TO ACTION BOTTOM ==================== -->

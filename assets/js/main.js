@@ -173,6 +173,7 @@ const DEFAULT_NHIEM_VU_CONFIG = {
     reward: 'VIP+1 Trọn Tháng 11',
     reward_desc: 'Giảm đến 30% cước gom cont theo cấp VIP',
     theme: 'amber',
+    image: 'assets/images/chang-1-khoi-dong.jpg',
     customer_codes: [
       'ERK-KH-8891', 'ERK-KH-4432', 'ERK-KH-1205', 'ERK-KH-9012',
       'ERK-KH-7731', 'ERK-KH-5524', 'ERK-KH-3198', 'ERK-KH-6640',
@@ -191,6 +192,7 @@ const DEFAULT_NHIEM_VU_CONFIG = {
     reward: 'VIP+1 Trọn Tháng 12',
     reward_desc: 'Giảm đến 30% cước gom cont theo cấp VIP',
     theme: 'orange',
+    image: 'assets/images/chang-2-cao-diem.jpg',
     customer_codes: [
       'ERK-KH-8891', 'ERK-KH-4432', 'ERK-KH-1205', 'ERK-KH-9012',
       'ERK-KH-7731', 'ERK-KH-5524', 'ERK-KH-3198', 'ERK-KH-6640',
@@ -208,6 +210,7 @@ const DEFAULT_NHIEM_VU_CONFIG = {
     reward: 'VIP+1 Trọn Tháng 01/2027',
     reward_desc: 'Tăng thêm 15 ngày công nợ cho VIP Elite+',
     theme: 'blue',
+    image: 'assets/images/chang-3-ve-dich.jpg',
     customer_codes: [
       'ERK-KH-8891', 'ERK-KH-4432', 'ERK-KH-1205', 'ERK-KH-9012',
       'ERK-KH-7731', 'ERK-KH-5524', 'ERK-KH-3198', 'ERK-KH-6640',
@@ -401,22 +404,35 @@ function renderNhiemVuDisplay() {
             </div>
           </div>
 
-          <!-- Header chặng đang diễn ra -->
-          <div class="flex items-center justify-between mb-3">
-            <span class="px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider border ${themeColors.badge}">
-              ${curChang.period_title}
-            </span>
-            <span class="text-xs font-bold text-slate-300 bg-slate-900/60 px-3 py-1 rounded-lg border border-slate-700">
-              📅 ${curChang.time_range}
-            </span>
-          </div>
+          <!-- Header Chặng & Hero Banner Hình Ảnh Với Blur Đen -->
+          <div class="relative rounded-2xl overflow-hidden mb-5 border border-white/15 shadow-2xl h-44 sm:h-52 group/hero">
+            <img src="${curChang.image || (mode === 'chang-2' ? 'assets/images/chang-2-cao-diem.jpg' : (mode === 'chang-3' ? 'assets/images/chang-3-ve-dich.jpg' : 'assets/images/chang-1-khoi-dong.jpg'))}" alt="${curChang.title}" class="w-full h-full object-cover group-hover/hero:scale-105 transition-transform duration-700 brightness-90" />
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/70 to-slate-950/25 backdrop-blur-[1px]"></div>
+            
+            <div class="absolute inset-0 p-4 sm:p-5 flex flex-col justify-between z-10">
+              <div class="flex items-center justify-between">
+                <span class="px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider border backdrop-blur-md shadow-lg ${themeColors.badge}">
+                  ${curChang.period_title}
+                </span>
+                <span class="text-xs font-bold text-white bg-slate-950/80 backdrop-blur-md px-3 py-1 rounded-lg border border-white/20 shadow">
+                  📅 ${curChang.time_range}
+                </span>
+              </div>
 
-          <h3 class="text-2xl sm:text-3xl font-black text-white mb-2 font-display">
-            "${curChang.title}"
-          </h3>
-          <p class="text-xs sm:text-sm text-slate-300 mb-5 leading-relaxed">
-            ${curChang.desc}
-          </p>
+              <div>
+                <span class="text-[11px] font-bold text-amber-300 uppercase tracking-widest block mb-1 flex items-center gap-1.5">
+                  <span class="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
+                  TIÊU ĐIỂM CHẶNG ĐUA CAO ĐIỂM
+                </span>
+                <h3 class="text-2xl sm:text-3xl font-black text-white font-display drop-shadow-lg mb-1">
+                  "${curChang.title}"
+                </h3>
+                <p class="text-xs text-slate-200 line-clamp-2 max-w-xl drop-shadow leading-relaxed">
+                  ${curChang.desc}
+                </p>
+              </div>
+            </div>
+          </div>
 
           <!-- 2 Cột: Điều kiện & Phần thưởng đặt song song -->
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
