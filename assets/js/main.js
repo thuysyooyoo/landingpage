@@ -251,7 +251,7 @@ function renderNhiemVuDisplay() {
 
         <div class="text-center max-w-2xl mx-auto mb-8 relative z-10">
           <span class="px-3.5 py-1.5 rounded-full bg-emerald-500/20 text-emerald-300 text-xs font-black border border-emerald-500/30 uppercase tracking-wider inline-block mb-3">
-            📊 BẢNG TỔNG KẾT TOÀN DIỆN CHIẾN DỊCH
+            📊 BẢNG TỔNG KẾT TOÀN DIỆN CHƯƠNG TRÌNH
           </span>
           <h3 class="text-2xl sm:text-3xl font-black text-white font-display">
             Tổng Kết 3 Chặng Nhiệm Vụ Hệ Thống

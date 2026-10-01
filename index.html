@@ -1717,7 +1717,12 @@
         <div class="flex items-center gap-2.5 sm:gap-3">
           <span class="text-xl sm:text-2xl">⚙️</span>
           <div>
-            <h3 class="text-base sm:text-xl font-black text-white">Bảng Quản Trị Sự Kiện (Admin Control Panel)</h3>
+            <div class="flex flex-wrap items-center gap-2">
+              <h3 class="text-base sm:text-xl font-black text-white">Bảng Quản Trị Sự Kiện (Admin Control Panel)</h3>
+              <span id="admin-cloud-sync-badge" class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 text-[10px] font-bold">
+                <span>🟡 Bộ nhớ:</span> <span>Cục bộ</span>
+              </span>
+            </div>
             <span class="text-[11px] sm:text-xs text-emerald-400 font-semibold">Tài khoản Quản Trị Viên đang hoạt động</span>
           </div>
         </div>
@@ -1745,6 +1750,10 @@
         <button onclick="switchAdminTab('affiliate-contest')" id="admin-btn-affiliate-contest" class="admin-tab-btn px-3 sm:px-3.5 py-2 rounded-xl text-[11px] sm:text-xs font-bold text-slate-400 hover:text-white flex items-center gap-1.5 shrink-0 whitespace-nowrap">
           <span>🏆 5. Thi Đua Nội Bộ (Ref Link)</span>
           <span id="admin-affiliate-badge" class="px-1.5 py-0.2 rounded-full bg-emerald-400/20 text-emerald-300 text-[10px] font-bold border border-emerald-400/40">3 NV</span>
+        </button>
+        <button onclick="switchAdminTab('sheets-sync')" id="admin-btn-sheets-sync" class="admin-tab-btn px-3 sm:px-3.5 py-2 rounded-xl text-[11px] sm:text-xs font-bold text-slate-400 hover:text-white flex items-center gap-1.5 shrink-0 whitespace-nowrap">
+          <span>☁️ 6. Đồng Bộ Google Sheets (Cloud DB)</span>
+          <span id="admin-sheets-status-dot" class="w-2 h-2 rounded-full bg-amber-400"></span>
         </button>
       </div>
 
@@ -2459,6 +2468,104 @@
         </div>
       </div>
 
+      <!-- ==================== TAB 6: ĐỒNG BỘ GOOGLE SHEETS (CLOUD DB) ==================== -->
+      <div id="admin-tab-sheets-sync" class="admin-tab-content hidden space-y-5">
+        <!-- Banner giải thích -->
+        <div class="p-4 rounded-2xl bg-gradient-to-r from-sky-950/70 via-slate-900 to-indigo-950/70 border border-sky-500/40 flex flex-col md:flex-row md:items-center justify-between gap-3 shadow-lg">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-xl">☁️</span>
+              <h4 class="text-sm font-black uppercase text-sky-400 tracking-wider font-display">ĐỒNG BỘ DỮ LIỆU ĐÁM MÂY — GOOGLE SHEETS CLOUD DATABASE</h4>
+            </div>
+            <p class="text-xs text-slate-300 mt-1 max-w-2xl leading-relaxed">
+              Kết nối trực tiếp website với Google Sheets trên Google Drive của bạn. Giúp toàn bộ dữ liệu (Khách quay voucher, kết quả quay M05, Cấu hình Nhiệm Vụ, Ẩn/Hiện Gala) được lưu trữ dùng chung cho tất cả máy tính và điện thoại.
+            </p>
+          </div>
+          <div class="flex flex-wrap items-center gap-2 shrink-0">
+            <button type="button" onclick="handleFetchFromCloud()" class="px-3.5 py-2 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs flex items-center gap-1.5 shadow transition-all">
+              <span>📥 Kéo Dữ Liệu Từ Cloud</span>
+            </button>
+            <button type="button" onclick="handlePushAllToCloud()" class="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center gap-1.5 shadow transition-all">
+              <span>📤 Đẩy Dữ Liệu Máy Lên Cloud</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Block 1: Cấu hình URL Web App & Trạng thái kết nối -->
+        <div class="p-4 sm:p-5 rounded-2xl bg-slate-900/90 border border-slate-700/80 space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-slate-800">
+            <div>
+              <h5 class="text-xs sm:text-sm font-bold text-white flex items-center gap-2">
+                <span>🔗</span> <span>Đường Dẫn Kết Nối (Google Apps Script Web App URL)</span>
+              </h5>
+              <p class="text-[11px] text-slate-400 mt-0.5">Dán đường dẫn triển khai Web App từ Google Sheets của bạn vào đây.</p>
+            </div>
+            <div id="sheets-connection-status-pill" class="self-start sm:self-center px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-bold">
+              🟡 Chưa kết nối
+            </div>
+          </div>
+
+          <div class="space-y-3">
+            <div class="flex flex-col sm:flex-row gap-2">
+              <input type="url" id="admin-sheets-url-input" placeholder="https://script.google.com/macros/s/AKfycb.../exec" class="flex-1 bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs text-white font-mono focus:outline-none focus:border-sky-400" />
+              <button type="button" onclick="handleSaveSheetsUrl()" class="px-4 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs shrink-0 transition-colors shadow">
+                💾 Lưu Cấu Hình URL
+              </button>
+              <button type="button" onclick="handleTestSheetsConnection()" class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-600 text-white font-bold text-xs shrink-0 transition-colors">
+                ⚡ Kiểm Tra Kết Nối (Ping)
+              </button>
+            </div>
+            <p id="sheets-test-result-msg" class="text-xs font-semibold hidden"></p>
+          </div>
+        </div>
+
+        <!-- Block 2: Hướng dẫn 4 bước siêu nhanh kèm Mã Nguồn Apps Script -->
+        <div class="p-4 sm:p-5 rounded-2xl bg-slate-900/90 border border-slate-700/80 space-y-4">
+          <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+            <div>
+              <h5 class="text-xs sm:text-sm font-bold text-amber-400 flex items-center gap-2">
+                <span>📖</span> <span>Hướng Dẫn 4 Bước Cài Đặt Miễn Phí (Mất 2 Phút)</span>
+              </h5>
+              <p class="text-[11px] text-slate-400 mt-0.5">Làm theo các bước sau để Google Sheets tự động nhận diện và cập nhật dữ liệu.</p>
+            </div>
+            <button type="button" onclick="copyAppsScriptCode()" class="px-3 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs flex items-center gap-1.5 shadow transition-all">
+              <span>📋 Sao Chép Mã Apps Script</span>
+            </button>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-3 text-xs">
+            <div class="p-3 rounded-xl bg-slate-950 border border-slate-800 space-y-1">
+              <span class="text-amber-400 font-bold text-xs">Bước 1: Tạo Sheet</span>
+              <p class="text-slate-300 text-[11px]">Vào Google Drive -> Tạo <strong>Google Trang tính (Google Sheets)</strong> mới. Đặt tên: <em>Eureka Database 2026</em>.</p>
+            </div>
+            <div class="p-3 rounded-xl bg-slate-950 border border-slate-800 space-y-1">
+              <span class="text-amber-400 font-bold text-xs">Bước 2: Mở Apps Script</span>
+              <p class="text-slate-300 text-[11px]">Trên thanh công cụ của Sheet, bấm <strong>Tiện ích mở rộng (Extensions)</strong> -> chọn <strong>Apps Script</strong>.</p>
+            </div>
+            <div class="p-3 rounded-xl bg-slate-950 border border-slate-800 space-y-1">
+              <span class="text-amber-400 font-bold text-xs">Bước 3: Dán mã & Lưu</span>
+              <p class="text-slate-300 text-[11px]">Xóa hết code cũ trong file <code>Code.gs</code>, dán toàn bộ mã bên dưới vào và bấm biểu tượng <strong>Lưu 💾</strong>.</p>
+            </div>
+            <div class="p-3 rounded-xl bg-slate-950 border border-slate-800 space-y-1">
+              <span class="text-amber-400 font-bold text-xs">Bước 4: Triển khai Web App</span>
+              <p class="text-slate-300 text-[11px]">Bấm <strong>Triển khai (Deploy)</strong> -> <strong>Tùy chọn triển khai mới</strong> -> Chọn loại <strong>Ứng dụng web</strong> -> Quyền: <strong>Bất kỳ ai (Anyone)</strong> -> Dán URL vào ô trên.</p>
+            </div>
+          </div>
+
+          <!-- Mã nguồn Apps Script thu gọn có thể copy -->
+          <div class="space-y-1.5 pt-2">
+            <div class="flex items-center justify-between text-xs text-slate-400 font-semibold">
+              <span>📄 Mã nguồn Apps Script (Sẵn sàng copy & paste):</span>
+              <span id="copy-script-feedback" class="text-emerald-400 font-bold hidden">✅ Đã sao chép vào bộ nhớ tạm!</span>
+            </div>
+            <div class="relative">
+              <textarea id="apps-script-code-box" readonly rows="7" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-[11px] font-mono text-emerald-300 select-all focus:outline-none"></textarea>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
     </div>
   </div>
 
@@ -2506,6 +2613,7 @@
   <canvas id="confetti-canvas" class="fixed inset-0 pointer-events-none z-50 hidden"></canvas>
 
   <!-- ==================== MODULAR SCRIPTS ==================== -->
+  <script src="assets/js/sheets-sync.js"></script>
   <script src="assets/js/confetti.js"></script>
   <script src="assets/js/countdown.js"></script>
   <script src="assets/js/admin.js"></script>

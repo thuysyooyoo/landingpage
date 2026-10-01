@@ -239,7 +239,7 @@ function saveAdminWheelConfig() {
 }
 
 function resetAdminWheelConfig() {
-  if (confirm('Bạn có chắc chắn muốn đặt lại toàn bộ tỉ lệ và kho quà về mặc định của chiến dịch?')) {
+  if (confirm('Bạn có chắc chắn muốn đặt lại toàn bộ tỉ lệ và kho quà về mặc định của chương trình?')) {
     localStorage.removeItem(STORAGE_KEY_WHEEL_CONFIG);
     renderAdminWheelConfigTable();
     if (typeof initWelcomeWheelData === 'function') initWelcomeWheelData();
@@ -804,7 +804,7 @@ function saveAdminWeeklyWinner() {
 
   const winnerData = {
     is_active: isActive,
-    week_title: titleInput ? titleInput.value.trim() : 'Tuần Chiến Dịch',
+    week_title: titleInput ? titleInput.value.trim() : 'Tuần Chương Trình',
     customer_name: maskName(nameVal),
     customer_code: codeInput ? codeInput.value.trim().toUpperCase() : 'ERK-KH-8891',
     weekly_spending: spendVal,
@@ -814,6 +814,9 @@ function saveAdminWeeklyWinner() {
   };
 
   localStorage.setItem('eureka_weekly_winner', JSON.stringify(winnerData));
+  if (typeof syncAdminConfigToCloud === 'function') {
+    syncAdminConfigToCloud('eureka_weekly_winner', winnerData);
+  }
 
   if (typeof renderWeeklyWinnerSpotlight === 'function') {
     renderWeeklyWinnerSpotlight();
@@ -912,6 +915,9 @@ function saveAdminGalaToggle() {
     updated_at: new Date().toLocaleString('vi-VN')
   };
   localStorage.setItem('eureka_gala_awards_config', JSON.stringify(config));
+  if (typeof syncAdminConfigToCloud === 'function') {
+    syncAdminConfigToCloud('eureka_gala_awards_config', config);
+  }
   applyGalaVisibility();
   renderAdminGalaToggle();
   alert(isActive ? '🟢 Đã BẬT hiển thị phần Vinh danh Đêm Gala trên trang chính!' : '⚪ Đã TẮT / ẨN phần Vinh danh Đêm Gala khỏi trang chính!');
@@ -1078,6 +1084,9 @@ function saveAdminLeaderboardFromTable() {
   updatedList.sort((a, b) => a.rank - b.rank);
 
   localStorage.setItem('eureka_custom_leaderboard', JSON.stringify(updatedList));
+  if (typeof syncAdminConfigToCloud === 'function') {
+    syncAdminConfigToCloud('eureka_custom_leaderboard', updatedList);
+  }
 
   if (typeof loadLeaderboardData === 'function') {
     loadLeaderboardData();
@@ -1363,6 +1372,9 @@ function saveAdminNhiemVuConfig() {
   }
 
   localStorage.setItem('eureka_nhiem_vu_config', JSON.stringify(cfg));
+  if (typeof syncAdminConfigToCloud === 'function') {
+    syncAdminConfigToCloud('eureka_nhiem_vu_config', cfg);
+  }
 
   // Sync to frontend display
   if (typeof renderNhiemVuDisplay === 'function') {
@@ -1380,7 +1392,7 @@ function saveAdminNhiemVuConfig() {
 }
 
 function resetAdminNhiemVuConfig() {
-  if (confirm('Khôi phục cấu hình Nhiệm Vụ Hệ Thống về mặc định của chiến dịch?')) {
+  if (confirm('Khôi phục cấu hình Nhiệm Vụ Hệ Thống về mặc định của chương trình?')) {
     localStorage.removeItem('eureka_nhiem_vu_config');
     renderAdminNhiemVuManager();
     if (typeof renderNhiemVuDisplay === 'function') renderNhiemVuDisplay();
@@ -1565,6 +1577,9 @@ function switchAdminTab(tabName) {
   }
   if (tabName === 'affiliate-contest') {
     renderAdminAffiliateContest();
+  }
+  if (tabName === 'sheets-sync') {
+    renderAdminSheetsSyncTab();
   }
 }
 
@@ -1943,5 +1958,366 @@ if (document.readyState === 'loading') {
   window.addEventListener('DOMContentLoaded', initAdminTriggers);
 } else {
   initAdminTriggers();
+}
+
+// ==================== TAB 6: GOOGLE SHEETS CLOUD DATABASE ====================
+
+const APPS_SCRIPT_SOURCE_CODE = `/**
+ * GOOGLE APPS SCRIPT DATABASE - EUREKA CUSTOMER AWARDS 2026
+ * Hướng dẫn:
+ * 1. Mở một Google Spreadsheet mới trên Google Drive của bạn.
+ * 2. Đặt tên file: "Eureka Customer Awards 2026 - Database"
+ * 3. Trên menu: Tiện ích mở rộng (Extensions) -> Apps Script.
+ * 4. Xóa hết code cũ trong Code.gs và dán toàn bộ đoạn mã này vào.
+ * 5. Bấm nút "Lưu" (biểu tượng đĩa mềm 💾).
+ * 6. Bấm "Triển khai" (Deploy) -> "Tùy chọn triển khai mới" (New deployment).
+ *    - Loại: "Ứng dụng web" (Web app).
+ *    - Mô tả: "v1.0 Eureka Cloud DB".
+ *    - Thực thi dưới dạng (Execute as): "Tôi" (Me).
+ *    - Ai có quyền truy cập (Who has access): "Bất kỳ ai" (Anyone).
+ * 7. Bấm "Triển khai" -> Chọn tài khoản Google -> Bấm "Nâng cao" (Advanced) -> "Đi tới ... (không an toàn)" -> Bấm "Cho phép" (Allow).
+ * 8. Copy đường dẫn "URL ứng dụng web" (kết thúc bằng /exec) và dán vào mục Quản Trị Website!
+ */
+
+function doGet(e) {
+  var action = (e && e.parameter && e.parameter.action) ? e.parameter.action : 'getAllData';
+  if (action === 'ping') {
+    return jsonOutput({ status: 'ok', message: 'Kết nối Google Sheets Cloud Database thành công!', timestamp: new Date().toISOString() });
+  }
+
+  try {
+    var ss = SpreadsheetApp.getActiveSpreadsheet();
+    initDatabaseSheets(ss);
+
+    // 1. Leads & Phones
+    var leadsSheet = ss.getSheetByName('VongQuayMayMan');
+    var spinLeads = [];
+    var lockedPhones = [];
+    if (leadsSheet && leadsSheet.getLastRow() > 1) {
+      var leadsData = leadsSheet.getRange(2, 1, leadsSheet.getLastRow() - 1, 6).getValues();
+      for (var i = leadsData.length - 1; i >= 0; i--) {
+        var row = leadsData[i];
+        if (row[1]) {
+          var phoneStr = String(row[1]).trim();
+          spinLeads.push({
+            id: 'L-' + (i + 1),
+            createdAt: formatDate(row[0]),
+            phone: phoneStr,
+            voucherCode: String(row[2]),
+            prize: String(row[3]),
+            ref: String(row[4] || 'direct'),
+            status: String(row[5] || 'Chờ áp dụng')
+          });
+          lockedPhones.push(phoneStr);
+        }
+      }
+    }
+
+    // 2. M05 Winners
+    var m05Sheet = ss.getSheetByName('VongQuayM05');
+    var monthlyWinners = [];
+    if (m05Sheet && m05Sheet.getLastRow() > 1) {
+      var m05Data = m05Sheet.getRange(2, 1, m05Sheet.getLastRow() - 1, 5).getValues();
+      for (var j = m05Data.length - 1; j >= 0; j--) {
+        var mRow = m05Data[j];
+        if (mRow[2]) {
+          monthlyWinners.push({
+            id: 'W-' + (j + 1),
+            draw_time: formatDate(mRow[0]),
+            period: String(mRow[1]),
+            booking_code: String(mRow[2]),
+            prize: String(mRow[3]),
+            status: String(mRow[4] || '✅ Đã ghi nhận')
+          });
+        }
+      }
+    }
+
+    // 3. Admin Configs
+    var cfgSheet = ss.getSheetByName('AdminConfig');
+    var configs = {};
+    if (cfgSheet && cfgSheet.getLastRow() > 1) {
+      var cfgData = cfgSheet.getRange(2, 1, cfgSheet.getLastRow() - 1, 2).getValues();
+      for (var k = 0; k < cfgData.length; k++) {
+        var key = String(cfgData[k][0]).trim();
+        var valStr = String(cfgData[k][1]).trim();
+        if (key && valStr) {
+          try { configs[key] = JSON.parse(valStr); } catch (err) { configs[key] = valStr; }
+        }
+      }
+    }
+
+    return jsonOutput({
+      status: 'success',
+      data: {
+        spinLeads: spinLeads,
+        lockedPhones: lockedPhones,
+        monthlyWinners: monthlyWinners,
+        nhiemVuConfig: configs['eureka_nhiem_vu_config'] || null,
+        galaConfig: configs['eureka_gala_awards_config'] || null,
+        weeklyWinner: configs['eureka_weekly_winner'] || null,
+        customLeaderboard: configs['eureka_custom_leaderboard'] || null
+      }
+    });
+  } catch (err) {
+    return jsonOutput({ status: 'error', message: err.toString() });
+  }
+}
+
+function doPost(e) {
+  try {
+    var ss = SpreadsheetApp.getActiveSpreadsheet();
+    initDatabaseSheets(ss);
+    var payload = JSON.parse(e.postData.contents);
+    var action = payload.action;
+
+    if (action === 'record_spin_lead') {
+      var lead = payload.lead || {};
+      var leadsSheet = ss.getSheetByName('VongQuayMayMan');
+      leadsSheet.appendRow([new Date(), "'" + String(lead.phone || '').trim(), lead.voucherCode || '', lead.prize || '', lead.ref || 'direct', lead.status || 'Chờ áp dụng qua Zalo']);
+      return jsonOutput({ status: 'success', message: 'Đã lưu lead' });
+    }
+
+    if (action === 'record_m05_winner') {
+      var winner = payload.winner || {};
+      var m05Sheet = ss.getSheetByName('VongQuayM05');
+      m05Sheet.appendRow([new Date(), winner.period || '', winner.booking_code || '', winner.prize || '', winner.status || '✅ Vừa quay trúng']);
+      return jsonOutput({ status: 'success', message: 'Đã lưu người trúng M05' });
+    }
+
+    if (action === 'save_config') {
+      var cfgKey = payload.key;
+      var cfgVal = JSON.stringify(payload.value);
+      var cfgSheet = ss.getSheetByName('AdminConfig');
+      var foundRow = -1;
+      if (cfgSheet.getLastRow() > 1) {
+        var keys = cfgSheet.getRange(2, 1, cfgSheet.getLastRow() - 1, 1).getValues();
+        for (var r = 0; r < keys.length; r++) {
+          if (keys[r][0] === cfgKey) { foundRow = r + 2; break; }
+        }
+      }
+      if (foundRow > 0) {
+        cfgSheet.getRange(foundRow, 2).setValue(cfgVal);
+        cfgSheet.getRange(foundRow, 3).setValue(new Date());
+      } else {
+        cfgSheet.appendRow([cfgKey, cfgVal, new Date()]);
+      }
+      return jsonOutput({ status: 'success', message: 'Đã lưu cấu hình' });
+    }
+
+    if (action === 'sync_all') {
+      var all = payload.data || {};
+      if (all.spinLeads && Array.isArray(all.spinLeads)) {
+        var lSheet = ss.getSheetByName('VongQuayMayMan');
+        if (lSheet.getLastRow() > 1) lSheet.getRange(2, 1, lSheet.getLastRow() - 1, 6).clearContent();
+        var leadRows = all.spinLeads.map(function(l) {
+          return [l.createdAt || new Date(), "'" + String(l.phone || ''), l.voucherCode || '', l.prize || '', l.ref || 'direct', l.status || 'Chờ áp dụng qua Zalo'];
+        });
+        if (leadRows.length > 0) lSheet.getRange(2, 1, leadRows.length, 6).setValues(leadRows);
+      }
+      if (all.monthlyWinners && Array.isArray(all.monthlyWinners)) {
+        var mSheet = ss.getSheetByName('VongQuayM05');
+        if (mSheet.getLastRow() > 1) mSheet.getRange(2, 1, mSheet.getLastRow() - 1, 5).clearContent();
+        var mRows = all.monthlyWinners.map(function(w) {
+          return [w.draw_time || new Date(), w.period || '', w.booking_code || '', w.prize || '', w.status || '✅ Đã ghi nhận'];
+        });
+        if (mRows.length > 0) mSheet.getRange(2, 1, mRows.length, 5).setValues(mRows);
+      }
+      var cSheet = ss.getSheetByName('AdminConfig');
+      if (cSheet.getLastRow() > 1) cSheet.getRange(2, 1, cSheet.getLastRow() - 1, 3).clearContent();
+      var configItems = [
+        ['eureka_nhiem_vu_config', JSON.stringify(all.nhiemVuConfig || {})],
+        ['eureka_gala_awards_config', JSON.stringify(all.galaConfig || {})],
+        ['eureka_weekly_winner', JSON.stringify(all.weeklyWinner || {})],
+        ['eureka_custom_leaderboard', JSON.stringify(all.customLeaderboard || [])]
+      ];
+      var cRows = configItems.map(function(item) { return [item[0], item[1], new Date()]; });
+      cSheet.getRange(2, 1, cRows.length, 3).setValues(cRows);
+      return jsonOutput({ status: 'success', message: 'Đã đồng bộ toàn bộ' });
+    }
+
+    return jsonOutput({ status: 'ignored' });
+  } catch (err) {
+    return jsonOutput({ status: 'error', message: err.toString() });
+  }
+}
+
+function initDatabaseSheets(ss) {
+  var sheet1 = ss.getSheetByName('VongQuayMayMan');
+  if (!sheet1) {
+    sheet1 = ss.insertSheet('VongQuayMayMan');
+    sheet1.appendRow(['Thời Gian Quay', 'Số Điện Thoại', 'Mã Voucher', 'Giải Thưởng Trúng', 'Nguồn Giới Thiệu', 'Trạng Thái Chăm Sóc']);
+    sheet1.getRange(1, 1, 1, 6).setBackground('#1e293b').setFontColor('#38bdf8').setFontWeight('bold');
+    sheet1.setFrozenRows(1);
+  }
+  var sheet2 = ss.getSheetByName('VongQuayM05');
+  if (!sheet2) {
+    sheet2 = ss.insertSheet('VongQuayM05');
+    sheet2.appendRow(['Thời Gian Quay', 'Kỳ Quay Thưởng', 'Mã Booking Trúng Thưởng', 'Giải Thưởng Tri Ân', 'Trạng Thái']);
+    sheet2.getRange(1, 1, 1, 5).setBackground('#1e293b').setFontColor('#fbbf24').setFontWeight('bold');
+    sheet2.setFrozenRows(1);
+  }
+  var sheet3 = ss.getSheetByName('AdminConfig');
+  if (!sheet3) {
+    sheet3 = ss.insertSheet('AdminConfig');
+    sheet3.appendRow(['Tên Cấu Hình (Key)', 'Dữ Liệu JSON (Value)', 'Thời Gian Cập Nhật']);
+    sheet3.getRange(1, 1, 1, 3).setBackground('#1e293b').setFontColor('#34d399').setFontWeight('bold');
+    sheet3.setFrozenRows(1);
+  }
+}
+
+function formatDate(val) {
+  if (!val) return '';
+  if (val instanceof Date) return Utilities.formatDate(val, Session.getScriptTimeZone() || 'Asia/Ho_Chi_Minh', 'HH:mm - dd/MM/yyyy');
+  return String(val);
+}
+
+function jsonOutput(obj) {
+  return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(ContentService.MimeType.JSON);
+}
+`;
+
+function renderAdminSheetsSyncTab() {
+  const urlInput = document.getElementById('admin-sheets-url-input');
+  const codeBox = document.getElementById('apps-script-code-box');
+  const statusPill = document.getElementById('sheets-connection-status-pill');
+
+  if (urlInput) {
+    urlInput.value = (typeof getSheetsApiUrl === 'function') ? getSheetsApiUrl() : '';
+  }
+
+  if (codeBox) {
+    codeBox.value = APPS_SCRIPT_SOURCE_CODE;
+  }
+
+  const isConnected = (typeof isSheetsConnected === 'function') && isSheetsConnected();
+  if (statusPill) {
+    if (isConnected) {
+      statusPill.className = 'self-start sm:self-center px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 text-xs font-bold';
+      statusPill.innerHTML = '🟢 Đã kết nối Google Sheets';
+    } else {
+      statusPill.className = 'self-start sm:self-center px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-bold';
+      statusPill.innerHTML = '🟡 Chưa kết nối';
+    }
+  }
+
+  const dot = document.getElementById('admin-sheets-status-dot');
+  if (dot) {
+    dot.className = isConnected ? 'w-2 h-2 rounded-full bg-emerald-400' : 'w-2 h-2 rounded-full bg-amber-400';
+  }
+}
+
+async function handleSaveSheetsUrl() {
+  const urlInput = document.getElementById('admin-sheets-url-input');
+  const val = urlInput ? urlInput.value.trim() : '';
+  if (!val) {
+    if (confirm('Bạn có chắc muốn xóa URL Google Sheets? Hệ thống sẽ quay về chế độ lưu trữ cục bộ.')) {
+      if (typeof setSheetsApiUrl === 'function') setSheetsApiUrl('');
+      renderAdminSheetsSyncTab();
+      if (typeof updateCloudSyncStatusBadge === 'function') updateCloudSyncStatusBadge(false, 'Chưa liên kết');
+      alert('Đã xóa liên kết Google Sheets!');
+    }
+    return;
+  }
+
+  if (!val.startsWith('https://script.google.com/macros/s/')) {
+    alert('⚠️ Đường dẫn không hợp lệ!\nURL Google Apps Script Web App phải có dạng:\nhttps://script.google.com/macros/s/.../exec');
+    return;
+  }
+
+  if (typeof setSheetsApiUrl === 'function') setSheetsApiUrl(val);
+  renderAdminSheetsSyncTab();
+
+  const msgEl = document.getElementById('sheets-test-result-msg');
+  if (msgEl) {
+    msgEl.className = 'text-xs font-semibold text-sky-400 block';
+    msgEl.textContent = '⏳ Đang kiểm tra kết nối tới Google Sheets...';
+  }
+
+  const testRes = (typeof testCloudConnection === 'function') ? await testCloudConnection(val) : { success: true };
+  if (testRes.success) {
+    if (msgEl) {
+      msgEl.className = 'text-xs font-semibold text-emerald-400 block';
+      msgEl.textContent = '✅ ' + testRes.message;
+    }
+    if (typeof fetchCloudData === 'function') {
+      await fetchCloudData(false);
+    }
+    alert('🎉 KẾT NỐI GOOGLE SHEETS THÀNH CÔNG!\n\nTừ bây giờ, dữ liệu Vòng quay may mắn và Cấu hình Admin sẽ được đồng bộ dùng chung trên toàn bộ hệ thống.');
+  } else {
+    if (msgEl) {
+      msgEl.className = 'text-xs font-semibold text-rose-400 block';
+      msgEl.textContent = '❌ Lỗi: ' + testRes.message;
+    }
+    alert('⚠️ Lưu URL thành công nhưng kiểm tra kết nối thất bại:\n' + testRes.message + '\n\nVui lòng kiểm tra lại xem bạn đã chọn quyền truy cập là "Anyone" (Bất kỳ ai) khi Triển khai Web App chưa nhé!');
+  }
+}
+
+async function handleTestSheetsConnection() {
+  const urlInput = document.getElementById('admin-sheets-url-input');
+  const val = urlInput ? urlInput.value.trim() : '';
+  const msgEl = document.getElementById('sheets-test-result-msg');
+
+  if (!val) {
+    alert('Vui lòng nhập URL Google Apps Script Web App trước!');
+    return;
+  }
+
+  if (msgEl) {
+    msgEl.className = 'text-xs font-semibold text-sky-400 block';
+    msgEl.textContent = '⏳ Đang gửi yêu cầu kiểm tra (Ping)...';
+  }
+
+  const res = (typeof testCloudConnection === 'function') ? await testCloudConnection(val) : { success: false, message: 'Chưa nạp script sync' };
+  if (res.success) {
+    if (msgEl) {
+      msgEl.className = 'text-xs font-semibold text-emerald-400 block';
+      msgEl.textContent = '✅ ' + res.message;
+    }
+    alert('✅ KẾT NỐI TỐT! Google Apps Script phản hồi bình thường.');
+  } else {
+    if (msgEl) {
+      msgEl.className = 'text-xs font-semibold text-rose-400 block';
+      msgEl.textContent = '❌ ' + res.message;
+    }
+    alert('❌ KẾT NỐI THẤT BẠI: ' + res.message);
+  }
+}
+
+async function handleFetchFromCloud() {
+  if (typeof fetchCloudData === 'function') {
+    const success = await fetchCloudData(false);
+    if (success) {
+      alert('✅ ĐÃ KÉO DỮ LIỆU MỚI NHẤT TỪ GOOGLE SHEETS VỀ MÁY THÀNH CÔNG!');
+    } else {
+      alert('❌ Không thể kéo dữ liệu từ Google Sheets. Vui lòng kiểm tra kết nối mạng hoặc URL Web App.');
+    }
+  }
+}
+
+async function handlePushAllToCloud() {
+  if (confirm('Bạn có chắc muốn đẩy toàn bộ cấu hình, danh sách SĐT quay và lịch sử từ máy này lên Google Sheets?\n(Dữ liệu trên Google Sheets sẽ được đồng bộ cập nhật)')) {
+    if (typeof pushAllLocalDataToCloud === 'function') {
+      await pushAllLocalDataToCloud();
+    }
+  }
+}
+
+function copyAppsScriptCode() {
+  const codeBox = document.getElementById('apps-script-code-box');
+  const feedback = document.getElementById('copy-script-feedback');
+  if (codeBox) {
+    codeBox.select();
+    navigator.clipboard.writeText(codeBox.value).then(() => {
+      if (feedback) {
+        feedback.classList.remove('hidden');
+        setTimeout(() => feedback.classList.add('hidden'), 3000);
+      }
+      alert('📋 ĐÃ SAO CHÉP MÃ APPS SCRIPT!\n\nBây giờ bạn chỉ cần mở Google Sheets -> Tiện ích mở rộng -> Apps Script -> Xóa code cũ và bấm Ctrl+V để dán.');
+    }).catch(() => {
+      document.execCommand('copy');
+      alert('📋 Đã sao chép mã Apps Script!');
+    });
+  }
 }
 

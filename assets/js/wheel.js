@@ -212,6 +212,11 @@ function saveSpinLead(newLead) {
   }
   // Tự động đẩy dữ liệu sang Telegram Bot / Webhook nếu có cấu hình
   forwardLeadToBotWebhook(newLead);
+
+  // Tự động đồng bộ lên Google Sheets Cloud Database
+  if (typeof syncSpinLeadToCloud === 'function') {
+    syncSpinLeadToCloud(newLead);
+  }
 }
 
 // ==================== WHEEL 1: VÒNG QUAY TRẢI NGHIỆM KHÁCH HÀNG ====================
@@ -491,7 +496,7 @@ function spinWheel() {
             <span>🔒</span> SĐT [${validPhone}] ĐÃ THAM GIA QUAY THƯỞNG!
           </div>
           <div class="text-[11px] leading-relaxed text-slate-300">
-            Mỗi số điện thoại chỉ được quay <strong>01 lần duy nhất</strong> trong chiến dịch.<br>
+            Mỗi số điện thoại chỉ được quay <strong>01 lần duy nhất</strong> trong chương trình.<br>
             • Phần quà đã nhận: <strong class="text-emerald-300">${prevSpin.prize || 'Voucher chiết khấu'}</strong><br>
             • Mã voucher: <code class="px-1.5 py-0.5 rounded bg-slate-900 font-mono text-amber-300 font-bold border border-slate-700">${prevSpin.voucherCode || 'ERK-VOUCHER'}</code>
           </div>
@@ -894,6 +899,10 @@ function spinM05Admin() {
         renderPublicMonthlyWinners();
         if (typeof renderAdminWinnersTable === 'function') {
           renderAdminWinnersTable();
+        }
+        // Tự động đẩy kết quả M05 lên Google Sheets Cloud
+        if (typeof syncM05WinnerToCloud === 'function' && winners.length > 0) {
+          syncM05WinnerToCloud(winners[0]);
         }
       }
 
