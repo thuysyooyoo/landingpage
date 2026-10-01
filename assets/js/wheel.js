@@ -57,20 +57,75 @@ function playWinSound() {
   } catch (e) {}
 }
 
-// ==================== STORAGE FOR LEADS (SĐT ĐIỀN VÒNG QUAY) ====================
+// ==================== STORAGE FOR LEADS & AFFILIATE CONTEST ====================
 const STORAGE_KEY_SPIN_LEADS = 'eureka_spin_leads';
+const STORAGE_KEY_REF_CLICKS = 'eureka_ref_clicks';
+
+// Lấy mã nhân viên giới thiệu đang hoạt động (từ URL param -> session/local storage)
+function getActiveAffiliateRef() {
+  try {
+    return sessionStorage.getItem('eureka_active_ref') || localStorage.getItem('eureka_last_ref') || 'direct';
+  } catch (e) {
+    return 'direct';
+  }
+}
+
+// Lấy bảng đếm số lượt click theo từng mã ref
+function getAffiliateClicks() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY_REF_CLICKS);
+    if (raw) return JSON.parse(raw);
+  } catch (e) {}
+  return {
+    "nam": 38,
+    "lan": 24,
+    "thao": 15
+  };
+}
+
+function recordAffiliateClick(refCode) {
+  if (!refCode || refCode === 'direct') return;
+  try {
+    const clicks = getAffiliateClicks();
+    const cleanRef = String(refCode).trim().toLowerCase();
+    clicks[cleanRef] = (clicks[cleanRef] || 0) + 1;
+    localStorage.setItem(STORAGE_KEY_REF_CLICKS, JSON.stringify(clicks));
+  } catch (e) {}
+}
+
+// Khởi tạo ghi nhận lượt truy cập từ link tiếp thị (?ref=... / ?nv=... / ?aff=...)
+function initAffiliateTracking() {
+  try {
+    const urlParams = new URLSearchParams(window.location.search);
+    const refParam = (urlParams.get('ref') || urlParams.get('nv') || urlParams.get('aff') || urlParams.get('nhanvien') || '').trim().toLowerCase();
+    
+    if (refParam) {
+      sessionStorage.setItem('eureka_active_ref', refParam);
+      localStorage.setItem('eureka_last_ref', refParam);
+
+      // Chống spam: Mỗi phiên truy cập của 1 người chỉ đếm 1 lượt click cho nhân viên
+      const sessionCountKey = 'eureka_counted_click_' + refParam;
+      if (!sessionStorage.getItem(sessionCountKey)) {
+        sessionStorage.setItem(sessionCountKey, 'true');
+        recordAffiliateClick(refParam);
+      }
+    }
+  } catch (e) {
+    console.log('Error initializing affiliate tracking:', e);
+  }
+}
 
 function getSpinLeads() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY_SPIN_LEADS);
     if (raw) return JSON.parse(raw);
   } catch (e) {}
-  // Default seed leads for demonstration
+  // Default seed leads for demonstration with referrer tracking
   return [
-    { id: "L-101", phone: "0984356451", voucherCode: "ERK-908618", prize: "Voucher Chiết Khấu 400.000 đ", createdAt: "17:15 - 30/09/2026", status: "Chờ áp dụng qua Zalo" },
-    { id: "L-102", phone: "0912883421", voucherCode: "ERK-441209", prize: "Voucher Chiết Khấu 300.000 đ", createdAt: "16:42 - 30/09/2026", status: "Đã tư vấn Zalo" },
-    { id: "L-103", phone: "0977651209", voucherCode: "ERK-882315", prize: "Vé Ưu Tiên Xếp Cont Sớm", createdAt: "15:20 - 30/09/2026", status: "Chờ áp dụng qua Zalo" },
-    { id: "L-104", phone: "0903112882", voucherCode: "ERK-331908", prize: "Giảm 50% Phí Lưu Kho Bãi", createdAt: "14:05 - 30/09/2026", status: "Đã tư vấn Zalo" }
+    { id: "L-101", phone: "0984356451", voucherCode: "ERK-908618", prize: "Voucher Chiết Khấu 400.000 đ", createdAt: "17:15 - 30/09/2026", status: "Chờ áp dụng qua Zalo", ref: "nam" },
+    { id: "L-102", phone: "0912883421", voucherCode: "ERK-441209", prize: "Voucher Chiết Khấu 300.000 đ", createdAt: "16:42 - 30/09/2026", status: "Đã tư vấn Zalo", ref: "lan" },
+    { id: "L-103", phone: "0977651209", voucherCode: "ERK-882315", prize: "Vé Ưu Tiên Xếp Cont Sớm", createdAt: "15:20 - 30/09/2026", status: "Chờ áp dụng qua Zalo", ref: "nam" },
+    { id: "L-104", phone: "0903112882", voucherCode: "ERK-331908", prize: "Giảm 50% Phí Lưu Kho Bãi", createdAt: "14:05 - 30/09/2026", status: "Đã tư vấn Zalo", ref: "thao" }
   ];
 }
 
@@ -84,13 +139,19 @@ function forwardLeadToBotWebhook(newLead) {
     const zaloPhone = rawDigits.startsWith('0') ? '84' + rawDigits.slice(1) : (rawDigits.startsWith('84') ? rawDigits : ('84' + rawDigits));
     const zaloChatLink = `https://zalo.me/${zaloPhone}`;
 
+    const leadRef = (newLead.ref && newLead.ref !== 'direct') ? newLead.ref.toUpperCase() : 'Nguồn Tự Nhiên';
+    const refBadgeTg = (newLead.ref && newLead.ref !== 'direct') 
+      ? `👤 *Người Giới Thiệu (Ref):* \`${leadRef}\` 🌟 *(+1 Điểm Thi Đua)*` 
+      : `🌐 *Nguồn:* \`Trực tiếp (Website)\``;
+
     // 1. Forward to Telegram Bot if configured and active
     if (config.telegram_enabled && config.telegram_token && config.telegram_chat_id) {
-      const tgText = `🔔 *[EUREKA LOGISTICS] KHÁCH HÀNG MỚI VỪA QUAY THƯỞNG!*
+      const tgText = `🔔 *[EUREKA 2026] CÓ KHÁCH QUAY TRÚNG THƯỞNG MỚI!*
 ━━━━━━━━━━━━━━━━━━
 📱 *Số Điện Thoại:* \`${newLead.phone}\`
 🎁 *Phần Quà:* *${newLead.prize}*
 🎟 *Mã Voucher:* \`${newLead.voucherCode}\`
+${refBadgeTg}
 ⏰ *Thời Gian:* ${newLead.createdAt}
 ━━━━━━━━━━━━━━━━━━
 👉 *[BẤM ĐÂY CHAT ZALO VỚI KHÁCH](${zaloChatLink})*
@@ -123,6 +184,7 @@ function forwardLeadToBotWebhook(newLead) {
           phone: newLead.phone,
           voucher_code: newLead.voucherCode,
           prize: newLead.prize,
+          referrer: newLead.ref || 'direct',
           created_at: newLead.createdAt,
           zalo_link: zaloChatLink,
           hotline: '84898586622'
@@ -136,11 +198,17 @@ function forwardLeadToBotWebhook(newLead) {
 }
 
 function saveSpinLead(newLead) {
+  if (!newLead.ref) {
+    newLead.ref = getActiveAffiliateRef();
+  }
   const leads = getSpinLeads();
   leads.unshift(newLead);
   localStorage.setItem(STORAGE_KEY_SPIN_LEADS, JSON.stringify(leads));
   if (typeof renderAdminSpinLeadsTable === 'function') {
     renderAdminSpinLeadsTable();
+  }
+  if (typeof renderAdminAffiliateContest === 'function') {
+    renderAdminAffiliateContest();
   }
   // Tự động đẩy dữ liệu sang Telegram Bot / Webhook nếu có cấu hình
   forwardLeadToBotWebhook(newLead);
@@ -719,6 +787,7 @@ function renderPublicMonthlyWinners() {
 }
 
 function initAllWheelEngines() {
+  initAffiliateTracking();
   initWelcomeWheelData();
   drawWheel();
   initM05WheelSegments();

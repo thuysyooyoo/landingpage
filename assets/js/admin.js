@@ -105,6 +105,7 @@ function showAdminDashboard() {
   renderAdminWinnersTable();
   renderAdminWeeklyWinnerForm();
   renderAdminLeaderboardTable();
+  renderAdminAffiliateContest();
 }
 
 function closeAdminDashboard() {
@@ -252,6 +253,15 @@ function renderAdminSpinLeadsTable() {
         ${item.prize}
       </td>
       <td class="py-2.5 px-3">
+        ${(() => {
+          const ref = (item.ref && item.ref !== 'direct') ? item.ref.toUpperCase() : null;
+          if (ref) {
+            return `<span class="px-2 py-0.5 rounded text-[11px] font-bold bg-amber-500/15 text-amber-300 border border-amber-500/30">👤 ${ref}</span>`;
+          }
+          return `<span class="px-2 py-0.5 rounded text-[10px] font-medium bg-slate-800 text-slate-400">🌐 Trực tiếp</span>`;
+        })()}
+      </td>
+      <td class="py-2.5 px-3">
         <span class="px-2 py-0.5 rounded text-[11px] font-semibold bg-sky-500/10 text-sky-300 border border-sky-500/20">
           ${item.status || 'Chờ áp dụng'}
         </span>
@@ -313,9 +323,10 @@ function exportSpinLeadsCsv() {
     alert('Không có dữ liệu để xuất file!');
     return;
   }
-  let csv = 'STT,Thoi Gian,So Dien Thoai,Ma Voucher,Phan Qua,Trang Thai\n';
+  let csv = 'STT,Thoi Gian,So Dien Thoai,Ma Voucher,Phan Qua,Nguon Gioi Thieu (Ref),Trang Thai\n';
   leads.forEach((l, idx) => {
-    csv += `"${idx + 1}","${l.createdAt || ''}","${l.phone}","${l.voucherCode || ''}","${l.prize || ''}","${l.status || ''}"\n`;
+    const ref = (l.ref && l.ref !== 'direct') ? l.ref.toUpperCase() : 'Truc tiep';
+    csv += `"${idx + 1}","${l.createdAt || ''}","${l.phone}","${l.voucherCode || ''}","${l.prize || ''}","${ref}","${l.status || ''}"\n`;
   });
 
   const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8;' });
@@ -1149,6 +1160,299 @@ function switchAdminTab(tabName) {
     renderAdminWeeklyWinnerForm();
     renderAdminLeaderboardTable();
   }
+  if (tabName === 'affiliate-contest') {
+    renderAdminAffiliateContest();
+  }
+}
+
+// ==================== TAB 5: THI ĐUA NỘI BỘ (AFFILIATE / REF TRACKING) ====================
+function getAffiliateClicksData() {
+  try {
+    const raw = localStorage.getItem('eureka_ref_clicks');
+    if (raw) return JSON.parse(raw);
+  } catch (e) {}
+  return {
+    "nam": 38,
+    "lan": 24,
+    "thao": 15
+  };
+}
+
+function renderAdminAffiliateContest() {
+  const container = document.getElementById('admin-affiliate-table-body');
+  const leads = getSpinLeadsList();
+  const clicksData = getAffiliateClicksData();
+
+  // Aggregate stats per referrer
+  const staffMap = {};
+
+  // Register all refs from clicks
+  Object.keys(clicksData).forEach(ref => {
+    const cleanRef = ref.toLowerCase().trim();
+    if (!staffMap[cleanRef]) {
+      staffMap[cleanRef] = { ref: cleanRef, clicks: clicksData[ref] || 0, leads: [] };
+    } else {
+      staffMap[cleanRef].clicks = clicksData[ref] || 0;
+    }
+  });
+
+  // Register all refs from leads
+  leads.forEach(lead => {
+    const cleanRef = (lead.ref && lead.ref !== 'direct') ? lead.ref.toLowerCase().trim() : null;
+    if (cleanRef) {
+      if (!staffMap[cleanRef]) {
+        staffMap[cleanRef] = { ref: cleanRef, clicks: 0, leads: [] };
+      }
+      staffMap[cleanRef].leads.push(lead);
+    }
+  });
+
+  const staffList = Object.values(staffMap);
+
+  // Sắp xếp: Tiêu chí chính là Số SĐT thu về (leads.length) giảm dần, sau đó là Clicks giảm dần
+  staffList.sort((a, b) => {
+    if (b.leads.length !== a.leads.length) {
+      return b.leads.length - a.leads.length;
+    }
+    return b.clicks - a.clicks;
+  });
+
+  // Update KPI Cards
+  let totalClicks = 0;
+  let totalLeadsCount = 0;
+  staffList.forEach(s => {
+    totalClicks += s.clicks;
+    totalLeadsCount += s.leads.length;
+  });
+
+  const kpiMembers = document.getElementById('kpi-affiliate-members');
+  const kpiClicks = document.getElementById('kpi-affiliate-clicks');
+  const kpiLeads = document.getElementById('kpi-affiliate-leads');
+  const badge = document.getElementById('admin-affiliate-badge');
+
+  if (kpiMembers) kpiMembers.textContent = staffList.length;
+  if (kpiClicks) kpiClicks.textContent = totalClicks;
+  if (kpiLeads) kpiLeads.textContent = totalLeadsCount;
+  if (badge) badge.textContent = `${staffList.length} NV`;
+
+  if (!container) return;
+  container.innerHTML = '';
+
+  if (staffList.length === 0) {
+    container.innerHTML = `
+      <tr>
+        <td colspan="7" class="py-6 text-center text-slate-500 italic text-xs">
+          Chưa có dữ liệu thi đua. Hãy tạo link cho nhân viên bên trên để bắt đầu!
+        </td>
+      </tr>
+    `;
+    return;
+  }
+
+  const medals = ['🥇', '🥈', '🥉'];
+
+  staffList.forEach((staff, idx) => {
+    const rankBadge = idx < 3 
+      ? `<span class="text-base">${medals[idx]}</span>` 
+      : `<span class="font-bold text-slate-400 font-mono">#${idx + 1}</span>`;
+
+    const convRate = staff.clicks > 0 
+      ? ((staff.leads.length / staff.clicks) * 100).toFixed(1) + '%' 
+      : (staff.leads.length > 0 ? '100%' : '0%');
+
+    const tr = document.createElement('tr');
+    tr.className = 'border-b border-slate-800/80 hover:bg-slate-900/50 text-xs transition-colors';
+    tr.innerHTML = `
+      <td class="py-3 px-3.5 text-center font-bold">${rankBadge}</td>
+      <td class="py-3 px-3.5 font-bold text-white flex items-center gap-2">
+        <span class="w-7 h-7 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-[11px] text-amber-400 uppercase font-mono font-black shrink-0">
+          ${staff.ref.slice(0, 2)}
+        </span>
+        <div>
+          <div class="text-amber-300 font-bold uppercase tracking-wider font-mono">${staff.ref}</div>
+          <div class="text-[10px] text-slate-400">Nhân viên thi đua</div>
+        </div>
+      </td>
+      <td class="py-3 px-3.5 text-center font-mono font-bold text-slate-300">
+        ${staff.clicks}
+      </td>
+      <td class="py-3 px-3.5 text-center font-mono font-black text-emerald-400 text-sm">
+        ${staff.leads.length} SĐT
+      </td>
+      <td class="py-3 px-3.5 text-center font-mono font-bold text-sky-400">
+        ${convRate}
+      </td>
+      <td class="py-3 px-3.5 text-center font-mono text-[11px] text-slate-300">
+        <button type="button" onclick="copyAffiliateDirectLink('${staff.ref}')" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-amber-300 border border-slate-700 font-semibold text-[11px] inline-flex items-center gap-1 transition-all cursor-pointer" title="Sao chép link tiếp thị của ${staff.ref}">
+          <span>🔗</span> ?ref=${staff.ref}
+        </button>
+      </td>
+      <td class="py-3 px-3.5 text-center">
+        <button type="button" onclick="viewAffiliateLeads('${staff.ref}')" class="px-2.5 py-1 rounded-lg bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-300 border border-emerald-500/30 font-bold text-[11px] inline-flex items-center gap-1 transition-all cursor-pointer">
+          <span>👁️</span> Xem ${staff.leads.length} SĐT
+        </button>
+      </td>
+    `;
+    container.appendChild(tr);
+  });
+}
+
+function getBaseCampaignUrl() {
+  const loc = window.location;
+  return `${loc.protocol}//${loc.host}${loc.pathname}`;
+}
+
+function generateAffiliateLink() {
+  const input = document.getElementById('affiliate-name-input');
+  if (!input) return;
+  const rawName = input.value.trim().toLowerCase();
+  if (!rawName) {
+    alert('⚠️ Vui lòng nhập tên hoặc mã nhân viên (ví dụ: nam, lan, erk01)!');
+    return;
+  }
+  const cleanRef = rawName.replace(/[^a-z0-9_-]/g, '');
+  if (!cleanRef) {
+    alert('⚠️ Tên nhân viên chỉ nên gồm chữ cái, số, hoặc dấu gạch nối!');
+    return;
+  }
+
+  const baseUrl = getBaseCampaignUrl();
+  const fullUrl = `${baseUrl}?ref=${cleanRef}`;
+
+  const resultBox = document.getElementById('affiliate-link-result-box');
+  const resultUrl = document.getElementById('affiliate-generated-url');
+  if (resultBox && resultUrl) {
+    resultUrl.textContent = fullUrl;
+    resultBox.classList.remove('hidden');
+  }
+
+  // Ensure this staff appears in clicks tracking
+  const clicks = getAffiliateClicksData();
+  if (clicks[cleanRef] === undefined) {
+    clicks[cleanRef] = 0;
+    localStorage.setItem('eureka_ref_clicks', JSON.stringify(clicks));
+    renderAdminAffiliateContest();
+  }
+}
+
+function copyAffiliateGeneratedLink() {
+  const resultUrl = document.getElementById('affiliate-generated-url');
+  if (!resultUrl) return;
+  const text = resultUrl.textContent.trim();
+  if (!text) return;
+
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById('copy-affiliate-btn');
+    if (btn) {
+      const origHtml = btn.innerHTML;
+      btn.innerHTML = '<span>✅ ĐÃ SAO CHÉP!</span>';
+      setTimeout(() => { btn.innerHTML = origHtml; }, 2000);
+    }
+    alert(`✅ Đã sao chép link tiếp thị thi đua:\n${text}\n\nHãy gửi link này cho nhân viên đăng bài!`);
+  }).catch(() => {
+    alert(`Link tiếp thị:\n${text}`);
+  });
+}
+
+function copyAffiliateDirectLink(refCode) {
+  const baseUrl = getBaseCampaignUrl();
+  const fullUrl = `${baseUrl}?ref=${refCode}`;
+  navigator.clipboard.writeText(fullUrl).then(() => {
+    alert(`✅ Đã sao chép link tiếp thị của nhân viên ${refCode.toUpperCase()}:\n${fullUrl}`);
+  }).catch(() => {
+    alert(`Link tiếp thị:\n${fullUrl}`);
+  });
+}
+
+function viewAffiliateLeads(refCode) {
+  const leads = getSpinLeadsList();
+  const matched = leads.filter(l => l.ref && l.ref.toLowerCase().trim() === refCode.toLowerCase().trim());
+  
+  const container = document.getElementById('affiliate-leads-detail-container');
+  const title = document.getElementById('affiliate-detail-title');
+  const tbody = document.getElementById('affiliate-detail-table-body');
+
+  if (!container || !tbody) return;
+  title.innerHTML = `<span>📋</span> Danh sách ${matched.length} khách hàng do nhân viên <strong class="text-amber-400 uppercase font-mono">[${refCode}]</strong> mang về:`;
+  tbody.innerHTML = '';
+
+  if (matched.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="5" class="py-4 text-center text-slate-500 italic">Nhân viên này chưa mang về số điện thoại nào.</td></tr>`;
+  } else {
+    matched.forEach((item, idx) => {
+      const rawDigits = (item.phone || '').replace(/\D/g, '');
+      const zaloPhone = rawDigits.startsWith('0') ? '84' + rawDigits.slice(1) : (rawDigits.startsWith('84') ? rawDigits : ('84' + rawDigits));
+      const tr = document.createElement('tr');
+      tr.className = 'border-b border-slate-800/60 hover:bg-slate-900/40 text-xs';
+      tr.innerHTML = `
+        <td class="py-2 px-3 text-slate-400">${item.createdAt || 'Hôm nay'}</td>
+        <td class="py-2 px-3 font-mono font-bold text-amber-300">${item.phone}</td>
+        <td class="py-2 px-3 text-emerald-400 font-semibold">${item.prize}</td>
+        <td class="py-2 px-3 text-white">${item.voucherCode || 'ERK-VOUCHER'}</td>
+        <td class="py-2 px-3 text-center">
+          <a href="https://zalo.me/${zaloPhone}" target="_blank" class="px-2 py-0.5 rounded bg-blue-600 hover:bg-blue-500 text-white font-bold text-[10px] inline-flex items-center gap-1">
+            💬 Chat
+          </a>
+        </td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  container.classList.remove('hidden');
+  container.scrollIntoView({ behavior: 'smooth' });
+}
+
+function closeAffiliateDetail() {
+  const container = document.getElementById('affiliate-leads-detail-container');
+  if (container) container.classList.add('hidden');
+}
+
+function exportAffiliateContestCsv() {
+  const leads = getSpinLeadsList();
+  const clicksData = getAffiliateClicksData();
+
+  const staffMap = {};
+  Object.keys(clicksData).forEach(ref => {
+    const cleanRef = ref.toLowerCase().trim();
+    staffMap[cleanRef] = { ref: cleanRef, clicks: clicksData[ref] || 0, leads: [] };
+  });
+  leads.forEach(lead => {
+    const cleanRef = (lead.ref && lead.ref !== 'direct') ? lead.ref.toLowerCase().trim() : null;
+    if (cleanRef) {
+      if (!staffMap[cleanRef]) staffMap[cleanRef] = { ref: cleanRef, clicks: 0, leads: [] };
+      staffMap[cleanRef].leads.push(lead);
+    }
+  });
+
+  const staffList = Object.values(staffMap);
+  staffList.sort((a, b) => b.leads.length - a.leads.length);
+
+  let csvContent = '\uFEFF'; // UTF-8 BOM
+  csvContent += 'BẢNG XẾP HẠNG THI ĐUA NỘI BỘ - EUREKA 2026\n';
+  csvContent += `Thời gian xuất: ${new Date().toLocaleString('vi-VN')}\n\n`;
+  csvContent += 'Hạng,Nhân Viên (Ref),Lượt Click (Traffic),Số SĐT Thu Về (Điểm),Tỉ Lệ Chuyển Đổi\n';
+
+  staffList.forEach((s, idx) => {
+    const convRate = s.clicks > 0 ? ((s.leads.length / s.clicks) * 100).toFixed(1) + '%' : (s.leads.length > 0 ? '100%' : '0%');
+    csvContent += `"${idx + 1}","${s.ref.toUpperCase()}","${s.clicks}","${s.leads.length}","${convRate}"\n`;
+  });
+
+  csvContent += '\n\nDANH SÁCH CHI TIẾT KHÁCH HÀNG THEO TỪNG NHÂN VIÊN\n';
+  csvContent += 'Nhân Viên (Ref),Thời Gian,Số Điện Thoại,Phần Quà,Mã Voucher\n';
+  leads.forEach(l => {
+    const ref = (l.ref && l.ref !== 'direct') ? l.ref.toUpperCase() : 'Nguồn Trực Tiếp';
+    csvContent += `"${ref}","${l.createdAt || ''}","${l.phone || ''}","${l.prize || ''}","${l.voucherCode || ''}"\n`;
+  });
+
+  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `Bao_Cao_Thi_Dua_Noi_Bo_Eureka_${new Date().toISOString().slice(0, 10)}.csv`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
 }
 
 // URL triggers (e.g. #admin or ?admin=true)
