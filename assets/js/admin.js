@@ -235,15 +235,24 @@ function saveAdminWheelConfig() {
   if (typeof initWelcomeWheelData === 'function') initWelcomeWheelData();
   if (typeof drawWheel === 'function') drawWheel();
 
-  alert(`✅ Lưu cấu hình thành công!\nTổng tỉ lệ các ô hiện tại là: ${totalProb}%. Hệ thống đã áp dụng vào Vòng Quay!`);
+  // Tự động đồng bộ lên Google Sheets Cloud
+  if (typeof syncAdminConfigToCloud === 'function') {
+    syncAdminConfigToCloud(STORAGE_KEY_WHEEL_CONFIG, currentSegments);
+  }
+
+  alert(`✅ Lưu cấu hình thành công!\nTổng tỉ lệ các ô hiện tại là: ${totalProb}%. Hệ thống đã áp dụng vào Vòng Quay và đẩy lên Cloud!`);
 }
 
 function resetAdminWheelConfig() {
   if (confirm('Bạn có chắc chắn muốn đặt lại toàn bộ tỉ lệ và kho quà về mặc định của chương trình?')) {
     localStorage.removeItem(STORAGE_KEY_WHEEL_CONFIG);
+    const defaults = getActiveWheelSegments();
     renderAdminWheelConfigTable();
     if (typeof initWelcomeWheelData === 'function') initWelcomeWheelData();
     if (typeof drawWheel === 'function') drawWheel();
+    if (typeof syncAdminConfigToCloud === 'function') {
+      syncAdminConfigToCloud(STORAGE_KEY_WHEEL_CONFIG, defaults);
+    }
     alert('Đã khôi phục cài đặt mặc định!');
   }
 }
@@ -444,7 +453,10 @@ function saveAdminM05Prize() {
   if (typeof updateM05PublicInfo === 'function') {
     updateM05PublicInfo();
   }
-  alert(`✅ Đã cập nhật giải thưởng định kỳ thành: "${val}"`);
+  if (typeof syncAdminConfigToCloud === 'function') {
+    syncAdminConfigToCloud('eureka_m05_current_prize', val);
+  }
+  alert(`✅ Đã cập nhật giải thưởng định kỳ thành: "${val}" (Đã lưu lên Cloud)`);
 }
 
 function setQuickM05Prize(prizeText) {
@@ -491,8 +503,12 @@ function saveM05BookingPoolFromTextarea() {
   if (typeof drawM05Wheel === 'function') drawM05Wheel();
   if (typeof updateM05PublicInfo === 'function') updateM05PublicInfo();
 
+  if (typeof syncAdminConfigToCloud === 'function') {
+    syncAdminConfigToCloud('eureka_m05_booking_pool', codes);
+  }
+
   renderAdminM05BookingManager();
-  alert(`✅ Đã lưu thành công ${codes.length} mã booking vào Vòng Quay Mùng 05!`);
+  alert(`✅ Đã lưu thành công ${codes.length} mã booking vào Vòng Quay Mùng 05 và đồng bộ lên Cloud!`);
 }
 
 function loadDemoM05Bookings() {
@@ -509,8 +525,12 @@ function loadDemoM05Bookings() {
   if (typeof drawM05Wheel === 'function') drawM05Wheel();
   if (typeof updateM05PublicInfo === 'function') updateM05PublicInfo();
 
+  if (typeof syncAdminConfigToCloud === 'function') {
+    syncAdminConfigToCloud('eureka_m05_booking_pool', demoCodes);
+  }
+
   renderAdminM05BookingManager();
-  alert(`✅ Đã nạp ${demoCodes.length} mã booking mẫu vào hệ thống!`);
+  alert(`✅ Đã nạp ${demoCodes.length} mã booking mẫu vào hệ thống và lưu lên Cloud!`);
 }
 
 function clearM05BookingPool() {
@@ -519,6 +539,9 @@ function clearM05BookingPool() {
     if (typeof initM05WheelSegments === 'function') initM05WheelSegments();
     if (typeof drawM05Wheel === 'function') drawM05Wheel();
     if (typeof updateM05PublicInfo === 'function') updateM05PublicInfo();
+    if (typeof syncAdminConfigToCloud === 'function') {
+      syncAdminConfigToCloud('eureka_m05_booking_pool', []);
+    }
     renderAdminM05BookingManager();
     alert('Đã xóa sạch danh sách mã booking!');
   }
@@ -545,9 +568,14 @@ function handleM05FileUpload(event) {
     if (typeof initM05WheelSegments === 'function') initM05WheelSegments();
     if (typeof drawM05Wheel === 'function') drawM05Wheel();
     if (typeof updateM05PublicInfo === 'function') updateM05PublicInfo();
+
+    if (typeof syncAdminConfigToCloud === 'function') {
+      syncAdminConfigToCloud('eureka_m05_booking_pool', codes);
+    }
+
     renderAdminM05BookingManager();
 
-    alert(`🎉 Đã tải lên và nhập thành công ${codes.length} mã booking từ file: ${file.name}!`);
+    alert(`🎉 Đã tải lên và nhập thành công ${codes.length} mã booking từ file: ${file.name} (Đã đồng bộ lên Cloud)!`);
   };
   reader.readAsText(file);
   event.target.value = '';
@@ -1465,8 +1493,11 @@ function saveBotConfig() {
   };
 
   localStorage.setItem('eureka_bot_config', JSON.stringify(config));
+  if (typeof syncAdminConfigToCloud === 'function') {
+    syncAdminConfigToCloud('eureka_bot_config', config);
+  }
   loadBotConfigToAdminForm();
-  alert('💾 Đã lưu thành công cấu hình Bot & Webhook!\nHệ thống sẽ tự động chuyển dữ liệu khách quay thưởng theo cấu hình này.');
+  alert('💾 Đã lưu thành công cấu hình Bot & Webhook (Đã đồng bộ lên Cloud)!\nHệ thống sẽ tự động chuyển dữ liệu khách quay thưởng theo cấu hình này.');
 }
 
 async function testBotNotification() {
@@ -1793,6 +1824,9 @@ function generateAffiliateLink() {
   if (clicks[cleanRef] === undefined) {
     clicks[cleanRef] = 0;
     localStorage.setItem('eureka_ref_clicks', JSON.stringify(clicks));
+    if (typeof syncAdminConfigToCloud === 'function') {
+      syncAdminConfigToCloud('eureka_ref_clicks', clicks);
+    }
     renderAdminAffiliateContest();
   }
 }
@@ -2056,7 +2090,13 @@ function doGet(e) {
         nhiemVuConfig: configs['eureka_nhiem_vu_config'] || null,
         galaConfig: configs['eureka_gala_awards_config'] || null,
         weeklyWinner: configs['eureka_weekly_winner'] || null,
-        customLeaderboard: configs['eureka_custom_leaderboard'] || null
+        customLeaderboard: configs['eureka_custom_leaderboard'] || null,
+        botConfig: configs['eureka_bot_config'] || null,
+        wheelConfig: configs['eureka_welcome_wheel_config'] || null,
+        m05BookingPool: configs['eureka_m05_booking_pool'] || null,
+        m05CurrentPrize: configs['eureka_m05_current_prize'] || null,
+        refClicks: configs['eureka_ref_clicks'] || null,
+        configs: configs
       }
     });
   } catch (err) {
@@ -2129,7 +2169,12 @@ function doPost(e) {
         ['eureka_nhiem_vu_config', JSON.stringify(all.nhiemVuConfig || {})],
         ['eureka_gala_awards_config', JSON.stringify(all.galaConfig || {})],
         ['eureka_weekly_winner', JSON.stringify(all.weeklyWinner || {})],
-        ['eureka_custom_leaderboard', JSON.stringify(all.customLeaderboard || [])]
+        ['eureka_custom_leaderboard', JSON.stringify(all.customLeaderboard || [])],
+        ['eureka_bot_config', JSON.stringify(all.botConfig || {})],
+        ['eureka_welcome_wheel_config', JSON.stringify(all.wheelConfig || [])],
+        ['eureka_m05_booking_pool', JSON.stringify(all.m05BookingPool || [])],
+        ['eureka_m05_current_prize', JSON.stringify(all.m05CurrentPrize || '')],
+        ['eureka_ref_clicks', JSON.stringify(all.refClicks || {})]
       ];
       var cRows = configItems.map(function(item) { return [item[0], item[1], new Date()]; });
       cSheet.getRange(2, 1, cRows.length, 3).setValues(cRows);

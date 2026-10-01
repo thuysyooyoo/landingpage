@@ -21,6 +21,7 @@
         extend: {
           fontFamily: {
             sans: ['"Plus Jakarta Sans"', 'system-ui', '-apple-system', 'sans-serif'],
+            display: ['"Plus Jakarta Sans"', 'system-ui', '-apple-system', 'sans-serif'],
           },
           colors: {
             brand: {
@@ -74,10 +75,6 @@
 
   <!-- Modular Stylesheet -->
   <link rel="stylesheet" href="assets/css/style.css">
-  <!-- Google Fonts: Outfit & Cinzel for Editorial Gala Poster -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;800;900&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <style>
     /* Glassmorphism System for Hero Section */
@@ -256,18 +253,22 @@
       </a>
 
       <!-- Navigation Menu -->
-      <nav class="hidden md:flex items-center gap-1 lg:gap-2">
+      <nav class="hidden md:flex items-center gap-1 lg:gap-2" id="header-nav-menu">
         <a href="#tong-quan" class="px-3 py-2 text-sm font-medium text-slate-300 hover:text-brand-400 transition-colors">Tổng Quan</a>
-        <a href="#giai-thuong" class="px-3 py-2 text-sm font-medium text-slate-300 hover:text-brand-400 transition-colors">Cơ Cấu Giải Thưởng</a>
-        <a href="#the-le" class="px-3 py-2 text-sm font-medium text-slate-300 hover:text-brand-400 transition-colors">Thể Lệ</a>
-        <a href="javascript:void(0)" onclick="openWelcomeWheelModal()" class="px-3 py-2 text-sm font-medium text-amber-300 hover:text-amber-200 flex items-center gap-1.5 transition-colors cursor-pointer">
+        <a href="#gala-awards-section" id="nav-gala-link" class="px-3 py-2 text-sm font-bold text-amber-300 hover:text-amber-200 transition-colors flex items-center gap-1.5">
+          <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+          <span>Vinh Danh Gala 2026</span>
+        </a>
+        <a href="#giai-thuong" class="nav-campaign-only px-3 py-2 text-sm font-medium text-slate-300 hover:text-brand-400 transition-colors">Cơ Cấu Giải Thưởng</a>
+        <a href="#the-le" class="nav-campaign-only px-3 py-2 text-sm font-medium text-slate-300 hover:text-brand-400 transition-colors">Thể Lệ</a>
+        <a href="javascript:void(0)" onclick="openWelcomeWheelModal()" class="nav-campaign-only px-3 py-2 text-sm font-medium text-amber-300 hover:text-amber-200 flex items-center gap-1.5 transition-colors cursor-pointer">
           <span class="inline-block w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
           Vòng Quay Trải Nghiệm
         </a>
-        <a href="#vong-quay-mung-05" class="px-3 py-2 text-sm font-medium text-sky-400 hover:text-sky-300 transition-colors">
+        <a href="#vong-quay-mung-05" class="nav-campaign-only px-3 py-2 text-sm font-medium text-sky-400 hover:text-sky-300 transition-colors">
           Vòng Quay Tri Ân
         </a>
-        <a href="#cot-moc-vip" class="px-3 py-2 text-sm font-medium text-slate-300 hover:text-brand-400 transition-colors">Nhiệm Vụ Hệ Thống</a>
+        <a href="#cot-moc-vip" class="nav-campaign-only px-3 py-2 text-sm font-medium text-slate-300 hover:text-brand-400 transition-colors">Nhiệm Vụ Hệ Thống</a>
         <a href="#bxh-truc-tuyen" class="px-3 py-2 text-sm font-medium text-slate-300 hover:text-brand-400 transition-colors">Bảng Xếp Hạng</a>
       </nav>
 
@@ -350,8 +351,8 @@
       </div>
 
       <!-- Center CTA Buttons with Glowing Backdrop -->
-      <div class="flex flex-wrap items-center justify-center gap-4 mb-16">
-        <div class="relative">
+      <div id="hero-cta-buttons" class="flex flex-wrap items-center justify-center gap-4 mb-16">
+        <div id="hero-spin-btn-wrapper" class="relative">
           <div class="absolute inset-0 bg-brand-500/40 rounded-2xl blur-xl"></div>
           <button onclick="openWelcomeWheelModal()" class="btn-gala-shimmer relative inline-flex items-center gap-2.5 px-8 py-4 rounded-2xl text-white font-black text-base shadow-xl hover:scale-105 active:scale-95 cursor-pointer">
             <svg class="w-5 h-5 text-white animate-spin" style="animation-duration: 6s;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
@@ -359,117 +360,316 @@
           </button>
         </div>
 
+        <a href="#gala-awards-section" id="hero-gala-jump-btn" class="hidden px-8 py-4 rounded-2xl bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-500 text-slate-950 font-black text-base shadow-xl hover:scale-105 transition-all">
+          <span>🏆 Xem Vinh Danh Đêm Gala 2026 ↓</span>
+        </a>
+
         <a href="#bxh-truc-tuyen" class="glass-ultra inline-flex items-center gap-2 px-8 py-4 rounded-2xl text-slate-900 font-black text-base shadow-md hover:scale-105 hover:border-brand-500">
           <svg class="w-5 h-5 text-brand-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
           <span>Tra Cứu Bảng Xếp Hạng</span>
         </a>
       </div>
 
-      <!-- 3 Exhibition Showcase Cards for Top 3 (Transparent Glassmorphic Pedestals) -->
-      <div id="gala-awards-section">
-      <div class="mb-14">
-        <div class="flex flex-col sm:flex-row items-center justify-between mb-8 px-2 gap-3">
-          <div>
-            <span class="text-xs font-black uppercase text-brand-600 tracking-wider block text-left">AWARDS 01</span>
-            <h2 class="text-2xl sm:text-3xl font-black text-slate-900 text-left font-display">Top 3 Chung Cuộc</h2>
-          </div>
-          <span class="glass-ultra text-xs font-black text-amber-900 px-4 py-2 rounded-full border border-amber-300 shadow-sm">
-            Vinh danh Đêm Gala — Bộ giải thưởng công nghệ đỉnh cao
-          </span>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <!-- Exhibition 1: Surface Pro 11 (Quán Quân) -->
-          <div class="glass-ultra p-6 flex flex-col justify-between text-left group float-card-active">
+      <!-- ==================== TỔNG KẾT CHƯƠNG TRÌNH & VINH DANH ĐÊM GALA 2026 ==================== -->
+      <div id="gala-awards-section" class="relative z-20">
+        
+        <!-- Header & Toggle Bar -->
+        <div class="mb-10 p-6 sm:p-8 rounded-3xl bg-slate-900/90 border border-amber-400/50 shadow-2xl backdrop-blur-xl relative overflow-hidden">
+          <div class="absolute -top-24 -right-24 w-80 h-80 bg-amber-500/15 rounded-full blur-3xl pointer-events-none"></div>
+          
+          <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative z-10 text-left">
             <div>
-              <div class="flex justify-between items-center mb-4">
-                <span class="text-xs font-black text-amber-900 bg-amber-200/80 border border-amber-300 px-3 py-1 rounded-xl shadow-xs">👑 QUÁN QUÂN</span>
-                <span class="text-sm font-black text-amber-600 font-display">35.000.000 đ</span>
+              <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-500/20 border border-amber-400/40 text-amber-300 text-xs font-black uppercase tracking-wider mb-2">
+                <span>🏆 ĐÊM GALA VINH DANH YEAR-END PARTY 2026</span>
               </div>
-              
-              <div class="crystal-plate h-48 flex items-center justify-center p-3 mb-5 overflow-hidden">
-                <img src="assets/img/surface-pro-11.jpg" alt="Surface Pro 11" class="max-h-full object-contain mx-auto drop-shadow-xl" />
-              </div>
-
-              <h3 class="text-xl font-black text-slate-900 mb-1.5 font-display">Laptop Surface Pro 11</h3>
-              <p class="text-xs text-slate-600 font-semibold leading-relaxed">Trị giá 35 triệu đồng dành cho khách hàng xuất sắc nhất Chương trình tri ân 2026.</p>
+              <h2 class="text-2xl sm:text-3xl lg:text-4xl font-black text-white">
+                Tổng Kết Chương Trình & Tôn Vinh Chiến Tướng
+              </h2>
+              <p class="text-slate-300 text-xs sm:text-sm mt-1 max-w-2xl">
+                Công bố chính thức danh sách khách hàng, doanh nghiệp và hộ kinh doanh bứt phá xuất sắc nhất trong Chương trình Tri Ân Eureka 2026.
+              </p>
             </div>
 
-            <div class="mt-4 pt-3 border-t border-brand-500/20 flex items-center justify-between text-xs font-black text-brand-600">
-              <span>Giải thưởng cao nhất</span>
-              <span>Xem chi tiết →</span>
-            </div>
-          </div>
-
-          <!-- Exhibition 2: iPad Air M3 (Á Quân 1) -->
-          <div class="glass-ultra p-6 flex flex-col justify-between text-left group float-card-delay">
-            <div>
-              <div class="flex justify-between items-center mb-4">
-                <span class="text-xs font-black text-slate-800 bg-slate-200/90 border border-slate-300 px-3 py-1 rounded-xl shadow-xs">🥈 Á QUÂN 1</span>
-                <span class="text-sm font-black text-slate-700 font-display">20.000.000 đ</span>
-              </div>
-
-              <div class="crystal-plate h-48 flex items-center justify-center p-3 mb-5 overflow-hidden">
-                <img src="assets/img/ipad-air-m3.jpg" alt="iPad Air M3" class="max-h-full object-contain mx-auto drop-shadow-xl" />
-              </div>
-
-              <h3 class="text-xl font-black text-slate-900 mb-1.5 font-display">iPad Air M3 (12 inch)</h3>
-              <p class="text-xs text-slate-600 font-semibold leading-relaxed">Trị giá 20 triệu đồng vinh danh đối tác có tốc độ bứt phá thần tốc.</p>
-            </div>
-
-            <div class="mt-4 pt-3 border-t border-brand-500/20 flex items-center justify-between text-xs font-black text-brand-600">
-              <span>Tốc độ bứt phá</span>
-              <span>Xem chi tiết →</span>
+            <!-- Nút Chuyển Đổi Chế Độ Xem (Toggle Gala / Full Mode) -->
+            <div class="flex items-center gap-2 self-start lg:self-center">
+              <button id="btn-toggle-gala-mode" onclick="toggleGalaCelebrationMode()" class="px-5 py-3 rounded-2xl bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-500 hover:from-amber-400 hover:to-yellow-400 text-slate-950 font-black text-xs sm:text-sm shadow-xl hover:scale-105 active:scale-95 transition-all flex items-center gap-2 cursor-pointer">
+                <span id="gala-mode-icon">🏆</span>
+                <span id="gala-mode-text">Chế Độ Vinh Danh Gala (Đang Bật)</span>
+              </button>
             </div>
           </div>
 
-          <!-- Exhibition 3: Dyson Purifier (Á Quân 2) -->
-          <div class="glass-ultra p-6 flex flex-col justify-between text-left group float-card-active">
-            <div>
-              <div class="flex justify-between items-center mb-4">
-                <span class="text-xs font-black text-orange-900 bg-orange-200/90 border border-orange-300 px-3 py-1 rounded-xl shadow-xs">🥉 Á QUÂN 2</span>
-                <span class="text-sm font-black text-brand-500 font-display">10.000.000 đ</span>
-              </div>
-
-              <div class="crystal-plate h-48 flex items-center justify-center p-3 mb-5 overflow-hidden">
-                <img src="assets/img/dyson-purifier.jpg" alt="Máy lọc Dyson" class="max-h-full object-contain mx-auto drop-shadow-xl" />
-              </div>
-
-              <h3 class="text-xl font-black text-slate-900 mb-1.5 font-display">Máy Lọc Không Khí Dyson</h3>
-              <p class="text-xs text-slate-600 font-semibold leading-relaxed">Trị giá 10 triệu đồng tôn vinh đối tác phát triển bền vững cùng Eureka.</p>
+          <!-- 4 Thẻ Chỉ Số Tổng Kết Chương Trình -->
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mt-6 pt-6 border-t border-slate-800">
+            <div class="p-3.5 rounded-2xl bg-slate-800/60 border border-white/5">
+              <span class="text-[11px] text-slate-400 font-bold block mb-1">👥 KHÁCH HÀNG THAM GIA</span>
+              <div class="text-xl sm:text-2xl font-black text-amber-400">285+</div>
+              <span class="text-[10px] text-slate-400">Doanh nghiệp & Hộ KD</span>
             </div>
-
-            <div class="mt-4 pt-3 border-t border-brand-500/20 flex items-center justify-between text-xs font-black text-brand-600">
-              <span>Đồng hành bền bỉ</span>
-              <span>Xem chi tiết →</span>
+            <div class="p-3.5 rounded-2xl bg-slate-800/60 border border-white/5">
+              <span class="text-[11px] text-slate-400 font-bold block mb-1">📦 ĐƠN HÀNG HOÀN TẤT</span>
+              <div class="text-xl sm:text-2xl font-black text-emerald-400">2.140+</div>
+              <span class="text-[10px] text-slate-400">Booking thông quan chính ngạch</span>
+            </div>
+            <div class="p-3.5 rounded-2xl bg-slate-800/60 border border-white/5">
+              <span class="text-[11px] text-slate-400 font-bold block mb-1">⚖️ TỔNG SẢN LƯỢNG VẬN TẢI</span>
+              <div class="text-xl sm:text-2xl font-black text-sky-400">560 Tấn / 1.820 m³</div>
+              <span class="text-[10px] text-slate-400">Đường bộ Trung - Việt 24/7</span>
+            </div>
+            <div class="p-3.5 rounded-2xl bg-slate-800/60 border border-white/5">
+              <span class="text-[11px] text-slate-400 font-bold block mb-1">💎 TỔNG GIẢI THƯỞNG TRAO TAY</span>
+              <div class="text-xl sm:text-2xl font-black text-amber-300">135 Triệu đ</div>
+              <span class="text-[10px] text-slate-400">Quà công nghệ & Voucher</span>
             </div>
           </div>
         </div>
-      </div>
 
-      <!-- Bottom 3 Pillars Row (Transparent Glass Cards) -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-5 text-left">
-        <div class="glass-ultra p-6">
-          <span class="text-[10px] font-black uppercase text-brand-600 bg-orange-100/90 border border-brand-500/30 px-2.5 py-1 rounded-lg inline-block mb-3">AWARDS 02</span>
-          <h3 class="text-lg font-black text-slate-900 mb-2 font-display">05 Giải Phụ Chuyên Môn</h3>
-          <p class="text-xs text-slate-600 leading-relaxed font-semibold mb-4">Mỗi giải 3.000.000 đ: Vua Số Đơn, Tân Binh, Sự Trở Lại Ấn Tượng, Vua Tải Trọng và Vua Thể Tích.</p>
-          <span class="text-xs font-black text-brand-600 flex items-center gap-1 hover:translate-x-1">Tiêu chí toàn diện →</span>
+        <!-- 1. TOP 3 CHUNG CUỘC - AI ĐẠT GIẢI GÌ -->
+        <div class="mb-12">
+          <div class="flex items-center justify-between mb-6 px-1">
+            <div class="text-left">
+              <span class="text-xs font-black uppercase text-amber-400 tracking-wider">HẠNG MỤC DANH GIÁ NHẤT</span>
+              <h3 class="text-xl sm:text-2xl font-black text-white">Top 3 Chiến Tướng Chung Cuộc</h3>
+            </div>
+            <span class="px-3 py-1 rounded-full bg-amber-500/10 border border-amber-400/30 text-amber-300 text-xs font-bold">
+              Trao giải trực tiếp tại Gala YEP
+            </span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
+            <!-- Quán Quân -->
+            <div class="rounded-3xl p-6 bg-gradient-to-b from-amber-500/20 via-slate-900/90 to-slate-950 border-2 border-amber-400 shadow-2xl shadow-amber-500/20 flex flex-col justify-between relative order-1 md:order-2 transform md:-translate-y-2">
+              <div class="absolute -top-3.5 left-6 px-4 py-1 rounded-full bg-amber-400 text-slate-950 font-black text-xs uppercase tracking-wider shadow-lg flex items-center gap-1.5">
+                <span>👑 QUÁN QUÂN CHUNG CUỘC</span>
+              </div>
+              <div>
+                <div class="mt-2 mb-4 flex items-center justify-between">
+                  <span class="text-xs text-amber-300 font-bold">MÃ: ERK-KH-8891</span>
+                  <span class="text-xs font-black text-amber-400 bg-amber-400/20 px-2.5 py-0.5 rounded-lg border border-amber-400/40">HẠNG 1 TOÀN ĐOÀN</span>
+                </div>
+                <h4 class="text-lg font-black text-white mb-1">CÔNG TY TNHH TM XNK MINH CHÂU</h4>
+                <div class="text-2xl font-black text-amber-400 mb-3">1.280.500.000 đ</div>
+                <div class="p-3 rounded-2xl bg-slate-950/70 border border-amber-400/30 mb-4 flex items-center gap-3">
+                  <img src="assets/img/surface-pro-11.jpg" alt="Surface Pro 11" class="w-16 h-16 object-contain rounded-lg bg-white/5 p-1" />
+                  <div>
+                    <span class="text-[11px] text-amber-300 font-bold block">GIẢI THƯỞNG ĐẠT ĐƯỢC:</span>
+                    <strong class="text-sm text-white block">Laptop Microsoft Surface Pro 11</strong>
+                    <span class="text-xs text-slate-400">Trị giá 35.000.000 đ + Cúp Vàng Danh Dự</span>
+                  </div>
+                </div>
+                <p class="text-xs text-slate-300 leading-relaxed">Xuất sắc dẫn đầu bảng tổng sắp với 38 đơn booking hoàn tất đúng hạn.</p>
+              </div>
+              <div class="pt-4 border-t border-slate-800 mt-4 flex items-center justify-between text-xs text-amber-300 font-bold">
+                <span>✓ 38 Đơn hoàn tất</span>
+                <span>Vinh danh Quán quân</span>
+              </div>
+            </div>
+
+            <!-- Á Quân 1 -->
+            <div class="rounded-3xl p-6 bg-slate-900/90 border border-slate-700/80 hover:border-slate-400 shadow-xl flex flex-col justify-between relative order-2 md:order-1">
+              <div class="absolute -top-3 left-6 px-3.5 py-0.5 rounded-full bg-slate-300 text-slate-900 font-black text-xs uppercase tracking-wider shadow">
+                🥈 Á QUÂN 1
+              </div>
+              <div>
+                <div class="mt-2 mb-4 flex items-center justify-between">
+                  <span class="text-xs text-slate-300 font-bold">MÃ: ERK-KH-4432</span>
+                  <span class="text-xs font-black text-slate-300 bg-slate-700/50 px-2 py-0.5 rounded-lg border border-slate-600">HẠNG 2 TOÀN ĐOÀN</span>
+                </div>
+                <h4 class="text-lg font-black text-white mb-1">CÔNG TY CP VẬN TẢI & XNK ĐÔNG Á</h4>
+                <div class="text-2xl font-black text-slate-200 mb-3">945.200.000 đ</div>
+                <div class="p-3 rounded-2xl bg-slate-950/70 border border-slate-700 mb-4 flex items-center gap-3">
+                  <img src="assets/img/ipad-air-m3.jpg" alt="iPad Air M3" class="w-16 h-16 object-contain rounded-lg bg-white/5 p-1" />
+                  <div>
+                    <span class="text-[11px] text-slate-300 font-bold block">GIẢI THƯỞNG ĐẠT ĐƯỢC:</span>
+                    <strong class="text-sm text-white block">iPad Air M3 12-inch Chính Hãng</strong>
+                    <span class="text-xs text-slate-400">Trị giá 20.000.000 đ + Kỷ niệm chương Bạc</span>
+                  </div>
+                </div>
+                <p class="text-xs text-slate-300 leading-relaxed">Tốc độ bứt phá ngoạn mục với 27 chuyến hàng xuất nhập khẩu liên tục.</p>
+              </div>
+              <div class="pt-4 border-t border-slate-800 mt-4 flex items-center justify-between text-xs text-slate-300 font-bold">
+                <span>✓ 27 Đơn hoàn tất</span>
+                <span>Vinh danh Á Quân 1</span>
+              </div>
+            </div>
+
+            <!-- Á Quân 2 -->
+            <div class="rounded-3xl p-6 bg-slate-900/90 border border-amber-600/40 hover:border-amber-500 shadow-xl flex flex-col justify-between relative order-3">
+              <div class="absolute -top-3 left-6 px-3.5 py-0.5 rounded-full bg-amber-600 text-white font-black text-xs uppercase tracking-wider shadow">
+                🥉 Á QUÂN 2
+              </div>
+              <div>
+                <div class="mt-2 mb-4 flex items-center justify-between">
+                  <span class="text-xs text-amber-300/80 font-bold">MÃ: ERK-KH-1205</span>
+                  <span class="text-xs font-black text-amber-300 bg-amber-900/30 px-2 py-0.5 rounded-lg border border-amber-700/50">HẠNG 3 TOÀN ĐOÀN</span>
+                </div>
+                <h4 class="text-lg font-black text-white mb-1">HỘ KINH DOANH LOGISTICS ĐẠI NAM</h4>
+                <div class="text-2xl font-black text-amber-500 mb-3">710.800.000 đ</div>
+                <div class="p-3 rounded-2xl bg-slate-950/70 border border-amber-700/40 mb-4 flex items-center gap-3">
+                  <img src="assets/img/dyson-purifier.jpg" alt="Máy lọc Dyson" class="w-16 h-16 object-contain rounded-lg bg-white/5 p-1" />
+                  <div>
+                    <span class="text-[11px] text-amber-300 font-bold block">GIẢI THƯỞNG ĐẠT ĐƯỢC:</span>
+                    <strong class="text-sm text-white block">Máy Lọc Không Khí Dyson Purifier</strong>
+                    <span class="text-xs text-slate-400">Trị giá 10.000.000 đ + Kỷ niệm chương Đồng</span>
+                  </div>
+                </div>
+                <p class="text-xs text-slate-300 leading-relaxed">Đồng hành bền bỉ từ những ngày đầu mùa cao điểm với 21 đơn booking.</p>
+              </div>
+              <div class="pt-4 border-t border-slate-800 mt-4 flex items-center justify-between text-xs text-amber-400 font-bold">
+                <span>✓ 21 Đơn hoàn tất</span>
+                <span>Vinh danh Á Quân 2</span>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <div class="glass-ultra p-6">
-          <span class="text-[10px] font-black uppercase text-brand-600 bg-orange-100/90 border border-brand-500/30 px-2.5 py-1 rounded-lg inline-block mb-3">AWARDS 03</span>
-          <h3 class="text-lg font-black text-slate-900 mb-2 font-display">Nhiệm Vụ Hệ Thống (VIP+1)</h3>
-          <p class="text-xs text-slate-600 leading-relaxed font-semibold mb-4">Đạt mốc ngày 20 hàng tháng: Giảm đến 30% cước gom cont và đặc quyền tăng thêm 15 ngày công nợ.</p>
-          <span class="text-xs font-black text-brand-600 flex items-center gap-1 hover:translate-x-1">Đặc quyền độc quyền →</span>
+        <!-- 2. VINH DANH 05 KHÁCH HÀNG ĐẠT 05 GIẢI PHỤ CHUYÊN MÔN -->
+        <div class="mb-12">
+          <div class="flex items-center justify-between mb-6 px-1">
+            <div class="text-left">
+              <span class="text-xs font-black uppercase text-amber-400 tracking-wider">05 DANH HIỆU CHUYÊN SÂU</span>
+              <h3 class="text-xl sm:text-2xl font-black text-white">Vinh Danh 05 Khách Hàng Đạt Giải Phụ Chuyên Môn</h3>
+            </div>
+            <span class="px-3 py-1 rounded-full bg-slate-800 text-slate-300 text-xs font-bold border border-slate-700">
+              3.000.000 đ Tiền mặt / Giải
+            </span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 text-left">
+            <!-- Giải 1: Vua Số Lượng Đơn -->
+            <div class="rounded-2xl p-4 bg-slate-900/90 border border-white/10 hover:border-amber-400/60 transition-all flex flex-col justify-between">
+              <div>
+                <div class="h-24 rounded-xl overflow-hidden mb-3 relative">
+                  <img src="assets/images/award-so-luong-don.jpg" class="w-full h-full object-cover" />
+                  <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
+                  <span class="absolute top-2 left-2 px-2 py-0.5 rounded bg-amber-500 text-slate-950 text-[10px] font-black">📦 VUA SỐ ĐƠN</span>
+                </div>
+                <span class="text-[11px] text-amber-300 font-bold block">ERK-KH-9012</span>
+                <h5 class="text-sm font-bold text-white mb-1">XNK Hoàng Long</h5>
+                <div class="text-base font-black text-amber-400 mb-1">46 Đơn Booking</div>
+                <p class="text-[11px] text-slate-400">Kỷ lục booking hoàn tất nhiều nhất chương trình.</p>
+              </div>
+              <div class="pt-3 mt-3 border-t border-slate-800 text-[11px] font-bold text-emerald-400">
+                Thưởng: 3.000.000 đ
+              </div>
+            </div>
+
+            <!-- Giải 2: Tân Binh Xuất Sắc -->
+            <div class="rounded-2xl p-4 bg-slate-900/90 border border-white/10 hover:border-amber-400/60 transition-all flex flex-col justify-between">
+              <div>
+                <div class="h-24 rounded-xl overflow-hidden mb-3 relative">
+                  <img src="assets/images/award-tan-binh.jpg" class="w-full h-full object-cover" />
+                  <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
+                  <span class="absolute top-2 left-2 px-2 py-0.5 rounded bg-amber-500 text-slate-950 text-[10px] font-black">🌟 TÂN BINH</span>
+                </div>
+                <span class="text-[11px] text-amber-300 font-bold block">ERK-KH-7731</span>
+                <h5 class="text-sm font-bold text-white mb-1">Công ty Tân Thời Đại</h5>
+                <div class="text-base font-black text-amber-400 mb-1">485.000.000 đ</div>
+                <p class="text-[11px] text-slate-400">Khách hàng mới tạo tài khoản có doanh số cao nhất.</p>
+              </div>
+              <div class="pt-3 mt-3 border-t border-slate-800 text-[11px] font-bold text-emerald-400">
+                Thưởng: 3.000.000 đ
+              </div>
+            </div>
+
+            <!-- Giải 3: Sự Trở Lại Ấn Tượng -->
+            <div class="rounded-2xl p-4 bg-slate-900/90 border border-white/10 hover:border-amber-400/60 transition-all flex flex-col justify-between">
+              <div>
+                <div class="h-24 rounded-xl overflow-hidden mb-3 relative">
+                  <img src="assets/images/award-tro-lai.jpg" class="w-full h-full object-cover" />
+                  <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
+                  <span class="absolute top-2 left-2 px-2 py-0.5 rounded bg-amber-500 text-slate-950 text-[10px] font-black">🔄 TRỞ LẠI</span>
+                </div>
+                <span class="text-[11px] text-amber-300 font-bold block">ERK-KH-5524</span>
+                <h5 class="text-sm font-bold text-white mb-1">XNK Việt Trung Thịnh Vượng</h5>
+                <div class="text-base font-black text-amber-400 mb-1">18 Đơn Tái Xuất</div>
+                <p class="text-[11px] text-slate-400">Khách cũ quay lại hợp tác bứt phá ngoạn mục nhất.</p>
+              </div>
+              <div class="pt-3 mt-3 border-t border-slate-800 text-[11px] font-bold text-emerald-400">
+                Thưởng: 3.000.000 đ
+              </div>
+            </div>
+
+            <!-- Giải 4: Vua Tải Trọng (Kg) -->
+            <div class="rounded-2xl p-4 bg-slate-900/90 border border-white/10 hover:border-amber-400/60 transition-all flex flex-col justify-between">
+              <div>
+                <div class="h-24 rounded-xl overflow-hidden mb-3 relative">
+                  <img src="assets/images/award-tai-trong.jpg" class="w-full h-full object-cover" />
+                  <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
+                  <span class="absolute top-2 left-2 px-2 py-0.5 rounded bg-amber-500 text-slate-950 text-[10px] font-black">⚓ TẢI TRỌNG</span>
+                </div>
+                <span class="text-[11px] text-amber-300 font-bold block">ERK-KH-3198</span>
+                <h5 class="text-sm font-bold text-white mb-1">Thép & TB Tân Phát</h5>
+                <div class="text-base font-black text-amber-400 mb-1">68.450 kg</div>
+                <p class="text-[11px] text-slate-400">Tổng khối lượng kg cao nhất lô hàng term E & F.</p>
+              </div>
+              <div class="pt-3 mt-3 border-t border-slate-800 text-[11px] font-bold text-emerald-400">
+                Thưởng: 3.000.000 đ
+              </div>
+            </div>
+
+            <!-- Giải 5: Vua Khối Lượng (M³) -->
+            <div class="rounded-2xl p-4 bg-slate-900/90 border border-white/10 hover:border-amber-400/60 transition-all flex flex-col justify-between">
+              <div>
+                <div class="h-24 rounded-xl overflow-hidden mb-3 relative">
+                  <img src="assets/images/award-khoi-luong.jpg" class="w-full h-full object-cover" />
+                  <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
+                  <span class="absolute top-2 left-2 px-2 py-0.5 rounded bg-amber-500 text-slate-950 text-[10px] font-black">🚛 KHỐI LƯỢNG</span>
+                </div>
+                <span class="text-[11px] text-amber-300 font-bold block">ERK-KH-6640</span>
+                <h5 class="text-sm font-bold text-white mb-1">Nội Thất Á Châu</h5>
+                <div class="text-base font-black text-amber-400 mb-1">215 m³</div>
+                <p class="text-[11px] text-slate-400">Tổng thể tích m³ gom cont chính ngạch cao nhất.</p>
+              </div>
+              <div class="pt-3 mt-3 border-t border-slate-800 text-[11px] font-bold text-emerald-400">
+                Thưởng: 3.000.000 đ
+              </div>
+            </div>
+          </div>
         </div>
 
-        <div class="glass-ultra p-6">
-          <span class="text-[10px] font-black uppercase text-brand-600 bg-orange-100/90 border border-brand-500/30 px-2.5 py-1 rounded-lg inline-block mb-3">AWARDS 04</span>
-          <h3 class="text-lg font-black text-slate-900 mb-2 font-display">Vòng Quay Tri Ân</h3>
-          <p class="text-xs text-slate-600 leading-relaxed font-semibold mb-4">Quay thưởng mùng 05 hàng tháng (05/11, 05/12 & 05/01 cho Kỳ T10, T11, T12). Mỗi kỳ quay 3 lần, mã cộng dồn hoặc tùy chọn.</p>
-          <span class="text-xs font-black text-brand-600 flex items-center gap-1 hover:translate-x-1">Quay số hàng tháng →</span>
+        <!-- 3. THƯ CẢM ƠN & LỜI TRI ÂN TRANG TRỌNG TỪ BAN GIÁM ĐỐC EUREKA -->
+        <div class="p-8 sm:p-10 rounded-3xl bg-gradient-to-b from-slate-900/95 via-slate-950/95 to-slate-900/95 border-2 border-amber-400/50 shadow-2xl relative text-left overflow-hidden">
+          <div class="absolute top-0 right-0 w-80 h-80 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+          
+          <div class="max-w-4xl mx-auto relative z-10">
+            <div class="flex items-center gap-3 mb-4">
+              <span class="text-2xl">💌</span>
+              <div>
+                <span class="text-xs font-black uppercase text-amber-400 tracking-wider">THƯ TRI ÂN TỪ BAN GIÁM ĐỐC</span>
+                <h4 class="text-xl sm:text-2xl font-black text-white">Lời Cảm Ơn Sâu Sắc Tới Toàn Thể Quý Khách Hàng</h4>
+              </div>
+            </div>
+
+            <div class="text-xs sm:text-sm text-slate-300 space-y-3.5 leading-relaxed pt-2 border-t border-slate-800">
+              <p>
+                <strong>Kính gửi toàn thể Quý Khách Hàng, Quý Doanh Nghiệp và Quý Hộ Kinh Doanh thân thiết,</strong>
+              </p>
+              <p>
+                Chương trình Tri Ân Khách Hàng <em>Eureka Customer Awards 2026</em> đã chính thức khép lại với những kết quả rực rỡ và những cột mốc bứt phá đáng tự hào. Ban Giám Đốc cùng toàn thể đội ngũ cán bộ nhân viên <strong>Công ty TNHH Thương Mại & Xuất Nhập Khẩu Eureka</strong> xin trân trọng gửi lời cảm ơn chân thành và sâu sắc nhất tới toàn thể <strong>hơn 285 Quý khách hàng</strong> đã luôn tin tưởng, đồng hành và lựa chọn Eureka làm đối tác vận tải chính ngạch đường bộ Trung – Việt trong suốt một năm qua.
+              </p>
+              <p>
+                Mỗi chuyến xe lăn bánh, mỗi lô hàng thông quan chính ngạch an toàn và đúng hạn chính là niềm vinh hạnh to lớn của chúng tôi. Eureka cam kết sẽ không ngừng hoàn thiện hệ thống, tối ưu line vận tải, nâng cao năng lực kho bãi và giữ vững tinh thần phục vụ tận tâm để tiếp tục là người bạn đồng hành tin cậy trên mọi chặng đường kinh doanh của Quý vị.
+              </p>
+              <p>
+                Kính chúc Quý Khách Hàng một năm mới <strong>An Khang Thịnh Vượng — Vạn Dặm Thuận Buồm Xuôi Gió — Kinh Doanh Bội Thu & Đắc Lộc!</strong>
+              </p>
+            </div>
+
+            <div class="mt-6 pt-5 border-t border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div>
+                <span class="text-xs text-slate-400 block">Đại diện Ban Lãnh Đạo</span>
+                <strong class="text-sm text-amber-300 font-black">BAN GIÁM ĐỐC EUREKA LOGISTICS</strong>
+              </div>
+              <div class="flex items-center gap-2">
+                <a href="#bxh-truc-tuyen" class="px-5 py-2.5 rounded-xl bg-amber-400 text-slate-950 font-black text-xs hover:bg-amber-300 transition-all shadow cursor-pointer">
+                  Xem Bảng Xếp Hạng Toàn Đoàn ↓
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
+
       </div><!-- /gala-awards-section -->
 
     </div>
@@ -1545,12 +1745,17 @@
         <p class="text-slate-400 leading-relaxed max-w-md mb-3">
           Chuyên trang hỗ trợ Xuất nhập khẩu và Dịch vụ vận chuyển chính ngạch đường bộ Trung – Việt uy tín, minh bạch, trọn gói với hóa đơn VAT đầy đủ.
         </p>
-        <div class="flex items-center gap-3 text-slate-400">
+        <div class="flex items-center gap-3 text-slate-400 flex-wrap">
           <a href="https://www.facebook.com/101674648022986" target="_blank" class="hover:text-brand-400 transition-colors">Facebook</a>
           <span>•</span>
           <a href="https://www.tiktok.com/@eureka_logistics" target="_blank" class="hover:text-brand-400 transition-colors">TikTok</a>
           <span>•</span>
           <a href="https://www.youtube.com/@erktransport.logistics" target="_blank" class="hover:text-brand-400 transition-colors">YouTube</a>
+          <span>•</span>
+          <a href="https://zalo.me/g/igquxijleubpmg9hsykq" target="_blank" rel="noopener noreferrer" class="hover:text-sky-400 text-sky-400 font-semibold transition-colors inline-flex items-center gap-1" title="Tham gia Cộng đồng Zalo Xuất Nhập Khẩu Eureka">
+            <span>Group Zalo</span>
+            <span class="text-[10px]">↗</span>
+          </a>
         </div>
       </div>
 
@@ -2578,8 +2783,8 @@
               <span class="text-xl">☁️</span>
               <h4 class="text-sm font-black uppercase text-sky-400 tracking-wider font-display">ĐỒNG BỘ DỮ LIỆU ĐÁM MÂY — GOOGLE SHEETS CLOUD DATABASE</h4>
             </div>
-            <p class="text-xs text-slate-300 mt-1 max-w-2xl leading-relaxed">
-              Kết nối trực tiếp website với Google Sheets trên Google Drive của bạn. Giúp toàn bộ dữ liệu (Khách quay voucher, kết quả quay M05, Cấu hình Nhiệm Vụ, Ẩn/Hiện Gala) được lưu trữ dùng chung cho tất cả máy tính và điện thoại.
+            <p class="text-xs text-slate-300 mt-1 max-w-3xl leading-relaxed">
+              Kết nối trực tiếp website với Google Sheets trên Google Drive của bạn. Toàn bộ 100% dữ liệu động (Khách quay voucher & SĐT chống quay lặp, kết quả M05, Bảng xếp hạng Leaderboard, Người thắng giải tuần, Cấu hình 8 ô Vòng quay & Tồn kho, Mã Booking M05 & Tên quà, Token Telegram Bot & Webhook, Cấu hình Nhiệm Vụ 3 chặng, Ẩn/Hiện Gala, Thi đua Affiliate) được lưu trữ dùng chung cho tất cả máy tính và điện thoại.
             </p>
           </div>
           <div class="flex flex-wrap items-center gap-2 shrink-0">

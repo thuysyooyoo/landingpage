@@ -143,11 +143,91 @@ async function fetchCloudData(silent = true) {
           if (typeof renderLeaderboardTable === 'function') {
             renderLeaderboardTable();
           }
+          if (typeof renderAdminLeaderboardTable === 'function') {
+            renderAdminLeaderboardTable();
+          }
           hasUpdates = true;
         } catch (e) {}
       }
 
-      console.log('✅ [GoogleSheets DB] Đồng bộ Cloud thành công! Dữ liệu mới nhất đã được áp dụng.');
+      // 7. Đồng bộ Cấu hình Telegram Bot & Webhook
+      const botCfg = data.botConfig || (data.configs && data.configs.eureka_bot_config);
+      if (botCfg && typeof botCfg === 'object') {
+        try {
+          localStorage.setItem('eureka_bot_config', JSON.stringify(botCfg));
+          if (typeof loadBotConfigToAdminForm === 'function') {
+            loadBotConfigToAdminForm();
+          }
+          hasUpdates = true;
+        } catch (e) {}
+      }
+
+      // 8. Đồng bộ Cấu hình Vòng Quay May Mắn (8 Ô, Tỉ lệ %, Số lượng kho)
+      const wheelCfg = data.wheelConfig || (data.configs && data.configs.eureka_welcome_wheel_config);
+      if (Array.isArray(wheelCfg) && wheelCfg.length > 0) {
+        try {
+          localStorage.setItem('eureka_welcome_wheel_config', JSON.stringify(wheelCfg));
+          if (typeof initWelcomeWheelData === 'function') {
+            initWelcomeWheelData();
+          }
+          if (typeof drawWheel === 'function') {
+            drawWheel();
+          }
+          if (typeof renderAdminWheelConfigTable === 'function') {
+            renderAdminWheelConfigTable();
+          }
+          hasUpdates = true;
+        } catch (e) {}
+      }
+
+      // 9. Đồng bộ Danh sách Mã Booking Dự Thưởng Vòng Quay Mùng 05
+      const m05Pool = data.m05BookingPool || (data.configs && data.configs.eureka_m05_booking_pool);
+      if (Array.isArray(m05Pool) && m05Pool.length > 0) {
+        try {
+          localStorage.setItem('eureka_m05_booking_pool', JSON.stringify(m05Pool));
+          if (typeof initM05WheelSegments === 'function') {
+            initM05WheelSegments();
+          }
+          if (typeof drawM05Wheel === 'function') {
+            drawM05Wheel();
+          }
+          if (typeof updateM05PublicInfo === 'function') {
+            updateM05PublicInfo();
+          }
+          if (typeof renderAdminM05BookingManager === 'function') {
+            renderAdminM05BookingManager();
+          }
+          hasUpdates = true;
+        } catch (e) {}
+      }
+
+      // 10. Đồng bộ Giải Thưởng M05 Hiện Tại
+      const m05Prize = data.m05CurrentPrize || (data.configs && data.configs.eureka_m05_current_prize);
+      if (m05Prize && typeof m05Prize === 'string') {
+        try {
+          localStorage.setItem('eureka_m05_current_prize', m05Prize);
+          if (typeof updateM05PublicInfo === 'function') {
+            updateM05PublicInfo();
+          }
+          const m05PrizeInput = document.getElementById('admin-m05-prize-input');
+          if (m05PrizeInput) m05PrizeInput.value = m05Prize;
+          hasUpdates = true;
+        } catch (e) {}
+      }
+
+      // 11. Đồng bộ Số Liệu Thi Đua Tiếp Thị Affiliate Nhân Viên
+      const refClicks = data.refClicks || (data.configs && data.configs.eureka_ref_clicks);
+      if (refClicks && typeof refClicks === 'object') {
+        try {
+          localStorage.setItem('eureka_ref_clicks', JSON.stringify(refClicks));
+          if (typeof renderAdminAffiliateContest === 'function') {
+            renderAdminAffiliateContest();
+          }
+          hasUpdates = true;
+        } catch (e) {}
+      }
+
+      console.log('✅ [GoogleSheets DB] Đồng bộ Cloud thành công! Toàn bộ dữ liệu động đã được áp dụng.');
       updateCloudSyncStatusBadge(true, 'Đã đồng bộ ' + new Date().toLocaleTimeString('vi-VN'));
       return true;
     }
@@ -243,6 +323,11 @@ async function pushAllLocalDataToCloud() {
   const gala = JSON.parse(localStorage.getItem('eureka_gala_awards_config') || '{"is_active": true}');
   const weekly = (typeof getWeeklyWinnerData === 'function') ? getWeeklyWinnerData() : JSON.parse(localStorage.getItem('eureka_weekly_winner') || 'null');
   const customLb = JSON.parse(localStorage.getItem('eureka_custom_leaderboard') || '[]');
+  const botConfig = (typeof getBotConfig === 'function') ? getBotConfig() : JSON.parse(localStorage.getItem('eureka_bot_config') || '{}');
+  const wheelConfig = (typeof getActiveWheelSegments === 'function') ? getActiveWheelSegments() : JSON.parse(localStorage.getItem('eureka_welcome_wheel_config') || '[]');
+  const m05BookingPool = (typeof getM05BookingPool === 'function') ? getM05BookingPool() : JSON.parse(localStorage.getItem('eureka_m05_booking_pool') || '[]');
+  const m05CurrentPrize = (typeof getM05CurrentPrize === 'function') ? getM05CurrentPrize() : (localStorage.getItem('eureka_m05_current_prize') || 'Voucher 1.000.000 đ Lộc Vàng Tri Ân');
+  const refClicks = (typeof getAffiliateClicks === 'function') ? getAffiliateClicks() : JSON.parse(localStorage.getItem('eureka_ref_clicks') || '{}');
   const lockedPhones = Object.values(JSON.parse(localStorage.getItem('eureka_locked_spun_phones') || '{}'));
   
   if (Array.isArray(leads)) {
@@ -262,7 +347,12 @@ async function pushAllLocalDataToCloud() {
       nhiemVuConfig: nhiemVu,
       galaConfig: gala,
       weeklyWinner: weekly,
-      customLeaderboard: customLb
+      customLeaderboard: customLb,
+      botConfig: botConfig,
+      wheelConfig: wheelConfig,
+      m05BookingPool: m05BookingPool,
+      m05CurrentPrize: m05CurrentPrize,
+      refClicks: refClicks
     }
   };
 

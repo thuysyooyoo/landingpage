@@ -105,7 +105,13 @@ function doGet(e) {
         nhiemVuConfig: configs['eureka_nhiem_vu_config'] || null,
         galaConfig: configs['eureka_gala_awards_config'] || null,
         weeklyWinner: configs['eureka_weekly_winner'] || null,
-        customLeaderboard: configs['eureka_custom_leaderboard'] || null
+        customLeaderboard: configs['eureka_custom_leaderboard'] || null,
+        botConfig: configs['eureka_bot_config'] || null,
+        wheelConfig: configs['eureka_welcome_wheel_config'] || null,
+        m05BookingPool: configs['eureka_m05_booking_pool'] || null,
+        m05CurrentPrize: configs['eureka_m05_current_prize'] || null,
+        refClicks: configs['eureka_ref_clicks'] || null,
+        configs: configs
       }
     });
   } catch (err) {
@@ -235,7 +241,12 @@ function doPost(e) {
         ['eureka_nhiem_vu_config', JSON.stringify(all.nhiemVuConfig || {})],
         ['eureka_gala_awards_config', JSON.stringify(all.galaConfig || {})],
         ['eureka_weekly_winner', JSON.stringify(all.weeklyWinner || {})],
-        ['eureka_custom_leaderboard', JSON.stringify(all.customLeaderboard || [])]
+        ['eureka_custom_leaderboard', JSON.stringify(all.customLeaderboard || [])],
+        ['eureka_bot_config', JSON.stringify(all.botConfig || {})],
+        ['eureka_welcome_wheel_config', JSON.stringify(all.wheelConfig || [])],
+        ['eureka_m05_booking_pool', JSON.stringify(all.m05BookingPool || [])],
+        ['eureka_m05_current_prize', JSON.stringify(all.m05CurrentPrize || '')],
+        ['eureka_ref_clicks', JSON.stringify(all.refClicks || {})]
       ];
       if (cSheet.getLastRow() > 1) {
         cSheet.getRange(2, 1, cSheet.getLastRow() - 1, 3).clearContent();

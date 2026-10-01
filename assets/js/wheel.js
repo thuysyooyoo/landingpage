@@ -90,6 +90,9 @@ function recordAffiliateClick(refCode) {
     const cleanRef = String(refCode).trim().toLowerCase();
     clicks[cleanRef] = (clicks[cleanRef] || 0) + 1;
     localStorage.setItem(STORAGE_KEY_REF_CLICKS, JSON.stringify(clicks));
+    if (typeof syncAdminConfigToCloud === 'function') {
+      syncAdminConfigToCloud(STORAGE_KEY_REF_CLICKS, clicks);
+    }
   } catch (e) {}
 }
 
@@ -561,6 +564,9 @@ function spinWheel() {
       if (winningSeg.stock_quantity && winningSeg.stock_quantity > 0) {
         winningSeg.stock_quantity -= 1;
         localStorage.setItem('eureka_welcome_wheel_config', JSON.stringify(welcomeSegments));
+        if (typeof syncAdminConfigToCloud === 'function') {
+          syncAdminConfigToCloud('eureka_welcome_wheel_config', welcomeSegments);
+        }
       }
 
       // Generate Voucher Code
