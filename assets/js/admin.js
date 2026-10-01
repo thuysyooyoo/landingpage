@@ -807,7 +807,7 @@ function saveAdminWeeklyWinner() {
     customer_name: maskName(nameVal),
     customer_code: codeInput ? codeInput.value.trim().toUpperCase() : 'ERK-KH-8891',
     weekly_spending: spendVal,
-    prize_name: prizeInput ? prizeInput.value.trim() : 'Voucher Tiền Mặt 2.000.000 đ',
+    prize_name: prizeInput ? prizeInput.value.trim() : 'Voucher 1.000.000 đ',
     congrats_message: msgInput ? msgInput.value.trim() : '',
     updated_at: new Date().toLocaleString('vi-VN')
   };
@@ -833,7 +833,7 @@ function loadDemoWeeklyWinner() {
     customer_name: 'Khách hàng T*** Đ*** XNK *** Châu',
     customer_code: 'ERK-KH-8891',
     weekly_spending: '148.650.000 đ',
-    prize_name: 'Voucher Tiền Mặt 2.000.000 đ + Cúp Chiến Tướng Tuần',
+    prize_name: 'Voucher 1.000.000 đ',
     congrats_message: 'Nhiệt liệt chúc mừng Quý khách đã xuất sắc dẫn đầu bảng vàng chi tiêu dịch vụ tuần qua, bứt phá tiến độ vận chuyển vượt bậc!',
     updated_at: new Date().toLocaleString('vi-VN')
   };

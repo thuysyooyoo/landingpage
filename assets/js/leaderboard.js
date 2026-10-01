@@ -448,7 +448,11 @@ function renderWeeklyWinnerSpotlight() {
     if (nameEl) nameEl.textContent = maskCustomerName(winner.customer_name);
     if (codeEl) codeEl.textContent = `MÃ: ${winner.customer_code || winner.code || 'ERK-KH-8891'}`;
     if (spendEl) spendEl.textContent = winner.weekly_spending.includes('đ') ? winner.weekly_spending : new Intl.NumberFormat('vi-VN').format(winner.weekly_spending) + ' đ';
-    if (prizeEl) prizeEl.textContent = winner.prize_name || 'Voucher Tiền Mặt 2.000.000 đ + Huy Hiệu Chiến Tướng';
+    let prizeName = winner.prize_name || 'Voucher 1.000.000 đ';
+    if (prizeName.includes('2.000.000')) {
+      prizeName = 'Voucher 1.000.000 đ';
+    }
+    if (prizeEl) prizeEl.textContent = prizeName;
     if (msgEl) msgEl.textContent = winner.congrats_message || 'Nhiệt liệt chúc mừng Quý khách đã xuất sắc dẫn đầu doanh số chi tiêu dịch vụ tuần qua, bứt phá tiến độ vận chuyển vượt bậc!';
 
     container.classList.remove('hidden');
@@ -462,7 +466,7 @@ function renderWeeklyWinnerSpotlight() {
     if (prizeTopName) prizeTopName.textContent = maskCustomerName(winner.customer_name);
     if (prizeTopCode) prizeTopCode.textContent = 'MÃ: ' + (winner.customer_code || winner.code || 'ERK-KH-8891');
     if (prizeTopSpending) prizeTopSpending.textContent = winner.weekly_spending.includes('đ') ? winner.weekly_spending : new Intl.NumberFormat('vi-VN').format(winner.weekly_spending) + ' đ';
-    if (prizeTopPrize) prizeTopPrize.textContent = '🎁 ' + (winner.prize_name || 'Voucher Tiền Mặt 2.000.000 đ + Cúp Chiến Tướng');
+    if (prizeTopPrize) prizeTopPrize.textContent = '🎁 ' + prizeName;
   } else {
     // Hidden when admin has not entered information
     container.classList.add('hidden');
