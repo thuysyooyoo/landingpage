@@ -350,24 +350,34 @@ function drawWheel() {
 }
 
 function pickWinningIndexByWeight(segments) {
-  const eligible = segments.map((seg, idx) => ({
-    index: idx,
-    weight: (seg.stock_quantity !== undefined && seg.stock_quantity <= 0) ? 0 : (seg.probability_weight || 10)
-  }));
+  const eligible = segments.map((seg, idx) => {
+    let w = Number(seg.probability_weight);
+    if (isNaN(w) || w < 0) w = 0;
+    if (seg.stock_quantity !== undefined && seg.stock_quantity <= 0) {
+      w = 0;
+    }
+    return {
+      index: idx,
+      weight: w
+    };
+  });
 
   const totalWeight = eligible.reduce((sum, item) => sum + item.weight, 0);
   if (totalWeight <= 0) {
-    return segments.length - 1;
+    const firstAvailable = eligible.find(e => (segments[e.index].stock_quantity === undefined || segments[e.index].stock_quantity > 0));
+    return firstAvailable ? firstAvailable.index : 0;
   }
 
   let randomVal = Math.random() * totalWeight;
   for (let i = 0; i < eligible.length; i++) {
-    if (randomVal < eligible[i].weight) {
-      return eligible[i].index;
+    if (eligible[i].weight > 0) {
+      if (randomVal < eligible[i].weight) {
+        return eligible[i].index;
+      }
+      randomVal -= eligible[i].weight;
     }
-    randomVal -= eligible[i].weight;
   }
-  return eligible[eligible.length - 1].index;
+  return eligible.find(e => e.weight > 0)?.index ?? 0;
 }
 
 // ==================== PHONE VALIDATION & DUPLICATE LOCK ====================
