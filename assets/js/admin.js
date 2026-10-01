@@ -256,12 +256,15 @@ function renderAdminSpinLeadsTable() {
           ${item.status || 'Chờ áp dụng'}
         </span>
       </td>
-      <td class="py-2.5 px-3 text-center space-x-2">
-        <a href="https://zalo.me/${item.phone}" target="_blank" class="px-2 py-1 rounded bg-blue-600 hover:bg-blue-500 text-white font-bold text-[10px] inline-flex items-center gap-1">
-          Chat Zalo
+      <td class="py-2.5 px-3 text-center space-x-1 whitespace-nowrap">
+        <a href="https://zalo.me/${item.phone}" target="_blank" class="px-2.5 py-1 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-bold text-[10px] inline-flex items-center gap-1 shadow transition-colors" title="Chat Zalo với số ${item.phone}">
+          💬 Chat Zalo
         </a>
-        <button onclick="deleteSpinLead(${idx})" class="text-rose-400 hover:text-rose-300 text-[11px] font-semibold">
-          Xóa
+        <a href="tel:${item.phone}" class="px-2.5 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-[10px] inline-flex items-center gap-1 shadow transition-colors" title="Gọi trực tiếp số ${item.phone}">
+          📞 Gọi
+        </a>
+        <button onclick="deleteSpinLead(${idx})" class="p-1 text-rose-400 hover:text-rose-300 text-xs font-semibold" title="Xóa">
+          ✕
         </button>
       </td>
     `;

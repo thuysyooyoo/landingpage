@@ -111,6 +111,14 @@ function handleApplyZaloVoucher(e) {
   if (navigator.clipboard) {
     navigator.clipboard.writeText(msg).catch(() => {});
   }
+
+  const btnText = document.getElementById('modal-zalo-btn-text');
+  if (btnText) {
+    btnText.textContent = '✅ ĐÃ SAO CHÉP LỜI NHẮN! ĐANG MỞ ZALO...';
+    setTimeout(() => {
+      btnText.textContent = 'Áp Dụng Mã Ngay Qua Zalo Hotline';
+    }, 3000);
+  }
 }
 
 function closeWinModal() {

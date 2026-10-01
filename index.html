@@ -1529,11 +1529,14 @@
       </div>
 
       <!-- Direct Apply to Zalo Hotline -->
-      <a href="https://zalo.me/0898586622" target="_blank" onclick="handleApplyZaloVoucher(event)" class="w-full mb-3 py-3 px-4 rounded-xl bg-gradient-to-r from-blue-600 via-sky-500 to-blue-600 hover:from-blue-500 hover:to-sky-400 text-white font-extrabold text-xs sm:text-sm uppercase tracking-wider transition-all shadow-lg shadow-blue-500/30 flex items-center justify-center gap-2 cursor-pointer group">
+      <a href="https://zalo.me/0898586622" target="_blank" onclick="handleApplyZaloVoucher(event)" id="modal-zalo-apply-btn" class="w-full mb-2 py-3 px-4 rounded-xl bg-gradient-to-r from-blue-600 via-sky-500 to-blue-600 hover:from-blue-500 hover:to-sky-400 text-white font-extrabold text-xs sm:text-sm uppercase tracking-wider transition-all shadow-lg shadow-blue-500/30 flex items-center justify-center gap-2 cursor-pointer group">
         <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.03 2 11c0 2.87 1.5 5.43 3.84 7.07l-.97 3.55 3.73-1.63C9.57 20.67 10.76 21 12 21c5.52 0 10-4.03 10-9s-4.48-9-10-9z"/></svg>
-        <span>Áp Dụng Mã Ngay Qua Zalo Hotline</span>
+        <span id="modal-zalo-btn-text">Áp Dụng Mã Ngay Qua Zalo Hotline</span>
         <span class="text-xs opacity-80 font-normal">→</span>
       </a>
+      <p class="text-[11px] text-sky-300/80 mb-4 font-medium italic">
+        ✨ Hệ thống tự động sao chép mã & lời nhắn — Bạn chỉ cần dán & gửi qua Zalo Hotline 0898.586.622!
+      </p>
 
       <div class="flex gap-2">
         <button onclick="copyVoucherCode()" id="copy-btn" class="flex-1 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-bold text-xs uppercase tracking-wider transition-colors shadow">
