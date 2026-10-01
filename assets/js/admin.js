@@ -8,10 +8,167 @@
  */
 
 const ADMIN_PASSWORD_DEFAULT = 'eureka2026';
+const STORAGE_KEY_ADMIN_PASSWORD = 'eureka_admin_password_custom';
 const STORAGE_KEY_AUTH = 'eureka_admin_auth';
 const STORAGE_KEY_WHEEL_CONFIG = 'eureka_welcome_wheel_config';
 const STORAGE_KEY_MONTHLY_WINNERS = 'eureka_monthly_winners';
 const STORAGE_KEY_SPIN_LEADS_LOCAL = 'eureka_spin_leads';
+
+// Lấy mật khẩu quản trị viên hiện hành (ưu tiên mật khẩu mới do Admin đổi, fallback về mặc định)
+function getAdminPassword() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY_ADMIN_PASSWORD);
+    if (saved && typeof saved === 'string' && saved.trim().length > 0) {
+      return saved.trim();
+    }
+  } catch (e) {}
+  return ADMIN_PASSWORD_DEFAULT;
+}
+window.getAdminPassword = getAdminPassword;
+
+// Toggle hiển thị / ẩn mật khẩu (nút con mắt 👁️)
+function togglePasswordVisibility(inputId, btnId) {
+  const input = document.getElementById(inputId);
+  const btn = document.getElementById(btnId);
+  if (!input) return;
+  if (input.type === 'password') {
+    input.type = 'text';
+    if (btn) btn.textContent = '🙈';
+  } else {
+    input.type = 'password';
+    if (btn) btn.textContent = '👁️';
+  }
+}
+window.togglePasswordVisibility = togglePasswordVisibility;
+
+// Mở modal đổi mật khẩu quản trị
+function openChangeAdminPasswordModal() {
+  const modal = document.getElementById('admin-change-password-modal');
+  if (modal) {
+    modal.classList.remove('hidden');
+    const oldInput = document.getElementById('admin-old-password-input');
+    const newInput = document.getElementById('admin-new-password-input');
+    const confirmInput = document.getElementById('admin-confirm-password-input');
+    const msg = document.getElementById('admin-change-password-msg');
+    if (oldInput) { oldInput.value = ''; oldInput.type = 'password'; }
+    if (newInput) { newInput.value = ''; newInput.type = 'password'; }
+    if (confirmInput) { confirmInput.value = ''; confirmInput.type = 'password'; }
+    if (msg) { msg.classList.add('hidden'); msg.textContent = ''; }
+
+    // Reset các icon mắt
+    ['admin-old-toggle-btn', 'admin-new-toggle-btn', 'admin-confirm-toggle-btn'].forEach(id => {
+      const b = document.getElementById(id);
+      if (b) b.textContent = '👁️';
+    });
+
+    if (oldInput) oldInput.focus();
+  }
+}
+window.openChangeAdminPasswordModal = openChangeAdminPasswordModal;
+
+// Đóng modal đổi mật khẩu quản trị
+function closeChangeAdminPasswordModal() {
+  const modal = document.getElementById('admin-change-password-modal');
+  if (modal) modal.classList.add('hidden');
+}
+window.closeChangeAdminPasswordModal = closeChangeAdminPasswordModal;
+
+// Xử lý đổi mật khẩu quản trị
+function handleChangeAdminPassword(event) {
+  if (event) event.preventDefault();
+  const oldInput = document.getElementById('admin-old-password-input');
+  const newInput = document.getElementById('admin-new-password-input');
+  const confirmInput = document.getElementById('admin-confirm-password-input');
+  const msg = document.getElementById('admin-change-password-msg');
+
+  const oldPass = oldInput ? oldInput.value.trim() : '';
+  const newPass = newInput ? newInput.value.trim() : '';
+  const confirmPass = confirmInput ? confirmInput.value.trim() : '';
+
+  function showError(text) {
+    if (msg) {
+      msg.textContent = text;
+      msg.className = 'text-xs font-semibold p-2.5 rounded-xl bg-rose-500/20 text-rose-300 border border-rose-500/30';
+      msg.classList.remove('hidden');
+    }
+  }
+
+  function showSuccess(text) {
+    if (msg) {
+      msg.textContent = text;
+      msg.className = 'text-xs font-semibold p-2.5 rounded-xl bg-emerald-500/20 text-emerald-300 border border-emerald-500/30';
+      msg.classList.remove('hidden');
+    }
+  }
+
+  const currentPass = getAdminPassword();
+  if (oldPass !== currentPass) {
+    showError('❌ Mật khẩu hiện tại không chính xác!');
+    if (oldInput) oldInput.focus();
+    return;
+  }
+
+  if (newPass.length < 6) {
+    showError('❌ Mật khẩu mới phải có tối thiểu 6 ký tự để đảm bảo an toàn!');
+    if (newInput) newInput.focus();
+    return;
+  }
+
+  if (newPass === currentPass) {
+    showError('❌ Mật khẩu mới không được trùng với mật khẩu hiện tại!');
+    if (newInput) newInput.focus();
+    return;
+  }
+
+  if (newPass !== confirmPass) {
+    showError('❌ Xác nhận mật khẩu mới không trùng khớp!');
+    if (confirmInput) confirmInput.focus();
+    return;
+  }
+
+  // 1. Lưu vào localStorage trình duyệt
+  try {
+    localStorage.setItem(STORAGE_KEY_ADMIN_PASSWORD, newPass);
+  } catch (e) {
+    console.error('Lỗi lưu mật khẩu cục bộ:', e);
+  }
+
+  // 2. Tự động đồng bộ lên Google Sheets Cloud nếu đã liên kết
+  if (typeof syncAdminConfigToCloud === 'function') {
+    syncAdminConfigToCloud(STORAGE_KEY_ADMIN_PASSWORD, newPass);
+  }
+
+  showSuccess('✅ Đổi mật khẩu thành công! Mật khẩu mới đã có hiệu lực ngay lập tức.');
+  setTimeout(() => {
+    closeChangeAdminPasswordModal();
+  }, 1300);
+}
+window.handleChangeAdminPassword = handleChangeAdminPassword;
+
+// Khôi phục mật khẩu gốc mặc định (eureka2026)
+function handleResetAdminPassword() {
+  const currentPass = getAdminPassword();
+  if (currentPass === ADMIN_PASSWORD_DEFAULT) {
+    alert('Mật khẩu quản trị viên hiện tại đã là mặc định (eureka2026)!');
+    return;
+  }
+
+  if (!confirm('Bạn có chắc chắn muốn khôi phục mật khẩu Quản Trị Viên về mặc định ban đầu không?')) {
+    return;
+  }
+
+  try {
+    localStorage.removeItem(STORAGE_KEY_ADMIN_PASSWORD);
+  } catch (e) {}
+
+  if (typeof syncAdminConfigToCloud === 'function') {
+    syncAdminConfigToCloud(STORAGE_KEY_ADMIN_PASSWORD, '');
+  }
+
+  alert('Đã khôi phục mật khẩu Quản Trị Viên về mặc định!');
+  closeChangeAdminPasswordModal();
+}
+window.handleResetAdminPassword = handleResetAdminPassword;
 
 // Check if Admin is logged in
 function isAdminLoggedIn() {
@@ -29,8 +186,11 @@ function openAdminModal() {
       const input = document.getElementById('admin-password-input');
       if (input) {
         input.value = '';
+        input.type = 'password';
         input.focus();
       }
+      const toggleBtn = document.getElementById('admin-password-toggle-btn');
+      if (toggleBtn) toggleBtn.textContent = '👁️';
     }
   }
 }
@@ -46,7 +206,7 @@ function handleAdminLogin(event) {
   const errorMsg = document.getElementById('admin-login-error');
   const password = input ? input.value.trim() : '';
 
-  if (password === ADMIN_PASSWORD_DEFAULT) {
+  if (password === getAdminPassword()) {
     sessionStorage.setItem(STORAGE_KEY_AUTH, 'true');
     if (errorMsg) errorMsg.classList.add('hidden');
     closeAdminLoginModal();

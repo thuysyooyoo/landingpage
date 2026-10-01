@@ -227,6 +227,14 @@ async function fetchCloudData(silent = true) {
         } catch (e) {}
       }
 
+      // 12. Đồng bộ Mật khẩu Quản Trị Viên Custom
+      const cloudAdminPass = data.configs && data.configs.eureka_admin_password_custom;
+      if (cloudAdminPass && typeof cloudAdminPass === 'string' && cloudAdminPass.trim().length > 0) {
+        try {
+          localStorage.setItem('eureka_admin_password_custom', cloudAdminPass.trim());
+        } catch (e) {}
+      }
+
       console.log('✅ [GoogleSheets DB] Đồng bộ Cloud thành công! Toàn bộ dữ liệu động đã được áp dụng.');
       updateCloudSyncStatusBadge(true, 'Đã đồng bộ ' + new Date().toLocaleTimeString('vi-VN'));
       return true;
@@ -351,8 +359,19 @@ async function pushAllLocalDataToCloud() {
       botConfig: botConfig,
       wheelConfig: wheelConfig,
       m05BookingPool: m05BookingPool,
-      m05CurrentPrize: m05CurrentPrize,
-      refClicks: refClicks
+      refClicks: refClicks,
+      configs: {
+        eureka_nhiem_vu_config: nhiemVu,
+        eureka_gala_awards_config: gala,
+        eureka_weekly_winner: weekly,
+        eureka_custom_leaderboard: customLb,
+        eureka_bot_config: botConfig,
+        eureka_welcome_wheel_config: wheelConfig,
+        eureka_m05_booking_pool: m05BookingPool,
+        eureka_m05_current_prize: m05CurrentPrize,
+        eureka_ref_clicks: refClicks,
+        eureka_admin_password_custom: localStorage.getItem('eureka_admin_password_custom') || ''
+      }
     }
   };
 
@@ -400,6 +419,13 @@ function updateCloudSyncStatusBadge(isConnected, text) {
     badge.innerHTML = `<span>🟡 Bộ nhớ cục bộ:</span> <span>${text || 'Chưa liên kết Sheet'}</span>`;
   }
 }
+
+// Export functions to window
+window.syncAdminConfigToCloud = syncAdminConfigToCloud;
+window.fetchCloudData = fetchCloudData;
+window.pushAllLocalDataToCloud = pushAllLocalDataToCloud;
+window.testCloudConnection = testCloudConnection;
+window.updateCloudSyncStatusBadge = updateCloudSyncStatusBadge;
 
 // Tự động khởi chạy đồng bộ khi tải trang
 document.addEventListener('DOMContentLoaded', () => {

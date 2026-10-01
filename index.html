@@ -1542,7 +1542,8 @@
                 <th class="py-3 px-2 sm:px-3">Khách Hàng & Mã Khách</th>
                 <th class="py-3 px-3 whitespace-nowrap hidden sm:table-cell">Hạng VIP</th>
                 <th class="py-3 px-3 text-right whitespace-nowrap hidden md:table-cell">Tổng Đơn</th>
-                <th class="py-3 px-3 text-right whitespace-nowrap hidden md:table-cell">Tổng Sản Lượng</th>
+                <th class="py-3 px-3 text-right whitespace-nowrap hidden md:table-cell text-amber-300">Tải Trọng (Kg)</th>
+                <th class="py-3 px-3 text-right whitespace-nowrap hidden md:table-cell text-sky-300">Thể Tích (M³)</th>
                 <th class="py-3 px-2 sm:px-3 text-right whitespace-nowrap">Phí Dịch Vụ</th>
                 <th class="py-3 px-3 text-center whitespace-nowrap hidden sm:table-cell">Quà Tạm Tính</th>
               </tr>
@@ -2028,14 +2029,72 @@
       <p class="text-xs text-slate-400 mb-4">Nhập mật khẩu để cấu hình tỉ lệ, kho quà và quyền quay Mùng 05</p>
 
       <form onsubmit="handleAdminLogin(event)" class="space-y-3">
-        <input type="password" id="admin-password-input" placeholder="Nhập mật khẩu admin..." class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-amber-400 text-center font-mono tracking-widest" />
+        <div class="relative">
+          <input type="password" id="admin-password-input" placeholder="Nhập mật khẩu admin..." class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2.5 pr-11 text-sm text-white focus:outline-none focus:border-amber-400 text-center tracking-widest placeholder:tracking-normal" />
+          <button type="button" onclick="togglePasswordVisibility('admin-password-input', 'admin-password-toggle-btn')" id="admin-password-toggle-btn" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white text-base transition-colors p-1" title="Ẩn/Hiện mật khẩu">
+            👁️
+          </button>
+        </div>
         <p id="admin-login-error" class="text-xs text-rose-400 font-bold hidden"></p>
 
         <button type="submit" class="w-full py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs uppercase tracking-wider transition-colors shadow">
           ĐĂNG NHẬP QUẢN TRỊ
         </button>
       </form>
-      <p class="text-[11px] text-slate-500 mt-3">Mật khẩu mặc định: eureka2026</p>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL 3.5: ĐỔI MẬT KHẨU QUẢN TRỊ VIÊN ==================== -->
+  <div id="admin-change-password-modal" class="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/85 backdrop-blur-md hidden transition-opacity duration-300">
+    <div class="glass-card rounded-3xl p-6 sm:p-8 max-w-md w-full border border-amber-500/40 text-left relative glow-gold shadow-2xl">
+      <button onclick="closeChangeAdminPasswordModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-xl font-bold w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center cursor-pointer transition-colors">✕</button>
+      
+      <div class="flex items-center gap-3 mb-4 pb-3 border-b border-slate-700/80">
+        <div class="w-12 h-12 rounded-2xl bg-amber-500/10 flex items-center justify-center text-2xl text-amber-400 shrink-0 border border-amber-500/20">
+          🔑
+        </div>
+        <div>
+          <h3 class="text-lg font-black text-white">Đổi Mật Khẩu Quản Trị</h3>
+          <p class="text-[11px] text-slate-400">Tăng tính bảo mật cho trang quản trị sự kiện Eureka 2026</p>
+        </div>
+      </div>
+
+      <form onsubmit="handleChangeAdminPassword(event)" class="space-y-3.5">
+        <div>
+          <label class="block text-xs font-bold text-slate-300 mb-1">Mật khẩu hiện tại:</label>
+          <div class="relative">
+            <input type="password" id="admin-old-password-input" placeholder="Nhập mật khẩu đang dùng..." class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3.5 py-2.5 pr-10 text-xs text-white focus:outline-none focus:border-amber-400 tracking-wider placeholder:tracking-normal" />
+            <button type="button" onclick="togglePasswordVisibility('admin-old-password-input', 'admin-old-toggle-btn')" id="admin-old-toggle-btn" class="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white text-sm p-1" title="Ẩn/Hiện">👁️</button>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-300 mb-1">Mật khẩu mới:</label>
+          <div class="relative">
+            <input type="password" id="admin-new-password-input" placeholder="Nhập mật khẩu mới (tối thiểu 6 ký tự)..." class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3.5 py-2.5 pr-10 text-xs text-white focus:outline-none focus:border-amber-400 tracking-wider placeholder:tracking-normal" />
+            <button type="button" onclick="togglePasswordVisibility('admin-new-password-input', 'admin-new-toggle-btn')" id="admin-new-toggle-btn" class="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white text-sm p-1" title="Ẩn/Hiện">👁️</button>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-300 mb-1">Xác nhận mật khẩu mới:</label>
+          <div class="relative">
+            <input type="password" id="admin-confirm-password-input" placeholder="Nhập lại mật khẩu mới..." class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3.5 py-2.5 pr-10 text-xs text-white focus:outline-none focus:border-amber-400 tracking-wider placeholder:tracking-normal" />
+            <button type="button" onclick="togglePasswordVisibility('admin-confirm-password-input', 'admin-confirm-toggle-btn')" id="admin-confirm-toggle-btn" class="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white text-sm p-1" title="Ẩn/Hiện">👁️</button>
+          </div>
+        </div>
+
+        <div id="admin-change-password-msg" class="text-xs font-semibold p-2.5 rounded-xl hidden"></div>
+
+        <div class="flex items-center gap-2 pt-2">
+          <button type="button" onclick="handleResetAdminPassword()" class="px-3 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white text-xs font-bold transition-all border border-slate-700 shrink-0 cursor-pointer" title="Khôi phục về mật khẩu gốc mặc định">
+            ↺ Khôi phục gốc
+          </button>
+          <button type="submit" class="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-slate-950 font-black text-xs uppercase tracking-wider transition-all shadow-lg cursor-pointer">
+            💾 LƯU MẬT KHẨU MỚI
+          </button>
+        </div>
+      </form>
     </div>
   </div>
 
@@ -2057,8 +2116,13 @@
           </div>
         </div>
         <div class="flex items-center gap-2">
-          <button onclick="adminLogout()" class="px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg bg-rose-500/20 text-rose-300 border border-rose-500/30 text-[11px] sm:text-xs font-bold hover:bg-rose-500/30">Đăng Xuất</button>
-          <button onclick="closeAdminDashboard()" class="text-slate-400 hover:text-white text-lg sm:text-xl font-bold w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-slate-800 flex items-center justify-center">✕</button>
+          <button type="button" onclick="openChangeAdminPasswordModal()" class="px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/40 text-[11px] sm:text-xs font-bold hover:bg-amber-500/30 flex items-center gap-1.5 transition-all shadow-sm cursor-pointer" title="Đổi mật khẩu quản trị viên để tăng tính bảo mật">
+            <span>🔑</span>
+            <span class="hidden sm:inline">Đổi Mật Khẩu</span>
+            <span class="sm:hidden">Đổi MK</span>
+          </button>
+          <button onclick="adminLogout()" class="px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg bg-rose-500/20 text-rose-300 border border-rose-500/30 text-[11px] sm:text-xs font-bold hover:bg-rose-500/30 cursor-pointer">Đăng Xuất</button>
+          <button onclick="closeAdminDashboard()" class="text-slate-400 hover:text-white text-lg sm:text-xl font-bold w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-slate-800 flex items-center justify-center cursor-pointer">✕</button>
         </div>
       </div>
 
@@ -2524,7 +2588,8 @@
                   <th class="py-2.5 px-2">Mã Khách Hàng</th>
                   <th class="py-2.5 px-2">Hạng VIP</th>
                   <th class="py-2.5 px-2 text-right">Tổng Đơn</th>
-                  <th class="py-2.5 px-2 text-right">Sản Lượng</th>
+                  <th class="py-2.5 px-2 text-right text-amber-300">Tải Trọng (Kg)</th>
+                  <th class="py-2.5 px-2 text-right text-sky-300">Thể Tích (M³)</th>
                   <th class="py-2.5 px-2 text-right">Phí Dịch Vụ (VNĐ)</th>
                   <th class="py-2.5 px-2">Quà Tạm Tính</th>
                   <th class="py-2.5 px-2 text-center">Xóa</th>
