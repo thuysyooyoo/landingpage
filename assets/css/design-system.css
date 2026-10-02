@@ -1873,3 +1873,185 @@ p, .body-text {
   align-items: center;
   gap: 0.35rem;
 }
+
+/* ==========================================================================
+   26. UNIFIED LIGHT GLASSMORPHISM ENGINE (ELIMINATE DARK-LIGHT PATCHWORK)
+   Synchronizes all 7 sections to continuous luxury Light Glass on warm ambient mesh
+   ========================================================================== */
+
+/* 1. Neutralize all hardcoded dark backgrounds on sections */
+#tong-quan,
+#giai-thuong,
+#vong-quay-mung-05,
+#cot-moc-vip,
+#bxh-truc-tuyen,
+#the-le,
+section {
+  background-color: transparent !important;
+  background-image: none !important;
+  border-color: rgba(226, 232, 240, 0.7) !important;
+}
+
+/* Remove dark background overlays inside sections */
+#giai-thuong > div[style*="background-image"],
+#giai-thuong > div[class*="from-[#0b1120]"],
+section > div[class*="from-[#0b1120]"] {
+  display: none !important;
+}
+
+/* 2. Transform all dark cards into luxury Light Glassmorphism cards */
+.bg-slate-900\/80,
+.bg-slate-900\/90,
+.bg-slate-900\/70,
+.bg-slate-900\/60,
+.bg-slate-900\/50,
+.bg-slate-800\/80,
+.bg-slate-800\/50,
+.bg-slate-800\/40,
+.bg-slate-800\/30,
+.bg-slate-950\/60,
+.bg-slate-950\/70,
+.bg-slate-950\/80,
+.glass-card,
+.glass-ultra {
+  background: rgba(255, 255, 255, 0.9) !important;
+  backdrop-filter: blur(24px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+  border: 1px solid rgba(226, 232, 240, 0.85) !important;
+  box-shadow: 0 20px 40px -15px rgba(15, 23, 42, 0.06), 0 0 1px 1px rgba(255, 255, 255, 0.8) inset !important;
+}
+
+/* 3. Typography contrast inside sections and cards */
+section h2, 
+section h3, 
+section h4 {
+  color: #0F172A !important;
+}
+
+section p.text-slate-300, 
+section p.text-slate-400,
+section span.text-slate-300,
+section span.text-slate-400,
+section li {
+  color: #334155 !important;
+}
+
+/* Specific section titles */
+#bxh-truc-tuyen h2,
+#bxh-truc-tuyen span.text-brand-400,
+#the-le h2,
+#vong-quay-mung-05 h2,
+#giai-thuong h2,
+#cot-moc-vip h2 {
+  color: #0F172A !important;
+}
+
+/* 4. Leaderboard Table Light Glass Enhancement */
+#bxh-truc-tuyen .overflow-x-auto table {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+#bxh-truc-tuyen table thead th {
+  background: #F1F5F9 !important;
+  color: #475569 !important;
+  font-weight: 800 !important;
+  border-bottom: 2px solid #E2E8F0 !important;
+}
+
+#bxh-truc-tuyen table tbody td {
+  border-bottom: 1px solid rgba(226, 232, 240, 0.8) !important;
+  color: #0F172A !important;
+}
+
+#bxh-truc-tuyen table tbody tr:hover {
+  background: rgba(254, 243, 199, 0.45) !important;
+}
+
+/* Search input & selector in Leaderboard */
+#bxh-search-input,
+#bxh-page-size-select {
+  background: #FFFFFF !important;
+  border: 1.5px solid #CBD5E1 !important;
+  color: #0F172A !important;
+}
+
+/* 5. Gala Awards Section Light Mode Harmonization */
+#gala-awards-section > div {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.97) 0%, rgba(255, 251, 242, 0.92) 100%) !important;
+  border: 2px solid #F59E0B !important;
+  box-shadow: 0 25px 60px -15px rgba(245, 158, 11, 0.15) !important;
+}
+
+#gala-awards-section h2,
+#gala-awards-section h3 {
+  color: #0F172A !important;
+}
+
+#gala-awards-section p {
+  color: #475569 !important;
+}
+
+/* 6. FAQ Accordion Clean Light Glass */
+#the-le .space-y-4 > div {
+  background: rgba(255, 255, 255, 0.9) !important;
+  border: 1px solid #E2E8F0 !important;
+}
+
+#the-le .space-y-4 button span {
+  color: #0F172A !important;
+  font-weight: 700 !important;
+}
+
+#the-le [id^="faq-content-"] {
+  color: #334155 !important;
+  background: #FAFAFD !important;
+}
+
+/* 7. Modal Windows Keep Professional Dark Translucent Backdrop */
+#giai-phu-modal > div,
+#admin-login-modal > div,
+#admin-dashboard-modal > div,
+#admin-change-password-modal > div,
+#m05-notice-modal > div {
+  background: rgba(15, 23, 42, 0.96) !important;
+  color: #F8FAFC !important;
+}
+
+#giai-phu-modal h2, #giai-phu-modal h3, #giai-phu-modal h4,
+#giai-phu-modal table td,
+#giai-phu-modal table th {
+  color: #F8FAFC !important;
+}
+
+
+/* 8. Top Tuần Spotlight Banner Light Glass Theme */
+#weekly-winner-spotlight > div {
+  background: linear-gradient(135deg, rgba(255, 251, 235, 0.98) 0%, rgba(254, 243, 199, 0.92) 50%, rgba(255, 247, 237, 0.98) 100%) !important;
+  border: 2px solid rgba(245, 158, 11, 0.5) !important;
+  box-shadow: 0 20px 40px -15px rgba(245, 158, 11, 0.15) !important;
+}
+
+#weekly-winner-spotlight h3,
+#weekly-winner-spotlight p {
+  color: #0F172A !important;
+}
+
+#weekly-winner-spotlight .text-slate-300,
+#weekly-winner-spotlight .text-slate-400 {
+  color: #475569 !important;
+}
+
+#weekly-winner-spotlight .bg-slate-900\/80,
+#weekly-winner-spotlight .bg-slate-950\/60 {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border: 1px solid rgba(226, 232, 240, 0.8) !important;
+}
+
+/* 9. Preserve High Contrast Text on Dark Photo Overlays */
+#the-le .group .absolute h3,
+#the-le .group .absolute p,
+#the-le .group .absolute span {
+  color: #FFFFFF !important;
+}
