@@ -513,7 +513,7 @@ function spinWheel() {
           <div class="text-[11px] leading-relaxed text-slate-300">
             Mỗi số điện thoại chỉ được quay <strong>01 lần duy nhất</strong> trong chương trình.<br>
             • Phần quà đã nhận: <strong class="text-emerald-300">${prevSpin.prize || 'Voucher chiết khấu'}</strong><br>
-            • Mã voucher: <code class="px-1.5 py-0.5 rounded bg-slate-900 font-mono text-amber-300 font-bold border border-slate-700">${prevSpin.voucherCode || 'ERK-VOUCHER'}</code>
+            • Mã voucher: <code class="px-2 py-0.5 rounded bg-amber-50 font-mono text-amber-800 font-bold border border-amber-300 shadow-sm">${prevSpin.voucherCode || 'ERK-VOUCHER'}</code>
           </div>
           <div class="pt-1">
             <button type="button" onclick="viewExistingVoucher('${validPhone}')" class="text-[11px] text-sky-400 hover:text-sky-300 font-bold underline cursor-pointer">
@@ -953,20 +953,20 @@ function renderPublicMonthlyWinners() {
   container.innerHTML = '';
   winners.forEach(w => {
     const tr = document.createElement('tr');
-    tr.className = 'border-b border-slate-800 hover:bg-slate-800/40 text-xs text-slate-300 transition-colors';
+    tr.className = 'border-b border-slate-200 hover:bg-amber-50/60 text-xs text-slate-800 transition-colors';
     tr.innerHTML = `
       <td class="py-3 px-3 hidden sm:table-cell">
-        <span class="px-2 py-0.5 rounded bg-blue-500/10 text-blue-300 font-bold border border-blue-500/20 text-[11px]">${w.period}</span>
+        <span class="px-2 py-0.5 rounded bg-blue-50 text-blue-800 font-bold border border-blue-200 text-[11px]">${w.period}</span>
       </td>
       <td class="py-2.5 sm:py-3 px-2 sm:px-3">
-        <span class="font-mono font-black text-amber-300 tracking-wider text-xs sm:text-sm bg-slate-800/80 px-2 py-0.5 sm:py-1 rounded border border-amber-400/30 inline-block">
+        <span class="font-mono font-black text-amber-800 tracking-wider text-xs sm:text-sm bg-amber-50 px-2 py-0.5 sm:py-1 rounded border border-amber-300 inline-block shadow-sm">
           ${w.booking_code || w.order_masked || 'ERK-BK-' + Math.floor(1000 + Math.random() * 9000)}
         </span>
-        <div class="sm:hidden text-[10px] text-sky-400 mt-1 font-semibold">
+        <div class="sm:hidden text-[10px] text-sky-600 mt-1 font-semibold">
           Kỳ: ${w.period}
         </div>
       </td>
-      <td class="py-2.5 sm:py-3 px-2 sm:px-3 font-bold text-white text-xs">${w.prize}</td>
+      <td class="py-2.5 sm:py-3 px-2 sm:px-3 font-bold text-slate-900 text-xs">${w.prize}</td>
       <td class="py-3 px-3 text-slate-400 font-mono text-[11px] hidden md:table-cell">${w.draw_time || '10h00 - Mùng 05'}</td>
       <td class="py-2.5 sm:py-3 px-2 sm:px-3 text-center">
         <span class="inline-flex items-center gap-1 text-[10px] sm:text-[11px] font-semibold text-emerald-300 bg-emerald-500/10 px-1.5 sm:px-2 py-0.5 rounded border border-emerald-500/20 whitespace-nowrap">

@@ -313,23 +313,23 @@ function renderAdminWheelConfigTable() {
     // 1. Desktop table row
     if (container) {
       const tr = document.createElement('tr');
-      tr.className = 'border-b border-slate-700/60 hover:bg-slate-800/40 text-xs text-slate-200';
+      tr.className = 'border-b border-slate-200 hover:bg-slate-50 text-xs text-slate-800';
       tr.innerHTML = `
         <td class="py-2.5 px-3 font-bold text-amber-400">Ô số ${idx + 1}</td>
         <td class="py-2.5 px-3">
-          <input type="text" value="${seg.text}" id="seg-text-${idx}" oninput="syncWheelInput('text', ${idx}, this.value)" class="w-full bg-slate-900 border border-slate-700 rounded px-2 py-1 text-white font-bold text-xs" />
+          <input type="text" value="${seg.text}" id="seg-text-${idx}" oninput="syncWheelInput('text', ${idx}, this.value)" class="w-full bg-white border border-slate-300 rounded px-2 py-1 text-slate-900 font-bold text-xs" />
         </td>
         <td class="py-2.5 px-3">
-          <input type="text" value="${seg.prize}" id="seg-prize-${idx}" oninput="syncWheelInput('prize', ${idx}, this.value)" class="w-full bg-slate-900 border border-slate-700 rounded px-2 py-1 text-slate-200 text-xs" />
+          <input type="text" value="${seg.prize}" id="seg-prize-${idx}" oninput="syncWheelInput('prize', ${idx}, this.value)" class="w-full bg-white border border-slate-300 rounded px-2 py-1 text-slate-800 text-xs" />
         </td>
         <td class="py-2.5 px-3 text-center">
           <div class="flex items-center justify-center gap-1">
-            <input type="number" min="0" max="100" value="${seg.probability_weight}" id="seg-prob-${idx}" oninput="syncWheelInput('prob', ${idx}, this.value)" class="w-16 bg-slate-900 border border-slate-700 rounded px-2 py-1 text-amber-300 font-bold text-center text-xs" />
+            <input type="number" min="0" max="100" value="${seg.probability_weight}" id="seg-prob-${idx}" oninput="syncWheelInput('prob', ${idx}, this.value)" class="w-16 bg-white border border-slate-300 rounded px-2 py-1 text-amber-800 font-bold text-center text-xs" />
             <span class="text-slate-400">%</span>
           </div>
         </td>
         <td class="py-2.5 px-3 text-center">
-          <input type="number" min="0" max="9999" value="${seg.stock_quantity}" id="seg-stock-${idx}" oninput="syncWheelInput('stock', ${idx}, this.value)" class="w-16 bg-slate-900 border border-slate-700 rounded px-2 py-1 text-emerald-400 font-bold text-center text-xs" />
+          <input type="number" min="0" max="9999" value="${seg.stock_quantity}" id="seg-stock-${idx}" oninput="syncWheelInput('stock', ${idx}, this.value)" class="w-16 bg-white border border-slate-300 rounded px-2 py-1 text-emerald-700 font-bold text-center text-xs" />
         </td>
       `;
       container.appendChild(tr);
@@ -338,29 +338,29 @@ function renderAdminWheelConfigTable() {
     // 2. Mobile card view (Zero horizontal scroll)
     if (mobileContainer) {
       const card = document.createElement('div');
-      card.className = 'p-3 rounded-xl bg-slate-900/90 border border-slate-800 space-y-2.5 shadow';
+      card.className = 'p-3 rounded-xl bg-white border border-slate-200 space-y-2.5 shadow-sm';
       card.innerHTML = `
         <div class="flex items-center justify-between">
           <span class="font-bold text-amber-400 text-xs">Ô số ${idx + 1}</span>
           <div class="flex items-center gap-2">
             <div class="flex items-center gap-1 text-[11px] text-slate-400">
               <span>Tỉ lệ:</span>
-              <input type="number" min="0" max="100" value="${seg.probability_weight}" id="seg-prob-m-${idx}" oninput="syncWheelInput('prob', ${idx}, this.value)" class="w-14 bg-slate-950 border border-slate-700 rounded px-1.5 py-0.5 text-amber-300 font-bold text-center text-xs" />
+              <input type="number" min="0" max="100" value="${seg.probability_weight}" id="seg-prob-m-${idx}" oninput="syncWheelInput('prob', ${idx}, this.value)" class="w-14 bg-white border border-slate-300 rounded px-1.5 py-0.5 text-amber-800 font-bold text-center text-xs" />
               <span>%</span>
             </div>
             <div class="flex items-center gap-1 text-[11px] text-slate-400">
               <span>Kho:</span>
-              <input type="number" min="0" max="9999" value="${seg.stock_quantity}" id="seg-stock-m-${idx}" oninput="syncWheelInput('stock', ${idx}, this.value)" class="w-14 bg-slate-950 border border-slate-700 rounded px-1.5 py-0.5 text-emerald-400 font-bold text-center text-xs" />
+              <input type="number" min="0" max="9999" value="${seg.stock_quantity}" id="seg-stock-m-${idx}" oninput="syncWheelInput('stock', ${idx}, this.value)" class="w-14 bg-white border border-slate-300 rounded px-1.5 py-0.5 text-emerald-700 font-bold text-center text-xs" />
             </div>
           </div>
         </div>
         <div class="space-y-1">
           <label class="block text-[10px] uppercase font-bold text-slate-500">Nhãn hiển thị:</label>
-          <input type="text" value="${seg.text}" id="seg-text-m-${idx}" oninput="syncWheelInput('text', ${idx}, this.value)" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1 text-white font-bold text-xs" />
+          <input type="text" value="${seg.text}" id="seg-text-m-${idx}" oninput="syncWheelInput('text', ${idx}, this.value)" class="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1 text-slate-900 font-bold text-xs" />
         </div>
         <div class="space-y-1">
           <label class="block text-[10px] uppercase font-bold text-slate-500">Tên phần thưởng:</label>
-          <input type="text" value="${seg.prize}" id="seg-prize-m-${idx}" oninput="syncWheelInput('prize', ${idx}, this.value)" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-2.5 py-1 text-slate-200 text-xs" />
+          <input type="text" value="${seg.prize}" id="seg-prize-m-${idx}" oninput="syncWheelInput('prize', ${idx}, this.value)" class="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1 text-slate-800 text-xs" />
         </div>
       `;
       mobileContainer.appendChild(card);
@@ -471,12 +471,12 @@ function renderAdminSpinLeadsTable() {
     const ref = (item.ref && item.ref !== 'direct') ? item.ref.toUpperCase() : null;
     const refBadge = ref 
       ? `<span class="px-2 py-0.5 rounded text-[11px] font-bold bg-amber-500/15 text-amber-300 border border-amber-500/30">👤 ${ref}</span>`
-      : `<span class="px-2 py-0.5 rounded text-[10px] font-medium bg-slate-800 text-slate-400">🌐 Trực tiếp</span>`;
+      : `<span class="px-2 py-0.5 rounded text-[10px] font-medium bg-slate-100 text-slate-600 border border-slate-200">🌐 Trực tiếp</span>`;
 
     // 1. Desktop table row
     if (container) {
       const tr = document.createElement('tr');
-      tr.className = 'border-b border-slate-700/60 hover:bg-slate-800/40 text-xs text-slate-200 transition-colors';
+      tr.className = 'border-b border-slate-200 hover:bg-slate-50 text-xs text-slate-800 transition-colors';
       tr.innerHTML = `
         <td class="py-2.5 px-3 text-slate-400 font-bold">${idx + 1}</td>
         <td class="py-2.5 px-3 text-slate-300 font-mono text-[11px]">${item.createdAt || 'Hôm nay'}</td>
@@ -517,11 +517,11 @@ function renderAdminSpinLeadsTable() {
     // 2. Mobile card view (Zero horizontal scroll!)
     if (mobileContainer) {
       const card = document.createElement('div');
-      card.className = 'p-3 rounded-xl bg-slate-900/90 border border-slate-800 space-y-2 shadow';
+      card.className = 'p-3 rounded-xl bg-white border border-slate-200 space-y-2 shadow-sm';
       card.innerHTML = `
         <div class="flex items-center justify-between">
           <div class="flex items-center gap-2">
-            <span class="w-5 h-5 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-[10px] text-slate-300 font-bold">${idx + 1}</span>
+            <span class="w-5 h-5 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-[10px] text-slate-700 font-bold">${idx + 1}</span>
             <span class="font-mono font-black text-amber-300 text-sm tracking-wider">${item.phone}</span>
           </div>
           <span class="text-[10px] text-slate-400 font-mono">${item.createdAt || 'Hôm nay'}</span>
@@ -794,13 +794,13 @@ function renderAdminM05BookingManager() {
       const showCount = Math.min(pool.length, 30);
       for (let i = 0; i < showCount; i++) {
         const span = document.createElement('span');
-        span.className = 'px-2 py-0.5 rounded bg-slate-800 text-amber-300 font-mono text-[11px] font-bold border border-slate-700';
+        span.className = 'px-2 py-0.5 rounded bg-amber-50 text-amber-800 font-mono text-[11px] font-bold border border-amber-300';
         span.textContent = pool[i];
         chipsContainer.appendChild(span);
       }
       if (pool.length > showCount) {
         const moreSpan = document.createElement('span');
-        moreSpan.className = 'px-2 py-0.5 rounded bg-slate-800/60 text-slate-400 font-mono text-[11px]';
+        moreSpan.className = 'px-2 py-0.5 rounded bg-slate-100 text-slate-600 font-mono text-[11px] border border-slate-200';
         moreSpan.textContent = `+ ${pool.length - showCount} mã khác...`;
         chipsContainer.appendChild(moreSpan);
       }
@@ -859,7 +859,7 @@ function renderAdminWinnersTable() {
     // 1. Desktop table row
     if (container) {
       const tr = document.createElement('tr');
-      tr.className = 'border-b border-slate-700/60 hover:bg-slate-800/40 text-xs text-slate-200';
+      tr.className = 'border-b border-slate-200 hover:bg-slate-50 text-xs text-slate-800';
       tr.innerHTML = `
         <td class="py-2.5 px-3 text-slate-400">${w.period}</td>
         <td class="py-2.5 px-3 font-mono font-black text-amber-300 text-sm tracking-wider">
@@ -878,7 +878,7 @@ function renderAdminWinnersTable() {
     // 2. Mobile card view (Zero horizontal scroll)
     if (mobileContainer) {
       const card = document.createElement('div');
-      card.className = 'p-3 rounded-xl bg-slate-900 border border-slate-800 space-y-1.5 text-xs shadow';
+      card.className = 'p-3 rounded-xl bg-white border border-slate-200 space-y-1.5 text-xs shadow-sm';
       card.innerHTML = `
         <div class="flex items-center justify-between">
           <span class="text-amber-400 font-mono font-bold text-sm tracking-wide">${w.booking_code || w.order_masked || 'ERK-BK-' + (1000 + idx)}</span>
@@ -965,14 +965,14 @@ function renderAdminWeeklyWinnerForm() {
         statusBadge.className = 'text-[11px] font-bold text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/30';
       } else {
         statusBadge.textContent = '⚪ ĐANG TẮT / ẨN KHỎI MÀN HÌNH CHÍNH';
-        statusBadge.className = 'text-[11px] font-bold text-slate-400 bg-slate-800 px-2.5 py-1 rounded-full border border-slate-700';
+        statusBadge.className = 'text-[11px] font-bold text-slate-600 bg-slate-100 px-2.5 py-1 rounded-full border border-slate-200';
       }
     }
   } else {
     if (activeCheck) activeCheck.checked = false;
     if (statusBadge) {
       statusBadge.textContent = '⚪ CHƯA CÔNG BỐ';
-      statusBadge.className = 'text-[11px] font-bold text-slate-400 bg-slate-800 px-2.5 py-1 rounded-full border border-slate-700';
+      statusBadge.className = 'text-[11px] font-bold text-slate-600 bg-slate-100 px-2.5 py-1 rounded-full border border-slate-200';
     }
   }
 }
@@ -1098,7 +1098,7 @@ function renderAdminGalaToggle() {
       statusBadge.className = 'text-[11px] font-bold text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/30';
     } else {
       statusBadge.textContent = '⚪ ĐANG ẨN';
-      statusBadge.className = 'text-[11px] font-bold text-slate-400 bg-slate-800 px-2.5 py-1 rounded-full border border-slate-700';
+      statusBadge.className = 'text-[11px] font-bold text-slate-600 bg-slate-100 px-2.5 py-1 rounded-full border border-slate-200';
     }
   }
 
@@ -1183,7 +1183,7 @@ function renderAdminLeaderboardTable() {
 
   data.forEach((row, idx) => {
     const tr = document.createElement('tr');
-    tr.className = 'border-b border-slate-700/60 hover:bg-slate-800/40 text-xs text-slate-200';
+    tr.className = 'border-b border-slate-200 hover:bg-amber-50/60 text-xs text-slate-800';
 
     let rowWeight = 0;
     if (row.weight_kg !== undefined && row.weight_kg !== null && !isNaN(parseFloat(row.weight_kg))) {
@@ -1201,16 +1201,16 @@ function renderAdminLeaderboardTable() {
 
     tr.innerHTML = `
       <td class="py-2 px-2 text-center">
-        <input type="number" min="1" max="999" value="${row.rank || (idx + 1)}" class="admin-bxh-rank w-12 bg-slate-900 border border-slate-700 rounded px-1.5 py-1 text-center font-bold text-amber-400">
+        <input type="number" min="1" max="999" value="${row.rank || (idx + 1)}" class="admin-bxh-rank w-12 bg-white border border-slate-300 rounded px-1.5 py-1 text-center font-bold text-amber-800">
       </td>
       <td class="py-2 px-2">
-        <input type="text" value="${row.customer_name || ''}" placeholder="Tên khách hàng..." class="admin-bxh-name w-full min-w-[170px] bg-slate-900 border border-slate-700 rounded px-2 py-1 text-white font-semibold">
+        <input type="text" value="${row.customer_name || ''}" placeholder="Tên khách hàng..." class="admin-bxh-name w-full min-w-[170px] bg-white border border-slate-300 rounded px-2 py-1 text-slate-900 font-semibold">
       </td>
       <td class="py-2 px-2">
-        <input type="text" value="${row.customer_code || row.code || ('ERK-KH-' + (8800 + idx))}" placeholder="ERK-KH-8891" class="admin-bxh-code w-28 bg-slate-900 border border-slate-700 rounded px-2 py-1 font-mono text-amber-300 font-bold uppercase">
+        <input type="text" value="${row.customer_code || row.code || ('ERK-KH-' + (8800 + idx))}" placeholder="ERK-KH-8891" class="admin-bxh-code w-28 bg-white border border-slate-300 rounded px-2 py-1 font-mono text-amber-800 font-bold uppercase">
       </td>
       <td class="py-2 px-2">
-        <select class="admin-bxh-vip bg-slate-900 border border-slate-700 rounded px-2 py-1 text-xs text-slate-200">
+        <select class="admin-bxh-vip bg-white border border-slate-300 rounded px-2 py-1 text-xs text-slate-800">
           <option value="VIP ELITE" ${row.vip_tier === 'VIP ELITE' ? 'selected' : ''}>VIP ELITE</option>
           <option value="VIP PREMIUM" ${row.vip_tier === 'VIP PREMIUM' ? 'selected' : ''}>VIP PREMIUM</option>
           <option value="VIP PRO" ${row.vip_tier === 'VIP PRO' ? 'selected' : ''}>VIP PRO</option>
@@ -1220,19 +1220,19 @@ function renderAdminLeaderboardTable() {
         </select>
       </td>
       <td class="py-2 px-2">
-        <input type="number" min="0" value="${row.order_count || 0}" class="admin-bxh-orders w-16 bg-slate-900 border border-slate-700 rounded px-1.5 py-1 text-right font-bold text-white">
+        <input type="number" min="0" value="${row.order_count || 0}" class="admin-bxh-orders w-16 bg-white border border-slate-300 rounded px-1.5 py-1 text-right font-bold text-slate-900">
       </td>
       <td class="py-2 px-2">
-        <input type="number" min="0" step="any" value="${rowWeight}" placeholder="142500" class="admin-bxh-weight w-24 bg-slate-900 border border-slate-700 rounded px-1.5 py-1 text-amber-300 font-mono text-right" title="Tải trọng tính theo Kg">
+        <input type="number" min="0" step="any" value="${rowWeight}" placeholder="142500" class="admin-bxh-weight w-24 bg-white border border-slate-300 rounded px-1.5 py-1 text-amber-800 font-mono text-right" title="Tải trọng tính theo Kg">
       </td>
       <td class="py-2 px-2">
-        <input type="number" min="0" step="any" value="${rowVol}" placeholder="190" class="admin-bxh-volm3 w-20 bg-slate-900 border border-slate-700 rounded px-1.5 py-1 text-sky-300 font-mono text-right" title="Thể tích tính theo M³">
+        <input type="number" min="0" step="any" value="${rowVol}" placeholder="190" class="admin-bxh-volm3 w-20 bg-white border border-slate-300 rounded px-1.5 py-1 text-sky-800 font-mono text-right" title="Thể tích tính theo M³">
       </td>
       <td class="py-2 px-2">
-        <input type="number" min="0" value="${row.service_fee || 0}" class="admin-bxh-fee w-32 bg-slate-900 border border-slate-700 rounded px-2 py-1 font-bold text-amber-300 text-right">
+        <input type="number" min="0" value="${row.service_fee || 0}" class="admin-bxh-fee w-32 bg-white border border-slate-300 rounded px-2 py-1 font-bold text-amber-800 text-right">
       </td>
       <td class="py-2 px-2">
-        <input type="text" value="${row.prize_tag || ''}" placeholder="💻 Laptop Surface 35Tr" class="admin-bxh-prize w-36 bg-slate-900 border border-slate-700 rounded px-2 py-1 text-slate-200">
+        <input type="text" value="${row.prize_tag || ''}" placeholder="💻 Laptop Surface 35Tr" class="admin-bxh-prize w-36 bg-white border border-slate-300 rounded px-2 py-1 text-slate-800">
       </td>
       <td class="py-2 px-2 text-center">
         <button type="button" onclick="deleteAdminLeaderboardRow(${idx})" class="text-rose-400 hover:text-rose-300 font-bold text-[11px]">Xóa</button>
@@ -1559,7 +1559,7 @@ function updateAdminNhiemVuUI() {
       if (m === currentMode) {
         btn.className = 'admin-nhiemvu-mode-btn p-2.5 rounded-xl border text-left transition-all bg-cyan-500/20 border-cyan-400 text-cyan-300 font-bold text-xs ring-1 ring-cyan-400/50';
       } else {
-        btn.className = 'admin-nhiemvu-mode-btn p-2.5 rounded-xl border text-left transition-all bg-slate-900 border-slate-700 text-slate-400 hover:text-white font-bold text-xs';
+        btn.className = 'admin-nhiemvu-mode-btn p-2.5 rounded-xl border text-left transition-all bg-white border-slate-300 text-slate-700 hover:text-amber-700 hover:bg-amber-50 font-bold text-xs';
       }
     }
   });
@@ -1650,7 +1650,7 @@ function updateAdminNhiemVuPreview() {
 
   codes.forEach(code => {
     const chip = document.createElement('span');
-    chip.className = 'px-2 py-0.5 rounded bg-slate-800 text-amber-300 text-[11px] font-bold border border-slate-700 tracking-wide';
+    chip.className = 'px-2 py-0.5 rounded bg-amber-50 text-amber-800 text-[11px] font-bold border border-amber-300 tracking-wide';
     chip.textContent = code;
     preview.appendChild(chip);
   });
@@ -1761,7 +1761,7 @@ function loadBotConfigToAdminForm() {
       statusBadge.className = 'px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-[10px] font-bold shrink-0';
     } else {
       statusBadge.textContent = '⚪ CHƯA KÍCH HOẠT';
-      statusBadge.className = 'px-2.5 py-1 rounded-full bg-slate-800 text-slate-400 border border-slate-700 text-[10px] font-bold shrink-0';
+      statusBadge.className = 'px-2.5 py-1 rounded-full bg-slate-100 text-slate-600 border border-slate-200 text-[10px] font-bold shrink-0';
     }
   }
 }
@@ -2029,11 +2029,11 @@ function renderAdminAffiliateContest() {
     // 1. Desktop table row
     if (container) {
       const tr = document.createElement('tr');
-      tr.className = 'border-b border-slate-800/80 hover:bg-slate-900/50 text-xs transition-colors';
+      tr.className = 'border-b border-slate-200 hover:bg-slate-50 text-xs text-slate-800 transition-colors';
       tr.innerHTML = `
         <td class="py-3 px-3.5 text-center font-bold">${rankBadge}</td>
         <td class="py-3 px-3.5 font-bold text-white flex items-center gap-2">
-          <span class="w-7 h-7 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-[11px] text-amber-400 uppercase font-mono font-black shrink-0">
+          <span class="w-7 h-7 rounded-full bg-amber-100 border border-amber-300 flex items-center justify-center text-[11px] text-amber-800 uppercase font-mono font-black shrink-0">
             ${staff.ref.slice(0, 2)}
           </span>
           <div>
@@ -2051,7 +2051,7 @@ function renderAdminAffiliateContest() {
           ${convRate}
         </td>
         <td class="py-3 px-3.5 text-center font-mono text-[11px] text-slate-300">
-          <button type="button" onclick="copyAffiliateDirectLink('${staff.ref}')" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-amber-300 border border-slate-700 font-semibold text-[11px] inline-flex items-center gap-1 transition-all cursor-pointer" title="Sao chép link tiếp thị của ${staff.ref}">
+          <button type="button" onclick="copyAffiliateDirectLink('${staff.ref}')" class="px-2.5 py-1 rounded bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-300 font-semibold text-[11px] inline-flex items-center gap-1 transition-all cursor-pointer" title="Sao chép link tiếp thị của ${staff.ref}">
             <span>🔗</span> ?ref=${staff.ref}
           </button>
         </td>
@@ -2067,11 +2067,11 @@ function renderAdminAffiliateContest() {
     // 2. Mobile card view (Zero horizontal scroll)
     if (mobileContainer) {
       const card = document.createElement('div');
-      card.className = 'p-3 rounded-xl bg-slate-900/90 border border-slate-800 space-y-2.5 shadow';
+      card.className = 'p-3 rounded-xl bg-white border border-slate-200 space-y-2.5 shadow-sm';
       card.innerHTML = `
         <div class="flex items-center justify-between">
           <div class="flex items-center gap-2">
-            <span class="w-6 h-6 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-xs font-bold shrink-0">${rankBadge}</span>
+            <span class="w-6 h-6 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-xs font-bold shrink-0 text-slate-700">${rankBadge}</span>
             <div>
               <div class="text-amber-300 font-bold uppercase tracking-wider font-mono text-xs">${staff.ref}</div>
               <div class="text-[10px] text-slate-400">Nhân viên thi đua</div>
@@ -2083,7 +2083,7 @@ function renderAdminAffiliateContest() {
           </div>
         </div>
         <div class="flex items-center justify-between gap-2 pt-2 border-t border-slate-800/80">
-          <button type="button" onclick="copyAffiliateDirectLink('${staff.ref}')" class="flex-1 py-1.5 px-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-amber-300 border border-slate-700 font-semibold text-[11px] inline-flex items-center justify-center gap-1">
+          <button type="button" onclick="copyAffiliateDirectLink('${staff.ref}')" class="flex-1 py-1.5 px-2 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-300 font-semibold text-[11px] inline-flex items-center justify-center gap-1">
             <span>🔗</span> ?ref=${staff.ref}
           </button>
           <button type="button" onclick="viewAffiliateLeads('${staff.ref}')" class="py-1.5 px-3 rounded-lg bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-300 border border-emerald-500/30 font-bold text-[11px] inline-flex items-center justify-center gap-1">
@@ -2191,7 +2191,7 @@ function viewAffiliateLeads(refCode) {
       // Desktop row
       if (tbody) {
         const tr = document.createElement('tr');
-        tr.className = 'border-b border-slate-800/60 hover:bg-slate-900/40 text-xs';
+        tr.className = 'border-b border-slate-200 hover:bg-slate-50 text-xs text-slate-800';
         tr.innerHTML = `
           <td class="py-2 px-3 text-slate-400">${item.createdAt || 'Hôm nay'}</td>
           <td class="py-2 px-3 font-mono font-bold text-amber-300">${item.phone}</td>
@@ -2209,7 +2209,7 @@ function viewAffiliateLeads(refCode) {
       // Mobile card
       if (mobileCards) {
         const mcard = document.createElement('div');
-        mcard.className = 'p-2.5 rounded-xl bg-slate-950 border border-slate-800 space-y-1.5 text-xs';
+        mcard.className = 'p-2.5 rounded-xl bg-white border border-slate-200 space-y-1.5 text-xs shadow-sm';
         mcard.innerHTML = `
           <div class="flex items-center justify-between">
             <span class="font-mono font-bold text-amber-300">${item.phone}</span>

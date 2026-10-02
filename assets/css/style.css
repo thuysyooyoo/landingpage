@@ -88,14 +88,14 @@ body {
   width: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #0b1120;
+  background: #F1F5F9;
 }
 ::-webkit-scrollbar-thumb {
-  background: #334155;
+  background: #CBD5E1;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #ea580c;
+  background: #F59E0B;
 }
 
 /* Lucky Wheel Custom Styles */

@@ -435,55 +435,55 @@ function renderLeaderboard(data) {
   data.forEach(item => {
     const tr = document.createElement('tr');
 
-    let rowClass = 'hover:bg-slate-800/40 transition-colors border-b border-slate-800/60';
+    let rowClass = 'hover:bg-amber-50/60 transition-colors border-b border-slate-200';
     let rankBadge = '';
     let prizeBadge = '';
 
     if (item.rank === 1) {
-      rowClass = 'bg-amber-500/10 hover:bg-amber-500/15 transition-colors border-b border-amber-500/20';
+      rowClass = 'bg-amber-50/70 hover:bg-amber-100/50 transition-colors border-b border-amber-200';
       rankBadge = `
-        <div class="w-8 h-8 rounded-full bg-gradient-to-r from-amber-400 to-amber-600 text-slate-950 font-black flex items-center justify-center text-sm shadow">
+        <div class="w-8 h-8 rounded-full bg-gradient-to-r from-amber-400 to-amber-600 text-white font-black flex items-center justify-center text-sm shadow">
           1
         </div>
       `;
       prizeBadge = `
-        <span class="px-2.5 py-1 rounded-full bg-amber-400 text-slate-950 font-extrabold text-[10px] uppercase tracking-wide">
+        <span class="px-2.5 py-1 rounded-full bg-amber-100 text-amber-900 border border-amber-300 font-extrabold text-[10px] uppercase tracking-wide">
           ${item.prize_tag}
         </span>
       `;
     } else if (item.rank === 2) {
-      rowClass = 'bg-slate-700/20 hover:bg-slate-700/30 transition-colors border-b border-slate-600/30';
+      rowClass = 'bg-sky-50/50 hover:bg-sky-100/50 transition-colors border-b border-sky-100';
       rankBadge = `
-        <div class="w-8 h-8 rounded-full bg-slate-300 text-slate-950 font-black flex items-center justify-center text-sm shadow">
+        <div class="w-8 h-8 rounded-full bg-sky-100 text-sky-800 border border-sky-300 font-black flex items-center justify-center text-sm shadow">
           2
         </div>
       `;
       prizeBadge = `
-        <span class="px-2.5 py-1 rounded-full bg-slate-300 text-slate-950 font-extrabold text-[10px] uppercase tracking-wide">
+        <span class="px-2.5 py-1 rounded-full bg-sky-100 text-sky-800 border border-sky-300 font-extrabold text-[10px] uppercase tracking-wide">
           ${item.prize_tag}
         </span>
       `;
     } else if (item.rank === 3) {
-      rowClass = 'bg-amber-900/10 hover:bg-amber-900/20 transition-colors border-b border-amber-800/30';
+      rowClass = 'bg-orange-50/50 hover:bg-orange-100/50 transition-colors border-b border-orange-100';
       rankBadge = `
-        <div class="w-8 h-8 rounded-full bg-amber-700 text-white font-black flex items-center justify-center text-sm shadow">
+        <div class="w-8 h-8 rounded-full bg-amber-600 text-white font-black flex items-center justify-center text-sm shadow">
           3
         </div>
       `;
       prizeBadge = `
-        <span class="px-2.5 py-1 rounded-full bg-amber-700 text-white font-extrabold text-[10px] uppercase tracking-wide">
+        <span class="px-2.5 py-1 rounded-full bg-amber-100 text-amber-800 border border-amber-300 font-extrabold text-[10px] uppercase tracking-wide">
           ${item.prize_tag}
         </span>
       `;
     } else {
-      rankBadge = `<span class="font-bold text-slate-400 text-sm ml-2">${item.rank}</span>`;
-      prizeBadge = `<span class="text-slate-400 text-xs">${item.prize_tag}</span>`;
+      rankBadge = `<span class="font-bold text-slate-600 text-sm ml-2">${item.rank}</span>`;
+      prizeBadge = `<span class="text-slate-600 text-xs font-medium">${item.prize_tag}</span>`;
     }
 
-    let vipBadgeClass = 'bg-slate-700 text-slate-300';
-    if (item.vip_tier.includes('ELITE')) vipBadgeClass = 'bg-purple-500/20 text-purple-300 border border-purple-500/30';
-    else if (item.vip_tier.includes('PREMIUM')) vipBadgeClass = 'bg-blue-500/20 text-blue-300 border border-blue-500/30';
-    else if (item.vip_tier.includes('MỚI')) vipBadgeClass = 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30';
+    let vipBadgeClass = 'bg-slate-100 text-slate-700 border border-slate-200';
+    if (item.vip_tier.includes('ELITE')) vipBadgeClass = 'bg-purple-100 text-purple-800 border border-purple-200 font-bold';
+    else if (item.vip_tier.includes('PREMIUM')) vipBadgeClass = 'bg-blue-100 text-blue-800 border border-blue-200 font-bold';
+    else if (item.vip_tier.includes('MỚI')) vipBadgeClass = 'bg-emerald-100 text-emerald-800 border border-emerald-200 font-bold';
 
     const displayName = item.customer_name || item.company_name || 'Khách hàng Eureka';
     const customerCode = item.customer_code || item.code || ('ERK-KH-' + (1000 + item.rank));

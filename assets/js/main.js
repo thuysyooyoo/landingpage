@@ -250,24 +250,24 @@ function renderNhiemVuDisplay() {
     const count3 = (cfg.chang_3?.customer_codes || []).length;
 
     container.innerHTML = `
-      <div class="rounded-3xl p-6 sm:p-8 bg-slate-800/40 backdrop-blur-2xl border border-white/15 shadow-2xl relative overflow-hidden">
+      <div class="rounded-3xl p-6 sm:p-8 bg-white border border-slate-200 shadow-xl relative overflow-hidden">
         <div class="absolute -top-24 -right-24 w-72 h-72 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
         <div class="text-center max-w-2xl mx-auto mb-8 relative z-10">
           <span class="px-3.5 py-1.5 rounded-full bg-emerald-500/20 text-emerald-300 text-xs font-black border border-emerald-500/30 uppercase tracking-wider inline-block mb-3">
             📊 BẢNG TỔNG KẾT TOÀN DIỆN CHƯƠNG TRÌNH
           </span>
-          <h3 class="text-2xl sm:text-3xl font-black text-white font-display">
+          <h3 class="text-2xl sm:text-3xl font-black text-slate-900 font-display">
             Tổng Kết 3 Chặng Nhiệm Vụ Hệ Thống
           </h3>
-          <p class="text-xs sm:text-sm text-slate-300 mt-2">
+          <p class="text-xs sm:text-sm text-slate-600 mt-2">
             Thống kê số lượng khách hàng hoàn thành nhiệm vụ và được tự động nâng hạng VIP+1 qua từng cột mốc
           </p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 relative z-10">
           <!-- Cột 1 -->
-          <div class="p-6 rounded-2xl bg-slate-900/80 border-t-4 border-amber-400 border-x border-b border-slate-700/80 shadow-xl flex flex-col justify-between">
+          <div class="p-6 rounded-2xl bg-white border-t-4 border-amber-400 border-x border-b border-slate-200 shadow-lg flex flex-col justify-between">
             <div>
               <div class="flex items-center justify-between mb-3">
                 <span class="text-xs font-black text-amber-300 bg-amber-500/15 border border-amber-500/30 px-2.5 py-1 rounded-lg">CHẶNG 1 — T10</span>
@@ -275,20 +275,20 @@ function renderNhiemVuDisplay() {
               </div>
               <h4 class="text-lg font-black text-white mb-1 font-display">"Khởi Động Sớm"</h4>
               <p class="text-xs text-slate-400 mb-3">Tối thiểu 01 đơn booking</p>
-              <div class="my-4 p-4 rounded-xl bg-slate-800/60 border border-slate-700/60 text-center">
+              <div class="my-4 p-4 rounded-xl bg-amber-50/70 border border-amber-200 text-center">
                 <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Số KH hoàn thành nhiệm vụ</span>
                 <div class="text-3xl sm:text-4xl font-black text-amber-400">${count1}</div>
                 <span class="text-[11px] text-emerald-400 font-semibold mt-1 block">✓ Đã nhận VIP+1 Tháng 11</span>
               </div>
             </div>
-            <div class="pt-3 border-t border-slate-800 text-xs text-slate-300 flex items-center justify-between">
+            <div class="pt-3 border-t border-slate-100 text-xs text-slate-600 flex items-center justify-between">
               <span>Giảm tới 30% cước</span>
               <span class="text-emerald-400 font-bold">100% Hoàn tất</span>
             </div>
           </div>
 
           <!-- Cột 2 -->
-          <div class="p-6 rounded-2xl bg-slate-900/80 border-t-4 border-orange-500 border-x border-b border-slate-700/80 shadow-xl flex flex-col justify-between">
+          <div class="p-6 rounded-2xl bg-white border-t-4 border-orange-500 border-x border-b border-slate-200 shadow-lg flex flex-col justify-between">
             <div>
               <div class="flex items-center justify-between mb-3">
                 <span class="text-xs font-black text-orange-300 bg-orange-500/15 border border-orange-500/30 px-2.5 py-1 rounded-lg">CHẶNG 2 — T11</span>
@@ -296,20 +296,20 @@ function renderNhiemVuDisplay() {
               </div>
               <h4 class="text-lg font-black text-white mb-1 font-display">"Giữ Nhịp Cao Điểm"</h4>
               <p class="text-xs text-slate-400 mb-3">02 đơn booking Tháng 11</p>
-              <div class="my-4 p-4 rounded-xl bg-slate-800/60 border border-slate-700/60 text-center">
+              <div class="my-4 p-4 rounded-xl bg-orange-50/70 border border-orange-200 text-center">
                 <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Số KH hoàn thành nhiệm vụ</span>
                 <div class="text-3xl sm:text-4xl font-black text-orange-400">${count2}</div>
                 <span class="text-[11px] text-emerald-400 font-semibold mt-1 block">✓ Đã nhận VIP+1 Tháng 12</span>
               </div>
             </div>
-            <div class="pt-3 border-t border-slate-800 text-xs text-slate-300 flex items-center justify-between">
+            <div class="pt-3 border-t border-slate-100 text-xs text-slate-600 flex items-center justify-between">
               <span>Giảm tới 30% cước</span>
               <span class="text-emerald-400 font-bold">100% Hoàn tất</span>
             </div>
           </div>
 
           <!-- Cột 3 -->
-          <div class="p-6 rounded-2xl bg-slate-900/80 border-t-4 border-blue-400 border-x border-b border-slate-700/80 shadow-xl flex flex-col justify-between">
+          <div class="p-6 rounded-2xl bg-white border-t-4 border-blue-400 border-x border-b border-slate-200 shadow-lg flex flex-col justify-between">
             <div>
               <div class="flex items-center justify-between mb-3">
                 <span class="text-xs font-black text-blue-300 bg-blue-500/15 border border-blue-500/30 px-2.5 py-1 rounded-lg">CHẶNG 3 — T12</span>
@@ -317,13 +317,13 @@ function renderNhiemVuDisplay() {
               </div>
               <h4 class="text-lg font-black text-white mb-1 font-display">"Về Đích An Toàn"</h4>
               <p class="text-xs text-slate-400 mb-3">Tối thiểu 01 đơn booking</p>
-              <div class="my-4 p-4 rounded-xl bg-slate-800/60 border border-slate-700/60 text-center">
+              <div class="my-4 p-4 rounded-xl bg-blue-50/70 border border-blue-200 text-center">
                 <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Số KH hoàn thành nhiệm vụ</span>
                 <div class="text-3xl sm:text-4xl font-black text-blue-400">${count3}</div>
                 <span class="text-[11px] text-emerald-400 font-semibold mt-1 block">✓ Đã nhận VIP+1 Tháng 01/2027</span>
               </div>
             </div>
-            <div class="pt-3 border-t border-slate-800 text-xs text-slate-300 flex items-center justify-between">
+            <div class="pt-3 border-t border-slate-100 text-xs text-slate-600 flex items-center justify-between">
               <span>Tăng 15 ngày nợ Elite+</span>
               <span class="text-emerald-400 font-bold">100% Hoàn tất</span>
             </div>
@@ -364,13 +364,13 @@ function renderNhiemVuDisplay() {
   container.innerHTML = `
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
       <!-- Cột Trái (lg:col-span-7 xl:col-span-8): BẢNG THỂ HIỆN CHẶNG THI ĐUA NỔI BẬT & TIẾN TRÌNH -->
-      <div class="lg:col-span-7 xl:col-span-8 flex flex-col justify-between rounded-3xl p-6 sm:p-8 bg-slate-800/50 backdrop-blur-2xl border-2 ${themeColors.border} shadow-2xl relative overflow-hidden group">
+      <div class="lg:col-span-7 xl:col-span-8 flex flex-col justify-between rounded-3xl p-6 sm:p-8 bg-white border-2 ${themeColors.border} shadow-xl relative overflow-hidden group">
         <div class="absolute -top-24 -left-24 w-60 h-60 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
         <div class="relative z-10">
           <!-- Mini 3-Chặng Progress Roadmap -->
-          <div class="grid grid-cols-3 gap-2 p-1.5 rounded-2xl bg-slate-900/90 border border-slate-700/80 mb-5">
-            <div class="p-2 sm:p-2.5 rounded-xl border text-center transition-all ${mode === 'chang-1' ? 'bg-amber-500/20 border-amber-400 text-amber-300 font-bold shadow-md ring-1 ring-amber-400/50' : 'bg-slate-900/60 border-slate-800 text-slate-400'}">
+          <div class="grid grid-cols-3 gap-2 p-1.5 rounded-2xl bg-slate-100 border border-slate-200 mb-5">
+            <div class="p-2 sm:p-2.5 rounded-xl border text-center transition-all ${mode === 'chang-1' ? 'bg-amber-500/20 border-amber-400 text-amber-300 font-bold shadow-md ring-1 ring-amber-400/50' : 'bg-white border-slate-200 text-slate-600'}">
               <div class="flex items-center justify-center gap-1 text-[11px] font-black uppercase">
                 <span>Chặng 1</span>
                 ${mode === 'chang-1' ? '<span class="inline-block w-1.5 h-1.5 rounded-full bg-amber-400 animate-ping"></span>' : '<span class="text-emerald-400">✓</span>'}
@@ -381,7 +381,7 @@ function renderNhiemVuDisplay() {
               </div>
             </div>
 
-            <div class="p-2 sm:p-2.5 rounded-xl border text-center transition-all ${mode === 'chang-2' ? 'bg-orange-500/20 border-orange-400 text-orange-300 font-bold shadow-md ring-1 ring-orange-400/50' : 'bg-slate-900/60 border-slate-800 text-slate-400'}">
+            <div class="p-2 sm:p-2.5 rounded-xl border text-center transition-all ${mode === 'chang-2' ? 'bg-orange-500/20 border-orange-400 text-orange-300 font-bold shadow-md ring-1 ring-orange-400/50' : 'bg-white border-slate-200 text-slate-600'}">
               <div class="flex items-center justify-center gap-1 text-[11px] font-black uppercase">
                 <span>Chặng 2</span>
                 ${mode === 'chang-2' ? '<span class="inline-block w-1.5 h-1.5 rounded-full bg-orange-400 animate-ping"></span>' : ''}
@@ -392,7 +392,7 @@ function renderNhiemVuDisplay() {
               </div>
             </div>
 
-            <div class="p-2 sm:p-2.5 rounded-xl border text-center transition-all ${mode === 'chang-3' ? 'bg-blue-500/20 border-blue-400 text-blue-300 font-bold shadow-md ring-1 ring-blue-400/50' : 'bg-slate-900/60 border-slate-800 text-slate-400'}">
+            <div class="p-2 sm:p-2.5 rounded-xl border text-center transition-all ${mode === 'chang-3' ? 'bg-blue-500/20 border-blue-400 text-blue-300 font-bold shadow-md ring-1 ring-blue-400/50' : 'bg-white border-slate-200 text-slate-600'}">
               <div class="flex items-center justify-center gap-1 text-[11px] font-black uppercase">
                 <span>Chặng 3</span>
                 ${mode === 'chang-3' ? '<span class="inline-block w-1.5 h-1.5 rounded-full bg-blue-400 animate-ping"></span>' : ''}
@@ -414,7 +414,7 @@ function renderNhiemVuDisplay() {
                 <span class="px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider border backdrop-blur-md shadow-lg ${themeColors.badge}">
                   ${curChang.period_title}
                 </span>
-                <span class="text-xs font-bold text-white bg-slate-950/80 backdrop-blur-md px-3 py-1 rounded-lg border border-white/20 shadow">
+                <span class="text-xs font-bold text-slate-800 bg-white/95 backdrop-blur-md px-3 py-1 rounded-lg border border-slate-200 shadow-sm">
                   📅 ${curChang.time_range}
                 </span>
               </div>
@@ -437,7 +437,7 @@ function renderNhiemVuDisplay() {
           <!-- 2 Cột: Điều kiện & Phần thưởng đặt song song -->
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
             <!-- Điều kiện xét giải -->
-            <div class="p-4 rounded-2xl bg-slate-900/85 border border-slate-700/80 flex flex-col justify-between">
+            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col justify-between"
               <div>
                 <span class="block text-[11px] font-bold text-slate-400 uppercase tracking-wide mb-1">
                   📋 Thể Lệ & Điều Kiện:
@@ -481,17 +481,17 @@ function renderNhiemVuDisplay() {
       </div>
 
       <!-- Cột Phải (lg:col-span-5 xl:col-span-4): DANH SÁCH MÃ KH ĐẠT CHUẨN THU NHỎ GỌN GÀNG -->
-      <div class="lg:col-span-5 xl:col-span-4 flex flex-col justify-between rounded-3xl p-5 sm:p-6 bg-slate-800/40 backdrop-blur-2xl border border-white/15 shadow-2xl relative overflow-hidden">
+      <div class="lg:col-span-5 xl:col-span-4 flex flex-col justify-between rounded-3xl p-5 sm:p-6 bg-white border border-slate-200 shadow-xl relative overflow-hidden">
         <div class="absolute -top-24 -right-24 w-52 h-52 bg-brand-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
         <div class="relative z-10">
           <!-- Header danh sách thu gọn -->
           <div class="flex items-center justify-between gap-2 mb-3.5 pb-3 border-b border-slate-700">
             <div>
-              <h3 class="text-base font-black text-white font-display flex items-center gap-1.5">
+              <h3 class="text-base font-black text-slate-900 font-display flex items-center gap-1.5">
                 <span>👑</span> Mã KH Hoàn Thành Nhiệm Vụ
               </h3>
-              <p class="text-[11px] text-slate-300">Đã nâng hạng VIP+1</p>
+              <p class="text-[11px] text-slate-500 font-medium">Đã nâng hạng VIP+1</p>
             </div>
             <span id="nhiem-vu-count-badge" class="px-2.5 py-1 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-xs font-black whitespace-nowrap">
               🎉 ${codes.length} Mã KH
@@ -503,7 +503,7 @@ function renderNhiemVuDisplay() {
             <span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-slate-400">
               <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
             </span>
-            <input type="text" id="nhiem-vu-code-filter" oninput="filterNhiemVuCodes(this.value)" placeholder="Tra cứu mã nhanh (VD: 8891)..." class="w-full bg-slate-900/90 border border-slate-700 rounded-xl pl-8 pr-3 py-1.5 text-xs text-white placeholder:text-slate-500 focus:outline-none focus:border-amber-400 shadow-inner" />
+            <input type="text" id="nhiem-vu-code-filter" oninput="filterNhiemVuCodes(this.value)" placeholder="Tra cứu mã nhanh (VD: 8891)..." class="w-full bg-white border border-slate-300 rounded-xl pl-8 pr-3 py-1.5 text-xs text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-amber-500 shadow-sm" />
           </div>
 
           <!-- Codes Badges Grid: 2 cột compact, chiều cao vừa vặn -->
@@ -529,8 +529,8 @@ function renderNhiemVuCodeBadges(codes) {
     return `<div class="col-span-full py-6 text-center text-xs text-slate-400">Chưa có mã khách hàng nào hoàn thành nhiệm vụ.</div>`;
   }
   return codes.map(code => `
-    <div class="py-1.5 px-2.5 rounded-lg bg-slate-900/85 border border-slate-700/70 hover:border-amber-400/50 transition-all flex items-center justify-between gap-1.5 group">
-      <span class="text-xs font-bold text-amber-300 tracking-wide group-hover:text-amber-200 truncate">
+    <div class="py-1.5 px-2.5 rounded-lg bg-amber-50/60 border border-amber-200 hover:border-amber-400 transition-all flex items-center justify-between gap-1.5 group">
+      <span class="text-xs font-bold text-amber-800 tracking-wide group-hover:text-amber-900 truncate">
         ${code}
       </span>
       <span class="text-[9px] font-bold text-emerald-300 bg-emerald-500/15 px-1 py-0.2 rounded border border-emerald-500/30 shrink-0">
@@ -817,7 +817,7 @@ function switchGiaiPhuTab(awardKey) {
 
   // Cập nhật Active Tab buttons
   document.querySelectorAll('.giai-phu-tab-btn').forEach(btn => {
-    btn.className = 'giai-phu-tab-btn px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all bg-slate-800 text-slate-300 hover:text-white hover:bg-slate-700';
+    btn.className = 'giai-phu-tab-btn px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all bg-slate-100 text-slate-700 hover:text-slate-900 hover:bg-slate-200 border border-slate-200';
   });
   const activeBtn = document.getElementById(`tab-btn-${awardKey}`);
   if (activeBtn) {
@@ -888,7 +888,7 @@ function renderGiaiPhuTable(list, query = '') {
     if (rank === 1) {
       rankBadge = `<span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 font-black text-xs shadow-md">🥇 1</span>`;
     } else if (rank === 2) {
-      rankBadge = `<span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-slate-300 text-slate-950 font-black text-xs shadow">🥈 2</span>`;
+      rankBadge = `<span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-sky-100 text-sky-800 border border-sky-300 font-black text-xs shadow">🥈 2</span>`;
     } else if (rank === 3) {
       rankBadge = `<span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-amber-700 text-white font-black text-xs shadow">🥉 3</span>`;
     } else {
@@ -896,7 +896,7 @@ function renderGiaiPhuTable(list, query = '') {
     }
 
     let statusBadge = '';
-    let rowBg = 'hover:bg-slate-800/40 transition-colors';
+    let rowBg = 'hover:bg-amber-50/60 transition-colors';
 
     if (isWinnerThisAward) {
       statusBadge = `<span class="px-2.5 py-1 rounded-full bg-emerald-500/25 text-emerald-300 text-[10px] font-black border border-emerald-500/50 shadow-sm animate-pulse">🏆 ĐẠT GIẢI 3TR</span>`;
@@ -906,7 +906,7 @@ function renderGiaiPhuTable(list, query = '') {
     } else if (otherAward && otherAward.type === 'side') {
       statusBadge = `<span class="px-2 py-0.5 rounded-full bg-purple-500/20 text-purple-300 text-[10px] font-bold border border-purple-500/35" title="${otherAward.name}">Đạt giải phụ khác</span>`;
     } else {
-      statusBadge = `<span class="px-2 py-0.5 rounded-full bg-slate-800 text-slate-400 text-[10px] font-medium">Ứng viên</span>`;
+      statusBadge = `<span class="px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200 text-[10px] font-medium">Ứng viên</span>`;
     }
 
     let highlightClass = '';
@@ -915,7 +915,7 @@ function renderGiaiPhuTable(list, query = '') {
     }
 
     const tr = document.createElement('tr');
-    tr.className = `${rowBg} ${highlightClass} border-b border-slate-800/60 transition-all`;
+    tr.className = `${rowBg} ${highlightClass} border-b border-slate-200 transition-all`;
     tr.id = `giai-phu-row-${code}`;
     tr.innerHTML = `
       <td class="py-3 px-3 sm:px-4 text-center">${rankBadge}</td>
