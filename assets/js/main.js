@@ -301,7 +301,7 @@ function renderNhiemVuDisplay() {
           </p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 relative z-10">
+        <div id="nhiem-vu-summary-cards" class="nhiem-vu-3-cols grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 relative z-10">
           <!-- Cột 1 -->
           <div class="p-6 rounded-2xl bg-white border-t-4 border-amber-400 border-x border-b border-slate-200 shadow-lg flex flex-col justify-between">
             <div>

@@ -2929,3 +2929,448 @@ button[onclick*="close"]:hover svg,
 button[aria-label="Đóng menu"]:hover svg {
   stroke: #DC2626 !important;
 }
+
+/* ==========================================================================
+   MOBILE OPTIMIZATION (< 768px): COMPACT 3-COLUMN SIDE-BY-SIDE LAYOUT
+   1. Cơ Cấu Giải Thưởng: Top 3 Chung Cuộc Q4 (#tab-content-top3-q4)
+      -> Bục 3D Quán Quân & Á Quân 1 - Á Quân 2 xếp ngang hàng gọn gàng như Desktop
+   2. Nhiệm Vụ Hệ Thống: 3 Chặng (T10, T11, T12) (.nhiem-vu-3-cols)
+      -> 3 cột Chặng nhiệm vụ xếp ngang hàng gọn gàng như Desktop
+   ========================================================================== */
+@media (max-width: 767px) {
+  /* -------------------------------------------------------------------------
+     1. TOP 3 CHUNG CUỘC PODIUM (#tab-content-top3-q4)
+     ------------------------------------------------------------------------- */
+  #tab-content-top3-q4:not(.hidden) {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: flex-end !important;
+    justify-content: center !important;
+    gap: 0.35rem !important;
+    padding-top: 2rem !important;
+    padding-bottom: 0.5rem !important;
+    padding-left: 0.15rem !important;
+    padding-right: 0.15rem !important;
+    margin-left: -0.35rem !important;
+    margin-right: -0.35rem !important;
+    width: auto !important;
+    overflow-x: visible !important;
+  }
+
+  /* Á Quân 1 - Bục Trái (Silver) */
+  #tab-content-top3-q4 #podium-card-silver {
+    order: 1 !important;
+    flex: 1 1 0% !important;
+    min-width: 95px !important;
+    padding: 0.5rem 0.3rem 0.55rem !important;
+    border-radius: 0.85rem 0.85rem 0.6rem 0.6rem !important;
+    border: 1.5px solid #38BDF8 !important;
+    border-bottom: 5px solid #0284C7 !important;
+    background: linear-gradient(180deg, #FFFFFF 0%, rgba(240, 249, 255, 0.96) 100%) !important;
+    box-shadow: 0 8px 20px -4px rgba(2, 132, 199, 0.18) !important;
+    text-align: center !important;
+  }
+
+  /* Quán Quân - Bục Giữa Nhô Cao (Gold) */
+  #tab-content-top3-q4 #podium-card-gold {
+    order: 2 !important;
+    flex: 1.15 1 0% !important;
+    min-width: 105px !important;
+    padding: 0.65rem 0.35rem 0.7rem !important;
+    border-radius: 1rem 1rem 0.65rem 0.65rem !important;
+    border: 2px solid #F59E0B !important;
+    border-bottom: 7px solid #D97706 !important;
+    background: linear-gradient(180deg, #FFFFFF 0%, rgba(255, 251, 235, 0.98) 100%) !important;
+    box-shadow: 0 12px 28px -4px rgba(245, 158, 11, 0.28) !important;
+    transform: translateY(-10px) !important;
+    z-index: 10 !important;
+    text-align: center !important;
+  }
+
+  /* Á Quân 2 - Bục Phải (Copper) */
+  #tab-content-top3-q4 #podium-card-copper {
+    order: 3 !important;
+    flex: 1 1 0% !important;
+    min-width: 95px !important;
+    padding: 0.5rem 0.3rem 0.55rem !important;
+    border-radius: 0.85rem 0.85rem 0.6rem 0.6rem !important;
+    border: 1.5px solid #FB7185 !important;
+    border-bottom: 5px solid #BE123C !important;
+    background: linear-gradient(180deg, #FFFFFF 0%, rgba(255, 241, 242, 0.96) 100%) !important;
+    box-shadow: 0 8px 20px -4px rgba(190, 18, 60, 0.18) !important;
+    text-align: center !important;
+  }
+
+  /* Badges top on mobile: căn giữa bục, chữ rõ, không đè viền */
+  #tab-content-top3-q4 #podium-card-gold > .absolute.-top-3\.5 {
+    top: -11px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    font-size: 7.5px !important;
+    line-height: 1 !important;
+    padding: 3px 6px !important;
+    white-space: nowrap !important;
+    letter-spacing: 0 !important;
+    box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3) !important;
+  }
+
+  #tab-content-top3-q4 #podium-card-silver > .absolute.-top-3\.5,
+  #tab-content-top3-q4 #podium-card-copper > .absolute.-top-3\.5 {
+    top: -10px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    font-size: 7px !important;
+    line-height: 1 !important;
+    padding: 2.5px 5px !important;
+    white-space: nowrap !important;
+    letter-spacing: 0 !important;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08) !important;
+  }
+
+  /* Crystal plates on mobile: nhỏ gọn, hình ảnh chính hãng rõ ràng */
+  #tab-content-top3-q4 #podium-card-silver .crystal-plate,
+  #tab-content-top3-q4 #podium-card-copper .crystal-plate {
+    height: 68px !important;
+    padding: 0.2rem !important;
+    margin-bottom: 0.35rem !important;
+    border-radius: 0.5rem !important;
+  }
+
+  #tab-content-top3-q4 #podium-card-gold .crystal-plate {
+    height: 80px !important;
+    padding: 0.25rem !important;
+    margin-bottom: 0.4rem !important;
+    border-radius: 0.6rem !important;
+  }
+
+  #tab-content-top3-q4 .crystal-plate img {
+    max-height: 100% !important;
+    width: auto !important;
+    object-fit: contain !important;
+  }
+
+  /* Ẩn tag nhỏ xíu che sản phẩm trong đĩa pha lê ở mobile */
+  #tab-content-top3-q4 .crystal-plate > .absolute.bottom-3.right-3 {
+    display: none !important;
+  }
+
+  /* Tên sản phẩm */
+  #tab-content-top3-q4 #podium-card-silver h3,
+  #tab-content-top3-q4 #podium-card-copper h3 {
+    font-size: 10px !important;
+    line-height: 1.25 !important;
+    font-weight: 800 !important;
+    margin-bottom: 2px !important;
+    min-height: 24px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    color: #0F172A !important;
+  }
+
+  #tab-content-top3-q4 #podium-card-gold h3 {
+    font-size: 11px !important;
+    line-height: 1.25 !important;
+    font-weight: 900 !important;
+    margin-bottom: 2px !important;
+    min-height: 26px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    color: #0F172A !important;
+  }
+
+  /* Mô tả sản phẩm */
+  #tab-content-top3-q4 #podium-card-silver p,
+  #tab-content-top3-q4 #podium-card-copper p {
+    font-size: 7.5px !important;
+    line-height: 1.15 !important;
+    margin-bottom: 3px !important;
+    color: #475569 !important;
+    font-weight: 500 !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+  }
+
+  #tab-content-top3-q4 #podium-card-gold p {
+    font-size: 8px !important;
+    line-height: 1.15 !important;
+    margin-bottom: 3px !important;
+    color: #78350F !important;
+    font-weight: 700 !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+  }
+
+  /* Trị giá giải thưởng */
+  #tab-content-top3-q4 #podium-card-silver .text-sky-900,
+  #tab-content-top3-q4 #podium-card-copper .text-amber-900 {
+    font-size: 11.5px !important;
+    line-height: 1.2 !important;
+    font-weight: 900 !important;
+    margin-bottom: 4px !important;
+  }
+  #tab-content-top3-q4 #podium-card-silver .text-sky-900 {
+    color: #0284C7 !important;
+  }
+  #tab-content-top3-q4 #podium-card-copper .text-amber-900 {
+    color: #B45309 !important;
+  }
+
+  #tab-content-top3-q4 #podium-card-gold .text-amber-900 {
+    font-size: 13.5px !important;
+    line-height: 1.2 !important;
+    font-weight: 900 !important;
+    margin-bottom: 4px !important;
+    color: #B45309 !important;
+  }
+
+  /* Tiêu chí chân bục */
+  #tab-content-top3-q4 #podium-card-silver > .pt-4,
+  #tab-content-top3-q4 #podium-card-gold > .pt-4,
+  #tab-content-top3-q4 #podium-card-copper > .pt-4 {
+    padding-top: 4px !important;
+    margin-top: 2px !important;
+    border-top: 1px solid rgba(226, 232, 240, 0.9) !important;
+  }
+
+  #tab-content-top3-q4 #podium-card-silver > .pt-4 span,
+  #tab-content-top3-q4 #podium-card-copper > .pt-4 span {
+    font-size: 7.5px !important;
+    line-height: 1.15 !important;
+    color: #334155 !important;
+    font-weight: 600 !important;
+    text-align: center !important;
+    justify-content: center !important;
+    display: block !important;
+  }
+
+  #tab-content-top3-q4 #podium-card-gold > .pt-4 span {
+    font-size: 8px !important;
+    line-height: 1.15 !important;
+    color: #78350F !important;
+    font-weight: 700 !important;
+    text-align: center !important;
+    justify-content: center !important;
+    display: block !important;
+  }
+
+  #tab-content-top3-q4 #podium-card-silver svg,
+  #tab-content-top3-q4 #podium-card-gold svg,
+  #tab-content-top3-q4 #podium-card-copper svg {
+    display: none !important;
+  }
+
+  /* -------------------------------------------------------------------------
+     2. NHIỆM VỤ HỆ THỐNG: 3 CHẶNG SIDE-BY-SIDE (.nhiem-vu-3-cols)
+     ------------------------------------------------------------------------- */
+  /* Khung chứa ngoài cùng của tab hoặc section nhiệm vụ */
+  #tab-content-nhiem-vu > div,
+  #cot-moc-vip #nhiem-vu-display-wrapper > div {
+    padding: 0.85rem 0.45rem !important;
+    border-radius: 1.25rem !important;
+  }
+
+  .nhiem-vu-3-cols,
+  #nhiem-vu-summary-cards,
+  #nhiem-vu-preview-cards,
+  #cot-moc-vip #nhiem-vu-display-wrapper .grid.grid-cols-1.md\:grid-cols-3 {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: stretch !important;
+    justify-content: space-between !important;
+    gap: 0.35rem !important;
+    padding-left: 0.15rem !important;
+    padding-right: 0.15rem !important;
+    margin-left: -0.35rem !important;
+    margin-right: -0.35rem !important;
+    margin-bottom: 0.85rem !important;
+    width: auto !important;
+  }
+
+  .nhiem-vu-3-cols > div,
+  #nhiem-vu-summary-cards > div,
+  #nhiem-vu-preview-cards > div,
+  #cot-moc-vip #nhiem-vu-display-wrapper .grid.grid-cols-1.md\:grid-cols-3 > div {
+    flex: 1 1 0% !important;
+    min-width: 95px !important;
+    padding: 0.45rem 0.3rem 0.5rem !important;
+    border-radius: 0.85rem !important;
+    box-shadow: 0 4px 15px -2px rgba(15, 23, 42, 0.08) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+  }
+
+  /* Header inside each card (Chặng badge + time range) */
+  .nhiem-vu-3-cols > div .flex.items-center.justify-between,
+  #nhiem-vu-summary-cards > div .flex.items-center.justify-between,
+  #nhiem-vu-preview-cards > div .flex.items-center.justify-between,
+  #cot-moc-vip #nhiem-vu-display-wrapper .grid.grid-cols-1.md\:grid-cols-3 > div .flex.items-center.justify-between {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 2px !important;
+    margin-bottom: 0.35rem !important;
+  }
+
+  /* Badge Chặng (CHẶNG 1 — T10, etc.) */
+  .nhiem-vu-3-cols > div .flex.items-center.justify-between span:first-child,
+  #nhiem-vu-summary-cards > div .flex.items-center.justify-between span:first-child,
+  #nhiem-vu-preview-cards > div .flex.items-center.justify-between span:first-child,
+  #cot-moc-vip #nhiem-vu-display-wrapper .grid.grid-cols-1.md\:grid-cols-3 > div .flex.items-center.justify-between span:first-child {
+    font-size: 7.5px !important;
+    line-height: 1.1 !important;
+    padding: 2px 4px !important;
+    border-radius: 4px !important;
+    font-weight: 800 !important;
+    white-space: nowrap !important;
+    text-align: center !important;
+    display: inline-block !important;
+  }
+
+  /* Thời gian diễn ra (01/10 – 30/10, etc.) */
+  .nhiem-vu-3-cols > div .flex.items-center.justify-between span:last-child,
+  #nhiem-vu-summary-cards > div .flex.items-center.justify-between span:last-child,
+  #nhiem-vu-preview-cards > div .flex.items-center.justify-between span:last-child,
+  #cot-moc-vip #nhiem-vu-display-wrapper .grid.grid-cols-1.md\:grid-cols-3 > div .flex.items-center.justify-between span:last-child {
+    font-size: 7.5px !important;
+    line-height: 1 !important;
+    font-weight: 600 !important;
+    color: #475569 !important;
+    text-align: center !important;
+  }
+
+  /* Tên Chặng ("Khởi Động Sớm", "Giữ Nhịp Cao Điểm", "Về Đích An Toàn") */
+  .nhiem-vu-3-cols h4,
+  #nhiem-vu-summary-cards h4,
+  #nhiem-vu-preview-cards h4,
+  #cot-moc-vip #nhiem-vu-display-wrapper .grid.grid-cols-1.md\:grid-cols-3 h4 {
+    font-size: 10.5px !important;
+    line-height: 1.25 !important;
+    font-weight: 800 !important;
+    text-align: center !important;
+    margin-bottom: 2px !important;
+    min-height: 24px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    color: #0F172A !important;
+  }
+
+  /* Mô tả tóm tắt */
+  .nhiem-vu-3-cols p,
+  #nhiem-vu-summary-cards p,
+  #cot-moc-vip #nhiem-vu-display-wrapper .grid.grid-cols-1.md\:grid-cols-3 p {
+    font-size: 7.5px !important;
+    line-height: 1.15 !important;
+    text-align: center !important;
+    color: #475569 !important;
+    margin-bottom: 3px !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+  }
+
+  /* Khung Thể Lệ Nhiệm Vụ trong Tab 5 */
+  #nhiem-vu-preview-cards .p-3.rounded-xl {
+    padding: 0.3rem 0.2rem !important;
+    margin-bottom: 0.35rem !important;
+    text-align: center !important;
+    border-radius: 0.5rem !important;
+  }
+  #nhiem-vu-preview-cards .p-3.rounded-xl span,
+  #nhiem-vu-preview-cards .p-3.rounded-xl strong {
+    font-size: 7.5px !important;
+    line-height: 1.15 !important;
+    text-align: center !important;
+    display: block !important;
+  }
+
+  /* Khung thống kê số KH hoàn thành (Summary cards) */
+  #nhiem-vu-summary-cards .my-4.p-4.rounded-xl,
+  #cot-moc-vip #nhiem-vu-display-wrapper .grid.grid-cols-1.md\:grid-cols-3 .my-4.p-4.rounded-xl {
+    padding: 0.35rem 0.2rem !important;
+    margin: 0.35rem 0 !important;
+    border-radius: 0.6rem !important;
+    text-align: center !important;
+  }
+
+  #nhiem-vu-summary-cards .my-4.p-4.rounded-xl span:first-child,
+  #cot-moc-vip #nhiem-vu-display-wrapper .grid.grid-cols-1.md\:grid-cols-3 .my-4.p-4.rounded-xl span:first-child {
+    font-size: 7px !important;
+    line-height: 1.1 !important;
+    font-weight: 700 !important;
+    color: #475569 !important;
+    letter-spacing: 0 !important;
+    display: block !important;
+    margin-bottom: 1px !important;
+  }
+
+  /* Số đếm KH (18, 14, 11) */
+  #nhiem-vu-summary-cards .text-3xl,
+  #cot-moc-vip #nhiem-vu-display-wrapper .grid.grid-cols-1.md\:grid-cols-3 .text-3xl {
+    font-size: 18px !important;
+    line-height: 1.15 !important;
+    font-weight: 900 !important;
+  }
+
+  #nhiem-vu-summary-cards .my-4.p-4.rounded-xl span:last-child,
+  #cot-moc-vip #nhiem-vu-display-wrapper .grid.grid-cols-1.md\:grid-cols-3 .my-4.p-4.rounded-xl span:last-child {
+    font-size: 7px !important;
+    line-height: 1.1 !important;
+    font-weight: 700 !important;
+    margin-top: 1px !important;
+    display: block !important;
+  }
+
+  /* Footer của từng Chặng */
+  .nhiem-vu-3-cols > div .pt-3.border-t,
+  #nhiem-vu-summary-cards > div .pt-3.border-t,
+  #nhiem-vu-preview-cards > div .pt-3.border-t,
+  #cot-moc-vip #nhiem-vu-display-wrapper .grid.grid-cols-1.md\:grid-cols-3 > div .pt-3.border-t {
+    padding-top: 4px !important;
+    margin-top: 2px !important;
+    border-top: 1px solid rgba(226, 232, 240, 0.8) !important;
+    flex-direction: column !important;
+    gap: 2px !important;
+    align-items: center !important;
+    text-align: center !important;
+  }
+
+  .nhiem-vu-3-cols > div .pt-3.border-t span,
+  #nhiem-vu-summary-cards > div .pt-3.border-t span,
+  #nhiem-vu-preview-cards > div .pt-3.border-t span,
+  #cot-moc-vip #nhiem-vu-display-wrapper .grid.grid-cols-1.md\:grid-cols-3 > div .pt-3.border-t span {
+    font-size: 7px !important;
+    line-height: 1.15 !important;
+    display: block !important;
+    text-align: center !important;
+  }
+
+  /* Super VIP Banner dưới 3 chặng */
+  #cot-moc-vip #nhiem-vu-display-wrapper .bg-gradient-to-r.from-amber-50 {
+    padding: 0.75rem 0.65rem !important;
+    border-radius: 1rem !important;
+  }
+  #cot-moc-vip #nhiem-vu-display-wrapper .bg-gradient-to-r.from-amber-50 h4 {
+    font-size: 12px !important;
+    line-height: 1.3 !important;
+  }
+  #cot-moc-vip #nhiem-vu-display-wrapper .bg-gradient-to-r.from-amber-50 p {
+    font-size: 9px !important;
+    line-height: 1.25 !important;
+    margin-top: 2px !important;
+  }
+  #cot-moc-vip #nhiem-vu-display-wrapper .bg-gradient-to-r.from-amber-50 span.whitespace-nowrap {
+    font-size: 8.5px !important;
+    padding: 3px 8px !important;
+    border-radius: 6px !important;
+    align-self: flex-start !important;
+  }
+}
+
