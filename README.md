@@ -2,7 +2,7 @@
 
 > **Dự án Landing Page Sự Kiện & Hệ Thống Vòng Quay Kép Tri Ân Khách Hàng Quý 4/2026**  
 > **Thương hiệu:** Eureka Logistics ([erktransport.com](https://www.erktransport.com/))  
-> **Hệ thống giải thưởng:** Top 3 Chung Cuộc Q4 (Surface Pro 11, iPad Air M3, Dyson), 05 Giải Phụ Chuyên Môn, Cột Mốc VIP+1 và Vòng Quay Tri Ân Mùng 05.  
+> **Hệ thống giải thưởng:** Top 3 Chung Cuộc Q4 (Surface Pro 12, iPad Air M3, Dyson), 05 Giải Phụ Chuyên Môn, Cột Mốc VIP+1 và Vòng Quay Tri Ân Mùng 05.  
 > **Phong cách:** *Huashu-Design* (HTML Native High Craft, ít chữ, nhiều visual, bảo mật B2B tuyệt đối, tốc độ tải tức thì).
 
 ---

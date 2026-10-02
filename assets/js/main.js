@@ -758,7 +758,7 @@ function getGalaAwardsAllocation(data) {
     awardedCodes.add(sortedRank[0].customer_code);
     allocation.allAwardedMap[sortedRank[0].customer_code] = {
       key: 'top1',
-      name: 'Quán Quân Toàn Đoàn (Laptop Surface Pro 11)',
+      name: 'Quán Quân Toàn Đoàn (Laptop Surface Pro 12)',
       type: 'main',
       badgeText: 'Quán Quân'
     };
