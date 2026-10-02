@@ -1282,18 +1282,47 @@ section#the-le .blur-3xl {
   box-shadow: none !important;
   padding: 0 !important;
 }
-#nhiem-vu-display-wrapper .text-white {
+/* Hero Banner on Dark Photo Background - MUST BE PURE WHITE & GOLD (Chặng 1, 2, 3) */
+#nhiem-vu-display-wrapper .nhiem-vu-hero-banner,
+#nhiem-vu-display-wrapper .group\/hero {
+  position: relative;
+}
+#nhiem-vu-display-wrapper .nhiem-vu-hero-banner h3,
+#nhiem-vu-display-wrapper .group\/hero h3,
+#nhiem-vu-display-wrapper .nhiem-vu-hero-banner .hero-title,
+#nhiem-vu-display-wrapper .group\/hero .hero-title,
+#nhiem-vu-display-wrapper .hero-title {
+  color: #FFFFFF !important;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9), 0 1px 3px rgba(0, 0, 0, 0.95) !important;
+}
+#nhiem-vu-display-wrapper .nhiem-vu-hero-banner p,
+#nhiem-vu-display-wrapper .group\/hero p,
+#nhiem-vu-display-wrapper .nhiem-vu-hero-banner .hero-desc,
+#nhiem-vu-display-wrapper .group\/hero .hero-desc,
+#nhiem-vu-display-wrapper .hero-desc {
+  color: #FFFFFF !important;
+  opacity: 0.95 !important;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.9), 0 1px 2px rgba(0, 0, 0, 0.95) !important;
+}
+#nhiem-vu-display-wrapper .nhiem-vu-hero-banner .hero-eyebrow,
+#nhiem-vu-display-wrapper .group\/hero .hero-eyebrow,
+#nhiem-vu-display-wrapper .hero-eyebrow,
+#nhiem-vu-display-wrapper .nhiem-vu-hero-banner span[class*="text-amber"],
+#nhiem-vu-display-wrapper .group\/hero span[class*="text-amber"] {
+  color: #FDE68A !important;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.95) !important;
+}
+#nhiem-vu-display-wrapper .nhiem-vu-hero-banner .text-white,
+#nhiem-vu-display-wrapper .group\/hero .text-white {
+  color: #FFFFFF !important;
+}
+
+/* Light Theme overrides for card elements (outside hero banner) */
+#nhiem-vu-display-wrapper .bg-white h3,
+#nhiem-vu-display-wrapper .bg-white h4 {
   color: #0F172A !important;
 }
-#nhiem-vu-display-wrapper .text-slate-300,
-#nhiem-vu-display-wrapper .text-slate-400 {
-  color: #475569 !important;
-}
-#nhiem-vu-display-wrapper h3,
-#nhiem-vu-display-wrapper h4 {
-  color: #0F172A !important;
-}
-#nhiem-vu-display-wrapper p {
+#nhiem-vu-display-wrapper .bg-white p {
   color: #475569 !important;
 }
 #nhiem-vu-display-wrapper .bg-slate-900\/80,
@@ -1303,13 +1332,6 @@ section#the-le .blur-3xl {
   background: #FFFFFF !important;
   border: 1.5px solid #E2E8F0 !important;
   box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04) !important;
-}
-#nhiem-vu-display-wrapper .text-white {
-  color: #0F172A !important;
-}
-#nhiem-vu-display-wrapper .text-slate-300,
-#nhiem-vu-display-wrapper .text-slate-400 {
-  color: #64748B !important;
 }
 #nhiem-vu-display-wrapper .bg-slate-800\/70,
 #nhiem-vu-display-wrapper .bg-slate-800\/60 {
@@ -3080,30 +3102,32 @@ button[aria-label="Đóng menu"]:hover svg {
     color: #0F172A !important;
   }
 
-  /* Mô tả sản phẩm */
+  /* Mô tả sản phẩm — Cỡ chữ nhỏ gọn tinh tế, hiển thị trọn vẹn 100%, KHÔNG BỊ ẨN MẤT CHỮ */
   #tab-content-top3-q4 #podium-card-silver p,
   #tab-content-top3-q4 #podium-card-copper p {
     font-size: 7.5px !important;
-    line-height: 1.15 !important;
+    line-height: 1.25 !important;
     margin-bottom: 3px !important;
     color: #475569 !important;
-    font-weight: 500 !important;
-    display: -webkit-box !important;
-    -webkit-line-clamp: 2 !important;
-    -webkit-box-orient: vertical !important;
-    overflow: hidden !important;
+    font-weight: 600 !important;
+    display: block !important;
+    overflow: visible !important;
+    -webkit-line-clamp: unset !important;
+    white-space: normal !important;
+    word-break: break-word !important;
   }
 
   #tab-content-top3-q4 #podium-card-gold p {
-    font-size: 8px !important;
-    line-height: 1.15 !important;
+    font-size: 7.5px !important;
+    line-height: 1.25 !important;
     margin-bottom: 3px !important;
     color: #78350F !important;
     font-weight: 700 !important;
-    display: -webkit-box !important;
-    -webkit-line-clamp: 2 !important;
-    -webkit-box-orient: vertical !important;
-    overflow: hidden !important;
+    display: block !important;
+    overflow: visible !important;
+    -webkit-line-clamp: unset !important;
+    white-space: normal !important;
+    word-break: break-word !important;
   }
 
   /* Trị giá giải thưởng */
@@ -3266,14 +3290,15 @@ button[aria-label="Đóng menu"]:hover svg {
   #nhiem-vu-summary-cards p,
   #cot-moc-vip #nhiem-vu-display-wrapper .grid.grid-cols-1.md\:grid-cols-3 p {
     font-size: 7.5px !important;
-    line-height: 1.15 !important;
+    line-height: 1.25 !important;
     text-align: center !important;
     color: #475569 !important;
     margin-bottom: 3px !important;
-    display: -webkit-box !important;
-    -webkit-line-clamp: 2 !important;
-    -webkit-box-orient: vertical !important;
-    overflow: hidden !important;
+    display: block !important;
+    overflow: visible !important;
+    -webkit-line-clamp: unset !important;
+    white-space: normal !important;
+    word-break: break-word !important;
   }
 
   /* Khung Thể Lệ Nhiệm Vụ trong Tab 5 */
