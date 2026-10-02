@@ -939,7 +939,7 @@ function exportMonthlyWinnersCsv() {
 
 // ==================== TAB 4: QUẢN LÝ BẢNG XẾP HẠNG & CÔNG BỐ TOP TUẦN ====================
 
-// --- PHẦN 1: CÔNG BỐ CHIẾN TƯỚNG / GIẢI TOP TUẦN ---
+// --- PHẦN 1: CÔNG BỐ KHÁCH HÀNG TOP TUẦN ---
 function renderAdminWeeklyWinnerForm() {
   let winner = null;
   try {
@@ -1049,7 +1049,7 @@ function loadDemoWeeklyWinner() {
     renderWeeklyWinnerSpotlight();
   }
   renderAdminWeeklyWinnerForm();
-  alert('Đã nạp mẫu Chiến Tướng Tuần 42 và kích hoạt hiển thị lên màn hình chính!');
+  alert('Đã nạp mẫu Khách Hàng Xuất Sắc Tuần 42 và kích hoạt hiển thị lên màn hình chính!');
 }
 
 function disableAdminWeeklyWinner() {
@@ -1070,7 +1070,7 @@ function disableAdminWeeklyWinner() {
     renderWeeklyWinnerSpotlight();
   }
   renderAdminWeeklyWinnerForm();
-  alert('Đã gỡ bỏ / ẩn khối vinh danh Chiến Tướng Top Tuần khỏi màn hình chính!');
+  alert('Đã gỡ bỏ / ẩn khối vinh danh Khách Hàng Top Tuần khỏi màn hình chính!');
 }
 
 // --- GALA AWARDS VISIBILITY & CELEBRATION MODE TOGGLE ---
@@ -1262,7 +1262,7 @@ function addAdminLeaderboardRow() {
     volume_m3: 25,
     volume_weight: "10,0 tấn | 25 m³",
     service_fee: 50000000,
-    prize_tag: "Ứng viên Tiềm Năng",
+    prize_tag: "Khách Hàng Tiềm Năng",
     prize_type: "regular"
   });
   localStorage.setItem('eureka_custom_leaderboard', JSON.stringify(current));

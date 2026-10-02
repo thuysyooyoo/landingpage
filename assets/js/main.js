@@ -648,7 +648,7 @@ function formatVND(num) {
 const GIAI_PHU_CONFIGS = {
   'vua-so-luong-don': {
     id: 'vua-so-luong-don',
-    name: 'Vua Số Lượng Đơn',
+    name: 'Kỷ Lục Số Lượng Đơn',
     icon: '',
     prize: '3.000.000 đ',
     badge: 'Tiêu chí đơn hàng',
@@ -661,7 +661,7 @@ const GIAI_PHU_CONFIGS = {
   },
   'tan-binh-xuat-sac': {
     id: 'tan-binh-xuat-sac',
-    name: 'Tân Binh Xuất Sắc',
+    name: 'Khách Hàng Mới Tiêu Biểu',
     icon: '',
     prize: '3.000.000 đ',
     badge: 'Khách hàng mới',
@@ -679,7 +679,7 @@ const GIAI_PHU_CONFIGS = {
   },
   'su-tro-lai-an-tuong': {
     id: 'su-tro-lai-an-tuong',
-    name: 'Sự Trở Lại Ấn Tượng',
+    name: 'Tái Hợp Tác Ấn Tượng',
     icon: '',
     prize: '3.000.000 đ',
     badge: 'Tái kích hoạt',
@@ -697,7 +697,7 @@ const GIAI_PHU_CONFIGS = {
   },
   'vua-tai-trong': {
     id: 'vua-tai-trong',
-    name: 'Vua Tải Trọng (Kg)',
+    name: 'Kỷ Lục Tải Trọng (Kg)',
     icon: '',
     prize: '3.000.000 đ',
     badge: 'Tổng khối lượng',
@@ -717,7 +717,7 @@ const GIAI_PHU_CONFIGS = {
   },
   'vua-khoi-luong': {
     id: 'vua-khoi-luong',
-    name: 'Vua Khối Lượng (M³)',
+    name: 'Kỷ Lục Thể Tích (M³)',
     icon: '',
     prize: '3.000.000 đ',
     badge: 'Tổng thể tích',
@@ -758,7 +758,7 @@ function getGalaAwardsAllocation(data) {
     awardedCodes.add(sortedRank[0].customer_code);
     allocation.allAwardedMap[sortedRank[0].customer_code] = {
       key: 'top1',
-      name: 'Quán Quân Toàn Đoàn (Laptop Surface Pro 12)',
+      name: 'Giải Quán Quân (Laptop Surface Pro 12)',
       type: 'main',
       badgeText: 'Quán Quân'
     };
@@ -769,7 +769,7 @@ function getGalaAwardsAllocation(data) {
     awardedCodes.add(sortedRank[1].customer_code);
     allocation.allAwardedMap[sortedRank[1].customer_code] = {
       key: 'top2',
-      name: 'Á Quân 1 Toàn Đoàn (iPad Air M3)',
+      name: 'Giải Á Quân 1 (iPad Air M3)',
       type: 'main',
       badgeText: 'Á Quân 1'
     };
@@ -780,7 +780,7 @@ function getGalaAwardsAllocation(data) {
     awardedCodes.add(sortedRank[2].customer_code);
     allocation.allAwardedMap[sortedRank[2].customer_code] = {
       key: 'top3',
-      name: 'Á Quân 2 Toàn Đoàn (Máy Lọc Dyson)',
+      name: 'Giải Á Quân 2 (Máy Lọc Dyson)',
       type: 'main',
       badgeText: 'Á Quân 2'
     };
@@ -1160,18 +1160,20 @@ function renderGalaSummaryData() {
     }
   });
 
-  // Gán vào 4 ô chỉ số thống kê
+  // Gán vào 4 ô chỉ số thống kê (tinh gọn, chuẩn Dashboard B2B)
   const elTotalCust = document.getElementById('gala-stat-total-customers');
   const elTotalOrders = document.getElementById('gala-stat-total-orders');
   const elTotalVol = document.getElementById('gala-stat-total-volume');
+  const elTotalRev = document.getElementById('gala-stat-total-revenue');
 
-  if (elTotalCust) elTotalCust.textContent = `${totalCustomers.toLocaleString('vi-VN')} Doanh Nghiệp`;
-  if (elTotalOrders) elTotalOrders.textContent = `${totalOrders.toLocaleString('vi-VN')} Đơn Booking`;
+  if (elTotalCust) elTotalCust.innerHTML = `${totalCustomers.toLocaleString('vi-VN')} <span class="text-xs sm:text-sm font-semibold opacity-75">Doanh nghiệp</span>`;
+  if (elTotalOrders) elTotalOrders.innerHTML = `${totalOrders.toLocaleString('vi-VN')} <span class="text-xs sm:text-sm font-semibold opacity-75">Đơn</span>`;
   if (elTotalVol) {
     const kgStr = totalKg >= 1000 ? `${(Math.round(totalKg / 1000)).toLocaleString('vi-VN')} Tấn` : `${Math.round(totalKg).toLocaleString('vi-VN')} Kg`;
     const m3Str = `${Math.round(totalM3).toLocaleString('vi-VN')} m³`;
-    elTotalVol.textContent = `${kgStr} & ${m3Str}`;
+    elTotalVol.innerHTML = `${kgStr} <span class="opacity-60">/</span> ${m3Str}`;
   }
+  if (elTotalRev) elTotalRev.innerHTML = `135 <span class="text-xs sm:text-sm font-semibold opacity-75">Triệu</span>`;
 
   // 2. TỔNG SẮP 8 GIẢI THƯỞNG GALA (ĐẢM BẢO MỖI KHÁCH DUY NHẤT 1 GIẢI)
   const alloc = getGalaAwardsAllocation(data);
@@ -1225,7 +1227,7 @@ function renderGalaSummaryData() {
     const vEl = document.getElementById('gala-award-don-val');
     if (cEl) cEl.textContent = w1.customer_code || '';
     if (nEl) nEl.textContent = w1.customer_name || w1.original_name || '';
-    if (vEl) vEl.textContent = `${w1.order_count || 0} Đơn Booking`;
+    if (vEl) vEl.textContent = `${w1.order_count || 0} Đơn`;
   }
 
   // Giải 2: Tân Binh Xuất Sắc
@@ -1247,7 +1249,7 @@ function renderGalaSummaryData() {
     const vEl = document.getElementById('gala-award-return-val');
     if (cEl) cEl.textContent = w3.customer_code || '';
     if (nEl) nEl.textContent = w3.customer_name || w3.original_name || '';
-    if (vEl) vEl.textContent = `${w3.order_count || 0} Đơn Tái Xuất`;
+    if (vEl) vEl.textContent = `${w3.order_count || 0} Đơn`;
   }
 
   // Giải 4: Vua Tải Trọng (Kg)
