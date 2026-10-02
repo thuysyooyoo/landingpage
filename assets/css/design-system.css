@@ -1930,7 +1930,7 @@ section li {
 }
 
 /* 5. Gala Awards Section Light Mode Harmonization */
-#gala-awards-section > div {
+#gala-awards-section > div.mb-10 {
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.97) 0%, rgba(255, 251, 242, 0.92) 100%) !important;
   border: 2px solid #F59E0B !important;
   box-shadow: 0 25px 60px -15px rgba(245, 158, 11, 0.15) !important;
@@ -2132,9 +2132,7 @@ section .border-slate-700 {
 
 /* --- 2. BORDER CAM DÀY (ẢNH 2) CHUYỂN SANG MỎNG NỔI (ẢNH 4) --- */
 
-#gala-awards-section > div,
 #gala-awards-section .mb-10,
-#gala-awards-section .mb-12,
 #weekly-winner-spotlight > div,
 section#cot-moc-vip .glass-card,
 section#vong-quay-mung-05 .glass-card {
@@ -2755,3 +2753,90 @@ a[title*="VIP ELITE"] {
   background: #E2E8F0 !important;
   color: #0F172A !important;
 }
+
+/* ==========================================================================
+   29. UNIVERSAL TAG PADDING & DEEP HIGH-CONTRAST ENFORCEMENT
+   - Tuyệt đối không để chữ dính sát viền tag/card (đảm bảo padding thông thoáng).
+   - Nền vàng: chữ vàng hổ phách đậm (#78350F / #92400E).
+   - Nền xanh: chữ xanh navy đậm (#0C4A6E / #075985).
+   - Nền xanh lá: chữ xanh lá đậm (#064E3B / #065F46).
+   - Tuyệt đối không dùng chữ mờ/nhờ nhờ trên nền sáng.
+   ========================================================================== */
+
+/* A. ĐẢM BẢO TẤT CẢ TAG/BADGE CÓ PADDING THÔNG THOÁNG KHÔNG CHẠM VIỀN */
+.rounded-full[class*="px-"],
+.rounded-xl[class*="px-"],
+.rounded-lg[class*="px-"],
+.rounded-md[class*="px-"],
+span[class*="tracking-wide"][class*="uppercase"],
+span[class*="tracking-wider"][class*="uppercase"] {
+  letter-spacing: 0.04em !important;
+}
+
+/* B. NỀN VÀNG / AMBER: CHỮ VÀNG HỔ PHÁCH ĐẬM SIÊU RÕ NÉT */
+[class*="bg-amber-100"] [class*="text-amber"],
+[class*="bg-amber-50"] [class*="text-amber"],
+[class*="bg-yellow-100"] [class*="text-yellow"],
+[class*="bg-yellow-50"] [class*="text-yellow"],
+span.bg-amber-100,
+div.bg-amber-100,
+span[class*="bg-amber-400/"],
+span[class*="bg-amber-500/"] {
+  color: #78350F !important; /* Amber-900 */
+}
+
+/* C. NỀN XANH DƯƠNG / SKY / BLUE: CHỮ XANH THẬT ĐẬM SIÊU RÕ NÉT */
+[class*="bg-sky-100"] [class*="text-sky"],
+[class*="bg-sky-50"] [class*="text-sky"],
+[class*="bg-blue-100"] [class*="text-blue"],
+[class*="bg-blue-50"] [class*="text-blue"],
+span.bg-sky-100,
+div.bg-sky-100,
+span[class*="bg-sky-400/"],
+span[class*="bg-sky-500/"],
+span[class*="bg-blue-400/"],
+span[class*="bg-blue-500/"] {
+  color: #0C4A6E !important; /* Sky-900 */
+}
+
+/* D. NỀN XANH LÁ / EMERALD: CHỮ XANH LÁ ĐẬM SIÊU RÕ NÉT */
+[class*="bg-emerald-100"] [class*="text-emerald"],
+[class*="bg-emerald-50"] [class*="text-emerald"],
+span.bg-emerald-100,
+div.bg-emerald-100,
+span[class*="bg-emerald-400/"],
+span[class*="bg-emerald-500/"] {
+  color: #064E3B !important; /* Emerald-900 */
+}
+
+/* E. CỐ ĐỊNH CHỮ TRẮNG TÀNG HÌNH TRÊN NỀN TRẮNG */
+#gala-awards-section h3,
+#gala-awards-section h4,
+#gala-awards-section h5,
+#tab-content-giai-phu h4,
+#tab-content-m05-tri-an h3,
+#tab-content-top-tuan h3,
+#tab-content-nhiem-vu h3,
+#tab-content-nhiem-vu h4 {
+  color: #0F172A !important;
+}
+
+/* F. ĐẢM BẢO CHỈ SỐ DOANH SỐ VÀ CỘT MỐC LUÔN NỔI BẬT KHÔNG NHỜ NHỜ */
+#spotlight-weekly-spending,
+#prize-top-tuan-spending,
+#gala-stat-total-revenue,
+#gala-top1-fee {
+  color: #78350F !important;
+  font-weight: 900 !important;
+}
+
+#m05-public-prize-badge {
+  color: #78350F !important;
+  font-weight: 900 !important;
+}
+
+#m05-public-count-badge {
+  color: #0C4A6E !important;
+  font-weight: 900 !important;
+}
+

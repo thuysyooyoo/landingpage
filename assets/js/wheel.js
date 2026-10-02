@@ -506,17 +506,17 @@ function spinWheel() {
   if (prevSpin) {
     if (errorEl) {
       errorEl.innerHTML = `
-        <div class="p-3 rounded-xl bg-amber-500/15 border border-amber-500/40 text-amber-200 text-xs text-left space-y-1.5 mt-2">
-          <div class="font-bold flex items-center gap-1.5 text-amber-300">
+        <div class="p-3.5 rounded-xl bg-amber-50 border border-amber-300 text-amber-900 text-xs text-left space-y-1.5 mt-2 shadow-sm">
+          <div class="font-black flex items-center gap-1.5 text-amber-900">
             SĐT [${validPhone}] ĐÃ THAM GIA QUAY THƯỞNG!
           </div>
-          <div class="text-[11px] leading-relaxed text-slate-300">
+          <div class="text-xs leading-relaxed text-slate-700">
             Mỗi số điện thoại chỉ được quay <strong>01 lần duy nhất</strong> trong chương trình.<br>
-            • Phần quà đã nhận: <strong class="text-emerald-300">${prevSpin.prize || 'Voucher chiết khấu'}</strong><br>
-            • Mã voucher: <code class="px-2 py-0.5 rounded bg-amber-50 font-mono text-amber-800 font-bold border border-amber-300 shadow-sm">${prevSpin.voucherCode || 'ERK-VOUCHER'}</code>
+            • Phần quà đã nhận: <strong class="text-emerald-800 font-bold">${prevSpin.prize || 'Voucher chiết khấu'}</strong><br>
+            • Mã voucher: <code class="px-2.5 py-1 rounded-md bg-amber-100 font-mono text-amber-950 font-black border border-amber-400 shadow-sm">${prevSpin.voucherCode || 'ERK-VOUCHER'}</code>
           </div>
           <div class="pt-1">
-            <button type="button" onclick="viewExistingVoucher('${validPhone}')" class="text-[11px] text-sky-400 hover:text-sky-300 font-bold underline cursor-pointer">
+            <button type="button" onclick="viewExistingVoucher('${validPhone}')" class="text-xs text-sky-800 hover:text-sky-950 font-black underline cursor-pointer">
               Bấm để xem lại & lấy lại mã Voucher đã trúng
             </button>
           </div>

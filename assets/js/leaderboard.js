@@ -399,14 +399,14 @@ function formatWeightDisplay(kg) {
   const num = typeof kg === 'number' ? kg : parseFloat(kg) || 0;
   if (num >= 1000) {
     const ton = (num / 1000).toLocaleString('vi-VN', { maximumFractionDigits: 1 });
-    return `<div class="font-bold text-amber-300 font-mono text-xs sm:text-sm">${num.toLocaleString('vi-VN')} kg</div><div class="text-[10px] text-slate-400 font-medium">(${ton} tấn)</div>`;
+    return `<div class="font-black text-amber-900 font-mono text-xs sm:text-sm">${num.toLocaleString('vi-VN')} kg</div><div class="text-[10px] text-slate-500 font-semibold">(${ton} tấn)</div>`;
   }
-  return `<div class="font-bold text-amber-300 font-mono text-xs sm:text-sm">${num.toLocaleString('vi-VN')} kg</div>`;
+  return `<div class="font-black text-amber-900 font-mono text-xs sm:text-sm">${num.toLocaleString('vi-VN')} kg</div>`;
 }
 
 function formatVolumeDisplay(m3) {
   const num = typeof m3 === 'number' ? m3 : parseFloat(m3) || 0;
-  return `<div class="font-bold text-sky-300 font-mono text-xs sm:text-sm">${num.toLocaleString('vi-VN')} m³</div>`;
+  return `<div class="font-black text-sky-900 font-mono text-xs sm:text-sm">${num.toLocaleString('vi-VN')} m³</div>`;
 }
 
 function renderLeaderboard(data) {
@@ -419,11 +419,11 @@ function renderLeaderboard(data) {
   if (!data || data.length === 0) {
     const emptyTr = document.createElement('tr');
     emptyTr.innerHTML = `
-      <td colspan="8" class="py-12 text-center text-slate-400">
+      <td colspan="8" class="py-12 text-center text-slate-500">
         
-        <div class="font-bold text-white text-sm sm:text-base">Không tìm thấy khách hàng nào khớp với từ khóa</div>
-        <p class="text-xs text-slate-400 mt-1 max-w-md mx-auto">Vui lòng kiểm tra lại Tên khách hàng hoặc Mã khách (Ví dụ: ERK-KH-8891, Cty...).</p>
-        <button onclick="clearLeaderboardSearch()" class="mt-3 px-3 py-1.5 rounded-lg bg-brand-600 hover:bg-brand-500 text-white text-xs font-bold transition-all">
+        <div class="font-black text-slate-900 text-sm sm:text-base">Không tìm thấy khách hàng nào khớp với từ khóa</div>
+        <p class="text-xs text-slate-500 mt-1 max-w-md mx-auto">Vui lòng kiểm tra lại Tên khách hàng hoặc Mã khách (Ví dụ: ERK-KH-8891, Cty...).</p>
+        <button onclick="clearLeaderboardSearch()" class="mt-3 px-3.5 py-1.5 rounded-lg bg-brand-600 hover:bg-brand-500 text-white text-xs font-bold transition-all shadow-sm">
           Xóa tìm kiếm & Hiện tất cả
         </button>
       </td>
@@ -440,50 +440,50 @@ function renderLeaderboard(data) {
     let prizeBadge = '';
 
     if (item.rank === 1) {
-      rowClass = 'bg-amber-50/70 hover:bg-amber-100/50 transition-colors border-b border-amber-200';
+      rowClass = 'bg-amber-50/80 hover:bg-amber-100/60 transition-colors border-b border-amber-200';
       rankBadge = `
-        <div class="w-8 h-8 rounded-full bg-gradient-to-r from-amber-400 to-amber-600 text-white font-black flex items-center justify-center text-sm shadow">
+        <div class="w-8 h-8 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 text-white font-black flex items-center justify-center text-sm shadow">
           1
         </div>
       `;
       prizeBadge = `
-        <span class="px-2.5 py-1 rounded-full bg-amber-100 text-amber-900 border border-amber-300 font-extrabold text-[10px] uppercase tracking-wide">
+        <span class="px-3 py-1 rounded-full bg-amber-100 text-amber-900 border border-amber-300 font-extrabold text-[10px] uppercase tracking-wide shadow-sm">
           ${item.prize_tag}
         </span>
       `;
     } else if (item.rank === 2) {
-      rowClass = 'bg-sky-50/50 hover:bg-sky-100/50 transition-colors border-b border-sky-100';
+      rowClass = 'bg-sky-50/70 hover:bg-sky-100/60 transition-colors border-b border-sky-200';
       rankBadge = `
-        <div class="w-8 h-8 rounded-full bg-sky-100 text-sky-800 border border-sky-300 font-black flex items-center justify-center text-sm shadow">
+        <div class="w-8 h-8 rounded-full bg-sky-100 text-sky-900 border border-sky-300 font-black flex items-center justify-center text-sm shadow">
           2
         </div>
       `;
       prizeBadge = `
-        <span class="px-2.5 py-1 rounded-full bg-sky-100 text-sky-800 border border-sky-300 font-extrabold text-[10px] uppercase tracking-wide">
+        <span class="px-3 py-1 rounded-full bg-sky-100 text-sky-900 border border-sky-300 font-extrabold text-[10px] uppercase tracking-wide shadow-sm">
           ${item.prize_tag}
         </span>
       `;
     } else if (item.rank === 3) {
-      rowClass = 'bg-orange-50/50 hover:bg-orange-100/50 transition-colors border-b border-orange-100';
+      rowClass = 'bg-orange-50/70 hover:bg-orange-100/60 transition-colors border-b border-orange-200';
       rankBadge = `
         <div class="w-8 h-8 rounded-full bg-amber-600 text-white font-black flex items-center justify-center text-sm shadow">
           3
         </div>
       `;
       prizeBadge = `
-        <span class="px-2.5 py-1 rounded-full bg-amber-100 text-amber-800 border border-amber-300 font-extrabold text-[10px] uppercase tracking-wide">
+        <span class="px-3 py-1 rounded-full bg-amber-100 text-amber-900 border border-amber-300 font-extrabold text-[10px] uppercase tracking-wide shadow-sm">
           ${item.prize_tag}
         </span>
       `;
     } else {
-      rankBadge = `<span class="font-bold text-slate-600 text-sm ml-2">${item.rank}</span>`;
-      prizeBadge = `<span class="text-slate-600 text-xs font-medium">${item.prize_tag}</span>`;
+      rankBadge = `<span class="font-bold text-slate-700 text-sm ml-2">${item.rank}</span>`;
+      prizeBadge = `<span class="text-slate-700 text-xs font-medium">${item.prize_tag}</span>`;
     }
 
-    let vipBadgeClass = 'bg-slate-100 text-slate-700 border border-slate-200';
-    if (item.vip_tier.includes('ELITE')) vipBadgeClass = 'bg-purple-100 text-purple-800 border border-purple-200 font-bold';
-    else if (item.vip_tier.includes('PREMIUM')) vipBadgeClass = 'bg-blue-100 text-blue-800 border border-blue-200 font-bold';
-    else if (item.vip_tier.includes('MỚI')) vipBadgeClass = 'bg-emerald-100 text-emerald-800 border border-emerald-200 font-bold';
+    let vipBadgeClass = 'bg-slate-100 text-slate-800 border border-slate-300';
+    if (item.vip_tier.includes('ELITE')) vipBadgeClass = 'bg-purple-100 text-purple-900 border border-purple-300 font-bold';
+    else if (item.vip_tier.includes('PREMIUM')) vipBadgeClass = 'bg-blue-100 text-blue-900 border border-blue-300 font-bold';
+    else if (item.vip_tier.includes('MỚI')) vipBadgeClass = 'bg-emerald-100 text-emerald-900 border border-emerald-300 font-bold';
 
     const displayName = item.customer_name || item.company_name || 'Khách hàng Eureka';
     const customerCode = item.customer_code || item.code || ('ERK-KH-' + (1000 + item.rank));
@@ -495,18 +495,18 @@ function renderLeaderboard(data) {
       <td class="py-3 sm:py-3.5 px-2 sm:px-3 whitespace-nowrap">${rankBadge}</td>
       <td class="py-3 sm:py-3.5 px-2 sm:px-3">
         <div class="flex items-center gap-1.5 flex-wrap">
-          <span class="font-bold text-white text-xs sm:text-sm leading-snug">${displayName}</span>
-          <a href="https://www.erktransport.com/pricing" target="_blank" rel="noopener noreferrer" class="sm:hidden px-1.5 py-0.2 rounded text-[10px] font-bold ${vipBadgeClass} inline-flex items-center gap-0.5" title="Chi tiết gói ${item.vip_tier}">
+          <span class="font-bold text-slate-900 text-xs sm:text-sm leading-snug">${displayName}</span>
+          <a href="https://www.erktransport.com/pricing" target="_blank" rel="noopener noreferrer" class="sm:hidden px-2 py-0.5 rounded text-[10px] font-bold ${vipBadgeClass} inline-flex items-center gap-0.5 shadow-sm" title="Chi tiết gói ${item.vip_tier}">
             <span>${item.vip_tier}</span>
             <span class="text-[8px] opacity-70">↗</span>
           </a>
         </div>
         <div class="flex items-center gap-1.5 mt-1 flex-wrap">
-          <span class="text-[10px] sm:text-[11px] font-bold text-amber-300 bg-amber-400/10 border border-amber-400/25 px-1.5 sm:px-2 py-0.5 rounded tracking-wide inline-flex items-center gap-1">
-            <span class="text-[9px] opacity-75 text-slate-400">MÃ:</span>${customerCode}
+          <span class="text-[10px] sm:text-[11px] font-bold text-amber-900 bg-amber-100 border border-amber-300 px-2 py-0.5 rounded tracking-wide inline-flex items-center gap-1 shadow-sm">
+            <span class="text-[9px] opacity-80 text-amber-800">MÃ:</span>${customerCode}
           </span>
-          <span class="md:hidden text-[10px] text-slate-400 font-medium">
-            · ${item.order_count} đơn · <span class="text-amber-300 font-bold">${weightKg.toLocaleString('vi-VN')} kg</span> · <span class="text-sky-300 font-bold">${volumeM3.toLocaleString('vi-VN')} m³</span>
+          <span class="md:hidden text-[10px] text-slate-500 font-medium">
+            · ${item.order_count} đơn · <span class="text-amber-900 font-black">${weightKg.toLocaleString('vi-VN')} kg</span> · <span class="text-sky-900 font-black">${volumeM3.toLocaleString('vi-VN')} m³</span>
           </span>
         </div>
         <div class="sm:hidden mt-1.5">
@@ -514,15 +514,15 @@ function renderLeaderboard(data) {
         </div>
       </td>
       <td class="py-3.5 px-3 whitespace-nowrap hidden sm:table-cell">
-        <a href="https://www.erktransport.com/pricing" target="_blank" rel="noopener noreferrer" class="px-2 py-0.5 rounded text-[11px] font-bold ${vipBadgeClass} hover:scale-105 transition-transform inline-flex items-center gap-1 cursor-pointer" title="Bấm để xem chi tiết quyền lợi gói ${item.vip_tier} tại bảng giá Eureka Logistics">
+        <a href="https://www.erktransport.com/pricing" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1 rounded text-xs font-bold ${vipBadgeClass} hover:scale-105 transition-transform inline-flex items-center gap-1 cursor-pointer shadow-sm" title="Bấm để xem chi tiết quyền lợi gói ${item.vip_tier} tại bảng giá Eureka Logistics">
           <span>${item.vip_tier}</span>
           <span class="text-[9px] opacity-70">↗</span>
         </a>
       </td>
-      <td class="py-3.5 px-3 text-right font-bold text-white whitespace-nowrap hidden md:table-cell">${item.order_count} đơn</td>
+      <td class="py-3.5 px-3 text-right font-bold text-slate-800 whitespace-nowrap hidden md:table-cell">${item.order_count} đơn</td>
       <td class="py-3.5 px-3 text-right whitespace-nowrap hidden md:table-cell">${formatWeightDisplay(weightKg)}</td>
       <td class="py-3.5 px-3 text-right whitespace-nowrap hidden md:table-cell">${formatVolumeDisplay(volumeM3)}</td>
-      <td class="py-3 sm:py-3.5 px-2 sm:px-3 text-right font-black whitespace-nowrap ${item.rank === 1 ? 'text-amber-400 text-sm sm:text-base' : item.rank === 2 ? 'text-slate-200 text-sm sm:text-base' : item.rank === 3 ? 'text-amber-500 text-sm sm:text-base' : 'text-slate-200 text-xs sm:text-sm'}">
+      <td class="py-3 sm:py-3.5 px-2 sm:px-3 text-right font-black whitespace-nowrap ${item.rank === 1 ? 'text-amber-900 text-sm sm:text-base' : item.rank === 2 ? 'text-sky-900 text-sm sm:text-base' : item.rank === 3 ? 'text-orange-950 text-sm sm:text-base' : 'text-slate-900 text-xs sm:text-sm'}">
         ${formatCurrency(item.service_fee)}
       </td>
       <td class="py-3.5 px-3 text-center whitespace-nowrap hidden sm:table-cell">${prizeBadge}</td>
