@@ -1351,27 +1351,26 @@
       <div class="glass-card rounded-3xl p-5 sm:p-6 border border-white/10">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4 pb-3 border-b border-slate-200">
           <div>
-            <h3 class="text-base font-bold text-white flex items-center gap-2">
+            <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
               <span class="w-2 h-2 rounded-full bg-sky-400 animate-pulse"></span>
               Danh Sách Mã Booking Trúng Thưởng Tri Ân Mùng 05
             </h3>
-            <p class="text-xs text-slate-400 mt-0.5">Mã booking trúng thưởng được công bố công khai. Khách hàng đối soát trực tiếp trên lệnh giao nhận / tài khoản Eureka.</p>
+            <p class="text-xs text-slate-600 mt-0.5">Mã booking trúng thưởng được công bố công khai. Khách hàng đối soát trực tiếp trên lệnh giao nhận / tài khoản Eureka.</p>
           </div>
-          <span class="text-xs font-semibold text-slate-400">Cập nhật kỳ gần nhất</span>
+          <span class="text-xs font-semibold text-slate-500">Cập nhật kỳ gần nhất</span>
         </div>
 
         <div class="overflow-x-auto">
           <table class="w-full text-left text-xs">
             <thead>
-              <tr class="text-slate-400 border-b border-slate-200 text-[10px] sm:text-[11px] uppercase tracking-wider">
+              <tr class="text-slate-600 font-bold border-b border-slate-200 text-[10px] sm:text-[11px] uppercase tracking-wider">
                 <th class="py-2.5 px-3 whitespace-nowrap hidden sm:table-cell">Kỳ Quay</th>
                 <th class="py-2.5 px-2 sm:px-3">Mã Booking Trúng Thưởng</th>
                 <th class="py-2.5 px-2 sm:px-3">Giải Thưởng Tri Ân</th>
                 <th class="py-2.5 px-3 hidden md:table-cell">Thời Điểm Quay</th>
-                
               </tr>
             </thead>
-            <tbody id="public-m05-winners-body" class="divide-y divide-slate-800/60">
+            <tbody id="public-m05-winners-body" class="divide-y divide-slate-100">
               <!-- Rendered dynamically by assets/js/wheel.js -->
             </tbody>
           </table>
@@ -1673,24 +1672,30 @@
             <!-- 3 Cam kết cốt lõi -->
             <div class="p-5 space-y-3.5 bg-white border-t border-slate-200">
               <div class="flex items-start gap-3">
-                <div class="w-7 h-7 rounded-lg bg-emerald-50 text-emerald-900 flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5"></div>
+                <div class="w-7 h-7 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5 border border-emerald-200">
+                  <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                </div>
                 <div>
                   <h4 class="text-xs font-bold text-slate-900">Ghi nhận tự động 100%</h4>
-                  <p class="text-[11px] text-slate-400">Không cần đăng ký form, hệ thống tự động ghi nhận theo mã tài khoản.</p>
+                  <p class="text-[11px] text-slate-600 font-medium leading-relaxed">Không cần đăng ký form, hệ thống tự động ghi nhận theo mã tài khoản.</p>
                 </div>
               </div>
               <div class="flex items-start gap-3">
-                <div class="w-7 h-7 rounded-lg bg-sky-50 text-sky-900 flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5"></div>
+                <div class="w-7 h-7 rounded-lg bg-sky-50 text-sky-700 flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5 border border-sky-200">
+                  <svg class="w-4 h-4 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                </div>
                 <div>
                   <h4 class="text-xs font-bold text-slate-900">Bảo mật thông tin tối đa</h4>
-                  <p class="text-[11px] text-slate-400">Ẩn tên công ty và số điện thoại, bảo vệ đối tác khỏi các hành vi cào data.</p>
+                  <p class="text-[11px] text-slate-600 font-medium leading-relaxed">Ẩn tên công ty và số điện thoại, bảo vệ đối tác khỏi các hành vi cào data.</p>
                 </div>
               </div>
               <div class="flex items-start gap-3">
-                <div class="w-7 h-7 rounded-lg bg-amber-100 text-amber-900 flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5"></div>
+                <div class="w-7 h-7 rounded-lg bg-amber-50 text-amber-700 flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5 border border-amber-200">
+                  <svg class="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V6a2 2 0 10-2 2h2zm0 0h5a2 2 0 012 2v2H5v-2a2 2 0 012-2h5zm-7 4h14v7a2 2 0 01-2 2H7a2 2 0 01-2-2v-7z"/></svg>
+                </div>
                 <div>
                   <h4 class="text-xs font-bold text-slate-900">100% Khách hàng có quà</h4>
-                  <p class="text-[11px] text-slate-400">Từ Top Chung cuộc, 5 Giải Phụ, Vòng Quay Tri Ân đến Nhiệm Vụ VIP+1.</p>
+                  <p class="text-[11px] text-slate-600 font-medium leading-relaxed">Từ Top Chung cuộc, 5 Giải Phụ, Vòng Quay Tri Ân đến Nhiệm Vụ VIP+1.</p>
                 </div>
               </div>
             </div>
@@ -1706,7 +1711,7 @@
             <span>1. Tôi có cần phải điền form đăng ký tham gia chương trình không?</span>
             <span id="faq-icon-1" class="text-brand-500 font-bold text-xl transition-transform duration-200">+</span>
           </button>
-          <div id="faq-content-1" class="hidden px-6 pb-5 text-xs sm:text-sm text-slate-300 leading-relaxed border-t border-slate-200/60 pt-3">
+          <div id="faq-content-1" class="hidden px-6 pb-5 text-xs sm:text-sm text-slate-600 font-medium leading-relaxed border-t border-slate-200/60 pt-3">
             <strong>Hoàn toàn không cần!</strong> Để loại bỏ mọi thủ tục phiền hà, chương trình áp dụng cơ chế <em>ghi nhận tự động 100%</em>. Bất kỳ khách hàng Mới, khách hàng Đang đi hay khách Cũ quay lại phát sinh đơn booking từ 00h00 ngày 01/10/2026 đến 23h59 ngày 31/12/2026 trên hệ thống phần mềm Eureka đều tự động được cộng điểm và đưa vào danh sách xét thưởng.
           </div>
         </div>
@@ -1717,7 +1722,7 @@
             <span>2. Thước đo xếp hạng và quy tắc phân định hòa điểm như thế nào?</span>
             <span id="faq-icon-2" class="text-brand-500 font-bold text-xl transition-transform duration-200">+</span>
           </button>
-          <div id="faq-content-2" class="hidden px-6 pb-5 text-xs sm:text-sm text-slate-300 leading-relaxed border-t border-slate-200/60 pt-3">
+          <div id="faq-content-2" class="hidden px-6 pb-5 text-xs sm:text-sm text-slate-600 font-medium leading-relaxed border-t border-slate-200/60 pt-3">
             Bảng Xếp Hạng chính thức căn cứ vào <strong>Tổng Phí Dịch Vụ</strong> phát sinh từ các đơn hàng hợp lệ hoàn thành thực tế trước 23h59 ngày 15/01/2027. Trường hợp hòa phí dịch vụ, thứ tự ưu tiên trao giải lần lượt là:<br>
             <strong>(1)</strong> Tổng số lượng đơn hàng booking hoàn tất.<br>
             <strong>(2)</strong> Tổng khối lượng hàng hóa vận chuyển (kg).<br>
@@ -1732,7 +1737,7 @@
             <span>3. Hạn chót hoàn tất đơn hàng là khi nào? Nếu bị tắc biên có được tính không?</span>
             <span id="faq-icon-3" class="text-brand-500 font-bold text-xl transition-transform duration-200">+</span>
           </button>
-          <div id="faq-content-3" class="hidden px-6 pb-5 text-xs sm:text-sm text-slate-300 leading-relaxed border-t border-slate-200/60 pt-3">
+          <div id="faq-content-3" class="hidden px-6 pb-5 text-xs sm:text-sm text-slate-600 font-medium leading-relaxed border-t border-slate-200/60 pt-3">
             Đơn hàng phải hoàn thành thực tế (xác nhận giao nhận và hoàn tất dịch vụ) trước ngày <strong>15/01/2027</strong>. Các đơn tạo booking trong năm 2026 nhưng hoàn thành sau 15/01/2027 sẽ không kịp tính vào kết quả Gala YEP. Phòng Vận hành Eureka sẽ ưu tiên line thông quan cho các đơn mở trước 31/12 để kịp tiến độ cho Quý khách.
           </div>
         </div>
@@ -1743,7 +1748,7 @@
             <span>4. Tại sao tên công ty và số điện thoại trên bảng xếp hạng lại bị che ***?</span>
             <span id="faq-icon-4" class="text-brand-500 font-bold text-xl transition-transform duration-200">+</span>
           </button>
-          <div id="faq-content-4" class="hidden px-6 pb-5 text-xs sm:text-sm text-slate-300 leading-relaxed border-t border-slate-200/60 pt-3">
+          <div id="faq-content-4" class="hidden px-6 pb-5 text-xs sm:text-sm text-slate-600 font-medium leading-relaxed border-t border-slate-200/60 pt-3">
             Eureka Logistics cam kết <strong>Bảo Mật Tuyệt Đối Thông Tin Kinh Doanh</strong> của khách hàng và hộ kinh doanh. Để tránh việc các bên đối thủ cào dữ liệu, lấy cắp danh sách đối tác hoặc quấy rầy qua số điện thoại, hệ thống tự động ẩn ký tự tên công ty và che 4 số giữa của số điện thoại. Khách hàng có thể đối chiếu chính xác qua tài khoản Eureka của mình.
           </div>
         </div>
@@ -1754,7 +1759,7 @@
             <span>5. Giải Chiến Tướng Top Tuần được xét duyệt như thế nào và có bị trừ điểm đua Top năm không?</span>
             <span id="faq-icon-5" class="text-brand-500 font-bold text-xl transition-transform duration-200">+</span>
           </button>
-          <div id="faq-content-5" class="hidden px-6 pb-5 text-xs sm:text-sm text-slate-300 leading-relaxed border-t border-slate-200/60 pt-3">
+          <div id="faq-content-5" class="hidden px-6 pb-5 text-xs sm:text-sm text-slate-600 font-medium leading-relaxed border-t border-slate-200/60 pt-3">
             Giải thưởng <strong>Chiến Tướng Top Tuần</strong> diễn ra liên tục từ <strong>Tuần 4 Tháng 10/2026 đến hết Tuần 02 Tháng 01/2027</strong>. Mỗi tuần, hệ thống tự động chốt doanh số và trao <strong>Voucher Tiền Mặt 1.000.000 đ</strong> cho khách hàng có chi tiêu dịch vụ cao nhất tuần đó.<br>
             <strong>Đặc biệt:</strong> Toàn bộ doanh số tuần đó của khách hàng <em>vẫn được giữ nguyên 100%</em> để cộng dồn đua giải thưởng Chung cuộc (Surface Pro 11, iPad Air M3, Dyson...). Khách hàng có thể thắng giải Top Tuần nhiều lần nếu liên tục dẫn đầu!
           </div>
@@ -1766,7 +1771,7 @@
             <span>6. Vòng Quay Tri Ân Mùng 05 hàng tháng quay vào lúc nào và mã voucher có được cộng dồn không?</span>
             <span id="faq-icon-6" class="text-brand-500 font-bold text-xl transition-transform duration-200">+</span>
           </button>
-          <div id="faq-content-6" class="hidden px-6 pb-5 text-xs sm:text-sm text-slate-300 leading-relaxed border-t border-slate-200/60 pt-3">
+          <div id="faq-content-6" class="hidden px-6 pb-5 text-xs sm:text-sm text-slate-600 font-medium leading-relaxed border-t border-slate-200/60 pt-3">
             Sự kiện quay thưởng chính thức diễn ra định kỳ vào ngày <strong>05/11, 05/12/2026 và 05/01/2027</strong> dành cho các đơn hàng hoàn tất của <strong>Kỳ Tháng 10, Tháng 11 và Tháng 12/2026</strong>. Mỗi kỳ sẽ quay <strong>3 lần</strong>. Hệ thống thiết lập ngầm đảm bảo mỗi lần quay chỉ trúng <strong>01 mã Khách hàng duy nhất</strong>.<br>
             Khách hàng may mắn trúng giải có quyền <strong>áp dụng mã cộng dồn</strong> cho một đơn hàng lớn hoặc tách riêng để sử dụng cho nhiều đơn hàng tiếp theo.
           </div>
@@ -1778,7 +1783,7 @@
             <span>7. Khách hàng có cơ hội nhận quà không? Nhiệm Vụ Hệ Thống VIP+1 xét ra sao?</span>
             <span id="faq-icon-7" class="text-brand-500 font-bold text-xl transition-transform duration-200">+</span>
           </button>
-          <div id="faq-content-7" class="hidden px-6 pb-5 text-xs sm:text-sm text-slate-300 leading-relaxed border-t border-slate-200/60 pt-3">
+          <div id="faq-content-7" class="hidden px-6 pb-5 text-xs sm:text-sm text-slate-600 font-medium leading-relaxed border-t border-slate-200/60 pt-3">
             <strong>100% khách hàng đều có quà!</strong> Không cần dẫn đầu doanh số tiền tỷ, chương trình thiết kế <strong>Nhiệm Vụ Hệ Thống</strong> theo 3 chặng công bố hàng tháng:<br>
             • <strong>Chặng 1 (Tháng 10):</strong> Chỉ cần tối thiểu 01 đơn booking (tạo từ 01/10 đến 30/10, hoàn thành trước 15/01/2027) là được tự động nâng <strong>VIP+1 trọn tháng 11</strong>.<br>
             • <strong>Chặng 2 (Tháng 11):</strong> 02 đơn booking (ít nhất 01 đơn trước 20/11) -> nhận <strong>VIP+1 trọn tháng 12</strong>.<br>
@@ -1793,7 +1798,7 @@
             <span>8. Mỗi số điện thoại được quay Vòng Quay May Mắn mấy lần? Áp dụng Voucher thế nào?</span>
             <span id="faq-icon-8" class="text-brand-500 font-bold text-xl transition-transform duration-200">+</span>
           </button>
-          <div id="faq-content-8" class="hidden px-6 pb-5 text-xs sm:text-sm text-slate-300 leading-relaxed border-t border-slate-200/60 pt-3">
+          <div id="faq-content-8" class="hidden px-6 pb-5 text-xs sm:text-sm text-slate-600 font-medium leading-relaxed border-t border-slate-200/60 pt-3">
             Để đảm bảo tính minh bạch và công bằng cho toàn thể cộng đồng xuất nhập khẩu, <strong>mỗi số điện thoại chỉ được tham gia quay thưởng 01 lần duy nhất</strong>.<br>
             Sau khi quay trúng thưởng, quý khách chỉ cần nhấn nút <em>"Áp Dụng Mã Ngay Qua Zalo Hotline"</em> hoặc gửi mã cho CSKH Eureka (Hotline/Zalo: <strong>0898.586.622</strong>). Voucher có hiệu lực trừ trực tiếp vào cước vận chuyển các lô hàng phát sinh trong suốt thời gian chương trình đến hết ngày <strong>15/01/2027</strong>.
           </div>

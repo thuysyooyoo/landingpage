@@ -590,8 +590,20 @@ section#vong-quay-mung-05 #m05-user-notice p {
 }
 #public-m05-winners-body td span.font-mono {
   background: #FEF3C7 !important;
-  color: #B45309 !important;
+  color: #78350F !important;
   border: 1px solid #FDE68A !important;
+  font-weight: 700 !important;
+}
+
+@media (max-width: 640px) {
+  #public-m05-winners-body td span.font-mono {
+    font-size: 10px !important;
+    padding: 2px 6px !important;
+    letter-spacing: -0.02em !important;
+    white-space: nowrap !important;
+    font-weight: 700 !important;
+    display: inline-block !important;
+  }
 }
 
 /* ==========================================================================
@@ -2330,22 +2342,27 @@ a[title*="VIP ELITE"] {
    không che mờ ảnh, không bị chữ trắng/vàng chìm trên nền sáng.
    ========================================================================== */
 
-/* 1. Poster Gala Year-End Party (assets/images/bg-gala-awards.jpg) */
+/* 1. Poster Gala Year-End Party (assets/images/bg-gala-awards.jpg) Card - High Contrast Light Theme */
+#the-le h3,
+#the-le .relative h3,
 #the-le div:has(> img[src*="bg-gala-awards"]) h3,
 #the-le .relative:has(img[src*="bg-gala-awards"]) h3 {
-  color: #FDE68A !important;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.95), 0 0 2px #000 !important;
+  color: #0F172A !important;
+  text-shadow: none !important;
 }
 
+#the-le p,
+#the-le .relative p,
 #the-le div:has(> img[src*="bg-gala-awards"]) p,
 #the-le .relative:has(img[src*="bg-gala-awards"]) p {
-  color: #F8FAFC !important;
-  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.9) !important;
+  color: #334155 !important;
+  text-shadow: none !important;
 }
 
-#the-le div:has(> img[src*="bg-gala-awards"]) div[class*="bg-gradient-to-t"],
-#the-le .relative:has(img[src*="bg-gala-awards"]) div[class*="bg-gradient-to-t"] {
-  background: linear-gradient(to top, rgba(2, 6, 23, 0.95) 0%, rgba(2, 6, 23, 0.6) 50%, transparent 100%) !important;
+#the-le [id^="faq-content-"],
+#the-le [id^="faq-content-"] * {
+  color: #334155 !important;
+  text-shadow: none !important;
 }
 
 /* 2. Gala Top 3 Quán Quân / Á Quân 1 / Á Quân 2 Hero Podium */

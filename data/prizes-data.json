@@ -122,7 +122,7 @@
         "booking_code": "ERK-BK-2026-8891",
         "prize": "Voucher Chiết Khấu 300.000 đ",
         "draw_time": "10h05 - 05/11/2026",
-        "status": "✅ Đã đối soát & trừ cước"
+        "status": "Đã đối soát & trừ cước"
       },
       {
         "id": "W-02",
@@ -130,7 +130,7 @@
         "booking_code": "ERK-BK-2026-4432",
         "prize": "Vé Ưu Tiên Xếp Cont Sớm",
         "draw_time": "10h10 - 05/11/2026",
-        "status": "✅ Đã cấp vé ưu tiên"
+        "status": "Đã cấp vé ưu tiên"
       },
       {
         "id": "W-03",
@@ -138,7 +138,7 @@
         "booking_code": "ERK-BK-2026-1205",
         "prize": "Voucher Chiết Khấu 300.000 đ",
         "draw_time": "10h15 - 05/11/2026",
-        "status": "✅ Đã đối soát & trừ cước"
+        "status": "Đã đối soát & trừ cước"
       },
       {
         "id": "W-04",
@@ -146,7 +146,7 @@
         "booking_code": "ERK-BK-2026-7731",
         "prize": "Giảm 50% Phí Lưu Kho Bãi",
         "draw_time": "10h08 - 05/10/2026",
-        "status": "✅ Đã hoàn tất trừ phí"
+        "status": "Đã hoàn tất trừ phí"
       }
     ]
   }

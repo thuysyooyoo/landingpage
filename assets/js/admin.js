@@ -816,7 +816,13 @@ function getMonthlyWinners() {
   const saved = localStorage.getItem(STORAGE_KEY_MONTHLY_WINNERS);
   if (saved) {
     try {
-      return JSON.parse(saved);
+      let parsed = JSON.parse(saved);
+      if (Array.isArray(parsed)) {
+        parsed.forEach(w => {
+          if (w.status) w.status = w.status.replace(/[\u{1F300}-\u{1F9FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/gu, '').trim();
+        });
+        return parsed;
+      }
     } catch (e) {}
   }
   return [

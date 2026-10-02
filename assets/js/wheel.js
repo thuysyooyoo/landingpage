@@ -955,29 +955,37 @@ function renderPublicMonthlyWinners() {
     const tr = document.createElement('tr');
     tr.className = 'border-b border-slate-200 hover:bg-amber-50/60 text-xs text-slate-800 transition-colors';
     tr.innerHTML = `
-      <td class="py-3 px-3 hidden sm:table-cell">
-        <span class="px-2 py-0.5 rounded bg-blue-50 text-blue-800 font-bold border border-blue-200 text-[11px]">${w.period}</span>
+      <td class="py-2.5 sm:py-3 px-2 sm:px-3 hidden sm:table-cell">
+        <span class="px-2 py-0.5 rounded bg-blue-50 text-blue-900 font-bold border border-blue-200 text-[11px] whitespace-nowrap">${w.period}</span>
       </td>
-      <td class="py-2.5 sm:py-3 px-2 sm:px-3">
-        <span class="font-mono font-black text-amber-800 tracking-wider text-xs sm:text-sm bg-amber-50 px-2 py-0.5 sm:py-1 rounded border border-amber-300 inline-block shadow-sm">
+      <td class="py-2 sm:py-3 px-2 sm:px-3 whitespace-nowrap">
+        <span class="font-mono font-bold text-amber-900 tracking-tight sm:tracking-normal text-[10px] sm:text-xs bg-amber-50 px-1.5 sm:px-2.5 py-0.5 sm:py-1 rounded border border-amber-300 inline-block shadow-sm">
           ${w.booking_code || w.order_masked || 'ERK-BK-' + Math.floor(1000 + Math.random() * 9000)}
         </span>
-        <div class="sm:hidden text-[10px] text-sky-600 mt-1 font-semibold">
+        <div class="sm:hidden text-[9px] text-sky-900 mt-0.5 font-semibold">
           Kỳ: ${w.period}
         </div>
       </td>
-      <td class="py-2.5 sm:py-3 px-2 sm:px-3 font-bold text-slate-900 text-xs">${w.prize}</td>
-      <td class="py-3 px-3 text-slate-400 font-mono text-[11px] hidden md:table-cell">${w.draw_time || '10h00 - Mùng 05'}</td>
-      <td class="py-2.5 sm:py-3 px-2 sm:px-3 text-center">
-        <span class="inline-flex items-center gap-1 text-[10px] sm:text-[11px] font-semibold text-emerald-300 bg-emerald-500/10 px-1.5 sm:px-2 py-0.5 rounded border border-emerald-500/20 whitespace-nowrap">
-          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-          <span>${w.status || 'Đã ghi nhận'}</span>
-        </span>
-      </td>
+      <td class="py-2 sm:py-3 px-2 sm:px-3 font-bold text-slate-900 text-xs sm:text-sm leading-snug">${w.prize}</td>
+      <td class="py-2.5 sm:py-3 px-3 text-slate-500 font-mono text-[11px] hidden md:table-cell">${w.draw_time || '10h00 - Mùng 05'}</td>
     `;
     container.appendChild(tr);
   });
 }
+
+// Tự động dọn dẹp các emoji cũ trong localStorage khi load trang
+(function cleanStoredEmojis() {
+  try {
+    const keys = ['eureka_monthly_winners', 'eureka_spin_leads', 'eureka_custom_leaderboard'];
+    keys.forEach(k => {
+      const raw = localStorage.getItem(k);
+      if (raw && /[\u{1F300}-\u{1F9FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/u.test(raw)) {
+        const cleaned = raw.replace(/[\u{1F300}-\u{1F9FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/gu, '').replace(/\s+/g, ' ');
+        localStorage.setItem(k, cleaned);
+      }
+    });
+  } catch (e) {}
+})();
 
 function initAllWheelEngines() {
   initAffiliateTracking();

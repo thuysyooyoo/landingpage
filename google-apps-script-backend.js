@@ -144,7 +144,7 @@ function doPost(e) {
         winner.period || '',
         winner.booking_code || '',
         winner.prize || '',
-        winner.status || '✅ Vừa quay trúng'
+        winner.status || 'Vừa quay trúng'
       ]);
       return jsonOutput({ status: 'success', message: 'Đã lưu kết quả quay M05' });
     }
@@ -611,7 +611,7 @@ function readM05WinnersFromSheet(ss) {
         period: String(r[1] || ''),
         booking_code: String(r[2] || ''),
         prize: String(r[3] || ''),
-        status: String(r[4] || '✅ Đã ghi nhận')
+        status: String(r[4] || 'Đã ghi nhận')
       });
     }
   }
@@ -633,7 +633,7 @@ function writeM05WinnersToSheet(ss, winners) {
       w.period || '',
       w.booking_code || '',
       w.prize || '',
-      w.status || '✅ Đã ghi nhận'
+      w.status || 'Đã ghi nhận'
     ]);
   });
 

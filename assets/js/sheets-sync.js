@@ -83,6 +83,9 @@ async function fetchCloudData(silent = true) {
       // 2. Đồng bộ Danh sách Trúng Thưởng M05
       if (Array.isArray(data.monthlyWinners) && data.monthlyWinners.length > 0) {
         try {
+          data.monthlyWinners.forEach(w => {
+            if (w && w.status) w.status = w.status.replace(/[\u{1F300}-\u{1F9FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/gu, '').trim();
+          });
           localStorage.setItem('eureka_monthly_winners', JSON.stringify(data.monthlyWinners));
           if (typeof renderPublicMonthlyWinners === 'function') {
             renderPublicMonthlyWinners();
