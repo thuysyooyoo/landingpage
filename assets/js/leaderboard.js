@@ -18,7 +18,7 @@ const fallbackLeaderboardData = [
     "order_count": 48,
     "volume_weight": "142,5 tấn | 190 m³",
     "service_fee": 428650000,
-    "prize_tag": "💻 Laptop Surface 35Tr",
+    "prize_tag": "Laptop Surface 35Tr",
     "prize_type": "top1",
     "weight_kg": 142500,
     "volume_m3": 190
@@ -32,7 +32,7 @@ const fallbackLeaderboardData = [
     "order_count": 35,
     "volume_weight": "98,2 tấn | 135 m³",
     "service_fee": 312400000,
-    "prize_tag": "📱 iPad Air M3 20Tr",
+    "prize_tag": "iPad Air M3 20Tr",
     "prize_type": "top2",
     "weight_kg": 98200,
     "volume_m3": 135
@@ -46,7 +46,7 @@ const fallbackLeaderboardData = [
     "order_count": 29,
     "volume_weight": "76,0 tấn | 110 m³",
     "service_fee": 245900000,
-    "prize_tag": "🌪️ Máy Lọc Dyson 10Tr",
+    "prize_tag": "Máy Lọc Dyson 10Tr",
     "prize_type": "top3",
     "weight_kg": 76000,
     "volume_m3": 110
@@ -420,7 +420,7 @@ function renderLeaderboard(data) {
     const emptyTr = document.createElement('tr');
     emptyTr.innerHTML = `
       <td colspan="8" class="py-12 text-center text-slate-400">
-        <div class="text-3xl mb-2">🔍</div>
+        
         <div class="font-bold text-white text-sm sm:text-base">Không tìm thấy khách hàng nào khớp với từ khóa</div>
         <p class="text-xs text-slate-400 mt-1 max-w-md mx-auto">Vui lòng kiểm tra lại Tên khách hàng hoặc Mã khách (Ví dụ: ERK-KH-8891, Cty...).</p>
         <button onclick="clearLeaderboardSearch()" class="mt-3 px-3 py-1.5 rounded-lg bg-brand-600 hover:bg-brand-500 text-white text-xs font-bold transition-all">
@@ -566,7 +566,7 @@ function renderWeeklyWinnerSpotlight() {
     const prizeEl = document.getElementById('spotlight-prize-tag');
     const msgEl = document.getElementById('spotlight-congrats-msg');
 
-    if (weekEl) weekEl.textContent = `👑 VINH DANH CHIẾN TƯỚNG: ${winner.week_title || 'TOP TUẦN'}`;
+    if (weekEl) weekEl.textContent = `VINH DANH CHIẾN TƯỚNG: ${winner.week_title || 'TOP TUẦN'}`;
     if (nameEl) nameEl.textContent = maskCustomerName(winner.customer_name);
     if (codeEl) codeEl.textContent = `MÃ: ${winner.customer_code || winner.code || 'ERK-KH-8891'}`;
     if (spendEl) spendEl.textContent = winner.weekly_spending.includes('đ') ? winner.weekly_spending : new Intl.NumberFormat('vi-VN').format(winner.weekly_spending) + ' đ';
@@ -588,7 +588,7 @@ function renderWeeklyWinnerSpotlight() {
     if (prizeTopName) prizeTopName.textContent = maskCustomerName(winner.customer_name);
     if (prizeTopCode) prizeTopCode.textContent = 'MÃ: ' + (winner.customer_code || winner.code || 'ERK-KH-8891');
     if (prizeTopSpending) prizeTopSpending.textContent = winner.weekly_spending.includes('đ') ? winner.weekly_spending : new Intl.NumberFormat('vi-VN').format(winner.weekly_spending) + ' đ';
-    if (prizeTopPrize) prizeTopPrize.textContent = '🎁 ' + prizeName;
+    if (prizeTopPrize) prizeTopPrize.textContent = prizeName;
   } else {
     // Hidden when admin has not entered information
     container.classList.add('hidden');

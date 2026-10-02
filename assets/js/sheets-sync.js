@@ -240,7 +240,7 @@ async function fetchCloudData(silent = true) {
         } catch (e) {}
       }
 
-      console.log('✅ [GoogleSheets DB] Đồng bộ Cloud thành công! Toàn bộ dữ liệu động đã được áp dụng.');
+      console.log('[GoogleSheets DB] Đồng bộ Cloud thành công! Toàn bộ dữ liệu động đã được áp dụng.');
       updateCloudSyncStatusBadge(true, 'Đã đồng bộ ' + new Date().toLocaleTimeString('vi-VN'));
       return true;
     }
@@ -306,7 +306,7 @@ async function syncM05WinnerToCloud(winner) {
       booking_code: winner.booking_code,
       prize: winner.prize,
       draw_time: winner.draw_time || new Date().toLocaleString('vi-VN'),
-      status: winner.status || '✅ Vừa quay trúng'
+      status: winner.status || 'Vừa quay trúng'
     }
   };
   return postToSheets(payload);
@@ -326,7 +326,7 @@ async function syncAdminConfigToCloud(configKey, configData) {
 // 4. Đẩy Toàn Bộ Dữ Liệu Máy Lên Google Sheets (One-Click Backup)
 async function pushAllLocalDataToCloud() {
   if (!isSheetsConnected()) {
-    alert('⚠️ Bạn chưa cấu hình đường link Google Apps Script Web App!');
+    alert('Bạn chưa cấu hình đường link Google Apps Script Web App!');
     return false;
   }
 
@@ -382,10 +382,10 @@ async function pushAllLocalDataToCloud() {
 
   const success = await postToSheets(payload);
   if (success) {
-    alert('✅ ĐÃ ĐẨY TOÀN BỘ DỮ LIỆU LÊN GOOGLE SHEETS THÀNH CÔNG!\n\nMọi khách hàng truy cập từ máy tính hoặc điện thoại khác từ bây giờ sẽ thấy đầy đủ thông tin này.');
+    alert('ĐÃ ĐẨY TOÀN BỘ DỮ LIỆU LÊN GOOGLE SHEETS THÀNH CÔNG!\n\nMọi khách hàng truy cập từ máy tính hoặc điện thoại khác từ bây giờ sẽ thấy đầy đủ thông tin này.');
     updateCloudSyncStatusBadge(true, 'Đã đồng bộ ' + new Date().toLocaleTimeString('vi-VN'));
   } else {
-    alert('❌ Không thể đồng bộ lên Google Sheets. Vui lòng kiểm tra lại URL hoặc phân quyền Web App!');
+    alert('Không thể đồng bộ lên Google Sheets. Vui lòng kiểm tra lại URL hoặc phân quyền Web App!');
   }
   return success;
 }
@@ -418,10 +418,10 @@ function updateCloudSyncStatusBadge(isConnected, text) {
   if (!badge) return;
   if (isConnected) {
     badge.className = 'inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-[10px] font-bold';
-    badge.innerHTML = `<span>🟢 Google Sheets:</span> <span>${text || 'Đã kết nối'}</span>`;
+    badge.innerHTML = `<span>Google Sheets:</span> <span>${text || 'Đã kết nối'}</span>`;
   } else {
     badge.className = 'inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 text-[10px] font-bold';
-    badge.innerHTML = `<span>🟡 Bộ nhớ cục bộ:</span> <span>${text || 'Chưa liên kết Sheet'}</span>`;
+    badge.innerHTML = `<span>Bộ nhớ cục bộ:</span> <span>${text || 'Chưa liên kết Sheet'}</span>`;
   }
 }
 

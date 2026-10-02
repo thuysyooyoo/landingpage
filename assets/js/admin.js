@@ -26,17 +26,17 @@ function getAdminPassword() {
 }
 window.getAdminPassword = getAdminPassword;
 
-// Toggle hiển thị / ẩn mật khẩu (nút con mắt 👁️)
+// Toggle hiển thị / ẩn mật khẩu (nút con mắt ️)
 function togglePasswordVisibility(inputId, btnId) {
   const input = document.getElementById(inputId);
   const btn = document.getElementById(btnId);
   if (!input) return;
   if (input.type === 'password') {
     input.type = 'text';
-    if (btn) btn.textContent = '🙈';
+    if (btn) btn.textContent = 'Ẩn';
   } else {
     input.type = 'password';
-    if (btn) btn.textContent = '👁️';
+    if (btn) btn.textContent = 'Hiện';
   }
 }
 window.togglePasswordVisibility = togglePasswordVisibility;
@@ -58,7 +58,7 @@ function openChangeAdminPasswordModal() {
     // Reset các icon mắt
     ['admin-old-toggle-btn', 'admin-new-toggle-btn', 'admin-confirm-toggle-btn'].forEach(id => {
       const b = document.getElementById(id);
-      if (b) b.textContent = '👁️';
+      if (b) b.textContent = 'Hiện';
     });
 
     if (oldInput) oldInput.focus();
@@ -103,25 +103,25 @@ function handleChangeAdminPassword(event) {
 
   const currentPass = getAdminPassword();
   if (oldPass !== currentPass) {
-    showError('❌ Mật khẩu hiện tại không chính xác!');
+    showError('Mật khẩu hiện tại không chính xác!');
     if (oldInput) oldInput.focus();
     return;
   }
 
   if (newPass.length < 6) {
-    showError('❌ Mật khẩu mới phải có tối thiểu 6 ký tự để đảm bảo an toàn!');
+    showError('Mật khẩu mới phải có tối thiểu 6 ký tự để đảm bảo an toàn!');
     if (newInput) newInput.focus();
     return;
   }
 
   if (newPass === currentPass) {
-    showError('❌ Mật khẩu mới không được trùng với mật khẩu hiện tại!');
+    showError('Mật khẩu mới không được trùng với mật khẩu hiện tại!');
     if (newInput) newInput.focus();
     return;
   }
 
   if (newPass !== confirmPass) {
-    showError('❌ Xác nhận mật khẩu mới không trùng khớp!');
+    showError('Xác nhận mật khẩu mới không trùng khớp!');
     if (confirmInput) confirmInput.focus();
     return;
   }
@@ -138,7 +138,7 @@ function handleChangeAdminPassword(event) {
     syncAdminConfigToCloud(STORAGE_KEY_ADMIN_PASSWORD, newPass);
   }
 
-  showSuccess('✅ Đổi mật khẩu thành công! Mật khẩu mới đã có hiệu lực ngay lập tức.');
+  showSuccess('Đổi mật khẩu thành công! Mật khẩu mới đã có hiệu lực ngay lập tức.');
   setTimeout(() => {
     closeChangeAdminPasswordModal();
   }, 1300);
@@ -190,7 +190,7 @@ function openAdminModal() {
         input.focus();
       }
       const toggleBtn = document.getElementById('admin-password-toggle-btn');
-      if (toggleBtn) toggleBtn.textContent = '👁️';
+      if (toggleBtn) toggleBtn.textContent = 'Hiện';
     }
   }
 }
@@ -406,7 +406,7 @@ function saveAdminWheelConfig() {
     syncAdminConfigToCloud(STORAGE_KEY_WHEEL_CONFIG, currentSegments);
   }
 
-  alert(`✅ Lưu cấu hình thành công!\nTổng tỉ lệ các ô hiện tại là: ${totalProb}%. Hệ thống đã áp dụng vào Vòng Quay và đẩy lên Cloud!`);
+  alert(`Lưu cấu hình thành công!\nTổng tỉ lệ các ô hiện tại là: ${totalProb}%. Hệ thống đã áp dụng vào Vòng Quay và đẩy lên Cloud!`);
 }
 
 function resetAdminWheelConfig() {
@@ -470,8 +470,8 @@ function renderAdminSpinLeadsTable() {
     const zaloPhone = rawDigits.startsWith('0') ? '84' + rawDigits.slice(1) : (rawDigits.startsWith('84') ? rawDigits : ('84' + rawDigits));
     const ref = (item.ref && item.ref !== 'direct') ? item.ref.toUpperCase() : null;
     const refBadge = ref 
-      ? `<span class="px-2 py-0.5 rounded text-[11px] font-bold bg-amber-500/15 text-amber-300 border border-amber-500/30">👤 ${ref}</span>`
-      : `<span class="px-2 py-0.5 rounded text-[10px] font-medium bg-slate-100 text-slate-600 border border-slate-200">🌐 Trực tiếp</span>`;
+      ? `<span class="px-2 py-0.5 rounded text-[11px] font-bold bg-amber-500/15 text-amber-300 border border-amber-500/30">Ref: ${ref}</span>`
+      : `<span class="px-2 py-0.5 rounded text-[10px] font-medium bg-slate-100 text-slate-600 border border-slate-200">Trực tiếp</span>`;
 
     // 1. Desktop table row
     if (container) {
@@ -501,13 +501,13 @@ function renderAdminSpinLeadsTable() {
         </td>
         <td class="py-2.5 px-3 text-center space-x-1 whitespace-nowrap">
           <a href="https://zalo.me/${zaloPhone}" target="_blank" class="px-2.5 py-1 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-bold text-[10px] inline-flex items-center gap-1 shadow transition-colors" title="Chat Zalo với số ${item.phone}">
-            💬 Chat Zalo
+            Chat Zalo
           </a>
           <a href="tel:${item.phone}" class="px-2.5 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-[10px] inline-flex items-center gap-1 shadow transition-colors" title="Gọi trực tiếp số ${item.phone}">
-            📞 Gọi
+            Gọi
           </a>
           <button onclick="deleteSpinLead(${idx})" class="p-1 text-rose-400 hover:text-rose-300 text-xs font-semibold cursor-pointer" title="Xóa">
-            ✕
+            
           </button>
         </td>
       `;
@@ -537,12 +537,12 @@ function renderAdminSpinLeadsTable() {
           </div>
           <div class="flex items-center gap-1.5">
             <a href="https://zalo.me/${zaloPhone}" target="_blank" class="px-2.5 py-1 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-bold text-[10px] inline-flex items-center gap-1 shadow">
-              💬 Zalo
+              Zalo
             </a>
             <a href="tel:${item.phone}" class="px-2.5 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-[10px] inline-flex items-center gap-1 shadow">
-              📞 Gọi
+              Gọi
             </a>
-            <button onclick="deleteSpinLead(${idx})" class="p-1 text-rose-400 hover:text-rose-300 text-xs">✕</button>
+            <button onclick="deleteSpinLead(${idx})" class="p-1 text-rose-400 hover:text-rose-300 text-xs"></button>
           </div>
         </div>
       `;
@@ -576,7 +576,7 @@ function copyAllSpinLeadPhones() {
   }
   const phoneList = leads.map(l => l.phone).join('\n');
   navigator.clipboard.writeText(phoneList).then(() => {
-    alert(`✅ Đã sao chép ${leads.length} số điện thoại vào bộ nhớ tạm!`);
+    alert(`Đã sao chép ${leads.length} số điện thoại vào bộ nhớ tạm!`);
   });
 }
 
@@ -610,7 +610,7 @@ function saveAdminM05Prize() {
   if (!prizeInput) return;
   const val = prizeInput.value.trim();
   if (!val) {
-    alert('⚠️ Vui lòng nhập tên giải thưởng!');
+    alert('Vui lòng nhập tên giải thưởng!');
     return;
   }
   if (typeof setM05CurrentPrize === 'function') {
@@ -624,7 +624,7 @@ function saveAdminM05Prize() {
   if (typeof syncAdminConfigToCloud === 'function') {
     syncAdminConfigToCloud('eureka_m05_current_prize', val);
   }
-  alert(`✅ Đã cập nhật giải thưởng định kỳ thành: "${val}" (Đã lưu lên Cloud)`);
+  alert(`Đã cập nhật giải thưởng định kỳ thành: "${val}" (Đã lưu lên Cloud)`);
 }
 
 function setQuickM05Prize(prizeText) {
@@ -661,7 +661,7 @@ function saveM05BookingPoolFromTextarea() {
   if (!textarea) return;
   const codes = parseBookingCodesFromText(textarea.value);
   if (codes.length === 0) {
-    alert('⚠️ Vui lòng nhập hoặc dán ít nhất 01 mã booking hợp lệ!');
+    alert('Vui lòng nhập hoặc dán ít nhất 01 mã booking hợp lệ!');
     return;
   }
 
@@ -676,7 +676,7 @@ function saveM05BookingPoolFromTextarea() {
   }
 
   renderAdminM05BookingManager();
-  alert(`✅ Đã lưu thành công ${codes.length} mã booking vào Vòng Quay Mùng 05 và đồng bộ lên Cloud!`);
+  alert(`Đã lưu thành công ${codes.length} mã booking vào Vòng Quay Mùng 05 và đồng bộ lên Cloud!`);
 }
 
 function loadDemoM05Bookings() {
@@ -698,7 +698,7 @@ function loadDemoM05Bookings() {
   }
 
   renderAdminM05BookingManager();
-  alert(`✅ Đã nạp ${demoCodes.length} mã booking mẫu vào hệ thống và lưu lên Cloud!`);
+  alert(`Đã nạp ${demoCodes.length} mã booking mẫu vào hệ thống và lưu lên Cloud!`);
 }
 
 function clearM05BookingPool() {
@@ -724,7 +724,7 @@ function handleM05FileUpload(event) {
     const content = e.target.result;
     const codes = parseBookingCodesFromText(content);
     if (codes.length === 0) {
-      alert('⚠️ Không tìm thấy mã booking nào trong file vừa chọn!');
+      alert('Không tìm thấy mã booking nào trong file vừa chọn!');
       return;
     }
 
@@ -743,7 +743,7 @@ function handleM05FileUpload(event) {
 
     renderAdminM05BookingManager();
 
-    alert(`🎉 Đã tải lên và nhập thành công ${codes.length} mã booking từ file: ${file.name} (Đã đồng bộ lên Cloud)!`);
+    alert(`Đã tải lên và nhập thành công ${codes.length} mã booking từ file: ${file.name} (Đã đồng bộ lên Cloud)!`);
   };
   reader.readAsText(file);
   event.target.value = '';
@@ -820,10 +820,10 @@ function getMonthlyWinners() {
     } catch (e) {}
   }
   return [
-    { period: "Kỳ 10/2026 (Mùng 05/11)", booking_code: "ERK-BK-2026-8891", prize: "Voucher Chiết Khấu 300.000 đ", draw_time: "10h05 - 05/11/2026", status: "✅ Đã đối soát & trừ cước" },
-    { period: "Kỳ 10/2026 (Mùng 05/11)", booking_code: "ERK-BK-2026-4432", prize: "Voucher Chiết Khấu 300.000 đ", draw_time: "10h10 - 05/11/2026", status: "✅ Đã đối soát & trừ cước" },
-    { period: "Kỳ 10/2026 (Mùng 05/11)", booking_code: "ERK-BK-2026-1205", prize: "Voucher Chiết Khấu 300.000 đ", draw_time: "10h15 - 05/11/2026", status: "✅ Đã đối soát & trừ cước" },
-    { period: "Kỳ 09/2026 (Mùng 05/10)", booking_code: "ERK-BK-2026-7731", prize: "Voucher Chiết Khấu 300.000 đ", draw_time: "10h08 - 05/10/2026", status: "✅ Đã hoàn tất trừ phí" }
+    { period: "Kỳ 10/2026 (Mùng 05/11)", booking_code: "ERK-BK-2026-8891", prize: "Voucher Chiết Khấu 300.000 đ", draw_time: "10h05 - 05/11/2026", status: "Đã đối soát & trừ cước" },
+    { period: "Kỳ 10/2026 (Mùng 05/11)", booking_code: "ERK-BK-2026-4432", prize: "Voucher Chiết Khấu 300.000 đ", draw_time: "10h10 - 05/11/2026", status: "Đã đối soát & trừ cước" },
+    { period: "Kỳ 10/2026 (Mùng 05/11)", booking_code: "ERK-BK-2026-1205", prize: "Voucher Chiết Khấu 300.000 đ", draw_time: "10h15 - 05/11/2026", status: "Đã đối soát & trừ cước" },
+    { period: "Kỳ 09/2026 (Mùng 05/10)", booking_code: "ERK-BK-2026-7731", prize: "Voucher Chiết Khấu 300.000 đ", draw_time: "10h08 - 05/10/2026", status: "Đã hoàn tất trừ phí" }
   ];
 }
 
@@ -890,7 +890,7 @@ function renderAdminWinnersTable() {
         </div>
         <div class="flex items-center justify-between pt-1 border-t border-slate-800/60">
           <span class="text-[10px] text-slate-300">${w.status || 'Đã ghi nhận'}</span>
-          <button onclick="deleteMonthlyWinner(${idx})" class="text-rose-400 hover:text-rose-300 font-bold text-[11px]">✕ Xóa</button>
+          <button onclick="deleteMonthlyWinner(${idx})" class="text-rose-400 hover:text-rose-300 font-bold text-[11px]"> Xóa</button>
         </div>
       `;
       mobileContainer.appendChild(card);
@@ -961,17 +961,17 @@ function renderAdminWeeklyWinnerForm() {
     
     if (statusBadge) {
       if (winner.is_active) {
-        statusBadge.textContent = '🟢 ĐANG HIỂN THỊ TRÊN MÀN HÌNH CHÍNH';
+        statusBadge.textContent = 'ĐANG HIỂN THỊ TRÊN MÀN HÌNH CHÍNH';
         statusBadge.className = 'text-[11px] font-bold text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/30';
       } else {
-        statusBadge.textContent = '⚪ ĐANG TẮT / ẨN KHỎI MÀN HÌNH CHÍNH';
+        statusBadge.textContent = 'ĐANG TẮT / ẨN KHỎI MÀN HÌNH CHÍNH';
         statusBadge.className = 'text-[11px] font-bold text-slate-600 bg-slate-100 px-2.5 py-1 rounded-full border border-slate-200';
       }
     }
   } else {
     if (activeCheck) activeCheck.checked = false;
     if (statusBadge) {
-      statusBadge.textContent = '⚪ CHƯA CÔNG BỐ';
+      statusBadge.textContent = 'CHƯA CÔNG BỐ';
       statusBadge.className = 'text-[11px] font-bold text-slate-600 bg-slate-100 px-2.5 py-1 rounded-full border border-slate-200';
     }
   }
@@ -991,7 +991,7 @@ function saveAdminWeeklyWinner() {
   const spendVal = spendInput ? spendInput.value.trim() : '';
 
   if (isActive && (!nameVal || !spendVal)) {
-    alert('⚠️ Vui lòng nhập Tên khách hàng và Số tiền chi tiêu dịch vụ tuần trước khi kích hoạt hiển thị!');
+    alert('Vui lòng nhập Tên khách hàng và Số tiền chi tiêu dịch vụ tuần trước khi kích hoạt hiển thị!');
     return;
   }
 
@@ -1020,9 +1020,9 @@ function saveAdminWeeklyWinner() {
   renderAdminWeeklyWinnerForm();
 
   if (isActive) {
-    alert(`🎉 ĐÃ CÔNG BỐ THÀNH CÔNG LÊN MÀN HÌNH CHÍNH!\n\n👑 Khách Hàng: ${winnerData.customer_name}\n🏷️ Mã: ${winnerData.customer_code}\n💰 Doanh Số Dịch Vụ Tuần: ${winnerData.weekly_spending}\n🎁 Phần Thưởng: ${winnerData.prize_name}`);
+    alert(`ĐÃ CÔNG BỐ THÀNH CÔNG LÊN MÀN HÌNH CHÍNH!\n\nKhách Hàng: ${winnerData.customer_name}\n️ Mã: ${winnerData.customer_code}\n Doanh Số Dịch Vụ Tuần: ${winnerData.weekly_spending}\nPhần Thưởng: ${winnerData.prize_name}`);
   } else {
-    alert('✅ Đã lưu cấu hình (Đang ở trạng thái TẮT hiển thị trên trang chủ).');
+    alert('Đã lưu cấu hình (Đang ở trạng thái TẮT hiển thị trên trang chủ).');
   }
 }
 
@@ -1043,7 +1043,7 @@ function loadDemoWeeklyWinner() {
     renderWeeklyWinnerSpotlight();
   }
   renderAdminWeeklyWinnerForm();
-  alert('✅ Đã nạp mẫu Chiến Tướng Tuần 42 và kích hoạt hiển thị lên màn hình chính!');
+  alert('Đã nạp mẫu Chiến Tướng Tuần 42 và kích hoạt hiển thị lên màn hình chính!');
 }
 
 function disableAdminWeeklyWinner() {
@@ -1064,7 +1064,7 @@ function disableAdminWeeklyWinner() {
     renderWeeklyWinnerSpotlight();
   }
   renderAdminWeeklyWinnerForm();
-  alert('🚫 Đã gỡ bỏ / ẩn khối vinh danh Chiến Tướng Top Tuần khỏi màn hình chính!');
+  alert('Đã gỡ bỏ / ẩn khối vinh danh Chiến Tướng Top Tuần khỏi màn hình chính!');
 }
 
 // --- GALA AWARDS VISIBILITY & CELEBRATION MODE TOGGLE ---
@@ -1094,10 +1094,10 @@ function renderAdminGalaToggle() {
   if (statusBadge) {
     const isActive = activeCheck ? activeCheck.checked : true;
     if (isActive) {
-      statusBadge.textContent = '🟢 ĐANG HIỂN THỊ';
+      statusBadge.textContent = 'ĐANG HIỂN THỊ';
       statusBadge.className = 'text-[11px] font-bold text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/30';
     } else {
-      statusBadge.textContent = '⚪ ĐANG ẨN';
+      statusBadge.textContent = 'ĐANG ẨN';
       statusBadge.className = 'text-[11px] font-bold text-slate-600 bg-slate-100 px-2.5 py-1 rounded-full border border-slate-200';
     }
   }
@@ -1129,7 +1129,7 @@ function saveAdminGalaToggle() {
   }
   applyGalaVisibility();
   renderAdminGalaToggle();
-  alert('✅ Đã lưu cài đặt Gala thành công!\n- Hiển thị khối Gala: ' + (isActive ? 'BẬT' : 'TẮT') + '\n- Chế độ Tổng kết Gala: ' + (isCelebration ? 'BẬT (chỉ giữ Tổng quan, Vinh danh & BXH)' : 'TẮT (hiện toàn bộ chương trình)'));
+  alert('Đã lưu cài đặt Gala thành công!\n- Hiển thị khối Gala: ' + (isActive ? 'BẬT' : 'TẮT') + '\n- Chế độ Tổng kết Gala: ' + (isCelebration ? 'BẬT (chỉ giữ Tổng quan, Vinh danh & BXH)' : 'TẮT (hiện toàn bộ chương trình)'));
 }
 
 function applyGalaVisibility() {
@@ -1232,7 +1232,7 @@ function renderAdminLeaderboardTable() {
         <input type="number" min="0" value="${row.service_fee || 0}" class="admin-bxh-fee w-32 bg-white border border-slate-300 rounded px-2 py-1 font-bold text-amber-800 text-right">
       </td>
       <td class="py-2 px-2">
-        <input type="text" value="${row.prize_tag || ''}" placeholder="💻 Laptop Surface 35Tr" class="admin-bxh-prize w-36 bg-white border border-slate-300 rounded px-2 py-1 text-slate-800">
+        <input type="text" value="${row.prize_tag || ''}" placeholder="Laptop Surface 35Tr" class="admin-bxh-prize w-36 bg-white border border-slate-300 rounded px-2 py-1 text-slate-800">
       </td>
       <td class="py-2 px-2 text-center">
         <button type="button" onclick="deleteAdminLeaderboardRow(${idx})" class="text-rose-400 hover:text-rose-300 font-bold text-[11px]">Xóa</button>
@@ -1329,7 +1329,7 @@ function saveAdminLeaderboardFromTable() {
   }
   renderAdminLeaderboardTable();
 
-  alert(`✅ Đã lưu thành công ${updatedList.length} khách hàng vào Bảng Xếp Hạng Doanh Số!\nĐã cập nhật Tải Trọng (Kg) và Thể Tích (M³) độc lập.`);
+  alert(`Đã lưu thành công ${updatedList.length} khách hàng vào Bảng Xếp Hạng Doanh Số!\nĐã cập nhật Tải Trọng (Kg) và Thể Tích (M³) độc lập.`);
 }
 
 function loadDemoLeaderboardToAdmin() {
@@ -1339,7 +1339,7 @@ function loadDemoLeaderboardToAdmin() {
     }
     renderAdminLeaderboardTable();
     if (typeof loadLeaderboardData === 'function') loadLeaderboardData();
-    alert('✅ Đã nạp lại dữ liệu 25 khách hàng mẫu chuẩn!');
+    alert('Đã nạp lại dữ liệu 25 khách hàng mẫu chuẩn!');
   }
 }
 
@@ -1458,12 +1458,12 @@ function handleBxhFileUpload(event) {
         localStorage.setItem('eureka_custom_leaderboard', JSON.stringify(list));
         renderAdminLeaderboardTable();
         if (typeof loadLeaderboardData === 'function') loadLeaderboardData();
-        alert(`🎉 Tải lên thành công ${list.length} khách hàng từ file ${file.name} vào Bảng Xếp Hạng!`);
+        alert(`Tải lên thành công ${list.length} khách hàng từ file ${file.name} vào Bảng Xếp Hạng!`);
       } else {
-        alert('⚠️ Không tìm thấy dữ liệu hợp lệ trong file!');
+        alert('Không tìm thấy dữ liệu hợp lệ trong file!');
       }
     } catch (err) {
-      alert('⚠️ Lỗi khi đọc file: ' + err.message);
+      alert('Lỗi khi đọc file: ' + err.message);
     }
   };
   reader.readAsText(file);
@@ -1568,16 +1568,16 @@ function updateAdminNhiemVuUI() {
   const statusBadge = document.getElementById('admin-nhiemvu-status-badge');
   if (statusBadge) {
     if (currentMode === 'tong-ket') {
-      statusBadge.textContent = '📊 ĐANG CÔNG BỐ: TỔNG KẾT 3 CHẶNG';
+      statusBadge.textContent = 'ĐANG CÔNG BỐ: TỔNG KẾT 3 CHẶNG';
       statusBadge.className = 'px-2.5 py-1 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/40 text-[10px] font-bold shrink-0';
     } else if (currentMode === 'chang-1') {
-      statusBadge.textContent = '⚡ ĐANG CÔNG BỐ: CHẶNG 1 (THÁNG 10)';
+      statusBadge.textContent = 'ĐANG CÔNG BỐ: CHẶNG 1 (THÁNG 10)';
       statusBadge.className = 'px-2.5 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 text-[10px] font-bold shrink-0';
     } else if (currentMode === 'chang-2') {
-      statusBadge.textContent = '⚡ ĐANG CÔNG BỐ: CHẶNG 2 (THÁNG 11)';
+      statusBadge.textContent = 'ĐANG CÔNG BỐ: CHẶNG 2 (THÁNG 11)';
       statusBadge.className = 'px-2.5 py-1 rounded-full bg-orange-500/20 text-orange-300 border border-orange-500/40 text-[10px] font-bold shrink-0';
     } else if (currentMode === 'chang-3') {
-      statusBadge.textContent = '⚡ ĐANG CÔNG BỐ: CHẶNG 3 (THÁNG 12)';
+      statusBadge.textContent = 'ĐANG CÔNG BỐ: CHẶNG 3 (THÁNG 12)';
       statusBadge.className = 'px-2.5 py-1 rounded-full bg-blue-500/20 text-blue-300 border border-blue-500/40 text-[10px] font-bold shrink-0';
     }
   }
@@ -1713,7 +1713,7 @@ function saveAdminNhiemVuConfig() {
   if (cfg.active_mode === 'chang-3') modeLabel = 'Chặng 3 (Tháng 12)';
   if (cfg.active_mode === 'tong-ket') modeLabel = 'Bản Tổng Kết 3 Chặng';
 
-  alert(`✅ ĐÃ LƯU & CẬP NHẬT CÔNG BỐ NHIỆM VỤ HỆ THỐNG!\n\nChế độ hiển thị: ${modeLabel}\nTrang chủ đã được tự động làm mới ngay lập tức.`);
+  alert(`ĐÃ LƯU & CẬP NHẬT CÔNG BỐ NHIỆM VỤ HỆ THỐNG!\n\nChế độ hiển thị: ${modeLabel}\nTrang chủ đã được tự động làm mới ngay lập tức.`);
 }
 
 function resetAdminNhiemVuConfig() {
@@ -1721,7 +1721,7 @@ function resetAdminNhiemVuConfig() {
     localStorage.removeItem('eureka_nhiem_vu_config');
     renderAdminNhiemVuManager();
     if (typeof renderNhiemVuDisplay === 'function') renderNhiemVuDisplay();
-    alert('✅ Đã khôi phục cài đặt mặc định!');
+    alert('Đã khôi phục cài đặt mặc định!');
   }
 }
 
@@ -1757,10 +1757,10 @@ function loadBotConfigToAdminForm() {
 
   if (statusBadge) {
     if (config.telegram_enabled || config.webhook_enabled) {
-      statusBadge.textContent = '🟢 ĐANG BẬT BẮN TIN TỰ ĐỘNG';
+      statusBadge.textContent = 'ĐANG BẬT BẮN TIN TỰ ĐỘNG';
       statusBadge.className = 'px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-[10px] font-bold shrink-0';
     } else {
-      statusBadge.textContent = '⚪ CHƯA KÍCH HOẠT';
+      statusBadge.textContent = 'CHƯA KÍCH HOẠT';
       statusBadge.className = 'px-2.5 py-1 rounded-full bg-slate-100 text-slate-600 border border-slate-200 text-[10px] font-bold shrink-0';
     }
   }
@@ -1794,7 +1794,7 @@ function saveBotConfig() {
     syncAdminConfigToCloud('eureka_bot_config', config);
   }
   loadBotConfigToAdminForm();
-  alert('💾 Đã lưu thành công cấu hình Bot & Webhook (Đã đồng bộ lên Cloud)!\nHệ thống sẽ tự động chuyển dữ liệu khách quay thưởng theo cấu hình này.');
+  alert('Đã lưu thành công cấu hình Bot & Webhook (Đã đồng bộ lên Cloud)!\nHệ thống sẽ tự động chuyển dữ liệu khách quay thưởng theo cấu hình này.');
 }
 
 async function testBotNotification() {
@@ -1812,7 +1812,7 @@ async function testBotNotification() {
   }
 
   if (!tgActive && !whActive) {
-    alert('⚠️ Vui lòng tích chọn Kích hoạt ít nhất 01 kênh (Telegram Bot hoặc Webhook) để thử nghiệm!');
+    alert('Vui lòng tích chọn Kích hoạt ít nhất 01 kênh (Telegram Bot hoặc Webhook) để thử nghiệm!');
     return;
   }
 
@@ -1820,11 +1820,11 @@ async function testBotNotification() {
 
   if (tgActive) {
     if (!tgToken || !tgChatId) {
-      alert('⚠️ Vui lòng điền đủ Bot Token và Chat ID của Telegram để test!');
+      alert('Vui lòng điền đủ Bot Token và Chat ID của Telegram để test!');
       return;
     }
     try {
-      const testMsg = `🧪 *[EUREKA LOGISTICS - TEST KẾT NỐI BOT]*\n━━━━━━━━━━━━━━━━━━\n✅ *Kết nối Telegram Bot thành công!*\n⏰ Thời gian: ${new Date().toLocaleString('vi-VN')}\n👉 Sẵn sàng nhận thông báo khi khách quay thưởng!\n━━━━━━━━━━━━━━━━━━`;
+      const testMsg = `*[EUREKA LOGISTICS - TEST KẾT NỐI BOT]*\n━━━━━━━━━━━━━━━━━━\n*Kết nối Telegram Bot thành công!*\n⏰ Thời gian: ${new Date().toLocaleString('vi-VN')}\n Sẵn sàng nhận thông báo khi khách quay thưởng!\n━━━━━━━━━━━━━━━━━━`;
       const res = await fetch(`https://api.telegram.org/bot${tgToken}/sendMessage`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -1836,22 +1836,22 @@ async function testBotNotification() {
       });
       const data = await res.json();
       if (data.ok) {
-        results.push('✅ Telegram Bot: Gửi tin nhắn thử nghiệm thành công! Hãy kiểm tra ứng dụng Telegram của bạn.');
+        results.push('Telegram Bot: Gửi tin nhắn thử nghiệm thành công! Hãy kiểm tra ứng dụng Telegram của bạn.');
       } else {
         let errDesc = data.description || 'Lỗi Token hoặc Chat ID';
         if (errDesc.includes('chat not found')) {
-          errDesc += '\n\n💡 HƯỚNG DẪN XỬ LÝ:\n1. Bạn ĐÃ THÊM BOT VÀO NHÓM CHƯA? Bắt buộc phải thêm Bot vào làm thành viên nhóm thì bot mới gửi tin được.\n2. Chat ID của nhóm phải có dấu trừ (-) ở đầu (ví dụ: -' + tgChatId.replace(/^-/, '') + ').';
+          errDesc += '\n\nHƯỚNG DẪN XỬ LÝ:\n1. Bạn ĐÃ THÊM BOT VÀO NHÓM CHƯA? Bắt buộc phải thêm Bot vào làm thành viên nhóm thì bot mới gửi tin được.\n2. Chat ID của nhóm phải có dấu trừ (-) ở đầu (ví dụ: -' + tgChatId.replace(/^-/, '') + ').';
         }
-        results.push(`❌ Telegram Bot thất bại: ${errDesc}`);
+        results.push(`Telegram Bot thất bại: ${errDesc}`);
       }
     } catch (e) {
-      results.push(`❌ Lỗi kết nối Telegram: ${e.message}`);
+      results.push(`Lỗi kết nối Telegram: ${e.message}`);
     }
   }
 
   if (whActive) {
     if (!whUrl) {
-      alert('⚠️ Vui lòng nhập Webhook URL để test!');
+      alert('Vui lòng nhập Webhook URL để test!');
       return;
     }
     try {
@@ -1865,9 +1865,9 @@ async function testBotNotification() {
         }),
         mode: 'no-cors'
       });
-      results.push('✅ Webhook: Đã gửi payload thử nghiệm đến URL!');
+      results.push('Webhook: Đã gửi payload thử nghiệm đến URL!');
     } catch (e) {
-      results.push(`❌ Lỗi gửi Webhook: ${e.message}`);
+      results.push(`Lỗi gửi Webhook: ${e.message}`);
     }
   }
 
@@ -2015,7 +2015,7 @@ function renderAdminAffiliateContest() {
     return;
   }
 
-  const medals = ['🥇', '🥈', '🥉'];
+  const medals = ['', '', ''];
 
   staffList.forEach((staff, idx) => {
     const rankBadge = idx < 3 
@@ -2052,12 +2052,12 @@ function renderAdminAffiliateContest() {
         </td>
         <td class="py-3 px-3.5 text-center font-mono text-[11px] text-slate-300">
           <button type="button" onclick="copyAffiliateDirectLink('${staff.ref}')" class="px-2.5 py-1 rounded bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-300 font-semibold text-[11px] inline-flex items-center gap-1 transition-all cursor-pointer" title="Sao chép link tiếp thị của ${staff.ref}">
-            <span>🔗</span> ?ref=${staff.ref}
+            <span></span> ?ref=${staff.ref}
           </button>
         </td>
         <td class="py-3 px-3.5 text-center">
           <button type="button" onclick="viewAffiliateLeads('${staff.ref}')" class="px-2.5 py-1 rounded-lg bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-300 border border-emerald-500/30 font-bold text-[11px] inline-flex items-center gap-1 transition-all cursor-pointer">
-            <span>👁️</span> Xem ${staff.leads.length} SĐT
+            <span>️</span> Xem ${staff.leads.length} SĐT
           </button>
         </td>
       `;
@@ -2084,10 +2084,10 @@ function renderAdminAffiliateContest() {
         </div>
         <div class="flex items-center justify-between gap-2 pt-2 border-t border-slate-800/80">
           <button type="button" onclick="copyAffiliateDirectLink('${staff.ref}')" class="flex-1 py-1.5 px-2 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-300 font-semibold text-[11px] inline-flex items-center justify-center gap-1">
-            <span>🔗</span> ?ref=${staff.ref}
+            <span></span> ?ref=${staff.ref}
           </button>
           <button type="button" onclick="viewAffiliateLeads('${staff.ref}')" class="py-1.5 px-3 rounded-lg bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-300 border border-emerald-500/30 font-bold text-[11px] inline-flex items-center justify-center gap-1">
-            <span>👁️</span> Xem ${staff.leads.length} SĐT
+            <span>️</span> Xem ${staff.leads.length} SĐT
           </button>
         </div>
       `;
@@ -2106,12 +2106,12 @@ function generateAffiliateLink() {
   if (!input) return;
   const rawName = input.value.trim().toLowerCase();
   if (!rawName) {
-    alert('⚠️ Vui lòng nhập tên hoặc mã nhân viên (ví dụ: nam, lan, erk01)!');
+    alert('Vui lòng nhập tên hoặc mã nhân viên (ví dụ: nam, lan, erk01)!');
     return;
   }
   const cleanRef = rawName.replace(/[^a-z0-9_-]/g, '');
   if (!cleanRef) {
-    alert('⚠️ Tên nhân viên chỉ nên gồm chữ cái, số, hoặc dấu gạch nối!');
+    alert('Tên nhân viên chỉ nên gồm chữ cái, số, hoặc dấu gạch nối!');
     return;
   }
 
@@ -2147,10 +2147,10 @@ function copyAffiliateGeneratedLink() {
     const btn = document.getElementById('copy-affiliate-btn');
     if (btn) {
       const origHtml = btn.innerHTML;
-      btn.innerHTML = '<span>✅ ĐÃ SAO CHÉP!</span>';
+      btn.innerHTML = '<span>ĐÃ SAO CHÉP!</span>';
       setTimeout(() => { btn.innerHTML = origHtml; }, 2000);
     }
-    alert(`✅ Đã sao chép link tiếp thị thi đua:\n${text}\n\nHãy gửi link này cho nhân viên đăng bài!`);
+    alert(`Đã sao chép link tiếp thị thi đua:\n${text}\n\nHãy gửi link này cho nhân viên đăng bài!`);
   }).catch(() => {
     alert(`Link tiếp thị:\n${text}`);
   });
@@ -2160,7 +2160,7 @@ function copyAffiliateDirectLink(refCode) {
   const baseUrl = getBaseCampaignUrl();
   const fullUrl = `${baseUrl}?ref=${refCode}`;
   navigator.clipboard.writeText(fullUrl).then(() => {
-    alert(`✅ Đã sao chép link tiếp thị của nhân viên ${refCode.toUpperCase()}:\n${fullUrl}`);
+    alert(`Đã sao chép link tiếp thị của nhân viên ${refCode.toUpperCase()}:\n${fullUrl}`);
   }).catch(() => {
     alert(`Link tiếp thị:\n${fullUrl}`);
   });
@@ -2176,7 +2176,7 @@ function viewAffiliateLeads(refCode) {
   const mobileCards = document.getElementById('affiliate-detail-cards-mobile');
 
   if (!container) return;
-  if (title) title.innerHTML = `<span>📋</span> Danh sách ${matched.length} khách hàng do nhân viên <strong class="text-amber-400 uppercase font-mono">[${refCode}]</strong> mang về:`;
+  if (title) title.innerHTML = `<span></span> Danh sách ${matched.length} khách hàng do nhân viên <strong class="text-amber-400 uppercase font-mono">[${refCode}]</strong> mang về:`;
   if (tbody) tbody.innerHTML = '';
   if (mobileCards) mobileCards.innerHTML = '';
 
@@ -2199,7 +2199,7 @@ function viewAffiliateLeads(refCode) {
           <td class="py-2 px-3"><span class="admin-voucher-badge text-[11px]">${item.voucherCode || 'ERK-VOUCHER'}</span></td>
           <td class="py-2 px-3 text-center">
             <a href="https://zalo.me/${zaloPhone}" target="_blank" class="px-2 py-0.5 rounded bg-blue-600 hover:bg-blue-500 text-white font-bold text-[10px] inline-flex items-center gap-1">
-              💬 Chat
+              Chat
             </a>
           </td>
         `;
@@ -2221,7 +2221,7 @@ function viewAffiliateLeads(refCode) {
           </div>
           <div class="pt-1 border-t border-slate-800/80 flex justify-end">
             <a href="https://zalo.me/${zaloPhone}" target="_blank" class="px-2.5 py-1 rounded bg-blue-600 hover:bg-blue-500 text-white font-bold text-[10px] inline-flex items-center gap-1">
-              💬 Chat Zalo
+              Chat Zalo
             </a>
           </div>
         `;
@@ -2302,7 +2302,7 @@ if (document.readyState === 'loading') {
 
 // ==================== TAB 6: GOOGLE SHEETS CLOUD DATABASE ====================
 
-const APPS_SCRIPT_SOURCE_CODE = "/**\n * =========================================================================\n * GOOGLE APPS SCRIPT CLOUD DATABASE v3.0 - EUREKA CUSTOMER AWARDS 2026\n * HỆ THỐNG QUẢN LÝ DỮ LIỆU ĐỘC LẬP TỪNG SHEET CHUYÊN BIỆT:\n * 1. Sheet 'CauHinhVongQuay': Quản lý 8 ô giải thưởng, nhãn, tỉ lệ %, kho quà.\n * 2. Sheet 'CauHinhBotTelegram': Quản lý Telegram Bot Token, Chat ID, Webhook.\n * 3. Sheet 'NhiemVuHeThong': Quản lý Chặng 1, 2, 3 và Danh sách Mã KH hoàn thành.\n * 4. Sheet 'CaiDatChung': Quản lý Mật khẩu Admin, Bật/Tắt Gala, Top Tuần, Giải M05.\n * 5. Sheet 'BangXepHang': Quản lý 25+ khách hàng đua top doanh số (Cân & Khối riêng).\n * 6. Sheet 'VongQuayMayMan': Lưu lịch sử SĐT khách quay nhận Voucher.\n * 7. Sheet 'VongQuayM05': Lưu lịch sử mã booking trúng thưởng Vòng Quay Mùng 05.\n * =========================================================================\n */\n\nfunction doGet(e) {\n  var action = (e && e.parameter && e.parameter.action) ? e.parameter.action : 'getAllData';\n\n  if (action === 'ping') {\n    return jsonOutput({\n      status: 'ok',\n      message: 'Kết nối Google Sheets Cloud Database thành công!',\n      timestamp: new Date().toISOString()\n    });\n  }\n\n  try {\n    var ss = SpreadsheetApp.getActiveSpreadsheet();\n    initDatabaseSheets(ss);\n\n    // 1. Đọc Cấu hình Vòng Quay May Mắn từ Sheet riêng: CauHinhVongQuay\n    var wheelConfig = readWheelConfigFromSheet(ss);\n\n    // 2. Đọc Cấu hình Telegram Bot & Webhook từ Sheet riêng: CauHinhBotTelegram\n    var botConfig = readBotConfigFromSheet(ss);\n\n    // 3. Đọc Cấu hình Nhiệm Vụ Hệ Thống từ Sheet riêng: NhiemVuHeThong\n    var nhiemVuConfig = readNhiemVuConfigFromSheet(ss);\n\n    // 4. Đọc Cài Đặt Chung từ Sheet riêng: CaiDatChung\n    var generalSettings = readGeneralSettingsFromSheet(ss);\n\n    // 5. Đọc Bảng Xếp Hạng Doanh Số từ Sheet riêng: BangXepHang\n    var customLeaderboard = readLeaderboardFromSheet(ss);\n\n    // 6. Đọc Lịch Sử Khách Quay từ Sheet riêng: VongQuayMayMan\n    var spinData = readSpinLeadsFromSheet(ss);\n\n    // 7. Đọc Danh Sách Trúng Thưởng M05 từ Sheet riêng: VongQuayM05\n    var monthlyWinners = readM05WinnersFromSheet(ss);\n\n    return jsonOutput({\n      status: 'success',\n      data: {\n        wheelConfig: wheelConfig,\n        botConfig: botConfig,\n        nhiemVuConfig: nhiemVuConfig,\n        customLeaderboard: customLeaderboard,\n        spinLeads: spinData.spinLeads,\n        lockedPhones: spinData.lockedPhones,\n        monthlyWinners: monthlyWinners,\n        adminPassword: generalSettings.admin_password || '',\n        galaConfig: generalSettings.gala_config || null,\n        weeklyWinner: generalSettings.weekly_winner || null,\n        m05BookingPool: generalSettings.m05_booking_pool || null,\n        m05CurrentPrize: generalSettings.m05_current_prize || '',\n        refClicks: generalSettings.ref_clicks || null\n      }\n    });\n  } catch (err) {\n    return jsonOutput({\n      status: 'error',\n      message: err.toString()\n    });\n  }\n}\n\nfunction doPost(e) {\n  try {\n    var ss = SpreadsheetApp.getActiveSpreadsheet();\n    initDatabaseSheets(ss);\n\n    var raw = e.postData.contents;\n    var payload = JSON.parse(raw);\n    var action = payload.action;\n\n    // 1. Lưu Cấu Hình Vòng Quay vào Sheet riêng 'CauHinhVongQuay'\n    if (action === 'save_wheel_config' || (action === 'save_config' && payload.key === 'eureka_welcome_wheel_config')) {\n      var segments = payload.wheelConfig || payload.value || [];\n      if (Array.isArray(segments) && segments.length > 0) {\n        writeWheelConfigToSheet(ss, segments);\n        return jsonOutput({ status: 'success', message: 'Đã lưu cấu hình Vòng Quay vào Sheet CauHinhVongQuay' });\n      }\n    }\n\n    // 2. Lưu Cấu Hình Bot & Webhook vào Sheet riêng 'CauHinhBotTelegram'\n    if (action === 'save_bot_config' || (action === 'save_config' && payload.key === 'eureka_bot_config')) {\n      var bConfig = payload.botConfig || payload.value || {};\n      writeBotConfigToSheet(ss, bConfig);\n      return jsonOutput({ status: 'success', message: 'Đã lưu cấu hình Bot vào Sheet CauHinhBotTelegram' });\n    }\n\n    // 3. Lưu Cấu Hình Nhiệm Vụ Hệ Thống vào Sheet riêng 'NhiemVuHeThong'\n    if (action === 'save_nhiem_vu' || (action === 'save_config' && payload.key === 'eureka_nhiem_vu_config')) {\n      var nvConfig = payload.nhiemVuConfig || payload.value || {};\n      writeNhiemVuConfigToSheet(ss, nvConfig);\n      return jsonOutput({ status: 'success', message: 'Đã lưu cấu hình Nhiệm Vụ vào Sheet NhiemVuHeThong' });\n    }\n\n    // 4. Lưu Bảng Xếp Hạng Doanh Số vào Sheet riêng 'BangXepHang'\n    if (action === 'sync_leaderboard' || (action === 'save_config' && payload.key === 'eureka_custom_leaderboard')) {\n      var lbList = payload.leaderboard || payload.value || [];\n      if (Array.isArray(lbList)) {\n        writeLeaderboardToSheet(ss, lbList);\n        return jsonOutput({ status: 'success', message: 'Đã lưu ' + lbList.length + ' khách hàng vào Sheet BangXepHang' });\n      }\n    }\n\n    // 5. Ghi nhận lượt quay Voucher của khách hàng vào Sheet 'VongQuayMayMan'\n    if (action === 'record_spin_lead') {\n      var lead = payload.lead || {};\n      var leadsSheet = ss.getSheetByName('VongQuayMayMan');\n      var phoneFormatted = \"'\" + String(lead.phone || '').trim();\n      leadsSheet.appendRow([\n        new Date(),\n        phoneFormatted,\n        lead.voucherCode || '',\n        lead.prize || '',\n        lead.ref || 'direct',\n        lead.status || 'Chờ áp dụng qua Zalo'\n      ]);\n\n      // Đồng thời tự động trừ 1 số lượng kho trong Sheet 'CauHinhVongQuay' nếu tìm thấy phần thưởng tương ứng\n      decrementWheelStock(ss, lead.prize);\n\n      return jsonOutput({ status: 'success', message: 'Đã lưu lead khách quay và cập nhật kho quà' });\n    }\n\n    // 6. Ghi nhận mã booking trúng thưởng M05 vào Sheet 'VongQuayM05'\n    if (action === 'record_m05_winner') {\n      var winner = payload.winner || {};\n      var m05Sheet = ss.getSheetByName('VongQuayM05');\n      m05Sheet.appendRow([\n        new Date(),\n        winner.period || '',\n        winner.booking_code || '',\n        winner.prize || '',\n        winner.status || '✅ Vừa quay trúng'\n      ]);\n      return jsonOutput({ status: 'success', message: 'Đã lưu kết quả quay M05' });\n    }\n\n    // 7. Lưu Cài Đặt Chung (Mật khẩu Admin, Gala, Top Tuần...) vào Sheet 'CaiDatChung'\n    if (action === 'save_general_setting' || action === 'save_config') {\n      var key = payload.key;\n      var val = payload.value;\n      writeGeneralSettingToSheet(ss, key, val);\n      return jsonOutput({ status: 'success', message: 'Đã lưu cài đặt ' + key + ' vào Sheet CaiDatChung' });\n    }\n\n    // 8. Đẩy toàn bộ dữ liệu máy lên Cloud (One-Click Sync All)\n    if (action === 'sync_all') {\n      var all = payload.data || {};\n\n      if (all.wheelConfig && Array.isArray(all.wheelConfig)) {\n        writeWheelConfigToSheet(ss, all.wheelConfig);\n      }\n      if (all.botConfig && typeof all.botConfig === 'object') {\n        writeBotConfigToSheet(ss, all.botConfig);\n      }\n      if (all.nhiemVuConfig && typeof all.nhiemVuConfig === 'object') {\n        writeNhiemVuConfigToSheet(ss, all.nhiemVuConfig);\n      }\n      if (all.customLeaderboard && Array.isArray(all.customLeaderboard)) {\n        writeLeaderboardToSheet(ss, all.customLeaderboard);\n      }\n      if (all.spinLeads && Array.isArray(all.spinLeads)) {\n        writeSpinLeadsToSheet(ss, all.spinLeads);\n      }\n      if (all.monthlyWinners && Array.isArray(all.monthlyWinners)) {\n        writeM05WinnersToSheet(ss, all.monthlyWinners);\n      }\n\n      // Lưu các cài đặt còn lại vào CaiDatChung\n      if (all.adminPasswordCustom !== undefined) writeGeneralSettingToSheet(ss, 'eureka_admin_password_custom', all.adminPasswordCustom);\n      if (all.galaConfig) writeGeneralSettingToSheet(ss, 'eureka_gala_awards_config', all.galaConfig);\n      if (all.weeklyWinner) writeGeneralSettingToSheet(ss, 'eureka_weekly_winner', all.weeklyWinner);\n      if (all.m05BookingPool) writeGeneralSettingToSheet(ss, 'eureka_m05_booking_pool', all.m05BookingPool);\n      if (all.m05CurrentPrize) writeGeneralSettingToSheet(ss, 'eureka_m05_current_prize', all.m05CurrentPrize);\n      if (all.refClicks) writeGeneralSettingToSheet(ss, 'eureka_ref_clicks', all.refClicks);\n\n      return jsonOutput({ status: 'success', message: 'Đã đồng bộ toàn bộ dữ liệu vào từng Sheet riêng biệt thành công!' });\n    }\n\n    return jsonOutput({ status: 'ignored', message: 'Action không xác định: ' + action });\n  } catch (err) {\n    return jsonOutput({ status: 'error', message: err.toString() });\n  }\n}\n\n// =========================================================================\n// CÁC HÀM XỬ LÝ ĐỌC / GHI CHO TỪNG SHEET CHUYÊN BIỆT\n// =========================================================================\n\n// 1. SHEET 'CauHinhVongQuay'\nfunction readWheelConfigFromSheet(ss) {\n  var sheet = ss.getSheetByName('CauHinhVongQuay');\n  if (!sheet || sheet.getLastRow() < 2) return null;\n\n  var data = sheet.getRange(2, 1, Math.min(sheet.getLastRow() - 1, 8), 7).getValues();\n  var segments = [];\n  for (var i = 0; i < data.length; i++) {\n    var r = data[i];\n    segments.push({\n      id: Number(r[0]) || (i + 1),\n      text: String(r[1] || '').trim(),\n      prize: String(r[2] || '').trim(),\n      probability_weight: Number(r[3]) || 0,\n      stock_quantity: Number(r[4]) || 0,\n      color: String(r[5] || '#1e293b').trim(),\n      textColor: String(r[6] || '#FFFFFF').trim()\n    });\n  }\n  return segments.length === 8 ? segments : null;\n}\n\nfunction writeWheelConfigToSheet(ss, segments) {\n  if (!Array.isArray(segments) || segments.length === 0) return;\n  var sheet = ss.getSheetByName('CauHinhVongQuay');\n  if (!sheet) return;\n\n  var rows = [];\n  for (var i = 0; i < segments.length; i++) {\n    var seg = segments[i];\n    rows.push([\n      Number(seg.id) || (i + 1),\n      String(seg.text || '').trim(),\n      String(seg.prize || '').trim(),\n      Number(seg.probability_weight) || 0,\n      Number(seg.stock_quantity) || 0,\n      String(seg.color || '#1e293b').trim(),\n      String(seg.textColor || '#FFFFFF').trim(),\n      formatDate(new Date())\n    ]);\n  }\n\n  sheet.getRange(2, 1, rows.length, 8).setValues(rows);\n}\n\nfunction decrementWheelStock(ss, prizeName) {\n  if (!prizeName) return;\n  var sheet = ss.getSheetByName('CauHinhVongQuay');\n  if (!sheet || sheet.getLastRow() < 2) return;\n\n  var data = sheet.getRange(2, 3, sheet.getLastRow() - 1, 3).getValues();\n  for (var i = 0; i < data.length; i++) {\n    var pName = String(data[i][0]).trim();\n    if (pName === prizeName || prizeName.includes(pName) || pName.includes(prizeName)) {\n      var currentStock = Number(data[i][2]) || 0;\n      if (currentStock > 0) {\n        sheet.getRange(i + 2, 5).setValue(currentStock - 1);\n        sheet.getRange(i + 2, 8).setValue(formatDate(new Date()));\n      }\n      break;\n    }\n  }\n}\n\n// 2. SHEET 'CauHinhBotTelegram'\nfunction readBotConfigFromSheet(ss) {\n  var sheet = ss.getSheetByName('CauHinhBotTelegram');\n  if (!sheet || sheet.getLastRow() < 2) return null;\n\n  var data = sheet.getRange(2, 1, sheet.getLastRow() - 1, 4).getValues();\n  var config = {\n    telegram_enabled: false,\n    telegram_token: '',\n    telegram_chat_id: '',\n    webhook_enabled: false,\n    webhook_url: ''\n  };\n\n  for (var i = 0; i < data.length; i++) {\n    var channel = String(data[i][0]).toLowerCase();\n    var status = String(data[i][1]).toUpperCase();\n    var val1 = String(data[i][2] || '').trim();\n    var val2 = String(data[i][3] || '').trim();\n\n    if (channel.includes('telegram')) {\n      config.telegram_enabled = (status === 'BẬT' || status === 'TRUE' || status === '1');\n      config.telegram_token = val1;\n      config.telegram_chat_id = val2;\n    } else if (channel.includes('webhook')) {\n      config.webhook_enabled = (status === 'BẬT' || status === 'TRUE' || status === '1');\n      config.webhook_url = val1;\n    }\n  }\n  return config;\n}\n\nfunction writeBotConfigToSheet(ss, config) {\n  var sheet = ss.getSheetByName('CauHinhBotTelegram');\n  if (!sheet) return;\n\n  var rows = [\n    [\n      'Telegram Bot',\n      config.telegram_enabled ? 'BẬT' : 'TẮT',\n      String(config.telegram_token || '').trim(),\n      String(config.telegram_chat_id || '').trim(),\n      'Tự động gửi thông báo khi khách quay thưởng vào nhóm Telegram',\n      formatDate(new Date())\n    ],\n    [\n      'Webhook Endpoint',\n      config.webhook_enabled ? 'BẬT' : 'TẮT',\n      String(config.webhook_url || '').trim(),\n      '',\n      'Đẩy dữ liệu JSON sang server/CRM ngoài khi khách quay',\n      formatDate(new Date())\n    ]\n  ];\n\n  sheet.getRange(2, 1, 2, 6).setValues(rows);\n}\n\n// 3. SHEET 'NhiemVuHeThong'\nfunction readNhiemVuConfigFromSheet(ss) {\n  var sheet = ss.getSheetByName('NhiemVuHeThong');\n  if (!sheet || sheet.getLastRow() < 2) return null;\n\n  var data = sheet.getRange(2, 1, sheet.getLastRow() - 1, 7).getValues();\n  var config = {\n    active_mode: 'chang-1',\n    chang_1: { customer_codes: [] },\n    chang_2: { customer_codes: [] },\n    chang_3: { customer_codes: [] },\n    tong_ket: { customer_codes: [] }\n  };\n\n  for (var i = 0; i < data.length; i++) {\n    var key = String(data[i][0]).trim();\n    var time = String(data[i][2] || '').trim();\n    var reward = String(data[i][3] || '').trim();\n    var condition = String(data[i][4] || '').trim();\n    var rawCodes = String(data[i][5] || '').trim();\n    var isCurrentMode = String(data[i][6] || '').toUpperCase().includes('ĐANG');\n\n    var codeList = rawCodes.split(/[\\r\\n,]+/).map(function(s) { return s.trim(); }).filter(function(s) { return s.length > 0; });\n\n    if (isCurrentMode) {\n      config.active_mode = key.replace('_', '-');\n    }\n\n    if (config[key]) {\n      config[key] = {\n        time_range: time,\n        time_window: time,\n        reward: reward,\n        condition: condition,\n        customer_codes: codeList\n      };\n    }\n  }\n\n  return config;\n}\n\nfunction writeNhiemVuConfigToSheet(ss, cfg) {\n  var sheet = ss.getSheetByName('NhiemVuHeThong');\n  if (!sheet) return;\n\n  var activeMode = (cfg.active_mode || 'chang-1').replace('-', '_');\n\n  var changList = [\n    { key: 'chang_1', name: 'Chặng 1 — Khởi Động Sớm' },\n    { key: 'chang_2', name: 'Chặng 2 — Giữ Nhịp Cao Điểm' },\n    { key: 'chang_3', name: 'Chặng 3 — Về Đích An Toàn' },\n    { key: 'tong_ket', name: 'Tổng Kết 3 Chặng' }\n  ];\n\n  var rows = [];\n  changList.forEach(function(item) {\n    var cData = cfg[item.key] || {};\n    var codes = cData.customer_codes || cData.codes || [];\n    var codesStr = Array.isArray(codes) ? codes.join('\\n') : String(codes);\n    var isCurrent = (item.key === activeMode) ? '⭐ ĐANG HIỂN THỊ' : 'Chờ công bố';\n\n    rows.push([\n      item.key,\n      item.name,\n      cData.time_range || cData.time_window || '',\n      cData.reward || '',\n      cData.condition || '',\n      codesStr,\n      isCurrent,\n      formatDate(new Date())\n    ]);\n  });\n\n  sheet.getRange(2, 1, rows.length, 8).setValues(rows);\n}\n\n// 4. SHEET 'CaiDatChung'\nfunction readGeneralSettingsFromSheet(ss) {\n  var sheet = ss.getSheetByName('CaiDatChung');\n  var settings = {};\n  if (!sheet || sheet.getLastRow() < 2) return settings;\n\n  var data = sheet.getRange(2, 1, sheet.getLastRow() - 1, 2).getValues();\n  for (var i = 0; i < data.length; i++) {\n    var key = String(data[i][0]).trim();\n    var valStr = String(data[i][1]).trim();\n    if (key && valStr) {\n      try {\n        settings[key] = JSON.parse(valStr);\n      } catch (e) {\n        settings[key] = valStr;\n      }\n    }\n  }\n  return settings;\n}\n\nfunction writeGeneralSettingToSheet(ss, key, val) {\n  var sheet = ss.getSheetByName('CaiDatChung');\n  if (!sheet) return;\n\n  var valStr = typeof val === 'object' ? JSON.stringify(val) : String(val);\n\n  var foundRow = -1;\n  if (sheet.getLastRow() > 1) {\n    var keys = sheet.getRange(2, 1, sheet.getLastRow() - 1, 1).getValues();\n    for (var r = 0; r < keys.length; r++) {\n      if (keys[r][0] === key) {\n        foundRow = r + 2;\n        break;\n      }\n    }\n  }\n\n  if (foundRow > 0) {\n    sheet.getRange(foundRow, 2).setValue(valStr);\n    sheet.getRange(foundRow, 4).setValue(formatDate(new Date()));\n  } else {\n    sheet.appendRow([key, valStr, 'Cài đặt hệ thống', formatDate(new Date())]);\n  }\n}\n\n// 5. SHEET 'BangXepHang'\nfunction readLeaderboardFromSheet(ss) {\n  var sheet = ss.getSheetByName('BangXepHang');\n  var list = [];\n  if (!sheet || sheet.getLastRow() < 2) return list;\n\n  var data = sheet.getRange(2, 1, sheet.getLastRow() - 1, 10).getValues();\n  for (var i = 0; i < data.length; i++) {\n    var r = data[i];\n    if (r[1]) {\n      var rank = Number(r[0]) || (i + 1);\n      var w = Number(r[6]) || 0;\n      var v = Number(r[7]) || 0;\n      var vwStr = '';\n      if (w > 0 && v > 0) {\n        var wTon = (w / 1000).toLocaleString('vi-VN', { maximumFractionDigits: 1 });\n        var vM3 = v.toLocaleString('vi-VN', { maximumFractionDigits: 1 });\n        vwStr = wTon + ' tấn | ' + vM3 + ' m³';\n      }\n\n      list.push({\n        rank: rank,\n        customer_code: String(r[1]).trim(),\n        customer_name: String(r[2]).trim(),\n        original_name: String(r[3] || r[2]).trim(),\n        vip_tier: String(r[4] || 'VIP PRO').trim(),\n        order_count: Number(r[5]) || 0,\n        weight_kg: w,\n        volume_m3: v,\n        volume_weight: vwStr,\n        service_fee: Number(r[8]) || 0,\n        prize_tag: String(r[9] || '').trim(),\n        prize_type: rank === 1 ? 'top1' : rank === 2 ? 'top2' : rank === 3 ? 'top3' : 'regular'\n      });\n    }\n  }\n  return list;\n}\n\nfunction writeLeaderboardToSheet(ss, list) {\n  if (!Array.isArray(list) || list.length === 0) return;\n  var sheet = ss.getSheetByName('BangXepHang');\n  if (!sheet) return;\n\n  if (sheet.getLastRow() > 1) {\n    sheet.getRange(2, 1, sheet.getLastRow() - 1, 11).clearContent();\n  }\n\n  var rows = [];\n  for (var i = 0; i < list.length; i++) {\n    var item = list[i];\n    var rank = Number(item.rank) || (i + 1);\n    var code = String(item.customer_code || item.code || ('ERK-KH-' + (8800 + i))).trim().toUpperCase();\n    var name = String(item.customer_name || '').trim();\n    var origName = String(item.original_name || name).trim();\n    var vip = String(item.vip_tier || 'VIP PRO').trim();\n    var orders = Number(item.order_count) || 0;\n    var weightKg = Number(item.weight_kg) || 0;\n    var volM3 = Number(item.volume_m3) || 0;\n\n    if (weightKg === 0 && item.volume_weight) {\n      var p1 = String(item.volume_weight).split('|')[0] || '';\n      var m1 = p1.replace(',', '.').match(/([\\d.]+)\\s*(tấn|kg|t)/i);\n      if (m1) {\n        var num1 = parseFloat(m1[1]);\n        weightKg = m1[2].toLowerCase().includes('t') ? Math.round(num1 * 1000) : Math.round(num1);\n      }\n    }\n    if (volM3 === 0 && item.volume_weight) {\n      var p2 = String(item.volume_weight).split('|')[1] || String(item.volume_weight);\n      var m2 = p2.replace(',', '.').match(/([\\d.]+)\\s*(m³|m3|cbm)/i);\n      if (m2) volM3 = parseFloat(m2[1]);\n    }\n\n    var fee = Number(item.service_fee) || 0;\n    var prize = String(item.prize_tag || '').trim();\n\n    rows.push([\n      rank,\n      code,\n      name,\n      origName,\n      vip,\n      orders,\n      weightKg,\n      volM3,\n      fee,\n      prize,\n      formatDate(new Date())\n    ]);\n  }\n\n  if (rows.length > 0) {\n    sheet.getRange(2, 1, rows.length, 11).setValues(rows);\n  }\n}\n\n// 6. SHEET 'VongQuayMayMan' (Leads)\nfunction readSpinLeadsFromSheet(ss) {\n  var sheet = ss.getSheetByName('VongQuayMayMan');\n  var spinLeads = [];\n  var lockedPhones = [];\n  if (!sheet || sheet.getLastRow() < 2) return { spinLeads: spinLeads, lockedPhones: lockedPhones };\n\n  var data = sheet.getRange(2, 1, sheet.getLastRow() - 1, 6).getValues();\n  for (var i = data.length - 1; i >= 0; i--) {\n    var row = data[i];\n    if (row[1]) {\n      var phoneStr = String(row[1]).trim();\n      spinLeads.push({\n        id: 'L-' + (i + 1),\n        createdAt: formatDate(row[0]),\n        phone: phoneStr,\n        voucherCode: String(row[2] || ''),\n        prize: String(row[3] || ''),\n        ref: String(row[4] || 'direct'),\n        status: String(row[5] || 'Chờ áp dụng')\n      });\n      lockedPhones.push(phoneStr);\n    }\n  }\n  return { spinLeads: spinLeads, lockedPhones: lockedPhones };\n}\n\nfunction writeSpinLeadsToSheet(ss, leads) {\n  var sheet = ss.getSheetByName('VongQuayMayMan');\n  if (!sheet || !Array.isArray(leads)) return;\n\n  if (sheet.getLastRow() > 1) {\n    sheet.getRange(2, 1, sheet.getLastRow() - 1, 6).clearContent();\n  }\n\n  var rows = [];\n  leads.forEach(function(l) {\n    rows.push([\n      l.createdAt || new Date(),\n      \"'\" + String(l.phone || ''),\n      l.voucherCode || '',\n      l.prize || '',\n      l.ref || 'direct',\n      l.status || 'Chờ áp dụng qua Zalo'\n    ]);\n  });\n\n  if (rows.length > 0) {\n    sheet.getRange(2, 1, rows.length, 6).setValues(rows);\n  }\n}\n\n// 7. SHEET 'VongQuayM05'\nfunction readM05WinnersFromSheet(ss) {\n  var sheet = ss.getSheetByName('VongQuayM05');\n  var winners = [];\n  if (!sheet || sheet.getLastRow() < 2) return winners;\n\n  var data = sheet.getRange(2, 1, sheet.getLastRow() - 1, 5).getValues();\n  for (var j = data.length - 1; j >= 0; j--) {\n    var r = data[j];\n    if (r[2]) {\n      winners.push({\n        id: 'W-' + (j + 1),\n        draw_time: formatDate(r[0]),\n        period: String(r[1] || ''),\n        booking_code: String(r[2] || ''),\n        prize: String(r[3] || ''),\n        status: String(r[4] || '✅ Đã ghi nhận')\n      });\n    }\n  }\n  return winners;\n}\n\nfunction writeM05WinnersToSheet(ss, winners) {\n  var sheet = ss.getSheetByName('VongQuayM05');\n  if (!sheet || !Array.isArray(winners)) return;\n\n  if (sheet.getLastRow() > 1) {\n    sheet.getRange(2, 1, sheet.getLastRow() - 1, 5).clearContent();\n  }\n\n  var rows = [];\n  winners.forEach(function(w) {\n    rows.push([\n      w.draw_time || new Date(),\n      w.period || '',\n      w.booking_code || '',\n      w.prize || '',\n      w.status || '✅ Đã ghi nhận'\n    ]);\n  });\n\n  if (rows.length > 0) {\n    sheet.getRange(2, 1, rows.length, 5).setValues(rows);\n  }\n}\n\n// =========================================================================\n// KHỞI TẠO CÁC SHEET CHUYÊN BIỆT VỚI TIÊU ĐỀ & ĐỊNH DẠNG ĐẸP\n// =========================================================================\nfunction initDatabaseSheets(ss) {\n  // 1. Sheet CauHinhVongQuay (8 Ô giải thưởng)\n  var sWheel = ss.getSheetByName('CauHinhVongQuay');\n  if (!sWheel) {\n    sWheel = ss.insertSheet('CauHinhVongQuay');\n    sWheel.appendRow(['Ô Số (STT)', 'Nhãn Hiển Thị Nan Quạt', 'Tên Phần Thưởng Trao Cho Khách', 'Tỉ Lệ Trúng (%)', 'Số Lượng Trong Kho', 'Mã Màu Nan Quạt', 'Màu Chữ', 'Thời Gian Cập Nhật']);\n    var h = sWheel.getRange(1, 1, 1, 8);\n    h.setBackground('#0f172a').setFontColor('#f59e0b').setFontWeight('bold');\n    sWheel.setFrozenRows(1);\n    sWheel.setColumnWidth(1, 80);\n    sWheel.setColumnWidth(2, 220);\n    sWheel.setColumnWidth(3, 260);\n    sWheel.setColumnWidth(4, 120);\n    sWheel.setColumnWidth(5, 140);\n    sWheel.setColumnWidth(6, 120);\n    sWheel.setColumnWidth(7, 100);\n    sWheel.setColumnWidth(8, 160);\n\n    // Điền 8 dòng mẫu khởi tạo\n    var defaultSlots = [\n      [1, 'GIẢM GIÁ 10% CƯỚC', 'Giảm giá 10% chi phí vận chuyển', 100, 9999, '#ea580c', '#FFFFFF', formatDate(new Date())],\n      [2, 'VOUCHER 300K', 'Voucher Chiết Khấu 300.000 đ', 0, 25, '#1e293b', '#FBBF24', formatDate(new Date())],\n      [3, 'ƯU TIÊN XẾP CONT', 'Vé Ưu Tiên Xếp Cont Sớm', 0, 18, '#f59e0b', '#0F172A', formatDate(new Date())],\n      [4, 'GIẢM 50% LƯU KHO', 'Giảm 50% Phí Lưu Kho Bãi', 0, 15, '#0f172a', '#FFFFFF', formatDate(new Date())],\n      [5, 'VOUCHER 300K', 'Voucher Chiết Khấu 300.000 đ', 0, 20, '#ea580c', '#FFFFFF', formatDate(new Date())],\n      [6, 'GÓI SQUAD 2-IN-1', 'Gói Hỗ Trợ Squad 2-in-1', 0, 11, '#1e293b', '#38BDF8', formatDate(new Date())],\n      [7, 'VOUCHER 400K', 'Voucher 400.000 đ Lộc Xuân', 0, 10, '#f59e0b', '#0F172A', formatDate(new Date())],\n      [8, 'MAY MẮN LẦN SAU', 'Vé Tích Lũy Quay Mùng 05', 0, 999, '#0f172a', '#94A3B8', formatDate(new Date())]\n    ];\n    sWheel.getRange(2, 1, defaultSlots.length, 8).setValues(defaultSlots);\n  }\n\n  // 2. Sheet CauHinhBotTelegram\n  var sBot = ss.getSheetByName('CauHinhBotTelegram');\n  if (!sBot) {\n    sBot = ss.insertSheet('CauHinhBotTelegram');\n    sBot.appendRow(['Kênh Nhận Tin', 'Trạng Thái', 'Token / URL Webhook', 'Chat ID / Nhóm Nhận', 'Ghi Chú Hướng Dẫn', 'Thời Gian Cập Nhật']);\n    var hBot = sBot.getRange(1, 1, 1, 6);\n    hBot.setBackground('#0f172a').setFontColor('#38bdf8').setFontWeight('bold');\n    sBot.setFrozenRows(1);\n    sBot.setColumnWidth(1, 150);\n    sBot.setColumnWidth(2, 100);\n    sBot.setColumnWidth(3, 300);\n    sBot.setColumnWidth(4, 180);\n    sBot.setColumnWidth(5, 300);\n    sBot.setColumnWidth(6, 160);\n\n    var defaultBotRows = [\n      ['Telegram Bot', 'TẮT', '', '', 'Điền Bot Token & Chat ID để nhận thông báo tức thời khi khách quay quà', formatDate(new Date())],\n      ['Webhook Endpoint', 'TẮT', '', '', 'Endpoint HTTP nhận dữ liệu JSON payload khách quay thưởng', formatDate(new Date())]\n    ];\n    sBot.getRange(2, 1, 2, 6).setValues(defaultBotRows);\n  }\n\n  // 3. Sheet NhiemVuHeThong\n  var sNV = ss.getSheetByName('NhiemVuHeThong');\n  if (!sNV) {\n    sNV = ss.insertSheet('NhiemVuHeThong');\n    sNV.appendRow(['Mã Chặng', 'Tên Chặng', 'Thời Gian Diễn Ra', 'Phần Thưởng Đạt Chuẩn', 'Điều Kiện Hoàn Thành', 'Danh Sách Mã KH (Mỗi dòng 1 mã)', 'Trạng Thái Hiển Thị', 'Thời Gian Cập Nhật']);\n    var hNV = sNV.getRange(1, 1, 1, 8);\n    hNV.setBackground('#0f172a').setFontColor('#34d399').setFontWeight('bold');\n    sNV.setFrozenRows(1);\n    sNV.setColumnWidth(1, 110);\n    sNV.setColumnWidth(2, 200);\n    sNV.setColumnWidth(3, 130);\n    sNV.setColumnWidth(4, 200);\n    sNV.setColumnWidth(5, 200);\n    sNV.setColumnWidth(6, 250);\n    sNV.setColumnWidth(7, 160);\n    sNV.setColumnWidth(8, 160);\n  }\n\n  // 4. Sheet CaiDatChung\n  var sCaiDat = ss.getSheetByName('CaiDatChung');\n  if (!sCaiDat) {\n    sCaiDat = ss.insertSheet('CaiDatChung');\n    sCaiDat.appendRow(['Tên Cài Đặt (Key)', 'Giá Trị (Value)', 'Mô Tả Chức Năng', 'Thời Gian Cập Nhật']);\n    var hCD = sCaiDat.getRange(1, 1, 1, 4);\n    hCD.setBackground('#0f172a').setFontColor('#f43f5e').setFontWeight('bold');\n    sCaiDat.setFrozenRows(1);\n    sCaiDat.setColumnWidth(1, 240);\n    sCaiDat.setColumnWidth(2, 350);\n    sCaiDat.setColumnWidth(3, 300);\n    sCaiDat.setColumnWidth(4, 160);\n  }\n\n  // 5. Sheet BangXepHang\n  var sBXH = ss.getSheetByName('BangXepHang');\n  if (!sBXH) {\n    sBXH = ss.insertSheet('BangXepHang');\n    sBXH.appendRow(['Hạng', 'Mã Khách Hàng', 'Tên Khách Hàng (Bảo Mật)', 'Tên Doanh Nghiệp Gốc', 'Hạng VIP', 'Tổng Đơn', 'Tải Trọng (Kg)', 'Thể Tích (M³)', 'Phí Dịch Vụ (VNĐ)', 'Quà Tạm Tính / Giải Thưởng', 'Thời Gian Cập Nhật']);\n    var hBXH = sBXH.getRange(1, 1, 1, 11);\n    hBXH.setBackground('#0f172a').setFontColor('#fbbf24').setFontWeight('bold');\n    sBXH.setFrozenRows(1);\n    sBXH.setColumnWidth(1, 60);\n    sBXH.setColumnWidth(2, 130);\n    sBXH.setColumnWidth(3, 220);\n    sBXH.setColumnWidth(4, 220);\n    sBXH.setColumnWidth(5, 110);\n    sBXH.setColumnWidth(6, 90);\n    sBXH.setColumnWidth(7, 130);\n    sBXH.setColumnWidth(8, 130);\n    sBXH.setColumnWidth(9, 150);\n    sBXH.setColumnWidth(10, 220);\n    sBXH.setColumnWidth(11, 160);\n  }\n\n  // 6. Sheet VongQuayMayMan\n  var sLeads = ss.getSheetByName('VongQuayMayMan');\n  if (!sLeads) {\n    sLeads = ss.insertSheet('VongQuayMayMan');\n    sLeads.appendRow(['Thời Gian Quay', 'Số Điện Thoại', 'Mã Voucher', 'Giải Thưởng Trúng', 'Nguồn Giới Thiệu', 'Trạng Thái Chăm Sóc']);\n    var hL = sLeads.getRange(1, 1, 1, 6);\n    hL.setBackground('#0f172a').setFontColor('#38bdf8').setFontWeight('bold');\n    sLeads.setFrozenRows(1);\n    sLeads.setColumnWidth(1, 160);\n    sLeads.setColumnWidth(2, 130);\n    sLeads.setColumnWidth(3, 130);\n    sLeads.setColumnWidth(4, 240);\n    sLeads.setColumnWidth(5, 140);\n    sLeads.setColumnWidth(6, 170);\n  }\n\n  // 7. Sheet VongQuayM05\n  var sM05 = ss.getSheetByName('VongQuayM05');\n  if (!sM05) {\n    sM05 = ss.insertSheet('VongQuayM05');\n    sM05.appendRow(['Thời Gian Quay', 'Kỳ Quay Thưởng', 'Mã Booking Trúng Thưởng', 'Giải Thưởng Tri Ân', 'Trạng Thái']);\n    var hM = sM05.getRange(1, 1, 1, 5);\n    hM.setBackground('#0f172a').setFontColor('#fbbf24').setFontWeight('bold');\n    sM05.setFrozenRows(1);\n    sM05.setColumnWidth(1, 160);\n    sM05.setColumnWidth(2, 160);\n    sM05.setColumnWidth(3, 180);\n    sM05.setColumnWidth(4, 240);\n    sM05.setColumnWidth(5, 160);\n  }\n}\n\nfunction formatDate(val) {\n  if (!val) return '';\n  if (val instanceof Date) {\n    return Utilities.formatDate(val, Session.getScriptTimeZone() || 'Asia/Ho_Chi_Minh', 'HH:mm - dd/MM/yyyy');\n  }\n  return String(val);\n}\n\nfunction jsonOutput(obj) {\n  return ContentService.createTextOutput(JSON.stringify(obj))\n    .setMimeType(ContentService.MimeType.JSON);\n}\n";
+const APPS_SCRIPT_SOURCE_CODE = "/**\n * =========================================================================\n * GOOGLE APPS SCRIPT CLOUD DATABASE v3.0 - EUREKA CUSTOMER AWARDS 2026\n * HỆ THỐNG QUẢN LÝ DỮ LIỆU ĐỘC LẬP TỪNG SHEET CHUYÊN BIỆT:\n * 1. Sheet 'CauHinhVongQuay': Quản lý 8 ô giải thưởng, nhãn, tỉ lệ %, kho quà.\n * 2. Sheet 'CauHinhBotTelegram': Quản lý Telegram Bot Token, Chat ID, Webhook.\n * 3. Sheet 'NhiemVuHeThong': Quản lý Chặng 1, 2, 3 và Danh sách Mã KH hoàn thành.\n * 4. Sheet 'CaiDatChung': Quản lý Mật khẩu Admin, Bật/Tắt Gala, Top Tuần, Giải M05.\n * 5. Sheet 'BangXepHang': Quản lý 25+ khách hàng đua top doanh số (Cân & Khối riêng).\n * 6. Sheet 'VongQuayMayMan': Lưu lịch sử SĐT khách quay nhận Voucher.\n * 7. Sheet 'VongQuayM05': Lưu lịch sử mã booking trúng thưởng Vòng Quay Mùng 05.\n * =========================================================================\n */\n\nfunction doGet(e) {\n  var action = (e && e.parameter && e.parameter.action) ? e.parameter.action : 'getAllData';\n\n  if (action === 'ping') {\n    return jsonOutput({\n      status: 'ok',\n      message: 'Kết nối Google Sheets Cloud Database thành công!',\n      timestamp: new Date().toISOString()\n    });\n  }\n\n  try {\n    var ss = SpreadsheetApp.getActiveSpreadsheet();\n    initDatabaseSheets(ss);\n\n    // 1. Đọc Cấu hình Vòng Quay May Mắn từ Sheet riêng: CauHinhVongQuay\n    var wheelConfig = readWheelConfigFromSheet(ss);\n\n    // 2. Đọc Cấu hình Telegram Bot & Webhook từ Sheet riêng: CauHinhBotTelegram\n    var botConfig = readBotConfigFromSheet(ss);\n\n    // 3. Đọc Cấu hình Nhiệm Vụ Hệ Thống từ Sheet riêng: NhiemVuHeThong\n    var nhiemVuConfig = readNhiemVuConfigFromSheet(ss);\n\n    // 4. Đọc Cài Đặt Chung từ Sheet riêng: CaiDatChung\n    var generalSettings = readGeneralSettingsFromSheet(ss);\n\n    // 5. Đọc Bảng Xếp Hạng Doanh Số từ Sheet riêng: BangXepHang\n    var customLeaderboard = readLeaderboardFromSheet(ss);\n\n    // 6. Đọc Lịch Sử Khách Quay từ Sheet riêng: VongQuayMayMan\n    var spinData = readSpinLeadsFromSheet(ss);\n\n    // 7. Đọc Danh Sách Trúng Thưởng M05 từ Sheet riêng: VongQuayM05\n    var monthlyWinners = readM05WinnersFromSheet(ss);\n\n    return jsonOutput({\n      status: 'success',\n      data: {\n        wheelConfig: wheelConfig,\n        botConfig: botConfig,\n        nhiemVuConfig: nhiemVuConfig,\n        customLeaderboard: customLeaderboard,\n        spinLeads: spinData.spinLeads,\n        lockedPhones: spinData.lockedPhones,\n        monthlyWinners: monthlyWinners,\n        adminPassword: generalSettings.admin_password || '',\n        galaConfig: generalSettings.gala_config || null,\n        weeklyWinner: generalSettings.weekly_winner || null,\n        m05BookingPool: generalSettings.m05_booking_pool || null,\n        m05CurrentPrize: generalSettings.m05_current_prize || '',\n        refClicks: generalSettings.ref_clicks || null\n      }\n    });\n  } catch (err) {\n    return jsonOutput({\n      status: 'error',\n      message: err.toString()\n    });\n  }\n}\n\nfunction doPost(e) {\n  try {\n    var ss = SpreadsheetApp.getActiveSpreadsheet();\n    initDatabaseSheets(ss);\n\n    var raw = e.postData.contents;\n    var payload = JSON.parse(raw);\n    var action = payload.action;\n\n    // 1. Lưu Cấu Hình Vòng Quay vào Sheet riêng 'CauHinhVongQuay'\n    if (action === 'save_wheel_config' || (action === 'save_config' && payload.key === 'eureka_welcome_wheel_config')) {\n      var segments = payload.wheelConfig || payload.value || [];\n      if (Array.isArray(segments) && segments.length > 0) {\n        writeWheelConfigToSheet(ss, segments);\n        return jsonOutput({ status: 'success', message: 'Đã lưu cấu hình Vòng Quay vào Sheet CauHinhVongQuay' });\n      }\n    }\n\n    // 2. Lưu Cấu Hình Bot & Webhook vào Sheet riêng 'CauHinhBotTelegram'\n    if (action === 'save_bot_config' || (action === 'save_config' && payload.key === 'eureka_bot_config')) {\n      var bConfig = payload.botConfig || payload.value || {};\n      writeBotConfigToSheet(ss, bConfig);\n      return jsonOutput({ status: 'success', message: 'Đã lưu cấu hình Bot vào Sheet CauHinhBotTelegram' });\n    }\n\n    // 3. Lưu Cấu Hình Nhiệm Vụ Hệ Thống vào Sheet riêng 'NhiemVuHeThong'\n    if (action === 'save_nhiem_vu' || (action === 'save_config' && payload.key === 'eureka_nhiem_vu_config')) {\n      var nvConfig = payload.nhiemVuConfig || payload.value || {};\n      writeNhiemVuConfigToSheet(ss, nvConfig);\n      return jsonOutput({ status: 'success', message: 'Đã lưu cấu hình Nhiệm Vụ vào Sheet NhiemVuHeThong' });\n    }\n\n    // 4. Lưu Bảng Xếp Hạng Doanh Số vào Sheet riêng 'BangXepHang'\n    if (action === 'sync_leaderboard' || (action === 'save_config' && payload.key === 'eureka_custom_leaderboard')) {\n      var lbList = payload.leaderboard || payload.value || [];\n      if (Array.isArray(lbList)) {\n        writeLeaderboardToSheet(ss, lbList);\n        return jsonOutput({ status: 'success', message: 'Đã lưu ' + lbList.length + ' khách hàng vào Sheet BangXepHang' });\n      }\n    }\n\n    // 5. Ghi nhận lượt quay Voucher của khách hàng vào Sheet 'VongQuayMayMan'\n    if (action === 'record_spin_lead') {\n      var lead = payload.lead || {};\n      var leadsSheet = ss.getSheetByName('VongQuayMayMan');\n      var phoneFormatted = \"'\" + String(lead.phone || '').trim();\n      leadsSheet.appendRow([\n        new Date(),\n        phoneFormatted,\n        lead.voucherCode || '',\n        lead.prize || '',\n        lead.ref || 'direct',\n        lead.status || 'Chờ áp dụng qua Zalo'\n      ]);\n\n      // Đồng thời tự động trừ 1 số lượng kho trong Sheet 'CauHinhVongQuay' nếu tìm thấy phần thưởng tương ứng\n      decrementWheelStock(ss, lead.prize);\n\n      return jsonOutput({ status: 'success', message: 'Đã lưu lead khách quay và cập nhật kho quà' });\n    }\n\n    // 6. Ghi nhận mã booking trúng thưởng M05 vào Sheet 'VongQuayM05'\n    if (action === 'record_m05_winner') {\n      var winner = payload.winner || {};\n      var m05Sheet = ss.getSheetByName('VongQuayM05');\n      m05Sheet.appendRow([\n        new Date(),\n        winner.period || '',\n        winner.booking_code || '',\n        winner.prize || '',\n        winner.status || 'Vừa quay trúng'\n      ]);\n      return jsonOutput({ status: 'success', message: 'Đã lưu kết quả quay M05' });\n    }\n\n    // 7. Lưu Cài Đặt Chung (Mật khẩu Admin, Gala, Top Tuần...) vào Sheet 'CaiDatChung'\n    if (action === 'save_general_setting' || action === 'save_config') {\n      var key = payload.key;\n      var val = payload.value;\n      writeGeneralSettingToSheet(ss, key, val);\n      return jsonOutput({ status: 'success', message: 'Đã lưu cài đặt ' + key + ' vào Sheet CaiDatChung' });\n    }\n\n    // 8. Đẩy toàn bộ dữ liệu máy lên Cloud (One-Click Sync All)\n    if (action === 'sync_all') {\n      var all = payload.data || {};\n\n      if (all.wheelConfig && Array.isArray(all.wheelConfig)) {\n        writeWheelConfigToSheet(ss, all.wheelConfig);\n      }\n      if (all.botConfig && typeof all.botConfig === 'object') {\n        writeBotConfigToSheet(ss, all.botConfig);\n      }\n      if (all.nhiemVuConfig && typeof all.nhiemVuConfig === 'object') {\n        writeNhiemVuConfigToSheet(ss, all.nhiemVuConfig);\n      }\n      if (all.customLeaderboard && Array.isArray(all.customLeaderboard)) {\n        writeLeaderboardToSheet(ss, all.customLeaderboard);\n      }\n      if (all.spinLeads && Array.isArray(all.spinLeads)) {\n        writeSpinLeadsToSheet(ss, all.spinLeads);\n      }\n      if (all.monthlyWinners && Array.isArray(all.monthlyWinners)) {\n        writeM05WinnersToSheet(ss, all.monthlyWinners);\n      }\n\n      // Lưu các cài đặt còn lại vào CaiDatChung\n      if (all.adminPasswordCustom !== undefined) writeGeneralSettingToSheet(ss, 'eureka_admin_password_custom', all.adminPasswordCustom);\n      if (all.galaConfig) writeGeneralSettingToSheet(ss, 'eureka_gala_awards_config', all.galaConfig);\n      if (all.weeklyWinner) writeGeneralSettingToSheet(ss, 'eureka_weekly_winner', all.weeklyWinner);\n      if (all.m05BookingPool) writeGeneralSettingToSheet(ss, 'eureka_m05_booking_pool', all.m05BookingPool);\n      if (all.m05CurrentPrize) writeGeneralSettingToSheet(ss, 'eureka_m05_current_prize', all.m05CurrentPrize);\n      if (all.refClicks) writeGeneralSettingToSheet(ss, 'eureka_ref_clicks', all.refClicks);\n\n      return jsonOutput({ status: 'success', message: 'Đã đồng bộ toàn bộ dữ liệu vào từng Sheet riêng biệt thành công!' });\n    }\n\n    return jsonOutput({ status: 'ignored', message: 'Action không xác định: ' + action });\n  } catch (err) {\n    return jsonOutput({ status: 'error', message: err.toString() });\n  }\n}\n\n// =========================================================================\n// CÁC HÀM XỬ LÝ ĐỌC / GHI CHO TỪNG SHEET CHUYÊN BIỆT\n// =========================================================================\n\n// 1. SHEET 'CauHinhVongQuay'\nfunction readWheelConfigFromSheet(ss) {\n  var sheet = ss.getSheetByName('CauHinhVongQuay');\n  if (!sheet || sheet.getLastRow() < 2) return null;\n\n  var data = sheet.getRange(2, 1, Math.min(sheet.getLastRow() - 1, 8), 7).getValues();\n  var segments = [];\n  for (var i = 0; i < data.length; i++) {\n    var r = data[i];\n    segments.push({\n      id: Number(r[0]) || (i + 1),\n      text: String(r[1] || '').trim(),\n      prize: String(r[2] || '').trim(),\n      probability_weight: Number(r[3]) || 0,\n      stock_quantity: Number(r[4]) || 0,\n      color: String(r[5] || '#1e293b').trim(),\n      textColor: String(r[6] || '#FFFFFF').trim()\n    });\n  }\n  return segments.length === 8 ? segments : null;\n}\n\nfunction writeWheelConfigToSheet(ss, segments) {\n  if (!Array.isArray(segments) || segments.length === 0) return;\n  var sheet = ss.getSheetByName('CauHinhVongQuay');\n  if (!sheet) return;\n\n  var rows = [];\n  for (var i = 0; i < segments.length; i++) {\n    var seg = segments[i];\n    rows.push([\n      Number(seg.id) || (i + 1),\n      String(seg.text || '').trim(),\n      String(seg.prize || '').trim(),\n      Number(seg.probability_weight) || 0,\n      Number(seg.stock_quantity) || 0,\n      String(seg.color || '#1e293b').trim(),\n      String(seg.textColor || '#FFFFFF').trim(),\n      formatDate(new Date())\n    ]);\n  }\n\n  sheet.getRange(2, 1, rows.length, 8).setValues(rows);\n}\n\nfunction decrementWheelStock(ss, prizeName) {\n  if (!prizeName) return;\n  var sheet = ss.getSheetByName('CauHinhVongQuay');\n  if (!sheet || sheet.getLastRow() < 2) return;\n\n  var data = sheet.getRange(2, 3, sheet.getLastRow() - 1, 3).getValues();\n  for (var i = 0; i < data.length; i++) {\n    var pName = String(data[i][0]).trim();\n    if (pName === prizeName || prizeName.includes(pName) || pName.includes(prizeName)) {\n      var currentStock = Number(data[i][2]) || 0;\n      if (currentStock > 0) {\n        sheet.getRange(i + 2, 5).setValue(currentStock - 1);\n        sheet.getRange(i + 2, 8).setValue(formatDate(new Date()));\n      }\n      break;\n    }\n  }\n}\n\n// 2. SHEET 'CauHinhBotTelegram'\nfunction readBotConfigFromSheet(ss) {\n  var sheet = ss.getSheetByName('CauHinhBotTelegram');\n  if (!sheet || sheet.getLastRow() < 2) return null;\n\n  var data = sheet.getRange(2, 1, sheet.getLastRow() - 1, 4).getValues();\n  var config = {\n    telegram_enabled: false,\n    telegram_token: '',\n    telegram_chat_id: '',\n    webhook_enabled: false,\n    webhook_url: ''\n  };\n\n  for (var i = 0; i < data.length; i++) {\n    var channel = String(data[i][0]).toLowerCase();\n    var status = String(data[i][1]).toUpperCase();\n    var val1 = String(data[i][2] || '').trim();\n    var val2 = String(data[i][3] || '').trim();\n\n    if (channel.includes('telegram')) {\n      config.telegram_enabled = (status === 'BẬT' || status === 'TRUE' || status === '1');\n      config.telegram_token = val1;\n      config.telegram_chat_id = val2;\n    } else if (channel.includes('webhook')) {\n      config.webhook_enabled = (status === 'BẬT' || status === 'TRUE' || status === '1');\n      config.webhook_url = val1;\n    }\n  }\n  return config;\n}\n\nfunction writeBotConfigToSheet(ss, config) {\n  var sheet = ss.getSheetByName('CauHinhBotTelegram');\n  if (!sheet) return;\n\n  var rows = [\n    [\n      'Telegram Bot',\n      config.telegram_enabled ? 'BẬT' : 'TẮT',\n      String(config.telegram_token || '').trim(),\n      String(config.telegram_chat_id || '').trim(),\n      'Tự động gửi thông báo khi khách quay thưởng vào nhóm Telegram',\n      formatDate(new Date())\n    ],\n    [\n      'Webhook Endpoint',\n      config.webhook_enabled ? 'BẬT' : 'TẮT',\n      String(config.webhook_url || '').trim(),\n      '',\n      'Đẩy dữ liệu JSON sang server/CRM ngoài khi khách quay',\n      formatDate(new Date())\n    ]\n  ];\n\n  sheet.getRange(2, 1, 2, 6).setValues(rows);\n}\n\n// 3. SHEET 'NhiemVuHeThong'\nfunction readNhiemVuConfigFromSheet(ss) {\n  var sheet = ss.getSheetByName('NhiemVuHeThong');\n  if (!sheet || sheet.getLastRow() < 2) return null;\n\n  var data = sheet.getRange(2, 1, sheet.getLastRow() - 1, 7).getValues();\n  var config = {\n    active_mode: 'chang-1',\n    chang_1: { customer_codes: [] },\n    chang_2: { customer_codes: [] },\n    chang_3: { customer_codes: [] },\n    tong_ket: { customer_codes: [] }\n  };\n\n  for (var i = 0; i < data.length; i++) {\n    var key = String(data[i][0]).trim();\n    var time = String(data[i][2] || '').trim();\n    var reward = String(data[i][3] || '').trim();\n    var condition = String(data[i][4] || '').trim();\n    var rawCodes = String(data[i][5] || '').trim();\n    var isCurrentMode = String(data[i][6] || '').toUpperCase().includes('ĐANG');\n\n    var codeList = rawCodes.split(/[\\r\\n,]+/).map(function(s) { return s.trim(); }).filter(function(s) { return s.length > 0; });\n\n    if (isCurrentMode) {\n      config.active_mode = key.replace('_', '-');\n    }\n\n    if (config[key]) {\n      config[key] = {\n        time_range: time,\n        time_window: time,\n        reward: reward,\n        condition: condition,\n        customer_codes: codeList\n      };\n    }\n  }\n\n  return config;\n}\n\nfunction writeNhiemVuConfigToSheet(ss, cfg) {\n  var sheet = ss.getSheetByName('NhiemVuHeThong');\n  if (!sheet) return;\n\n  var activeMode = (cfg.active_mode || 'chang-1').replace('-', '_');\n\n  var changList = [\n    { key: 'chang_1', name: 'Chặng 1 — Khởi Động Sớm' },\n    { key: 'chang_2', name: 'Chặng 2 — Giữ Nhịp Cao Điểm' },\n    { key: 'chang_3', name: 'Chặng 3 — Về Đích An Toàn' },\n    { key: 'tong_ket', name: 'Tổng Kết 3 Chặng' }\n  ];\n\n  var rows = [];\n  changList.forEach(function(item) {\n    var cData = cfg[item.key] || {};\n    var codes = cData.customer_codes || cData.codes || [];\n    var codesStr = Array.isArray(codes) ? codes.join('\\n') : String(codes);\n    var isCurrent = (item.key === activeMode) ? '⭐ ĐANG HIỂN THỊ' : 'Chờ công bố';\n\n    rows.push([\n      item.key,\n      item.name,\n      cData.time_range || cData.time_window || '',\n      cData.reward || '',\n      cData.condition || '',\n      codesStr,\n      isCurrent,\n      formatDate(new Date())\n    ]);\n  });\n\n  sheet.getRange(2, 1, rows.length, 8).setValues(rows);\n}\n\n// 4. SHEET 'CaiDatChung'\nfunction readGeneralSettingsFromSheet(ss) {\n  var sheet = ss.getSheetByName('CaiDatChung');\n  var settings = {};\n  if (!sheet || sheet.getLastRow() < 2) return settings;\n\n  var data = sheet.getRange(2, 1, sheet.getLastRow() - 1, 2).getValues();\n  for (var i = 0; i < data.length; i++) {\n    var key = String(data[i][0]).trim();\n    var valStr = String(data[i][1]).trim();\n    if (key && valStr) {\n      try {\n        settings[key] = JSON.parse(valStr);\n      } catch (e) {\n        settings[key] = valStr;\n      }\n    }\n  }\n  return settings;\n}\n\nfunction writeGeneralSettingToSheet(ss, key, val) {\n  var sheet = ss.getSheetByName('CaiDatChung');\n  if (!sheet) return;\n\n  var valStr = typeof val === 'object' ? JSON.stringify(val) : String(val);\n\n  var foundRow = -1;\n  if (sheet.getLastRow() > 1) {\n    var keys = sheet.getRange(2, 1, sheet.getLastRow() - 1, 1).getValues();\n    for (var r = 0; r < keys.length; r++) {\n      if (keys[r][0] === key) {\n        foundRow = r + 2;\n        break;\n      }\n    }\n  }\n\n  if (foundRow > 0) {\n    sheet.getRange(foundRow, 2).setValue(valStr);\n    sheet.getRange(foundRow, 4).setValue(formatDate(new Date()));\n  } else {\n    sheet.appendRow([key, valStr, 'Cài đặt hệ thống', formatDate(new Date())]);\n  }\n}\n\n// 5. SHEET 'BangXepHang'\nfunction readLeaderboardFromSheet(ss) {\n  var sheet = ss.getSheetByName('BangXepHang');\n  var list = [];\n  if (!sheet || sheet.getLastRow() < 2) return list;\n\n  var data = sheet.getRange(2, 1, sheet.getLastRow() - 1, 10).getValues();\n  for (var i = 0; i < data.length; i++) {\n    var r = data[i];\n    if (r[1]) {\n      var rank = Number(r[0]) || (i + 1);\n      var w = Number(r[6]) || 0;\n      var v = Number(r[7]) || 0;\n      var vwStr = '';\n      if (w > 0 && v > 0) {\n        var wTon = (w / 1000).toLocaleString('vi-VN', { maximumFractionDigits: 1 });\n        var vM3 = v.toLocaleString('vi-VN', { maximumFractionDigits: 1 });\n        vwStr = wTon + ' tấn | ' + vM3 + ' m³';\n      }\n\n      list.push({\n        rank: rank,\n        customer_code: String(r[1]).trim(),\n        customer_name: String(r[2]).trim(),\n        original_name: String(r[3] || r[2]).trim(),\n        vip_tier: String(r[4] || 'VIP PRO').trim(),\n        order_count: Number(r[5]) || 0,\n        weight_kg: w,\n        volume_m3: v,\n        volume_weight: vwStr,\n        service_fee: Number(r[8]) || 0,\n        prize_tag: String(r[9] || '').trim(),\n        prize_type: rank === 1 ? 'top1' : rank === 2 ? 'top2' : rank === 3 ? 'top3' : 'regular'\n      });\n    }\n  }\n  return list;\n}\n\nfunction writeLeaderboardToSheet(ss, list) {\n  if (!Array.isArray(list) || list.length === 0) return;\n  var sheet = ss.getSheetByName('BangXepHang');\n  if (!sheet) return;\n\n  if (sheet.getLastRow() > 1) {\n    sheet.getRange(2, 1, sheet.getLastRow() - 1, 11).clearContent();\n  }\n\n  var rows = [];\n  for (var i = 0; i < list.length; i++) {\n    var item = list[i];\n    var rank = Number(item.rank) || (i + 1);\n    var code = String(item.customer_code || item.code || ('ERK-KH-' + (8800 + i))).trim().toUpperCase();\n    var name = String(item.customer_name || '').trim();\n    var origName = String(item.original_name || name).trim();\n    var vip = String(item.vip_tier || 'VIP PRO').trim();\n    var orders = Number(item.order_count) || 0;\n    var weightKg = Number(item.weight_kg) || 0;\n    var volM3 = Number(item.volume_m3) || 0;\n\n    if (weightKg === 0 && item.volume_weight) {\n      var p1 = String(item.volume_weight).split('|')[0] || '';\n      var m1 = p1.replace(',', '.').match(/([\\d.]+)\\s*(tấn|kg|t)/i);\n      if (m1) {\n        var num1 = parseFloat(m1[1]);\n        weightKg = m1[2].toLowerCase().includes('t') ? Math.round(num1 * 1000) : Math.round(num1);\n      }\n    }\n    if (volM3 === 0 && item.volume_weight) {\n      var p2 = String(item.volume_weight).split('|')[1] || String(item.volume_weight);\n      var m2 = p2.replace(',', '.').match(/([\\d.]+)\\s*(m³|m3|cbm)/i);\n      if (m2) volM3 = parseFloat(m2[1]);\n    }\n\n    var fee = Number(item.service_fee) || 0;\n    var prize = String(item.prize_tag || '').trim();\n\n    rows.push([\n      rank,\n      code,\n      name,\n      origName,\n      vip,\n      orders,\n      weightKg,\n      volM3,\n      fee,\n      prize,\n      formatDate(new Date())\n    ]);\n  }\n\n  if (rows.length > 0) {\n    sheet.getRange(2, 1, rows.length, 11).setValues(rows);\n  }\n}\n\n// 6. SHEET 'VongQuayMayMan' (Leads)\nfunction readSpinLeadsFromSheet(ss) {\n  var sheet = ss.getSheetByName('VongQuayMayMan');\n  var spinLeads = [];\n  var lockedPhones = [];\n  if (!sheet || sheet.getLastRow() < 2) return { spinLeads: spinLeads, lockedPhones: lockedPhones };\n\n  var data = sheet.getRange(2, 1, sheet.getLastRow() - 1, 6).getValues();\n  for (var i = data.length - 1; i >= 0; i--) {\n    var row = data[i];\n    if (row[1]) {\n      var phoneStr = String(row[1]).trim();\n      spinLeads.push({\n        id: 'L-' + (i + 1),\n        createdAt: formatDate(row[0]),\n        phone: phoneStr,\n        voucherCode: String(row[2] || ''),\n        prize: String(row[3] || ''),\n        ref: String(row[4] || 'direct'),\n        status: String(row[5] || 'Chờ áp dụng')\n      });\n      lockedPhones.push(phoneStr);\n    }\n  }\n  return { spinLeads: spinLeads, lockedPhones: lockedPhones };\n}\n\nfunction writeSpinLeadsToSheet(ss, leads) {\n  var sheet = ss.getSheetByName('VongQuayMayMan');\n  if (!sheet || !Array.isArray(leads)) return;\n\n  if (sheet.getLastRow() > 1) {\n    sheet.getRange(2, 1, sheet.getLastRow() - 1, 6).clearContent();\n  }\n\n  var rows = [];\n  leads.forEach(function(l) {\n    rows.push([\n      l.createdAt || new Date(),\n      \"'\" + String(l.phone || ''),\n      l.voucherCode || '',\n      l.prize || '',\n      l.ref || 'direct',\n      l.status || 'Chờ áp dụng qua Zalo'\n    ]);\n  });\n\n  if (rows.length > 0) {\n    sheet.getRange(2, 1, rows.length, 6).setValues(rows);\n  }\n}\n\n// 7. SHEET 'VongQuayM05'\nfunction readM05WinnersFromSheet(ss) {\n  var sheet = ss.getSheetByName('VongQuayM05');\n  var winners = [];\n  if (!sheet || sheet.getLastRow() < 2) return winners;\n\n  var data = sheet.getRange(2, 1, sheet.getLastRow() - 1, 5).getValues();\n  for (var j = data.length - 1; j >= 0; j--) {\n    var r = data[j];\n    if (r[2]) {\n      winners.push({\n        id: 'W-' + (j + 1),\n        draw_time: formatDate(r[0]),\n        period: String(r[1] || ''),\n        booking_code: String(r[2] || ''),\n        prize: String(r[3] || ''),\n        status: String(r[4] || 'Đã ghi nhận')\n      });\n    }\n  }\n  return winners;\n}\n\nfunction writeM05WinnersToSheet(ss, winners) {\n  var sheet = ss.getSheetByName('VongQuayM05');\n  if (!sheet || !Array.isArray(winners)) return;\n\n  if (sheet.getLastRow() > 1) {\n    sheet.getRange(2, 1, sheet.getLastRow() - 1, 5).clearContent();\n  }\n\n  var rows = [];\n  winners.forEach(function(w) {\n    rows.push([\n      w.draw_time || new Date(),\n      w.period || '',\n      w.booking_code || '',\n      w.prize || '',\n      w.status || 'Đã ghi nhận'\n    ]);\n  });\n\n  if (rows.length > 0) {\n    sheet.getRange(2, 1, rows.length, 5).setValues(rows);\n  }\n}\n\n// =========================================================================\n// KHỞI TẠO CÁC SHEET CHUYÊN BIỆT VỚI TIÊU ĐỀ & ĐỊNH DẠNG ĐẸP\n// =========================================================================\nfunction initDatabaseSheets(ss) {\n  // 1. Sheet CauHinhVongQuay (8 Ô giải thưởng)\n  var sWheel = ss.getSheetByName('CauHinhVongQuay');\n  if (!sWheel) {\n    sWheel = ss.insertSheet('CauHinhVongQuay');\n    sWheel.appendRow(['Ô Số (STT)', 'Nhãn Hiển Thị Nan Quạt', 'Tên Phần Thưởng Trao Cho Khách', 'Tỉ Lệ Trúng (%)', 'Số Lượng Trong Kho', 'Mã Màu Nan Quạt', 'Màu Chữ', 'Thời Gian Cập Nhật']);\n    var h = sWheel.getRange(1, 1, 1, 8);\n    h.setBackground('#0f172a').setFontColor('#f59e0b').setFontWeight('bold');\n    sWheel.setFrozenRows(1);\n    sWheel.setColumnWidth(1, 80);\n    sWheel.setColumnWidth(2, 220);\n    sWheel.setColumnWidth(3, 260);\n    sWheel.setColumnWidth(4, 120);\n    sWheel.setColumnWidth(5, 140);\n    sWheel.setColumnWidth(6, 120);\n    sWheel.setColumnWidth(7, 100);\n    sWheel.setColumnWidth(8, 160);\n\n    // Điền 8 dòng mẫu khởi tạo\n    var defaultSlots = [\n      [1, 'GIẢM GIÁ 10% CƯỚC', 'Giảm giá 10% chi phí vận chuyển', 100, 9999, '#ea580c', '#FFFFFF', formatDate(new Date())],\n      [2, 'VOUCHER 300K', 'Voucher Chiết Khấu 300.000 đ', 0, 25, '#1e293b', '#FBBF24', formatDate(new Date())],\n      [3, 'ƯU TIÊN XẾP CONT', 'Vé Ưu Tiên Xếp Cont Sớm', 0, 18, '#f59e0b', '#0F172A', formatDate(new Date())],\n      [4, 'GIẢM 50% LƯU KHO', 'Giảm 50% Phí Lưu Kho Bãi', 0, 15, '#0f172a', '#FFFFFF', formatDate(new Date())],\n      [5, 'VOUCHER 300K', 'Voucher Chiết Khấu 300.000 đ', 0, 20, '#ea580c', '#FFFFFF', formatDate(new Date())],\n      [6, 'GÓI SQUAD 2-IN-1', 'Gói Hỗ Trợ Squad 2-in-1', 0, 11, '#1e293b', '#38BDF8', formatDate(new Date())],\n      [7, 'VOUCHER 400K', 'Voucher 400.000 đ Lộc Xuân', 0, 10, '#f59e0b', '#0F172A', formatDate(new Date())],\n      [8, 'MAY MẮN LẦN SAU', 'Vé Tích Lũy Quay Mùng 05', 0, 999, '#0f172a', '#94A3B8', formatDate(new Date())]\n    ];\n    sWheel.getRange(2, 1, defaultSlots.length, 8).setValues(defaultSlots);\n  }\n\n  // 2. Sheet CauHinhBotTelegram\n  var sBot = ss.getSheetByName('CauHinhBotTelegram');\n  if (!sBot) {\n    sBot = ss.insertSheet('CauHinhBotTelegram');\n    sBot.appendRow(['Kênh Nhận Tin', 'Trạng Thái', 'Token / URL Webhook', 'Chat ID / Nhóm Nhận', 'Ghi Chú Hướng Dẫn', 'Thời Gian Cập Nhật']);\n    var hBot = sBot.getRange(1, 1, 1, 6);\n    hBot.setBackground('#0f172a').setFontColor('#38bdf8').setFontWeight('bold');\n    sBot.setFrozenRows(1);\n    sBot.setColumnWidth(1, 150);\n    sBot.setColumnWidth(2, 100);\n    sBot.setColumnWidth(3, 300);\n    sBot.setColumnWidth(4, 180);\n    sBot.setColumnWidth(5, 300);\n    sBot.setColumnWidth(6, 160);\n\n    var defaultBotRows = [\n      ['Telegram Bot', 'TẮT', '', '', 'Điền Bot Token & Chat ID để nhận thông báo tức thời khi khách quay quà', formatDate(new Date())],\n      ['Webhook Endpoint', 'TẮT', '', '', 'Endpoint HTTP nhận dữ liệu JSON payload khách quay thưởng', formatDate(new Date())]\n    ];\n    sBot.getRange(2, 1, 2, 6).setValues(defaultBotRows);\n  }\n\n  // 3. Sheet NhiemVuHeThong\n  var sNV = ss.getSheetByName('NhiemVuHeThong');\n  if (!sNV) {\n    sNV = ss.insertSheet('NhiemVuHeThong');\n    sNV.appendRow(['Mã Chặng', 'Tên Chặng', 'Thời Gian Diễn Ra', 'Phần Thưởng Đạt Chuẩn', 'Điều Kiện Hoàn Thành', 'Danh Sách Mã KH (Mỗi dòng 1 mã)', 'Trạng Thái Hiển Thị', 'Thời Gian Cập Nhật']);\n    var hNV = sNV.getRange(1, 1, 1, 8);\n    hNV.setBackground('#0f172a').setFontColor('#34d399').setFontWeight('bold');\n    sNV.setFrozenRows(1);\n    sNV.setColumnWidth(1, 110);\n    sNV.setColumnWidth(2, 200);\n    sNV.setColumnWidth(3, 130);\n    sNV.setColumnWidth(4, 200);\n    sNV.setColumnWidth(5, 200);\n    sNV.setColumnWidth(6, 250);\n    sNV.setColumnWidth(7, 160);\n    sNV.setColumnWidth(8, 160);\n  }\n\n  // 4. Sheet CaiDatChung\n  var sCaiDat = ss.getSheetByName('CaiDatChung');\n  if (!sCaiDat) {\n    sCaiDat = ss.insertSheet('CaiDatChung');\n    sCaiDat.appendRow(['Tên Cài Đặt (Key)', 'Giá Trị (Value)', 'Mô Tả Chức Năng', 'Thời Gian Cập Nhật']);\n    var hCD = sCaiDat.getRange(1, 1, 1, 4);\n    hCD.setBackground('#0f172a').setFontColor('#f43f5e').setFontWeight('bold');\n    sCaiDat.setFrozenRows(1);\n    sCaiDat.setColumnWidth(1, 240);\n    sCaiDat.setColumnWidth(2, 350);\n    sCaiDat.setColumnWidth(3, 300);\n    sCaiDat.setColumnWidth(4, 160);\n  }\n\n  // 5. Sheet BangXepHang\n  var sBXH = ss.getSheetByName('BangXepHang');\n  if (!sBXH) {\n    sBXH = ss.insertSheet('BangXepHang');\n    sBXH.appendRow(['Hạng', 'Mã Khách Hàng', 'Tên Khách Hàng (Bảo Mật)', 'Tên Doanh Nghiệp Gốc', 'Hạng VIP', 'Tổng Đơn', 'Tải Trọng (Kg)', 'Thể Tích (M³)', 'Phí Dịch Vụ (VNĐ)', 'Quà Tạm Tính / Giải Thưởng', 'Thời Gian Cập Nhật']);\n    var hBXH = sBXH.getRange(1, 1, 1, 11);\n    hBXH.setBackground('#0f172a').setFontColor('#fbbf24').setFontWeight('bold');\n    sBXH.setFrozenRows(1);\n    sBXH.setColumnWidth(1, 60);\n    sBXH.setColumnWidth(2, 130);\n    sBXH.setColumnWidth(3, 220);\n    sBXH.setColumnWidth(4, 220);\n    sBXH.setColumnWidth(5, 110);\n    sBXH.setColumnWidth(6, 90);\n    sBXH.setColumnWidth(7, 130);\n    sBXH.setColumnWidth(8, 130);\n    sBXH.setColumnWidth(9, 150);\n    sBXH.setColumnWidth(10, 220);\n    sBXH.setColumnWidth(11, 160);\n  }\n\n  // 6. Sheet VongQuayMayMan\n  var sLeads = ss.getSheetByName('VongQuayMayMan');\n  if (!sLeads) {\n    sLeads = ss.insertSheet('VongQuayMayMan');\n    sLeads.appendRow(['Thời Gian Quay', 'Số Điện Thoại', 'Mã Voucher', 'Giải Thưởng Trúng', 'Nguồn Giới Thiệu', 'Trạng Thái Chăm Sóc']);\n    var hL = sLeads.getRange(1, 1, 1, 6);\n    hL.setBackground('#0f172a').setFontColor('#38bdf8').setFontWeight('bold');\n    sLeads.setFrozenRows(1);\n    sLeads.setColumnWidth(1, 160);\n    sLeads.setColumnWidth(2, 130);\n    sLeads.setColumnWidth(3, 130);\n    sLeads.setColumnWidth(4, 240);\n    sLeads.setColumnWidth(5, 140);\n    sLeads.setColumnWidth(6, 170);\n  }\n\n  // 7. Sheet VongQuayM05\n  var sM05 = ss.getSheetByName('VongQuayM05');\n  if (!sM05) {\n    sM05 = ss.insertSheet('VongQuayM05');\n    sM05.appendRow(['Thời Gian Quay', 'Kỳ Quay Thưởng', 'Mã Booking Trúng Thưởng', 'Giải Thưởng Tri Ân', 'Trạng Thái']);\n    var hM = sM05.getRange(1, 1, 1, 5);\n    hM.setBackground('#0f172a').setFontColor('#fbbf24').setFontWeight('bold');\n    sM05.setFrozenRows(1);\n    sM05.setColumnWidth(1, 160);\n    sM05.setColumnWidth(2, 160);\n    sM05.setColumnWidth(3, 180);\n    sM05.setColumnWidth(4, 240);\n    sM05.setColumnWidth(5, 160);\n  }\n}\n\nfunction formatDate(val) {\n  if (!val) return '';\n  if (val instanceof Date) {\n    return Utilities.formatDate(val, Session.getScriptTimeZone() || 'Asia/Ho_Chi_Minh', 'HH:mm - dd/MM/yyyy');\n  }\n  return String(val);\n}\n\nfunction jsonOutput(obj) {\n  return ContentService.createTextOutput(JSON.stringify(obj))\n    .setMimeType(ContentService.MimeType.JSON);\n}\n";
 
 function renderAdminSheetsSyncTab() {
   const urlInput = document.getElementById('admin-sheets-url-input');
@@ -2321,10 +2321,10 @@ function renderAdminSheetsSyncTab() {
   if (statusPill) {
     if (isConnected) {
       statusPill.className = 'self-start sm:self-center px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 text-xs font-bold';
-      statusPill.innerHTML = '🟢 Đã kết nối Google Sheets';
+      statusPill.innerHTML = 'Đã kết nối Google Sheets';
     } else {
       statusPill.className = 'self-start sm:self-center px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-bold';
-      statusPill.innerHTML = '🟡 Chưa kết nối';
+      statusPill.innerHTML = 'Chưa kết nối';
     }
   }
 
@@ -2348,7 +2348,7 @@ async function handleSaveSheetsUrl() {
   }
 
   if (!val.startsWith('https://script.google.com/macros/s/')) {
-    alert('⚠️ Đường dẫn không hợp lệ!\nURL Google Apps Script Web App phải có dạng:\nhttps://script.google.com/macros/s/.../exec');
+    alert('Đường dẫn không hợp lệ!\nURL Google Apps Script Web App phải có dạng:\nhttps://script.google.com/macros/s/.../exec');
     return;
   }
 
@@ -2365,18 +2365,18 @@ async function handleSaveSheetsUrl() {
   if (testRes.success) {
     if (msgEl) {
       msgEl.className = 'text-xs font-semibold text-emerald-400 block';
-      msgEl.textContent = '✅ ' + testRes.message;
+      msgEl.textContent = '' + testRes.message;
     }
     if (typeof fetchCloudData === 'function') {
       await fetchCloudData(false);
     }
-    alert('🎉 KẾT NỐI GOOGLE SHEETS THÀNH CÔNG!\n\nTừ bây giờ, dữ liệu Vòng quay may mắn và Cấu hình Admin sẽ được đồng bộ dùng chung trên toàn bộ hệ thống.');
+    alert('KẾT NỐI GOOGLE SHEETS THÀNH CÔNG!\n\nTừ bây giờ, dữ liệu Vòng quay may mắn và Cấu hình Admin sẽ được đồng bộ dùng chung trên toàn bộ hệ thống.');
   } else {
     if (msgEl) {
       msgEl.className = 'text-xs font-semibold text-rose-400 block';
-      msgEl.textContent = '❌ Lỗi: ' + testRes.message;
+      msgEl.textContent = 'Lỗi: ' + testRes.message;
     }
-    alert('⚠️ Lưu URL thành công nhưng kiểm tra kết nối thất bại:\n' + testRes.message + '\n\nVui lòng kiểm tra lại xem bạn đã chọn quyền truy cập là "Anyone" (Bất kỳ ai) khi Triển khai Web App chưa nhé!');
+    alert('Lưu URL thành công nhưng kiểm tra kết nối thất bại:\n' + testRes.message + '\n\nVui lòng kiểm tra lại xem bạn đã chọn quyền truy cập là "Anyone" (Bất kỳ ai) khi Triển khai Web App chưa nhé!');
   }
 }
 
@@ -2399,15 +2399,15 @@ async function handleTestSheetsConnection() {
   if (res.success) {
     if (msgEl) {
       msgEl.className = 'text-xs font-semibold text-emerald-400 block';
-      msgEl.textContent = '✅ ' + res.message;
+      msgEl.textContent = '' + res.message;
     }
-    alert('✅ KẾT NỐI TỐT! Google Apps Script phản hồi bình thường.');
+    alert('KẾT NỐI TỐT! Google Apps Script phản hồi bình thường.');
   } else {
     if (msgEl) {
       msgEl.className = 'text-xs font-semibold text-rose-400 block';
-      msgEl.textContent = '❌ ' + res.message;
+      msgEl.textContent = '' + res.message;
     }
-    alert('❌ KẾT NỐI THẤT BẠI: ' + res.message);
+    alert('KẾT NỐI THẤT BẠI: ' + res.message);
   }
 }
 
@@ -2415,9 +2415,9 @@ async function handleFetchFromCloud() {
   if (typeof fetchCloudData === 'function') {
     const success = await fetchCloudData(false);
     if (success) {
-      alert('✅ ĐÃ KÉO DỮ LIỆU MỚI NHẤT TỪ GOOGLE SHEETS VỀ MÁY THÀNH CÔNG!');
+      alert('ĐÃ KÉO DỮ LIỆU MỚI NHẤT TỪ GOOGLE SHEETS VỀ MÁY THÀNH CÔNG!');
     } else {
-      alert('❌ Không thể kéo dữ liệu từ Google Sheets. Vui lòng kiểm tra kết nối mạng hoặc URL Web App.');
+      alert('Không thể kéo dữ liệu từ Google Sheets. Vui lòng kiểm tra kết nối mạng hoặc URL Web App.');
     }
   }
 }
@@ -2440,10 +2440,10 @@ function copyAppsScriptCode() {
         feedback.classList.remove('hidden');
         setTimeout(() => feedback.classList.add('hidden'), 3000);
       }
-      alert('📋 ĐÃ SAO CHÉP MÃ APPS SCRIPT!\n\nBây giờ bạn chỉ cần mở Google Sheets -> Tiện ích mở rộng -> Apps Script -> Xóa code cũ và bấm Ctrl+V để dán.');
+      alert('ĐÃ SAO CHÉP MÃ APPS SCRIPT!\n\nBây giờ bạn chỉ cần mở Google Sheets -> Tiện ích mở rộng -> Apps Script -> Xóa code cũ và bấm Ctrl+V để dán.');
     }).catch(() => {
       document.execCommand('copy');
-      alert('📋 Đã sao chép mã Apps Script!');
+      alert('Đã sao chép mã Apps Script!');
     });
   }
 }

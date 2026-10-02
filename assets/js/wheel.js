@@ -144,21 +144,21 @@ function forwardLeadToBotWebhook(newLead) {
 
     const leadRef = (newLead.ref && newLead.ref !== 'direct') ? newLead.ref.toUpperCase() : 'Nguồn Tự Nhiên';
     const refBadgeTg = (newLead.ref && newLead.ref !== 'direct') 
-      ? `👤 *Người Giới Thiệu (Ref):* \`${leadRef}\` 🌟 *(+1 Điểm Thi Đua)*` 
-      : `🌐 *Nguồn:* \`Trực tiếp (Website)\``;
+      ? `*Người Giới Thiệu (Ref):* \`${leadRef}\` *(+1 Điểm Thi Đua)*` 
+      : `*Nguồn:* \`Trực tiếp (Website)\``;
 
     // 1. Forward to Telegram Bot if configured and active
     if (config.telegram_enabled && config.telegram_token && config.telegram_chat_id) {
-      const tgText = `🔔 *[EUREKA 2026] CÓ KHÁCH QUAY TRÚNG THƯỞNG MỚI!*
+      const tgText = `*[EUREKA 2026] CÓ KHÁCH QUAY TRÚNG THƯỞNG MỚI!*
 ━━━━━━━━━━━━━━━━━━
-📱 *Số Điện Thoại:* \`${newLead.phone}\`
-🎁 *Phần Quà:* *${newLead.prize}*
-🎟 *Mã Voucher:* \`${newLead.voucherCode}\`
+*Số Điện Thoại:* \`${newLead.phone}\`
+*Phần Quà:* *${newLead.prize}*
+*Mã Voucher:* \`${newLead.voucherCode}\`
 ${refBadgeTg}
-⏰ *Thời Gian:* ${newLead.createdAt}
+*Thời Gian:* ${newLead.createdAt}
 ━━━━━━━━━━━━━━━━━━
-👉 *[BẤM ĐÂY CHAT ZALO VỚI KHÁCH](${zaloChatLink})*
-📞 *Gọi điện ngay:* tel:${newLead.phone}`;
+*[BẤM ĐÂY CHAT ZALO VỚI KHÁCH](${zaloChatLink})*
+*Gọi điện ngay:* tel:${newLead.phone}`;
 
       let tgChatId = config.telegram_chat_id ? String(config.telegram_chat_id).trim() : '';
       if (tgChatId && /^[0-9]{10,}$/.test(tgChatId)) {
@@ -492,7 +492,7 @@ function spinWheel() {
   const check = validateRealVietnamesePhone(rawPhone);
   if (!check.valid) {
     if (errorEl) {
-      errorEl.innerHTML = `⚠️ ${check.message}`;
+      errorEl.innerHTML = check.message;
       errorEl.classList.remove('hidden');
     }
     if (input) input.focus();
@@ -508,7 +508,7 @@ function spinWheel() {
       errorEl.innerHTML = `
         <div class="p-3 rounded-xl bg-amber-500/15 border border-amber-500/40 text-amber-200 text-xs text-left space-y-1.5 mt-2">
           <div class="font-bold flex items-center gap-1.5 text-amber-300">
-            <span>🔒</span> SĐT [${validPhone}] ĐÃ THAM GIA QUAY THƯỞNG!
+            SĐT [${validPhone}] ĐÃ THAM GIA QUAY THƯỞNG!
           </div>
           <div class="text-[11px] leading-relaxed text-slate-300">
             Mỗi số điện thoại chỉ được quay <strong>01 lần duy nhất</strong> trong chương trình.<br>
@@ -517,7 +517,7 @@ function spinWheel() {
           </div>
           <div class="pt-1">
             <button type="button" onclick="viewExistingVoucher('${validPhone}')" class="text-[11px] text-sky-400 hover:text-sky-300 font-bold underline cursor-pointer">
-              👉 Bấm để xem lại & lấy lại mã Voucher đã trúng
+              Bấm để xem lại & lấy lại mã Voucher đã trúng
             </button>
           </div>
         </div>
@@ -826,7 +826,7 @@ function spinM05Admin() {
 
   const pool = getM05BookingPool();
   if (!pool || pool.length === 0) {
-    alert('⚠️ Danh sách mã booking dự thưởng đang trống!\nVui lòng vào Admin để tải hoặc nạp danh sách mã booking trước khi quay.');
+    alert('Danh sách mã booking dự thưởng đang trống!\nVui lòng vào Admin để tải hoặc nạp danh sách mã booking trước khi quay.');
     return;
   }
 
@@ -853,7 +853,7 @@ function spinM05Admin() {
   // Filter pool to exclude already-won customer codes
   let eligiblePool = pool.filter(code => !wonCustomerCodes.includes(extractCustomerCode(code)));
   if (eligiblePool.length === 0) {
-    alert('⚠️ Tất cả mã khách hàng trong kỳ "' + period + '" đã trúng thưởng!\nVui lòng chọn kỳ quay khác hoặc nạp thêm mã booking.');
+    alert('Tất cả mã khách hàng trong kỳ "' + period + '" đã trúng thưởng!\nVui lòng chọn kỳ quay khác hoặc nạp thêm mã booking.');
     return;
   }
 
@@ -911,7 +911,7 @@ function spinM05Admin() {
           booking_code: winningBooking,
           prize: currentPrize,
           draw_time: new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' }) + ' - ' + new Date().toLocaleDateString('vi-VN'),
-          status: '✅ Vừa quay trúng'
+          status: 'Vừa quay trúng'
         });
         localStorage.setItem('eureka_monthly_winners', JSON.stringify(winners));
         renderPublicMonthlyWinners();
@@ -925,7 +925,7 @@ function spinM05Admin() {
       }
 
       setTimeout(() => {
-        alert(`🎉 [CHÚC MỪNG MÃ BOOKING TRÚNG THƯỞNG]\n═════════════════════════════════════\n🎯 Kỳ Quay: ${period}\n🎫 Mã Booking Trúng Thưởng: ${winningBooking}\n🎁 Giải Thưởng Tri Ân: ${currentPrize}\n═════════════════════════════════════\nKết quả đã được ghi nhận tự động vào Bảng Vinh Danh Công Khai!`);
+        alert(`[CHÚC MỪNG MÃ BOOKING TRÚNG THƯỞNG]\n═════════════════════════════════════\nKỳ Quay: ${period}\nMã Booking Trúng Thưởng: ${winningBooking}\nGiải Thưởng Tri Ân: ${currentPrize}\n═════════════════════════════════════\nKết quả đã được ghi nhận tự động vào Bảng Vinh Danh Công Khai!`);
       }, 250);
     }
   }
@@ -943,10 +943,10 @@ function renderPublicMonthlyWinners() {
     winners = getMonthlyWinners();
   } else {
     winners = [
-      { period: "Kỳ 10/2026 (Mùng 05/11)", booking_code: "ERK-BK-2026-8891", prize: "Voucher Chiết Khấu 300.000 đ", draw_time: "10h05 - 05/11/2026", status: "✅ Đã đối soát & trừ cước" },
-      { period: "Kỳ 10/2026 (Mùng 05/11)", booking_code: "ERK-BK-2026-4432", prize: "Vé Ưu Tiên Xếp Cont Sớm", draw_time: "10h10 - 05/11/2026", status: "✅ Đã cấp vé ưu tiên" },
-      { period: "Kỳ 10/2026 (Mùng 05/11)", booking_code: "ERK-BK-2026-1205", prize: "Voucher Chiết Khấu 300.000 đ", draw_time: "10h15 - 05/11/2026", status: "✅ Đã đối soát & trừ cước" },
-      { period: "Kỳ 09/2026 (Mùng 05/10)", booking_code: "ERK-BK-2026-7731", prize: "Giảm 50% Phí Lưu Kho Bãi", draw_time: "10h08 - 05/10/2026", status: "✅ Đã hoàn tất trừ phí" }
+      { period: "Kỳ 10/2026 (Mùng 05/11)", booking_code: "ERK-BK-2026-8891", prize: "Voucher Chiết Khấu 300.000 đ", draw_time: "10h05 - 05/11/2026", status: "Đã đối soát & trừ cước" },
+      { period: "Kỳ 10/2026 (Mùng 05/11)", booking_code: "ERK-BK-2026-4432", prize: "Vé Ưu Tiên Xếp Cont Sớm", draw_time: "10h10 - 05/11/2026", status: "Đã cấp vé ưu tiên" },
+      { period: "Kỳ 10/2026 (Mùng 05/11)", booking_code: "ERK-BK-2026-1205", prize: "Voucher Chiết Khấu 300.000 đ", draw_time: "10h15 - 05/11/2026", status: "Đã đối soát & trừ cước" },
+      { period: "Kỳ 09/2026 (Mùng 05/10)", booking_code: "ERK-BK-2026-7731", prize: "Giảm 50% Phí Lưu Kho Bãi", draw_time: "10h08 - 05/10/2026", status: "Đã hoàn tất trừ phí" }
     ];
   }
 

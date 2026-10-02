@@ -114,7 +114,7 @@ function handleApplyZaloVoucher(e) {
 
   const btnText = document.getElementById('modal-zalo-btn-text');
   if (btnText) {
-    btnText.textContent = '✅ ĐÃ SAO CHÉP LỜI NHẮN! ĐANG MỞ ZALO...';
+    btnText.textContent = 'ĐÃ SAO CHÉP LỜI NHẮN! ĐANG MỞ ZALO...';
     setTimeout(() => {
       btnText.textContent = 'Áp Dụng Mã Ngay Qua Zalo Hotline';
     }, 3000);
@@ -255,7 +255,7 @@ function renderNhiemVuDisplay() {
 
         <div class="text-center max-w-2xl mx-auto mb-8 relative z-10">
           <span class="px-3.5 py-1.5 rounded-full bg-emerald-500/20 text-emerald-300 text-xs font-black border border-emerald-500/30 uppercase tracking-wider inline-block mb-3">
-            📊 BẢNG TỔNG KẾT TOÀN DIỆN CHƯƠNG TRÌNH
+            BẢNG TỔNG KẾT TOÀN DIỆN CHƯƠNG TRÌNH
           </span>
           <h3 class="text-2xl sm:text-3xl font-black text-slate-900 font-display">
             Tổng Kết 3 Chặng Nhiệm Vụ Hệ Thống
@@ -278,7 +278,7 @@ function renderNhiemVuDisplay() {
               <div class="my-4 p-4 rounded-xl bg-amber-50/70 border border-amber-200 text-center">
                 <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Số KH hoàn thành nhiệm vụ</span>
                 <div class="text-3xl sm:text-4xl font-black text-amber-400">${count1}</div>
-                <span class="text-[11px] text-emerald-400 font-semibold mt-1 block">✓ Đã nhận VIP+1 Tháng 11</span>
+                <span class="text-[11px] text-emerald-400 font-semibold mt-1 block">Đã nhận VIP+1 Tháng 11</span>
               </div>
             </div>
             <div class="pt-3 border-t border-slate-100 text-xs text-slate-600 flex items-center justify-between">
@@ -299,7 +299,7 @@ function renderNhiemVuDisplay() {
               <div class="my-4 p-4 rounded-xl bg-orange-50/70 border border-orange-200 text-center">
                 <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Số KH hoàn thành nhiệm vụ</span>
                 <div class="text-3xl sm:text-4xl font-black text-orange-400">${count2}</div>
-                <span class="text-[11px] text-emerald-400 font-semibold mt-1 block">✓ Đã nhận VIP+1 Tháng 12</span>
+                <span class="text-[11px] text-emerald-400 font-semibold mt-1 block">Đã nhận VIP+1 Tháng 12</span>
               </div>
             </div>
             <div class="pt-3 border-t border-slate-100 text-xs text-slate-600 flex items-center justify-between">
@@ -320,7 +320,7 @@ function renderNhiemVuDisplay() {
               <div class="my-4 p-4 rounded-xl bg-blue-50/70 border border-blue-200 text-center">
                 <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider block mb-1">Số KH hoàn thành nhiệm vụ</span>
                 <div class="text-3xl sm:text-4xl font-black text-blue-400">${count3}</div>
-                <span class="text-[11px] text-emerald-400 font-semibold mt-1 block">✓ Đã nhận VIP+1 Tháng 01/2027</span>
+                <span class="text-[11px] text-emerald-400 font-semibold mt-1 block">Đã nhận VIP+1 Tháng 01/2027</span>
               </div>
             </div>
             <div class="pt-3 border-t border-slate-100 text-xs text-slate-600 flex items-center justify-between">
@@ -333,7 +333,7 @@ function renderNhiemVuDisplay() {
         <!-- Super VIP Grand Banner -->
         <div class="p-5 sm:p-6 rounded-2xl bg-gradient-to-r from-amber-500/20 via-slate-900/90 to-blue-500/20 border-2 border-amber-400/50 shadow-xl flex flex-col sm:flex-row sm:items-center justify-between gap-4 relative z-10">
           <div class="flex items-center gap-4">
-            <span class="text-4xl sm:text-5xl">🏆</span>
+            
             <div>
               <h4 class="text-base sm:text-lg font-black text-amber-300 font-display">Chiến Binh Bứt Phá — Hoàn Thành Trọn Vẹn 3 Chặng</h4>
               <p class="text-xs sm:text-sm text-slate-200 mt-0.5 leading-relaxed">
@@ -342,7 +342,7 @@ function renderNhiemVuDisplay() {
             </div>
           </div>
           <span class="px-4 py-2 rounded-xl bg-amber-500/20 border border-amber-400/50 text-amber-300 text-xs font-black whitespace-nowrap self-start sm:self-center">
-            🎖️ Tôn Vinh Đêm Gala
+            Tôn Vinh Đêm Gala
           </span>
         </div>
       </div>
@@ -373,11 +373,11 @@ function renderNhiemVuDisplay() {
             <div class="p-2 sm:p-2.5 rounded-xl border text-center transition-all ${mode === 'chang-1' ? 'bg-amber-500/20 border-amber-400 text-amber-300 font-bold shadow-md ring-1 ring-amber-400/50' : 'bg-white border-slate-200 text-slate-600'}">
               <div class="flex items-center justify-center gap-1 text-[11px] font-black uppercase">
                 <span>Chặng 1</span>
-                ${mode === 'chang-1' ? '<span class="inline-block w-1.5 h-1.5 rounded-full bg-amber-400 animate-ping"></span>' : '<span class="text-emerald-400">✓</span>'}
+                ${mode === 'chang-1' ? '<span class="inline-block w-1.5 h-1.5 rounded-full bg-amber-400 animate-ping"></span>' : '<span class="text-emerald-400"></span>'}
               </div>
               <div class="text-[10px] text-slate-400 mt-0.5 font-medium">01/10 – 30/10</div>
               <div class="text-[9px] ${mode === 'chang-1' ? 'text-amber-300 font-bold' : 'text-emerald-400 font-semibold'} mt-0.5">
-                ${mode === 'chang-1' ? '⚡ Đang công bố' : 'Hoàn thành'}
+                ${mode === 'chang-1' ? 'Đang công bố' : 'Hoàn thành'}
               </div>
             </div>
 
@@ -388,7 +388,7 @@ function renderNhiemVuDisplay() {
               </div>
               <div class="text-[10px] text-slate-400 mt-0.5 font-medium">01/11 – 20/11</div>
               <div class="text-[9px] ${mode === 'chang-2' ? 'text-orange-300 font-bold' : 'text-slate-500'} mt-0.5">
-                ${mode === 'chang-2' ? '⚡ Đang công bố' : 'Kế tiếp'}
+                ${mode === 'chang-2' ? 'Đang công bố' : 'Kế tiếp'}
               </div>
             </div>
 
@@ -399,7 +399,7 @@ function renderNhiemVuDisplay() {
               </div>
               <div class="text-[10px] text-slate-400 mt-0.5 font-medium">01/12 – 20/12</div>
               <div class="text-[9px] ${mode === 'chang-3' ? 'text-blue-300 font-bold' : 'text-slate-500'} mt-0.5">
-                ${mode === 'chang-3' ? '⚡ Đang công bố' : 'Về đích Gala'}
+                ${mode === 'chang-3' ? 'Đang công bố' : 'Về đích Gala'}
               </div>
             </div>
           </div>
@@ -415,7 +415,7 @@ function renderNhiemVuDisplay() {
                   ${curChang.period_title}
                 </span>
                 <span class="text-xs font-bold text-slate-800 bg-white/95 backdrop-blur-md px-3 py-1 rounded-lg border border-slate-200 shadow-sm">
-                  📅 ${curChang.time_range}
+                  ${curChang.time_range}
                 </span>
               </div>
 
@@ -440,7 +440,7 @@ function renderNhiemVuDisplay() {
             <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col justify-between"
               <div>
                 <span class="block text-[11px] font-bold text-slate-400 uppercase tracking-wide mb-1">
-                  📋 Thể Lệ & Điều Kiện:
+                  Thể Lệ & Điều Kiện:
                 </span>
                 <span class="text-base font-extrabold ${themeColors.text} block">
                   ${curChang.condition}
@@ -455,7 +455,7 @@ function renderNhiemVuDisplay() {
             <div class="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex flex-col justify-between">
               <div>
                 <span class="block text-[11px] font-bold text-emerald-400 uppercase tracking-wide mb-1">
-                  🎁 Quyền Lợi Đạt Chuẩn:
+                  Quyền Lợi Đạt Chuẩn:
                 </span>
                 <span class="text-base font-black text-emerald-300 block">
                   ${curChang.reward}
@@ -489,12 +489,12 @@ function renderNhiemVuDisplay() {
           <div class="flex items-center justify-between gap-2 mb-3.5 pb-3 border-b border-slate-700">
             <div>
               <h3 class="text-base font-black text-slate-900 font-display flex items-center gap-1.5">
-                <span>👑</span> Mã KH Hoàn Thành Nhiệm Vụ
+                Mã KH Hoàn Thành Nhiệm Vụ
               </h3>
               <p class="text-[11px] text-slate-500 font-medium">Đã nâng hạng VIP+1</p>
             </div>
             <span id="nhiem-vu-count-badge" class="px-2.5 py-1 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-xs font-black whitespace-nowrap">
-              🎉 ${codes.length} Mã KH
+              ${codes.length} Mã KH
             </span>
           </div>
 
@@ -514,9 +514,9 @@ function renderNhiemVuDisplay() {
 
         <!-- Footer Notice Compact -->
         <div class="pt-3 border-t border-slate-700/80 mt-3 flex items-center justify-between text-[11px] relative z-10 text-slate-400">
-          <span>⚡ Hệ thống nâng cấp tự động</span>
+          <span>Hệ thống nâng cấp tự động</span>
           <span class="text-emerald-400 font-bold whitespace-nowrap">
-            ✓ Đối soát hợp lệ
+            Đối soát hợp lệ
           </span>
         </div>
       </div>
@@ -613,7 +613,7 @@ const GIAI_PHU_CONFIGS = {
   'vua-so-luong-don': {
     id: 'vua-so-luong-don',
     name: 'Vua Số Lượng Đơn',
-    icon: '📦',
+    icon: '',
     prize: '3.000.000 đ',
     badge: 'Tiêu chí đơn hàng',
     criterion: 'Khách hàng có tổng số đơn booking hoàn tất nhiều nhất trong chương trình.',
@@ -626,7 +626,7 @@ const GIAI_PHU_CONFIGS = {
   'tan-binh-xuat-sac': {
     id: 'tan-binh-xuat-sac',
     name: 'Tân Binh Xuất Sắc',
-    icon: '🌟',
+    icon: '',
     prize: '3.000.000 đ',
     badge: 'Khách hàng mới',
     criterion: 'Khách hàng Mới (tạo tài khoản từ 01/10) có Phí Dịch Vụ tích lũy cao nhất.',
@@ -644,7 +644,7 @@ const GIAI_PHU_CONFIGS = {
   'su-tro-lai-an-tuong': {
     id: 'su-tro-lai-an-tuong',
     name: 'Sự Trở Lại Ấn Tượng',
-    icon: '🔄',
+    icon: '',
     prize: '3.000.000 đ',
     badge: 'Tái kích hoạt',
     criterion: 'Khách hàng cũ (từ đầu năm chưa gửi hàng) quay lại gửi hàng bứt phá nhất.',
@@ -662,7 +662,7 @@ const GIAI_PHU_CONFIGS = {
   'vua-tai-trong': {
     id: 'vua-tai-trong',
     name: 'Vua Tải Trọng (Kg)',
-    icon: '⚓',
+    icon: '',
     prize: '3.000.000 đ',
     badge: 'Tổng khối lượng',
     criterion: 'Tổng khối lượng kg cao nhất (áp dụng lô hàng đi term E & F quốc tế).',
@@ -682,7 +682,7 @@ const GIAI_PHU_CONFIGS = {
   'vua-khoi-luong': {
     id: 'vua-khoi-luong',
     name: 'Vua Khối Lượng (M³)',
-    icon: '🚛',
+    icon: '',
     prize: '3.000.000 đ',
     badge: 'Tổng thể tích',
     criterion: 'Tổng thể tích m³ cao nhất (áp dụng lô hàng gom cont chính ngạch).',
@@ -886,11 +886,11 @@ function renderGiaiPhuTable(list, query = '') {
 
     let rankBadge = '';
     if (rank === 1) {
-      rankBadge = `<span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 font-black text-xs shadow-md">🥇 1</span>`;
+      rankBadge = `<span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 font-black text-xs shadow-md">1</span>`;
     } else if (rank === 2) {
-      rankBadge = `<span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-sky-100 text-sky-800 border border-sky-300 font-black text-xs shadow">🥈 2</span>`;
+      rankBadge = `<span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-sky-100 text-sky-800 border border-sky-300 font-black text-xs shadow">2</span>`;
     } else if (rank === 3) {
-      rankBadge = `<span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-amber-700 text-white font-black text-xs shadow">🥉 3</span>`;
+      rankBadge = `<span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-amber-700 text-white font-black text-xs shadow">3</span>`;
     } else {
       rankBadge = `<span class="text-xs font-bold text-slate-400">#${rank}</span>`;
     }
@@ -899,7 +899,7 @@ function renderGiaiPhuTable(list, query = '') {
     let rowBg = 'hover:bg-amber-50/60 transition-colors';
 
     if (isWinnerThisAward) {
-      statusBadge = `<span class="px-2.5 py-1 rounded-full bg-emerald-500/25 text-emerald-300 text-[10px] font-black border border-emerald-500/50 shadow-sm animate-pulse">🏆 ĐẠT GIẢI 3TR</span>`;
+      statusBadge = `<span class="px-2.5 py-1 rounded-full bg-emerald-500/25 text-emerald-300 text-[10px] font-black border border-emerald-500/50 shadow-sm animate-pulse">ĐẠT GIẢI 3TR</span>`;
       rowBg = 'bg-emerald-500/15 hover:bg-emerald-500/20 border-emerald-500/40';
     } else if (otherAward && otherAward.type === 'main') {
       statusBadge = `<span class="px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 text-[10px] font-bold border border-amber-500/35" title="${otherAward.name}">Đã đạt Giải Chính</span>`;
@@ -950,7 +950,7 @@ function renderGiaiPhuTable(list, query = '') {
         
         let statusHtml = '';
         if (isWinnerThisAward) {
-          statusHtml = `<span class="text-emerald-300 font-black">🎉 Xin chúc mừng! Mã <strong>${code}</strong> là Khách hàng Đạt Giải 3.000.000 đ của danh hiệu này!</span>`;
+          statusHtml = `<span class="text-emerald-300 font-black">Xin chúc mừng! Mã <strong>${code}</strong> là Khách hàng Đạt Giải 3.000.000 đ của danh hiệu này!</span>`;
         } else if (otherAward && otherAward.type === 'main') {
           statusHtml = `<span>Mã <strong>${code}</strong> xếp hạng <strong>#${userFoundRank}</strong> tiêu chí này, nhưng đã được vinh danh tại <strong>${otherAward.name}</strong> (nhường quyền xét giải phụ cho ứng viên kế tiếp).</span>`;
         } else if (otherAward && otherAward.type === 'side') {
@@ -1151,7 +1151,7 @@ function renderGalaSummaryData() {
     if (t1Code) t1Code.textContent = `MÃ: ${top1.customer_code || 'ERK-KH-8891'}`;
     if (t1Name) t1Name.textContent = top1.customer_name || top1.original_name || 'Khách hàng Quán Quân';
     if (t1Fee) t1Fee.textContent = formatVND(top1.service_fee);
-    if (t1Orders) t1Orders.textContent = `✓ ${top1.order_count || 0} Đơn hoàn tất`;
+    if (t1Orders) t1Orders.textContent = `${top1.order_count || 0} Đơn hoàn tất`;
   }
 
   // Top 2 - Á Quân 1
@@ -1164,7 +1164,7 @@ function renderGalaSummaryData() {
     if (t2Code) t2Code.textContent = `MÃ: ${top2.customer_code || 'ERK-KH-4432'}`;
     if (t2Name) t2Name.textContent = top2.customer_name || top2.original_name || 'Khách hàng Á Quân 1';
     if (t2Fee) t2Fee.textContent = formatVND(top2.service_fee);
-    if (t2Orders) t2Orders.textContent = `✓ ${top2.order_count || 0} Đơn hoàn tất`;
+    if (t2Orders) t2Orders.textContent = `${top2.order_count || 0} Đơn hoàn tất`;
   }
 
   // Top 3 - Á Quân 2
@@ -1177,7 +1177,7 @@ function renderGalaSummaryData() {
     if (t3Code) t3Code.textContent = `MÃ: ${top3.customer_code || 'ERK-KH-1205'}`;
     if (t3Name) t3Name.textContent = top3.customer_name || top3.original_name || 'Khách hàng Á Quân 2';
     if (t3Fee) t3Fee.textContent = formatVND(top3.service_fee);
-    if (t3Orders) t3Orders.textContent = `✓ ${top3.order_count || 0} Đơn hoàn tất`;
+    if (t3Orders) t3Orders.textContent = `${top3.order_count || 0} Đơn hoàn tất`;
   }
 
   // 3. TỰ ĐỘNG PHÂN PHỐI 05 GIẢI PHỤ CHUYÊN MÔN (ĐỘC QUYỀN KHÔNG TRÙNG LẶP KHÁCH HÀNG)
@@ -1304,7 +1304,7 @@ function applyGalaCelebrationState(active) {
       : 'Bật Chế Độ Vinh Danh Gala (Chỉ Hiện Tổng Kết & BXH)';
   }
   if (toggleBtnIcon) {
-    toggleBtnIcon.textContent = active ? '🏆' : '📋';
+    toggleBtnIcon.textContent = '';
   }
 
   // Tự động tính toán & điền số liệu Gala từ BXH
