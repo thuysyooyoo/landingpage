@@ -4,12 +4,17 @@
  */
 
 const STORAGE_KEY_SHEETS_URL = 'eureka_sheets_api_url';
-const DEFAULT_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbz0jaKwtOv8BSZljDtxDxJ9vQ7Zw2dLRwI5Bgg7tvQTn_W7PxbfymX6rtA9YMy5uke_/exec';
+const DEFAULT_SHEETS_URL = 'https://script.google.com/macros/s/AKfycby0ELwJf47jlvETcGdDKXshs2Efj-eMSJbI8ET9Bn4a93xqCJCTiT7UBwV_b9RSso0b/exec';
 
 // Get active API URL
 function getSheetsApiUrl() {
   try {
     const saved = localStorage.getItem(STORAGE_KEY_SHEETS_URL);
+    // Tự động chuyển đổi nếu máy còn lưu URL cũ
+    if (saved && (saved.includes('AKfycbz0jaKwtOv8BSZljDtxDxJ9vQ7Zw2dLRwI5Bgg7tvQTn_W7PxbfymX6rtA9YMy5uke_') || saved.trim() === '')) {
+      localStorage.setItem(STORAGE_KEY_SHEETS_URL, DEFAULT_SHEETS_URL);
+      return DEFAULT_SHEETS_URL;
+    }
     if (saved && saved.trim().startsWith('http')) return saved.trim();
   } catch (e) {}
   return DEFAULT_SHEETS_URL;
@@ -76,6 +81,9 @@ async function fetchCloudData(silent = true) {
           data.spinLeads.forEach(l => leadMap.set(l.phone || l.id, l));
           const mergedLeads = Array.from(leadMap.values());
           localStorage.setItem('eureka_spin_leads', JSON.stringify(mergedLeads));
+          if (typeof renderAdminSpinLeadsTable === 'function') {
+            renderAdminSpinLeadsTable();
+          }
           hasUpdates = true;
         } catch (e) {}
       }
@@ -134,6 +142,9 @@ async function fetchCloudData(silent = true) {
           }
           if (typeof renderAdminWeeklyWinner === 'function') {
             renderAdminWeeklyWinner();
+          }
+          if (typeof renderWeeklyWinnerSpotlight === 'function') {
+            renderWeeklyWinnerSpotlight();
           }
           hasUpdates = true;
         } catch (e) {}
@@ -236,7 +247,7 @@ async function fetchCloudData(silent = true) {
       }
 
       // 12. Đồng bộ Mật khẩu Quản Trị Viên Custom
-      const cloudAdminPass = data.configs && data.configs.eureka_admin_password_custom;
+      const cloudAdminPass = data.adminPassword || (data.configs && data.configs.eureka_admin_password_custom);
       if (cloudAdminPass && typeof cloudAdminPass === 'string' && cloudAdminPass.trim().length > 0) {
         try {
           localStorage.setItem('eureka_admin_password_custom', cloudAdminPass.trim());
@@ -415,6 +426,27 @@ async function testCloudConnection(testUrl) {
   }
 }
 
+// 6. Dọn dẹp sheet thừa trên Cloud (chỉ giữ lại 8 sheet chuẩn v4.0)
+async function cleanupUnusedSheetsOnCloud() {
+  const url = getSheetsApiUrl();
+  if (!url) {
+    alert('Chưa cấu hình URL Google Sheets Web App!');
+    return false;
+  }
+  try {
+    const res = await fetch(`${url}?action=cleanupSheets&t=${Date.now()}`, {
+      method: 'GET',
+      mode: 'cors',
+      cache: 'no-cache'
+    });
+    const data = await res.json();
+    return data && data.status === 'success';
+  } catch (err) {
+    console.error('Lỗi khi gọi cleanupSheets:', err);
+    return false;
+  }
+}
+
 // Cập nhật Badge hiển thị trạng thái Cloud trên thanh Header Admin
 function updateCloudSyncStatusBadge(isConnected, text) {
   const badge = document.getElementById('admin-cloud-sync-badge');
@@ -432,6 +464,7 @@ function updateCloudSyncStatusBadge(isConnected, text) {
 window.syncAdminConfigToCloud = syncAdminConfigToCloud;
 window.fetchCloudData = fetchCloudData;
 window.pushAllLocalDataToCloud = pushAllLocalDataToCloud;
+window.cleanupUnusedSheetsOnCloud = cleanupUnusedSheetsOnCloud;
 window.testCloudConnection = testCloudConnection;
 window.updateCloudSyncStatusBadge = updateCloudSyncStatusBadge;
 

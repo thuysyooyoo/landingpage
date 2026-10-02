@@ -1,14 +1,15 @@
 /**
  * =========================================================================
- * GOOGLE APPS SCRIPT CLOUD DATABASE v3.0 - EUREKA CUSTOMER AWARDS 2026
- * HỆ THỐNG QUẢN LÝ DỮ LIỆU ĐỘC LẬP TỪNG SHEET CHUYÊN BIỆT:
- * 1. Sheet 'CauHinhVongQuay': Quản lý 8 ô giải thưởng, nhãn, tỉ lệ %, kho quà.
- * 2. Sheet 'CauHinhBotTelegram': Quản lý Telegram Bot Token, Chat ID, Webhook.
+ * GOOGLE APPS SCRIPT CLOUD DATABASE v4.0 - EUREKA CUSTOMER AWARDS 2026
+ * HỆ THỐNG QUẢN LÝ DỮ LIỆU ĐỘC LẬP TỪNG SHEET CHUYÊN BIỆT (SOURCE OF TRUTH):
+ * 1. Sheet 'CauHinhBotTelegram': Quản lý Telegram Bot Token, Chat ID, Webhook.
+ * 2. Sheet 'CauHinhVongQuay': Quản lý 8 ô giải thưởng, nhãn nan quạt, tỉ lệ %, kho quà, màu sắc.
  * 3. Sheet 'NhiemVuHeThong': Quản lý Chặng 1, 2, 3 và Danh sách Mã KH hoàn thành.
- * 4. Sheet 'CaiDatChung': Quản lý Mật khẩu Admin, Bật/Tắt Gala, Top Tuần, Giải M05.
- * 5. Sheet 'BangXepHang': Quản lý 25+ khách hàng đua top doanh số (Cân & Khối riêng).
+ * 4. Sheet 'BangXepHang': Quản lý 25+ khách hàng đua top doanh số (Cân & Khối riêng).
+ * 5. Sheet 'CaiDatChung': Quản lý Mật khẩu Admin, Bật/Tắt Gala, Top Tuần, Giải M05, Booking Pool.
  * 6. Sheet 'VongQuayMayMan': Lưu lịch sử SĐT khách quay nhận Voucher.
  * 7. Sheet 'VongQuayM05': Lưu lịch sử mã booking trúng thưởng Vòng Quay Mùng 05.
+ * 8. Sheet 'LichSuChinhSua': CHỈ DÙNG GHI NHẬN LỊCH SỬ CHỈNH SỬA (AUDIT LOG), KHÔNG LƯU CẤU HÌNH RUNTIME.
  * =========================================================================
  */
 
@@ -18,7 +19,7 @@ function doGet(e) {
   if (action === 'ping') {
     return jsonOutput({
       status: 'ok',
-      message: 'Kết nối Google Sheets Cloud Database thành công!',
+      message: 'Kết nối Google Sheets Cloud Database v4.0 thành công!',
       timestamp: new Date().toISOString()
     });
   }
@@ -27,20 +28,20 @@ function doGet(e) {
     var ss = SpreadsheetApp.getActiveSpreadsheet();
     initDatabaseSheets(ss);
 
-    // 1. Đọc Cấu hình Vòng Quay May Mắn từ Sheet riêng: CauHinhVongQuay
-    var wheelConfig = readWheelConfigFromSheet(ss);
-
-    // 2. Đọc Cấu hình Telegram Bot & Webhook từ Sheet riêng: CauHinhBotTelegram
+    // 1. Đọc Cấu hình Telegram Bot & Webhook từ Sheet riêng: CauHinhBotTelegram
     var botConfig = readBotConfigFromSheet(ss);
+
+    // 2. Đọc Cấu hình Vòng Quay May Mắn từ Sheet riêng: CauHinhVongQuay
+    var wheelConfig = readWheelConfigFromSheet(ss);
 
     // 3. Đọc Cấu hình Nhiệm Vụ Hệ Thống từ Sheet riêng: NhiemVuHeThong
     var nhiemVuConfig = readNhiemVuConfigFromSheet(ss);
 
-    // 4. Đọc Cài Đặt Chung từ Sheet riêng: CaiDatChung
-    var generalSettings = readGeneralSettingsFromSheet(ss);
-
-    // 5. Đọc Bảng Xếp Hạng Doanh Số từ Sheet riêng: BangXepHang
+    // 4. Đọc Bảng Xếp Hạng Doanh Số từ Sheet riêng: BangXepHang
     var customLeaderboard = readLeaderboardFromSheet(ss);
+
+    // 5. Đọc Cài Đặt Chung từ Sheet riêng: CaiDatChung
+    var generalSettings = readGeneralSettingsFromSheet(ss);
 
     // 6. Đọc Lịch Sử Khách Quay từ Sheet riêng: VongQuayMayMan
     var spinData = readSpinLeadsFromSheet(ss);
@@ -48,22 +49,42 @@ function doGet(e) {
     // 7. Đọc Danh Sách Trúng Thưởng M05 từ Sheet riêng: VongQuayM05
     var monthlyWinners = readM05WinnersFromSheet(ss);
 
+    // Trích xuất cài đặt chung chính xác theo đúng tên key
+    var adminPassword = generalSettings['eureka_admin_password_custom'] || generalSettings['admin_password'] || '';
+    var galaConfig = generalSettings['eureka_gala_awards_config'] || generalSettings['gala_config'] || null;
+    var weeklyWinner = generalSettings['eureka_weekly_winner'] || generalSettings['weekly_winner'] || null;
+    var m05BookingPool = generalSettings['eureka_m05_booking_pool'] || generalSettings['m05_booking_pool'] || null;
+    var m05CurrentPrize = generalSettings['eureka_m05_current_prize'] || generalSettings['m05_current_prize'] || '';
+    var refClicks = generalSettings['eureka_ref_clicks'] || generalSettings['ref_clicks'] || null;
+
     return jsonOutput({
       status: 'success',
       data: {
-        wheelConfig: wheelConfig,
         botConfig: botConfig,
+        wheelConfig: wheelConfig,
         nhiemVuConfig: nhiemVuConfig,
         customLeaderboard: customLeaderboard,
         spinLeads: spinData.spinLeads,
         lockedPhones: spinData.lockedPhones,
         monthlyWinners: monthlyWinners,
-        adminPassword: generalSettings.admin_password || '',
-        galaConfig: generalSettings.gala_config || null,
-        weeklyWinner: generalSettings.weekly_winner || null,
-        m05BookingPool: generalSettings.m05_booking_pool || null,
-        m05CurrentPrize: generalSettings.m05_current_prize || '',
-        refClicks: generalSettings.ref_clicks || null
+        adminPassword: adminPassword,
+        galaConfig: galaConfig,
+        weeklyWinner: weeklyWinner,
+        m05BookingPool: m05BookingPool,
+        m05CurrentPrize: m05CurrentPrize,
+        refClicks: refClicks,
+        configs: {
+          eureka_bot_config: botConfig,
+          eureka_welcome_wheel_config: wheelConfig,
+          eureka_nhiem_vu_config: nhiemVuConfig,
+          eureka_custom_leaderboard: customLeaderboard,
+          eureka_admin_password_custom: adminPassword,
+          eureka_gala_awards_config: galaConfig,
+          eureka_weekly_winner: weeklyWinner,
+          eureka_m05_booking_pool: m05BookingPool,
+          eureka_m05_current_prize: m05CurrentPrize,
+          eureka_ref_clicks: refClicks
+        }
       }
     });
   } catch (err) {
@@ -83,27 +104,30 @@ function doPost(e) {
     var payload = JSON.parse(raw);
     var action = payload.action;
 
-    // 1. Lưu Cấu Hình Vòng Quay vào Sheet riêng 'CauHinhVongQuay'
+    // 1. Lưu Cấu Hình Bot & Webhook vào Sheet riêng 'CauHinhBotTelegram'
+    if (action === 'save_bot_config' || (action === 'save_config' && payload.key === 'eureka_bot_config')) {
+      var bConfig = payload.botConfig || payload.value || {};
+      writeBotConfigToSheet(ss, bConfig);
+      logChangeHistory(ss, 'Telegram Bot & Webhook', 'Cập nhật cấu hình Bot', 'Trạng thái: ' + (bConfig.telegram_enabled ? 'BẬT' : 'TẮT') + ' | Chat ID: ' + (bConfig.telegram_chat_id || 'Trống'), 'Admin Website');
+      return jsonOutput({ status: 'success', message: 'Đã lưu cấu hình Bot vào Sheet CauHinhBotTelegram và ghi nhật ký' });
+    }
+
+    // 2. Lưu Cấu Hình Vòng Quay vào Sheet riêng 'CauHinhVongQuay'
     if (action === 'save_wheel_config' || (action === 'save_config' && payload.key === 'eureka_welcome_wheel_config')) {
       var segments = payload.wheelConfig || payload.value || [];
       if (Array.isArray(segments) && segments.length > 0) {
         writeWheelConfigToSheet(ss, segments);
-        return jsonOutput({ status: 'success', message: 'Đã lưu cấu hình Vòng Quay vào Sheet CauHinhVongQuay' });
+        logChangeHistory(ss, 'Vòng Quay May Mắn', 'Cập nhật cấu hình 8 ô quà', 'Cập nhật tỉ lệ và kho của ' + segments.length + ' ô giải thưởng', 'Admin Website');
+        return jsonOutput({ status: 'success', message: 'Đã lưu cấu hình Vòng Quay vào Sheet CauHinhVongQuay và ghi nhật ký' });
       }
-    }
-
-    // 2. Lưu Cấu Hình Bot & Webhook vào Sheet riêng 'CauHinhBotTelegram'
-    if (action === 'save_bot_config' || (action === 'save_config' && payload.key === 'eureka_bot_config')) {
-      var bConfig = payload.botConfig || payload.value || {};
-      writeBotConfigToSheet(ss, bConfig);
-      return jsonOutput({ status: 'success', message: 'Đã lưu cấu hình Bot vào Sheet CauHinhBotTelegram' });
     }
 
     // 3. Lưu Cấu Hình Nhiệm Vụ Hệ Thống vào Sheet riêng 'NhiemVuHeThong'
     if (action === 'save_nhiem_vu' || (action === 'save_config' && payload.key === 'eureka_nhiem_vu_config')) {
       var nvConfig = payload.nhiemVuConfig || payload.value || {};
       writeNhiemVuConfigToSheet(ss, nvConfig);
-      return jsonOutput({ status: 'success', message: 'Đã lưu cấu hình Nhiệm Vụ vào Sheet NhiemVuHeThong' });
+      logChangeHistory(ss, 'Nhiệm Vụ Hệ Thống', 'Cập nhật nhiệm vụ 3 chặng', 'Chế độ hiển thị: ' + (nvConfig.active_mode || 'chang-1'), 'Admin Website');
+      return jsonOutput({ status: 'success', message: 'Đã lưu cấu hình Nhiệm Vụ vào Sheet NhiemVuHeThong và ghi nhật ký' });
     }
 
     // 4. Lưu Bảng Xếp Hạng Doanh Số vào Sheet riêng 'BangXepHang'
@@ -111,7 +135,8 @@ function doPost(e) {
       var lbList = payload.leaderboard || payload.value || [];
       if (Array.isArray(lbList)) {
         writeLeaderboardToSheet(ss, lbList);
-        return jsonOutput({ status: 'success', message: 'Đã lưu ' + lbList.length + ' khách hàng vào Sheet BangXepHang' });
+        logChangeHistory(ss, 'Bảng Xếp Hạng', 'Cập nhật danh sách đua top', 'Cập nhật ' + lbList.length + ' khách hàng (Cân & Khối riêng)', 'Admin Website');
+        return jsonOutput({ status: 'success', message: 'Đã lưu ' + lbList.length + ' khách hàng vào Sheet BangXepHang và ghi nhật ký' });
       }
     }
 
@@ -129,10 +154,9 @@ function doPost(e) {
         lead.status || 'Chờ áp dụng qua Zalo'
       ]);
 
-      // Đồng thời tự động trừ 1 số lượng kho trong Sheet 'CauHinhVongQuay' nếu tìm thấy phần thưởng tương ứng
+      // Tự động trừ 1 số lượng kho trong Sheet 'CauHinhVongQuay'
       decrementWheelStock(ss, lead.prize);
-
-      return jsonOutput({ status: 'success', message: 'Đã lưu lead khách quay và cập nhật kho quà' });
+      return jsonOutput({ status: 'success', message: 'Đã lưu lead khách quay và trừ kho quà trong CauHinhVongQuay' });
     }
 
     // 6. Ghi nhận mã booking trúng thưởng M05 vào Sheet 'VongQuayM05'
@@ -144,28 +168,54 @@ function doPost(e) {
         winner.period || '',
         winner.booking_code || '',
         winner.prize || '',
-        winner.status || 'Vừa quay trúng'
+        winner.status || '✅ Vừa quay trúng'
       ]);
-      return jsonOutput({ status: 'success', message: 'Đã lưu kết quả quay M05' });
+      logChangeHistory(ss, 'Vòng Quay M05', 'Quay trúng giải M05', 'Mã trúng: ' + (winner.booking_code || '') + ' | Giải: ' + (winner.prize || ''), 'Admin Quay Thưởng');
+      return jsonOutput({ status: 'success', message: 'Đã lưu kết quả quay M05 vào Sheet VongQuayM05' });
     }
 
-    // 7. Lưu Cài Đặt Chung (Mật khẩu Admin, Gala, Top Tuần...) vào Sheet 'CaiDatChung'
+    // 7. Lưu Cài Đặt Chung vào Sheet 'CaiDatChung'
     if (action === 'save_general_setting' || action === 'save_config') {
       var key = payload.key;
       var val = payload.value;
+
+      // Phân luồng thông minh nếu payload key thuộc các hạng mục chuyên biệt
+      if (key === 'eureka_bot_config') {
+        writeBotConfigToSheet(ss, val || {});
+        logChangeHistory(ss, 'Telegram Bot & Webhook', 'Cập nhật cấu hình Bot', 'Lưu từ form cài đặt bot', 'Admin Website');
+        return jsonOutput({ status: 'success', message: 'Đã lưu Bot vào Sheet CauHinhBotTelegram' });
+      }
+      if (key === 'eureka_welcome_wheel_config') {
+        writeWheelConfigToSheet(ss, val || []);
+        logChangeHistory(ss, 'Vòng Quay May Mắn', 'Cập nhật cấu hình vòng quay', 'Lưu cấu hình 8 ô quà', 'Admin Website');
+        return jsonOutput({ status: 'success', message: 'Đã lưu Vòng Quay vào Sheet CauHinhVongQuay' });
+      }
+      if (key === 'eureka_nhiem_vu_config') {
+        writeNhiemVuConfigToSheet(ss, val || {});
+        logChangeHistory(ss, 'Nhiệm Vụ Hệ Thống', 'Cập nhật nhiệm vụ', 'Chế độ: ' + (val.active_mode || ''), 'Admin Website');
+        return jsonOutput({ status: 'success', message: 'Đã lưu Nhiệm Vụ vào Sheet NhiemVuHeThong' });
+      }
+      if (key === 'eureka_custom_leaderboard') {
+        writeLeaderboardToSheet(ss, val || []);
+        logChangeHistory(ss, 'Bảng Xếp Hạng', 'Cập nhật bảng xếp hạng', 'Tổng ' + (val ? val.length : 0) + ' khách hàng', 'Admin Website');
+        return jsonOutput({ status: 'success', message: 'Đã lưu Bảng Xếp Hạng vào Sheet BangXepHang' });
+      }
+
+      // Các cài đặt chung còn lại lưu vào Sheet CaiDatChung
       writeGeneralSettingToSheet(ss, key, val);
-      return jsonOutput({ status: 'success', message: 'Đã lưu cài đặt ' + key + ' vào Sheet CaiDatChung' });
+      logChangeHistory(ss, 'Cài Đặt Chung', 'Cập nhật ' + key, 'Giá trị đã cập nhật', 'Admin Website');
+      return jsonOutput({ status: 'success', message: 'Đã lưu cài đặt ' + key + ' vào Sheet CaiDatChung và ghi nhật ký' });
     }
 
     // 8. Đẩy toàn bộ dữ liệu máy lên Cloud (One-Click Sync All)
     if (action === 'sync_all') {
       var all = payload.data || {};
 
-      if (all.wheelConfig && Array.isArray(all.wheelConfig)) {
-        writeWheelConfigToSheet(ss, all.wheelConfig);
-      }
       if (all.botConfig && typeof all.botConfig === 'object') {
         writeBotConfigToSheet(ss, all.botConfig);
+      }
+      if (all.wheelConfig && Array.isArray(all.wheelConfig)) {
+        writeWheelConfigToSheet(ss, all.wheelConfig);
       }
       if (all.nhiemVuConfig && typeof all.nhiemVuConfig === 'object') {
         writeNhiemVuConfigToSheet(ss, all.nhiemVuConfig);
@@ -180,15 +230,25 @@ function doPost(e) {
         writeM05WinnersToSheet(ss, all.monthlyWinners);
       }
 
-      // Lưu các cài đặt còn lại vào CaiDatChung
-      if (all.adminPasswordCustom !== undefined) writeGeneralSettingToSheet(ss, 'eureka_admin_password_custom', all.adminPasswordCustom);
+      // Lưu cài đặt chung vào Sheet CaiDatChung
+      if (all.adminPasswordCustom !== undefined || (all.configs && all.configs.eureka_admin_password_custom !== undefined)) {
+        var p = all.adminPasswordCustom !== undefined ? all.adminPasswordCustom : all.configs.eureka_admin_password_custom;
+        writeGeneralSettingToSheet(ss, 'eureka_admin_password_custom', p);
+      }
       if (all.galaConfig) writeGeneralSettingToSheet(ss, 'eureka_gala_awards_config', all.galaConfig);
       if (all.weeklyWinner) writeGeneralSettingToSheet(ss, 'eureka_weekly_winner', all.weeklyWinner);
       if (all.m05BookingPool) writeGeneralSettingToSheet(ss, 'eureka_m05_booking_pool', all.m05BookingPool);
       if (all.m05CurrentPrize) writeGeneralSettingToSheet(ss, 'eureka_m05_current_prize', all.m05CurrentPrize);
       if (all.refClicks) writeGeneralSettingToSheet(ss, 'eureka_ref_clicks', all.refClicks);
 
-      return jsonOutput({ status: 'success', message: 'Đã đồng bộ toàn bộ dữ liệu vào từng Sheet riêng biệt thành công!' });
+      logChangeHistory(ss, 'Đồng Bộ Toàn Bộ', 'One-Click Sync All', 'Đã đồng bộ toàn bộ dữ liệu máy vào từng Sheet chuyên biệt', 'Admin Website');
+      return jsonOutput({ status: 'success', message: 'Đã đồng bộ toàn bộ dữ liệu vào 7 Sheet chuyên biệt độc lập thành công!' });
+    }
+
+    // 9. Dọn dẹp & xóa các sheet thừa không còn sử dụng
+    if (action === 'cleanup_unused_sheets') {
+      cleanupUnusedSheets(ss);
+      return jsonOutput({ status: 'success', message: 'Đã dọn dẹp và xóa các sheet không còn sử dụng!' });
     }
 
     return jsonOutput({ status: 'ignored', message: 'Action không xác định: ' + action });
@@ -201,26 +261,112 @@ function doPost(e) {
 // CÁC HÀM XỬ LÝ ĐỌC / GHI CHO TỪNG SHEET CHUYÊN BIỆT
 // =========================================================================
 
-// 1. SHEET 'CauHinhVongQuay'
+// 1. SHEET 'CauHinhBotTelegram'
+function readBotConfigFromSheet(ss) {
+  var sheet = ss.getSheetByName('CauHinhBotTelegram');
+  if (!sheet || sheet.getLastRow() < 2) return null;
+
+  var data = sheet.getRange(2, 1, sheet.getLastRow() - 1, 4).getValues();
+  var config = {
+    telegram_enabled: false,
+    telegram_token: '',
+    telegram_chat_id: '',
+    webhook_enabled: false,
+    webhook_url: ''
+  };
+
+  for (var i = 0; i < data.length; i++) {
+    var channel = String(data[i][0] || '').toLowerCase();
+    var rawStatus = data[i][1];
+    var status = String(rawStatus || '').toUpperCase().trim();
+    var isEnabled = (
+      rawStatus === true ||
+      status === 'BẬT' || status === 'TRUE' || status === '1' ||
+      status === 'ON' || status === 'CÓ' || status === 'ENABLE' ||
+      status === 'ENABLED' || status === 'HOẠT ĐỘNG'
+    );
+    var val1 = String(data[i][2] || '').trim();
+    var val2 = String(data[i][3] || '').trim();
+
+    if (channel.indexOf('telegram') !== -1) {
+      config.telegram_enabled = isEnabled;
+      config.telegram_token = val1;
+      config.telegram_chat_id = val2;
+    } else if (channel.indexOf('webhook') !== -1) {
+      config.webhook_enabled = isEnabled;
+      config.webhook_url = val1;
+    }
+  }
+
+  // Tự động chuẩn hóa Chat ID Telegram nếu là nhóm supergroup (>=10 số) nhưng thiếu dấu '-'
+  if (config.telegram_chat_id && /^[0-9]{10,}$/.test(config.telegram_chat_id)) {
+    config.telegram_chat_id = '-' + config.telegram_chat_id;
+  }
+
+  return config;
+}
+
+function writeBotConfigToSheet(ss, config) {
+  var sheet = ss.getSheetByName('CauHinhBotTelegram');
+  if (!sheet) return;
+
+  var chatId = String(config.telegram_chat_id || '').trim();
+  if (chatId && /^[0-9]{10,}$/.test(chatId)) {
+    chatId = '-' + chatId;
+  }
+
+  var rows = [
+    [
+      'Telegram Bot',
+      config.telegram_enabled ? 'BẬT' : 'TẮT',
+      String(config.telegram_token || '').trim(),
+      chatId,
+      'Tự động gửi thông báo khi khách quay thưởng vào nhóm Telegram',
+      formatDate(new Date())
+    ],
+    [
+      'Webhook Endpoint',
+      config.webhook_enabled ? 'BẬT' : 'TẮT',
+      String(config.webhook_url || '').trim(),
+      '',
+      'Đẩy dữ liệu JSON sang server/CRM ngoài khi khách quay',
+      formatDate(new Date())
+    ]
+  ];
+
+  sheet.getRange(2, 1, 2, 6).setValues(rows);
+}
+
+// 2. SHEET 'CauHinhVongQuay'
 function readWheelConfigFromSheet(ss) {
   var sheet = ss.getSheetByName('CauHinhVongQuay');
   if (!sheet || sheet.getLastRow() < 2) return null;
 
-  var data = sheet.getRange(2, 1, Math.min(sheet.getLastRow() - 1, 8), 7).getValues();
+  var numRows = Math.min(sheet.getLastRow() - 1, 12);
+  var data = sheet.getRange(2, 1, numRows, 7).getValues();
   var segments = [];
+
   for (var i = 0; i < data.length; i++) {
     var r = data[i];
+    var text = String(r[1] || '').trim();
+    var prize = String(r[2] || '').trim();
+    if (!text && !prize) continue;
+
+    var prob = parseSheetNumber(r[3]);
+    var stock = parseSheetNumber(r[4]);
+
     segments.push({
-      id: Number(r[0]) || (i + 1),
-      text: String(r[1] || '').trim(),
-      prize: String(r[2] || '').trim(),
-      probability_weight: Number(r[3]) || 0,
-      stock_quantity: Number(r[4]) || 0,
+      id: Number(r[0]) || (segments.length + 1),
+      text: text,
+      prize: prize || text,
+      probability_weight: prob,
+      stock_quantity: stock,
       color: String(r[5] || '#1e293b').trim(),
       textColor: String(r[6] || '#FFFFFF').trim()
     });
   }
-  return segments.length === 8 ? segments : null;
+
+  return segments.length > 0 ? segments : null;
 }
 
 function writeWheelConfigToSheet(ss, segments) {
@@ -243,6 +389,9 @@ function writeWheelConfigToSheet(ss, segments) {
     ]);
   }
 
+  if (sheet.getLastRow() > 1) {
+    sheet.getRange(2, 1, sheet.getLastRow() - 1, 8).clearContent();
+  }
   sheet.getRange(2, 1, rows.length, 8).setValues(rows);
 }
 
@@ -254,8 +403,8 @@ function decrementWheelStock(ss, prizeName) {
   var data = sheet.getRange(2, 3, sheet.getLastRow() - 1, 3).getValues();
   for (var i = 0; i < data.length; i++) {
     var pName = String(data[i][0]).trim();
-    if (pName === prizeName || prizeName.includes(pName) || pName.includes(prizeName)) {
-      var currentStock = Number(data[i][2]) || 0;
+    if (pName === prizeName || prizeName.indexOf(pName) !== -1 || pName.indexOf(prizeName) !== -1) {
+      var currentStock = parseSheetNumber(data[i][2]);
       if (currentStock > 0) {
         sheet.getRange(i + 2, 5).setValue(currentStock - 1);
         sheet.getRange(i + 2, 8).setValue(formatDate(new Date()));
@@ -263,64 +412,6 @@ function decrementWheelStock(ss, prizeName) {
       break;
     }
   }
-}
-
-// 2. SHEET 'CauHinhBotTelegram'
-function readBotConfigFromSheet(ss) {
-  var sheet = ss.getSheetByName('CauHinhBotTelegram');
-  if (!sheet || sheet.getLastRow() < 2) return null;
-
-  var data = sheet.getRange(2, 1, sheet.getLastRow() - 1, 4).getValues();
-  var config = {
-    telegram_enabled: false,
-    telegram_token: '',
-    telegram_chat_id: '',
-    webhook_enabled: false,
-    webhook_url: ''
-  };
-
-  for (var i = 0; i < data.length; i++) {
-    var channel = String(data[i][0]).toLowerCase();
-    var status = String(data[i][1]).toUpperCase();
-    var val1 = String(data[i][2] || '').trim();
-    var val2 = String(data[i][3] || '').trim();
-
-    if (channel.includes('telegram')) {
-      config.telegram_enabled = (status === 'BẬT' || status === 'TRUE' || status === '1');
-      config.telegram_token = val1;
-      config.telegram_chat_id = val2;
-    } else if (channel.includes('webhook')) {
-      config.webhook_enabled = (status === 'BẬT' || status === 'TRUE' || status === '1');
-      config.webhook_url = val1;
-    }
-  }
-  return config;
-}
-
-function writeBotConfigToSheet(ss, config) {
-  var sheet = ss.getSheetByName('CauHinhBotTelegram');
-  if (!sheet) return;
-
-  var rows = [
-    [
-      'Telegram Bot',
-      config.telegram_enabled ? 'BẬT' : 'TẮT',
-      String(config.telegram_token || '').trim(),
-      String(config.telegram_chat_id || '').trim(),
-      'Tự động gửi thông báo khi khách quay thưởng vào nhóm Telegram',
-      formatDate(new Date())
-    ],
-    [
-      'Webhook Endpoint',
-      config.webhook_enabled ? 'BẬT' : 'TẮT',
-      String(config.webhook_url || '').trim(),
-      '',
-      'Đẩy dữ liệu JSON sang server/CRM ngoài khi khách quay',
-      formatDate(new Date())
-    ]
-  ];
-
-  sheet.getRange(2, 1, 2, 6).setValues(rows);
 }
 
 // 3. SHEET 'NhiemVuHeThong'
@@ -331,34 +422,67 @@ function readNhiemVuConfigFromSheet(ss) {
   var data = sheet.getRange(2, 1, sheet.getLastRow() - 1, 7).getValues();
   var config = {
     active_mode: 'chang-1',
-    chang_1: { customer_codes: [] },
-    chang_2: { customer_codes: [] },
-    chang_3: { customer_codes: [] },
-    tong_ket: { customer_codes: [] }
+    chang_1: {
+      title: 'Khởi Động Sớm',
+      period_title: 'CHẶNG 1 — THÁNG 10',
+      time_range: '01/10 – 30/10/2026',
+      desc: 'Tránh nguy cơ tắc nghẽn kho bãi mùa cao điểm bằng việc lên đơn ngay từ đầu tháng 10.',
+      condition: 'Tối thiểu 01 đơn booking',
+      condition_detail: 'Tạo từ 01/10 đến 30/10, hoàn thành trước 15/01/2027',
+      reward: 'VIP+1 Trọn Tháng 11',
+      reward_desc: 'Giảm đến 30% cước gom cont theo cấp VIP',
+      theme: 'amber',
+      image: 'assets/images/chang-1-khoi-dong.jpg',
+      customer_codes: []
+    },
+    chang_2: {
+      title: 'Giữ Nhịp Cao Điểm',
+      period_title: 'CHẶNG 2 — THÁNG 11',
+      time_range: '01/11 – 20/11/2026',
+      desc: 'Tâm điểm mùa săn sale Black Friday & 11/11. Giữ vững tốc độ nhập hàng cung ứng thị trường Tết.',
+      condition: '02 đơn booking trong tháng 11',
+      condition_detail: 'Trong đó ít nhất 01 đơn trước ngày 20/11',
+      reward: 'VIP+1 Trọn Tháng 12',
+      reward_desc: 'Giảm đến 30% cước gom cont theo cấp VIP',
+      theme: 'orange',
+      image: 'assets/images/chang-2-cao-diem.jpg',
+      customer_codes: []
+    },
+    chang_3: {
+      title: 'Về Đích An Toàn',
+      period_title: 'CHẶNG 3 — THÁNG 12',
+      time_range: '01/12 – 20/12/2026',
+      desc: 'Chặng nước rút thông quan trước khi nhà máy Trung Quốc nghỉ Tết. Bảo đảm hàng về kho trước Tết.',
+      condition: 'Tối thiểu 01 đơn booking',
+      condition_detail: 'Tạo từ 01/12 đến 20/12, hoàn thành trước 15/01/2027',
+      reward: 'VIP+1 Trọn Tháng 01/2027',
+      reward_desc: 'Tăng thêm 15 ngày công nợ cho VIP Elite+',
+      theme: 'blue',
+      image: 'assets/images/chang-3-ve-dich.jpg',
+      customer_codes: []
+    }
   };
 
   for (var i = 0; i < data.length; i++) {
-    var key = String(data[i][0]).trim();
+    var rawKey = String(data[i][0] || '').trim().toLowerCase().replace('-', '_');
     var time = String(data[i][2] || '').trim();
     var reward = String(data[i][3] || '').trim();
     var condition = String(data[i][4] || '').trim();
     var rawCodes = String(data[i][5] || '').trim();
-    var isCurrentMode = String(data[i][6] || '').toUpperCase().includes('ĐANG');
+    var statusStr = String(data[i][6] || '').toUpperCase();
+    var isCurrentMode = (statusStr.indexOf('ĐANG') !== -1 || statusStr.indexOf('HIỆN') !== -1 || statusStr.indexOf('BẬT') !== -1);
 
-    var codeList = rawCodes.split(/[\r\n,]+/).map(function(s) { return s.trim(); }).filter(function(s) { return s.length > 0; });
+    var codeList = rawCodes.split(/[\r\n,;]+/).map(function(s) { return s.trim(); }).filter(function(s) { return s.length > 0; });
 
     if (isCurrentMode) {
-      config.active_mode = key.replace('_', '-');
+      config.active_mode = rawKey.replace('_', '-');
     }
 
-    if (config[key]) {
-      config[key] = {
-        time_range: time,
-        time_window: time,
-        reward: reward,
-        condition: condition,
-        customer_codes: codeList
-      };
+    if (config[rawKey]) {
+      if (time) config[rawKey].time_range = time;
+      if (reward) config[rawKey].reward = reward;
+      if (condition) config[rawKey].condition = condition;
+      config[rawKey].customer_codes = codeList;
     }
   }
 
@@ -400,53 +524,7 @@ function writeNhiemVuConfigToSheet(ss, cfg) {
   sheet.getRange(2, 1, rows.length, 8).setValues(rows);
 }
 
-// 4. SHEET 'CaiDatChung'
-function readGeneralSettingsFromSheet(ss) {
-  var sheet = ss.getSheetByName('CaiDatChung');
-  var settings = {};
-  if (!sheet || sheet.getLastRow() < 2) return settings;
-
-  var data = sheet.getRange(2, 1, sheet.getLastRow() - 1, 2).getValues();
-  for (var i = 0; i < data.length; i++) {
-    var key = String(data[i][0]).trim();
-    var valStr = String(data[i][1]).trim();
-    if (key && valStr) {
-      try {
-        settings[key] = JSON.parse(valStr);
-      } catch (e) {
-        settings[key] = valStr;
-      }
-    }
-  }
-  return settings;
-}
-
-function writeGeneralSettingToSheet(ss, key, val) {
-  var sheet = ss.getSheetByName('CaiDatChung');
-  if (!sheet) return;
-
-  var valStr = typeof val === 'object' ? JSON.stringify(val) : String(val);
-
-  var foundRow = -1;
-  if (sheet.getLastRow() > 1) {
-    var keys = sheet.getRange(2, 1, sheet.getLastRow() - 1, 1).getValues();
-    for (var r = 0; r < keys.length; r++) {
-      if (keys[r][0] === key) {
-        foundRow = r + 2;
-        break;
-      }
-    }
-  }
-
-  if (foundRow > 0) {
-    sheet.getRange(foundRow, 2).setValue(valStr);
-    sheet.getRange(foundRow, 4).setValue(formatDate(new Date()));
-  } else {
-    sheet.appendRow([key, valStr, 'Cài đặt hệ thống', formatDate(new Date())]);
-  }
-}
-
-// 5. SHEET 'BangXepHang'
+// 4. SHEET 'BangXepHang'
 function readLeaderboardFromSheet(ss) {
   var sheet = ss.getSheetByName('BangXepHang');
   var list = [];
@@ -455,28 +533,34 @@ function readLeaderboardFromSheet(ss) {
   var data = sheet.getRange(2, 1, sheet.getLastRow() - 1, 10).getValues();
   for (var i = 0; i < data.length; i++) {
     var r = data[i];
-    if (r[1]) {
-      var rank = Number(r[0]) || (i + 1);
-      var w = Number(r[6]) || 0;
-      var v = Number(r[7]) || 0;
-      var vwStr = '';
-      if (w > 0 && v > 0) {
-        var wTon = (w / 1000).toLocaleString('vi-VN', { maximumFractionDigits: 1 });
-        var vM3 = v.toLocaleString('vi-VN', { maximumFractionDigits: 1 });
-        vwStr = wTon + ' tấn | ' + vM3 + ' m³';
+    if (r[1] || r[2]) {
+      var rank = parseSheetNumber(r[0]) || (i + 1);
+      var w = parseSheetNumber(r[6]);
+      var v = parseSheetNumber(r[7]);
+      var fee = parseSheetNumber(r[8]);
+
+      var vwParts = [];
+      if (w >= 1000) {
+        vwParts.push((w / 1000).toLocaleString('vi-VN', { maximumFractionDigits: 1 }) + ' tấn');
+      } else if (w > 0) {
+        vwParts.push(w + ' kg');
       }
+      if (v > 0) {
+        vwParts.push(v.toLocaleString('vi-VN', { maximumFractionDigits: 1 }) + ' m³');
+      }
+      var vwStr = vwParts.join(' | ');
 
       list.push({
         rank: rank,
-        customer_code: String(r[1]).trim(),
-        customer_name: String(r[2]).trim(),
-        original_name: String(r[3] || r[2]).trim(),
+        customer_code: String(r[1] || '').trim().toUpperCase(),
+        customer_name: String(r[2] || '').trim(),
+        original_name: String(r[3] || r[2] || '').trim(),
         vip_tier: String(r[4] || 'VIP PRO').trim(),
-        order_count: Number(r[5]) || 0,
+        order_count: parseSheetNumber(r[5]),
         weight_kg: w,
         volume_m3: v,
         volume_weight: vwStr,
-        service_fee: Number(r[8]) || 0,
+        service_fee: fee,
         prize_tag: String(r[9] || '').trim(),
         prize_type: rank === 1 ? 'top1' : rank === 2 ? 'top2' : rank === 3 ? 'top3' : 'regular'
       });
@@ -511,7 +595,7 @@ function writeLeaderboardToSheet(ss, list) {
       var m1 = p1.replace(',', '.').match(/([\d.]+)\s*(tấn|kg|t)/i);
       if (m1) {
         var num1 = parseFloat(m1[1]);
-        weightKg = m1[2].toLowerCase().includes('t') ? Math.round(num1 * 1000) : Math.round(num1);
+        weightKg = m1[2].toLowerCase().indexOf('t') !== -1 ? Math.round(num1 * 1000) : Math.round(num1);
       }
     }
     if (volM3 === 0 && item.volume_weight) {
@@ -543,6 +627,57 @@ function writeLeaderboardToSheet(ss, list) {
   }
 }
 
+// 5. SHEET 'CaiDatChung'
+function readGeneralSettingsFromSheet(ss) {
+  var sheet = ss.getSheetByName('CaiDatChung');
+  var settings = {};
+  if (!sheet || sheet.getLastRow() < 2) return settings;
+
+  var data = sheet.getRange(2, 1, sheet.getLastRow() - 1, 2).getValues();
+  for (var i = 0; i < data.length; i++) {
+    var key = String(data[i][0]).trim();
+    var valStr = String(data[i][1]).trim();
+    if (key && valStr) {
+      try {
+        settings[key] = JSON.parse(valStr);
+      } catch (e) {
+        // Nếu là danh sách mã booking cách nhau bằng dấu phẩy
+        if (key.indexOf('booking_pool') !== -1 && valStr.indexOf(',') !== -1) {
+          settings[key] = valStr.split(/[\r\n,;]+/).map(function(s) { return s.trim(); }).filter(function(s) { return s.length > 0; });
+        } else {
+          settings[key] = valStr;
+        }
+      }
+    }
+  }
+  return settings;
+}
+
+function writeGeneralSettingToSheet(ss, key, val) {
+  var sheet = ss.getSheetByName('CaiDatChung');
+  if (!sheet) return;
+
+  var valStr = typeof val === 'object' ? JSON.stringify(val) : String(val);
+
+  var foundRow = -1;
+  if (sheet.getLastRow() > 1) {
+    var keys = sheet.getRange(2, 1, sheet.getLastRow() - 1, 1).getValues();
+    for (var r = 0; r < keys.length; r++) {
+      if (keys[r][0] === key) {
+        foundRow = r + 2;
+        break;
+      }
+    }
+  }
+
+  if (foundRow > 0) {
+    sheet.getRange(foundRow, 2).setValue(valStr);
+    sheet.getRange(foundRow, 4).setValue(formatDate(new Date()));
+  } else {
+    sheet.appendRow([key, valStr, 'Cài đặt hệ thống', formatDate(new Date())]);
+  }
+}
+
 // 6. SHEET 'VongQuayMayMan' (Leads)
 function readSpinLeadsFromSheet(ss) {
   var sheet = ss.getSheetByName('VongQuayMayMan');
@@ -554,7 +689,7 @@ function readSpinLeadsFromSheet(ss) {
   for (var i = data.length - 1; i >= 0; i--) {
     var row = data[i];
     if (row[1]) {
-      var phoneStr = String(row[1]).trim();
+      var phoneStr = String(row[1]).trim().replace(/^'/, '');
       spinLeads.push({
         id: 'L-' + (i + 1),
         createdAt: formatDate(row[0]),
@@ -582,7 +717,7 @@ function writeSpinLeadsToSheet(ss, leads) {
   leads.forEach(function(l) {
     rows.push([
       l.createdAt || new Date(),
-      "'" + String(l.phone || ''),
+      "'" + String(l.phone || '').trim().replace(/^'/, ''),
       l.voucherCode || '',
       l.prize || '',
       l.ref || 'direct',
@@ -611,7 +746,7 @@ function readM05WinnersFromSheet(ss) {
         period: String(r[1] || ''),
         booking_code: String(r[2] || ''),
         prize: String(r[3] || ''),
-        status: String(r[4] || 'Đã ghi nhận')
+        status: String(r[4] || '✅ Đã ghi nhận')
       });
     }
   }
@@ -633,7 +768,7 @@ function writeM05WinnersToSheet(ss, winners) {
       w.period || '',
       w.booking_code || '',
       w.prize || '',
-      w.status || 'Đã ghi nhận'
+      w.status || '✅ Đã ghi nhận'
     ]);
   });
 
@@ -642,42 +777,40 @@ function writeM05WinnersToSheet(ss, winners) {
   }
 }
 
+// 8. SHEET 'LichSuChinhSua' (AUDIT LOG - CHỈ GHI NHẬN LỊCH SỬ THAY ĐỔI)
+function logChangeHistory(ss, category, action, details, actor) {
+  try {
+    var sheet = ss.getSheetByName('LichSuChinhSua');
+    if (!sheet) {
+      sheet = ss.insertSheet('LichSuChinhSua');
+      sheet.appendRow(['Thời Gian Sửa', 'Hạng Mục', 'Hành Động / Thay Đổi', 'Chi Tiết Dữ Liệu', 'Người Thực Hiện / Nguồn']);
+      var h = sheet.getRange(1, 1, 1, 5);
+      h.setBackground('#0f172a').setFontColor('#38bdf8').setFontWeight('bold');
+      sheet.setFrozenRows(1);
+      sheet.setColumnWidth(1, 160);
+      sheet.setColumnWidth(2, 180);
+      sheet.setColumnWidth(3, 220);
+      sheet.setColumnWidth(4, 350);
+      sheet.setColumnWidth(5, 160);
+    }
+
+    sheet.appendRow([
+      formatDate(new Date()),
+      String(category || 'Chung'),
+      String(action || 'Cập nhật'),
+      String(details || ''),
+      String(actor || 'Admin Website')
+    ]);
+  } catch (e) {
+    // Không làm gián đoạn luồng chính nếu lỗi ghi log
+  }
+}
+
 // =========================================================================
-// KHỞI TẠO CÁC SHEET CHUYÊN BIỆT VỚI TIÊU ĐỀ & ĐỊNH DẠNG ĐẸP
+// KHỞI TẠO CÁC SHEET CHUYÊN BIỆT & TỰ ĐỘNG DI CHUYỂN DỮ LIỆU CŨ (AUTO-MIGRATION)
 // =========================================================================
 function initDatabaseSheets(ss) {
-  // 1. Sheet CauHinhVongQuay (8 Ô giải thưởng)
-  var sWheel = ss.getSheetByName('CauHinhVongQuay');
-  if (!sWheel) {
-    sWheel = ss.insertSheet('CauHinhVongQuay');
-    sWheel.appendRow(['Ô Số (STT)', 'Nhãn Hiển Thị Nan Quạt', 'Tên Phần Thưởng Trao Cho Khách', 'Tỉ Lệ Trúng (%)', 'Số Lượng Trong Kho', 'Mã Màu Nan Quạt', 'Màu Chữ', 'Thời Gian Cập Nhật']);
-    var h = sWheel.getRange(1, 1, 1, 8);
-    h.setBackground('#0f172a').setFontColor('#f59e0b').setFontWeight('bold');
-    sWheel.setFrozenRows(1);
-    sWheel.setColumnWidth(1, 80);
-    sWheel.setColumnWidth(2, 220);
-    sWheel.setColumnWidth(3, 260);
-    sWheel.setColumnWidth(4, 120);
-    sWheel.setColumnWidth(5, 140);
-    sWheel.setColumnWidth(6, 120);
-    sWheel.setColumnWidth(7, 100);
-    sWheel.setColumnWidth(8, 160);
-
-    // Điền 8 dòng mẫu khởi tạo
-    var defaultSlots = [
-      [1, 'GIẢM GIÁ 10% CƯỚC', 'Giảm giá 10% chi phí vận chuyển', 100, 9999, '#ea580c', '#FFFFFF', formatDate(new Date())],
-      [2, 'VOUCHER 300K', 'Voucher Chiết Khấu 300.000 đ', 0, 25, '#1e293b', '#FBBF24', formatDate(new Date())],
-      [3, 'ƯU TIÊN XẾP CONT', 'Vé Ưu Tiên Xếp Cont Sớm', 0, 18, '#f59e0b', '#0F172A', formatDate(new Date())],
-      [4, 'GIẢM 50% LƯU KHO', 'Giảm 50% Phí Lưu Kho Bãi', 0, 15, '#0f172a', '#FFFFFF', formatDate(new Date())],
-      [5, 'VOUCHER 300K', 'Voucher Chiết Khấu 300.000 đ', 0, 20, '#ea580c', '#FFFFFF', formatDate(new Date())],
-      [6, 'GÓI SQUAD 2-IN-1', 'Gói Hỗ Trợ Squad 2-in-1', 0, 11, '#1e293b', '#38BDF8', formatDate(new Date())],
-      [7, 'VOUCHER 400K', 'Voucher 400.000 đ Lộc Xuân', 0, 10, '#f59e0b', '#0F172A', formatDate(new Date())],
-      [8, 'MAY MẮN LẦN SAU', 'Vé Tích Lũy Quay Mùng 05', 0, 999, '#0f172a', '#94A3B8', formatDate(new Date())]
-    ];
-    sWheel.getRange(2, 1, defaultSlots.length, 8).setValues(defaultSlots);
-  }
-
-  // 2. Sheet CauHinhBotTelegram
+  // 1. Sheet CauHinhBotTelegram
   var sBot = ss.getSheetByName('CauHinhBotTelegram');
   if (!sBot) {
     sBot = ss.insertSheet('CauHinhBotTelegram');
@@ -699,6 +832,36 @@ function initDatabaseSheets(ss) {
     sBot.getRange(2, 1, 2, 6).setValues(defaultBotRows);
   }
 
+  // 2. Sheet CauHinhVongQuay (8 Ô giải thưởng)
+  var sWheel = ss.getSheetByName('CauHinhVongQuay');
+  if (!sWheel) {
+    sWheel = ss.insertSheet('CauHinhVongQuay');
+    sWheel.appendRow(['Ô Số (STT)', 'Nhãn Hiển Thị Nan Quạt', 'Tên Phần Thưởng Trao Cho Khách', 'Tỉ Lệ Trúng (%)', 'Số Lượng Trong Kho', 'Mã Màu Nan Quạt', 'Màu Chữ', 'Thời Gian Cập Nhật']);
+    var h = sWheel.getRange(1, 1, 1, 8);
+    h.setBackground('#0f172a').setFontColor('#f59e0b').setFontWeight('bold');
+    sWheel.setFrozenRows(1);
+    sWheel.setColumnWidth(1, 80);
+    sWheel.setColumnWidth(2, 220);
+    sWheel.setColumnWidth(3, 260);
+    sWheel.setColumnWidth(4, 120);
+    sWheel.setColumnWidth(5, 140);
+    sWheel.setColumnWidth(6, 120);
+    sWheel.setColumnWidth(7, 100);
+    sWheel.setColumnWidth(8, 160);
+
+    var defaultSlots = [
+      [1, 'GIẢM GIÁ 10% CƯỚC', 'Giảm giá 10% chi phí vận chuyển', 100, 9999, '#ea580c', '#FFFFFF', formatDate(new Date())],
+      [2, 'VOUCHER 300K', 'Voucher Chiết Khấu 300.000 đ', 0, 25, '#1e293b', '#FBBF24', formatDate(new Date())],
+      [3, 'ƯU TIÊN XẾP CONT', 'Vé Ưu Tiên Xếp Cont Sớm', 0, 18, '#f59e0b', '#0F172A', formatDate(new Date())],
+      [4, 'GIẢM 50% LƯU KHO', 'Giảm 50% Phí Lưu Kho Bãi', 0, 15, '#0f172a', '#FFFFFF', formatDate(new Date())],
+      [5, 'VOUCHER 300K', 'Voucher Chiết Khấu 300.000 đ', 0, 20, '#ea580c', '#FFFFFF', formatDate(new Date())],
+      [6, 'GÓI SQUAD 2-IN-1', 'Gói Hỗ Trợ Squad 2-in-1', 0, 11, '#1e293b', '#38BDF8', formatDate(new Date())],
+      [7, 'VOUCHER 400K', 'Voucher 400.000 đ Lộc Xuân', 0, 10, '#f59e0b', '#0F172A', formatDate(new Date())],
+      [8, 'MAY MẮN LẦN SAU', 'Vé Tích Lũy Quay Mùng 05', 0, 999, '#0f172a', '#94A3B8', formatDate(new Date())]
+    ];
+    sWheel.getRange(2, 1, defaultSlots.length, 8).setValues(defaultSlots);
+  }
+
   // 3. Sheet NhiemVuHeThong
   var sNV = ss.getSheetByName('NhiemVuHeThong');
   if (!sNV) {
@@ -717,21 +880,7 @@ function initDatabaseSheets(ss) {
     sNV.setColumnWidth(8, 160);
   }
 
-  // 4. Sheet CaiDatChung
-  var sCaiDat = ss.getSheetByName('CaiDatChung');
-  if (!sCaiDat) {
-    sCaiDat = ss.insertSheet('CaiDatChung');
-    sCaiDat.appendRow(['Tên Cài Đặt (Key)', 'Giá Trị (Value)', 'Mô Tả Chức Năng', 'Thời Gian Cập Nhật']);
-    var hCD = sCaiDat.getRange(1, 1, 1, 4);
-    hCD.setBackground('#0f172a').setFontColor('#f43f5e').setFontWeight('bold');
-    sCaiDat.setFrozenRows(1);
-    sCaiDat.setColumnWidth(1, 240);
-    sCaiDat.setColumnWidth(2, 350);
-    sCaiDat.setColumnWidth(3, 300);
-    sCaiDat.setColumnWidth(4, 160);
-  }
-
-  // 5. Sheet BangXepHang
+  // 4. Sheet BangXepHang
   var sBXH = ss.getSheetByName('BangXepHang');
   if (!sBXH) {
     sBXH = ss.insertSheet('BangXepHang');
@@ -750,6 +899,20 @@ function initDatabaseSheets(ss) {
     sBXH.setColumnWidth(9, 150);
     sBXH.setColumnWidth(10, 220);
     sBXH.setColumnWidth(11, 160);
+  }
+
+  // 5. Sheet CaiDatChung
+  var sCaiDat = ss.getSheetByName('CaiDatChung');
+  if (!sCaiDat) {
+    sCaiDat = ss.insertSheet('CaiDatChung');
+    sCaiDat.appendRow(['Tên Cài Đặt (Key)', 'Giá Trị (Value)', 'Mô Tả Chức Năng', 'Thời Gian Cập Nhật']);
+    var hCD = sCaiDat.getRange(1, 1, 1, 4);
+    hCD.setBackground('#0f172a').setFontColor('#f43f5e').setFontWeight('bold');
+    sCaiDat.setFrozenRows(1);
+    sCaiDat.setColumnWidth(1, 240);
+    sCaiDat.setColumnWidth(2, 350);
+    sCaiDat.setColumnWidth(3, 300);
+    sCaiDat.setColumnWidth(4, 160);
   }
 
   // 6. Sheet VongQuayMayMan
@@ -782,6 +945,127 @@ function initDatabaseSheets(ss) {
     sM05.setColumnWidth(4, 240);
     sM05.setColumnWidth(5, 160);
   }
+
+  // 8. Sheet LichSuChinhSua
+  var sLog = ss.getSheetByName('LichSuChinhSua');
+  if (!sLog) {
+    sLog = ss.insertSheet('LichSuChinhSua');
+    sLog.appendRow(['Thời Gian Sửa', 'Hạng Mục', 'Hành Động / Thay Đổi', 'Chi Tiết Dữ Liệu', 'Người Thực Hiện / Nguồn']);
+    var hLog = sLog.getRange(1, 1, 1, 5);
+    hLog.setBackground('#0f172a').setFontColor('#38bdf8').setFontWeight('bold');
+    sLog.setFrozenRows(1);
+    sLog.setColumnWidth(1, 160);
+    sLog.setColumnWidth(2, 180);
+    sLog.setColumnWidth(3, 220);
+    sLog.setColumnWidth(4, 350);
+    sLog.setColumnWidth(5, 160);
+  }
+
+  // TỰ ĐỘNG DI CHUYỂN DỮ LIỆU TỪ ADMINCONFIG CŨ SANG TỪNG SHEET CHUYÊN BIỆT (NẾU CÓ)
+  migrateLegacyAdminConfig(ss);
+
+  // TỰ ĐỘNG DỌN DẸP / XÓA CÁC SHEET THỪA KHÔNG CÒN SỬ DỤNG
+  cleanupUnusedSheets(ss);
+}
+
+// Tự động di chuyển dữ liệu từ AdminConfig sang từng Sheet chuyên biệt
+function migrateLegacyAdminConfig(ss) {
+  var oldSheet = ss.getSheetByName('AdminConfig');
+  if (!oldSheet || oldSheet.getLastRow() < 2) return;
+
+  try {
+    var oldData = oldSheet.getRange(2, 1, oldSheet.getLastRow() - 1, 2).getValues();
+    var configs = {};
+    for (var i = 0; i < oldData.length; i++) {
+      var k = String(oldData[i][0]).trim();
+      var v = String(oldData[i][1]).trim();
+      if (k && v) {
+        try { configs[k] = JSON.parse(v); } catch (e) { configs[k] = v; }
+      }
+    }
+
+    // Di chuyển Bot config sang CauHinhBotTelegram nếu sheet đang trống
+    var sBot = ss.getSheetByName('CauHinhBotTelegram');
+    if (sBot && configs['eureka_bot_config']) {
+      var currentBot = readBotConfigFromSheet(ss);
+      if (!currentBot || (!currentBot.telegram_token && !currentBot.webhook_url)) {
+        writeBotConfigToSheet(ss, configs['eureka_bot_config']);
+      }
+    }
+
+    // Di chuyển Vòng quay sang CauHinhVongQuay nếu có dữ liệu tùy chỉnh
+    if (configs['eureka_welcome_wheel_config'] && Array.isArray(configs['eureka_welcome_wheel_config'])) {
+      var currentWheel = readWheelConfigFromSheet(ss);
+      if (!currentWheel || currentWheel.length === 0) {
+        writeWheelConfigToSheet(ss, configs['eureka_welcome_wheel_config']);
+      }
+    }
+
+    // Di chuyển Cài Đặt Chung
+    var keys = ['eureka_admin_password_custom', 'eureka_gala_awards_config', 'eureka_weekly_winner', 'eureka_m05_booking_pool', 'eureka_m05_current_prize', 'eureka_ref_clicks'];
+    keys.forEach(function(key) {
+      if (configs[key] !== undefined) {
+        writeGeneralSettingToSheet(ss, key, configs[key]);
+      }
+    });
+
+    logChangeHistory(ss, 'Di Chuyển Dữ Liệu', 'Tự động di chuyển từ AdminConfig cũ', 'Đã chuyển thành công cấu hình sang các sheet chuyên biệt', 'Hệ Thống Cloud v4.0');
+
+    // Sau khi migrate, nếu đã có LichSuChinhSua thì xóa AdminConfig cũ đi
+    if (ss.getSheetByName('LichSuChinhSua') && ss.getSheets().length > 1) {
+      ss.deleteSheet(oldSheet);
+    } else {
+      oldSheet.setName('LichSuChinhSua');
+      oldSheet.clear();
+      oldSheet.appendRow(['Thời Gian Sửa', 'Hạng Mục', 'Hành Động / Thay Đổi', 'Chi Tiết Dữ Liệu', 'Người Thực Hiện / Nguồn']);
+      var h = oldSheet.getRange(1, 1, 1, 5);
+      h.setBackground('#0f172a').setFontColor('#38bdf8').setFontWeight('bold');
+    }
+  } catch (err) {
+    // Không gián đoạn nếu migration có lỗi
+  }
+}
+
+// TỰ ĐỘNG DỌN DẸP / XÓA CÁC SHEET KHÔNG CÒN SỬ DỤNG
+function cleanupUnusedSheets(ss) {
+  var validSheets = [
+    'CauHinhBotTelegram',
+    'CauHinhVongQuay',
+    'NhiemVuHeThong',
+    'BangXepHang',
+    'CaiDatChung',
+    'VongQuayMayMan',
+    'VongQuayM05',
+    'LichSuChinhSua'
+  ];
+  var allSheets = ss.getSheets();
+  allSheets.forEach(function(sh) {
+    var name = sh.getName();
+    // Nếu sheet không thuộc 8 sheet chuẩn nêu trên và ss còn nhiều hơn 1 sheet
+    if (validSheets.indexOf(name) === -1 && ss.getSheets().length > 1) {
+      try {
+        ss.deleteSheet(sh);
+        logChangeHistory(ss, 'Dọn Dẹp Sheet', 'Xóa sheet thừa', 'Đã tự động xóa sheet không còn sử dụng: ' + name, 'Hệ Thống Cloud v4.0');
+      } catch (e) {}
+    }
+  });
+}
+
+// Bóc tách số an toàn từ ô Google Sheets (hỗ trợ cả text có chữ "kg", "tấn", "m³", "%", dấu chấm, dấu phẩy)
+function parseSheetNumber(val) {
+  if (typeof val === 'number') return isNaN(val) ? 0 : val;
+  if (!val) return 0;
+  var str = String(val).trim().replace(/[%\s₫đvnđVNĐ]/g, '');
+  // Nếu có dấu phân cách nghìn kiểu Việt Nam: 428.650.000 -> 428650000
+  if (/^\d{1,3}(\.\d{3})+$/.test(str)) {
+    str = str.replace(/\./g, '');
+  } else if (/^\d{1,3}(,\d{3})+$/.test(str)) {
+    str = str.replace(/,/g, '');
+  } else {
+    str = str.replace(',', '.');
+  }
+  var num = parseFloat(str);
+  return isNaN(num) ? 0 : num;
 }
 
 function formatDate(val) {

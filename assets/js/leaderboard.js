@@ -569,7 +569,17 @@ function renderWeeklyWinnerSpotlight() {
     if (weekEl) weekEl.textContent = `VINH DANH CHIẾN TƯỚNG: ${winner.week_title || 'TOP TUẦN'}`;
     if (nameEl) nameEl.textContent = maskCustomerName(winner.customer_name);
     if (codeEl) codeEl.textContent = `MÃ: ${winner.customer_code || winner.code || 'ERK-KH-8891'}`;
-    if (spendEl) spendEl.textContent = winner.weekly_spending.includes('đ') ? winner.weekly_spending : new Intl.NumberFormat('vi-VN').format(winner.weekly_spending) + ' đ';
+    function formatWeeklySpending(val) {
+      const s = String(val || '').trim();
+      if (!s) return '0 đ';
+      if (s.includes('đ') || s.includes('VNĐ') || s.includes('VND')) return s;
+      const digits = s.replace(/[^\d]/g, '');
+      if (digits) {
+        return new Intl.NumberFormat('vi-VN').format(Number(digits)) + ' đ';
+      }
+      return s;
+    }
+    if (spendEl) spendEl.textContent = formatWeeklySpending(winner.weekly_spending);
     let prizeName = winner.prize_name || 'Voucher 1.000.000 đ';
     if (prizeName.includes('2.000.000')) {
       prizeName = 'Voucher 1.000.000 đ';
@@ -587,7 +597,7 @@ function renderWeeklyWinnerSpotlight() {
     const prizeTopPrize = document.getElementById('prize-top-tuan-prize');
     if (prizeTopName) prizeTopName.textContent = maskCustomerName(winner.customer_name);
     if (prizeTopCode) prizeTopCode.textContent = 'MÃ: ' + (winner.customer_code || winner.code || 'ERK-KH-8891');
-    if (prizeTopSpending) prizeTopSpending.textContent = winner.weekly_spending.includes('đ') ? winner.weekly_spending : new Intl.NumberFormat('vi-VN').format(winner.weekly_spending) + ' đ';
+    if (prizeTopSpending) prizeTopSpending.textContent = formatWeeklySpending(winner.weekly_spending);
     if (prizeTopPrize) prizeTopPrize.textContent = prizeName;
   } else {
     // Hidden when admin has not entered information

@@ -3,6 +3,42 @@
  * Handles UI tab switches, FAQ accordion, modals, and Zalo Voucher application.
  */
 
+// --- 0. Mobile Drawer Menu ---
+function openMobileMenu() {
+  const drawer = document.getElementById('mobile-side-menu');
+  const overlay = document.getElementById('mobile-drawer-overlay');
+  if (drawer) {
+    drawer.classList.add('drawer-open');
+    drawer.classList.remove('translate-x-full');
+    drawer.classList.add('translate-x-0');
+  }
+  if (overlay) {
+    overlay.classList.add('overlay-open');
+    overlay.classList.remove('opacity-0', 'pointer-events-none');
+    overlay.classList.add('opacity-100', 'pointer-events-auto');
+  }
+  document.body.style.overflow = 'hidden';
+}
+
+function closeMobileMenu() {
+  const drawer = document.getElementById('mobile-side-menu');
+  const overlay = document.getElementById('mobile-drawer-overlay');
+  if (drawer) {
+    drawer.classList.remove('drawer-open');
+    drawer.classList.remove('translate-x-0');
+    drawer.classList.add('translate-x-full');
+  }
+  if (overlay) {
+    overlay.classList.remove('overlay-open');
+    overlay.classList.remove('opacity-100', 'pointer-events-auto');
+    overlay.classList.add('opacity-0', 'pointer-events-none');
+  }
+  document.body.style.overflow = '';
+}
+
+window.openMobileMenu = openMobileMenu;
+window.closeMobileMenu = closeMobileMenu;
+
 // --- 1. Prize Tab Switching ---
 function switchPrizeTab(tabId) {
   document.querySelectorAll('.prize-tab-content').forEach(el => {

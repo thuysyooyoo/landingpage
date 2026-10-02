@@ -47,8 +47,8 @@
 5. **Ghi chú & Micro-copy**: `#64748B` *(Slate 500 — Chữ chú thích nhẹ nhàng)*
 
 ### 1.5. Hệ Thống Backend & Dữ Liệu Đồng Bộ
-* **Google Sheets Cloud Database v3.0**: 7 sheet chuyên biệt đồng bộ tự động 2 chiều qua `sheets-sync.js` và `google-apps-script-backend.js`.
-* **Admin Control Panel**: 6 Tab quản trị chuyên sâu (bao gồm Tab 6 Cloud DB, Đổi mật khẩu động trên Cloud, Phân tách cột Cân nặng Kg / Thể tích M³).
+* **Google Sheets Cloud Database v4.0**: 8 sheet chuyên biệt đồng bộ tự động 2 chiều qua `sheets-sync.js` và `google-apps-script-backend.js` (kèm sheet Audit Log `LichSuChinhSua` và cơ chế tự động dọn dẹp sheet thừa).
+* **Admin Control Panel**: 6 Tab quản trị chuyên sâu (bao gồm Tab 6 Cloud DB, Đổi mật khẩu động trên Cloud, Phân tách cột Cân nặng Kg / Thể tích M³, nút Xóa Sheet Thừa).
 * **Popup Tra Cứu 5 Hạng Mục Giải Phụ**: Tra cứu thứ hạng và mã khách hàng thời gian thực.
 * **Bảo toàn ảnh & Font**: Giữ nguyên toàn bộ thư mục `assets/images/` và `assets/img/`, chuẩn font nhận diện thương hiệu `Plus Jakarta Sans`.
 
