@@ -483,8 +483,10 @@ function renderAdminSpinLeadsTable() {
         <td class="py-2.5 px-3 font-mono font-black text-amber-300 text-sm tracking-wider">
           ${item.phone}
         </td>
-        <td class="py-2.5 px-3 font-mono font-bold text-white bg-slate-900/60 px-2 py-1 rounded">
-          ${item.voucherCode || 'ERK-VOUCHER'}
+        <td class="py-2.5 px-3">
+          <span class="admin-voucher-badge">
+            ${item.voucherCode || 'ERK-VOUCHER'}
+          </span>
         </td>
         <td class="py-2.5 px-3 font-bold text-emerald-400">
           ${item.prize}
@@ -526,7 +528,7 @@ function renderAdminSpinLeadsTable() {
         </div>
         <div class="flex items-center justify-between text-xs pt-1 border-t border-slate-800/80">
           <span class="font-bold text-emerald-400 text-xs">${item.prize}</span>
-          <span class="font-mono text-[10px] text-white bg-slate-800 px-1.5 py-0.5 rounded border border-slate-700">${item.voucherCode || 'ERK-VOUCHER'}</span>
+          <span class="admin-voucher-badge text-[11px]">${item.voucherCode || 'ERK-VOUCHER'}</span>
         </div>
         <div class="flex items-center justify-between pt-1 border-t border-slate-800/40">
           <div class="flex items-center gap-1.5">
@@ -2194,7 +2196,7 @@ function viewAffiliateLeads(refCode) {
           <td class="py-2 px-3 text-slate-400">${item.createdAt || 'Hôm nay'}</td>
           <td class="py-2 px-3 font-mono font-bold text-amber-300">${item.phone}</td>
           <td class="py-2 px-3 text-emerald-400 font-semibold">${item.prize}</td>
-          <td class="py-2 px-3 text-white">${item.voucherCode || 'ERK-VOUCHER'}</td>
+          <td class="py-2 px-3"><span class="admin-voucher-badge text-[11px]">${item.voucherCode || 'ERK-VOUCHER'}</span></td>
           <td class="py-2 px-3 text-center">
             <a href="https://zalo.me/${zaloPhone}" target="_blank" class="px-2 py-0.5 rounded bg-blue-600 hover:bg-blue-500 text-white font-bold text-[10px] inline-flex items-center gap-1">
               💬 Chat
@@ -2215,7 +2217,7 @@ function viewAffiliateLeads(refCode) {
           </div>
           <div class="flex items-center justify-between text-[11px]">
             <span class="text-emerald-400 font-semibold">${item.prize}</span>
-            <span class="text-white font-mono bg-slate-900 px-1.5 py-0.5 rounded border border-slate-800">${item.voucherCode || 'ERK-VOUCHER'}</span>
+            <span class="admin-voucher-badge text-[10px]">${item.voucherCode || 'ERK-VOUCHER'}</span>
           </div>
           <div class="pt-1 border-t border-slate-800/80 flex justify-end">
             <a href="https://zalo.me/${zaloPhone}" target="_blank" class="px-2.5 py-1 rounded bg-blue-600 hover:bg-blue-500 text-white font-bold text-[10px] inline-flex items-center gap-1">

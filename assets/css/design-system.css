@@ -29,7 +29,6 @@ html {
 body {
   background-color: #F8FAFD !important;
   color: var(--prism-text-primary) !important;
-  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
   overflow-x: hidden;
   background-image: 
     radial-gradient(at 10% 2%, rgba(234, 88, 12, 0.07) 0px, transparent 45%),
@@ -48,23 +47,12 @@ body {
    ========================================================================== */
 h1, h2, h3, h4, h5, h6 {
   color: #0F172A !important;
-  font-weight: 800 !important;
-  letter-spacing: -0.025em !important;
-}
-
-h1 {
-  font-weight: 900 !important;
-  letter-spacing: -0.035em !important;
-}
-
-/* Heading 1 Contrast & Chromatic Dispersion */
+}/* Heading 1 Contrast & Chromatic Dispersion */
 h1 span.text-slate-900,
 h1 span:first-child {
   background: none !important;
   -webkit-text-fill-color: #0F172A !important;
   color: #0F172A !important;
-  font-weight: 900 !important;
-  letter-spacing: -0.035em !important;
 }
 
 h1 span.text-transparent,
@@ -73,8 +61,6 @@ h1 span:last-child,
   background: linear-gradient(135deg, #EA580C 0%, #F59E0B 45%, #EC4899 85%, #8B5CF6 100%) !important;
   -webkit-background-clip: text !important;
   -webkit-text-fill-color: transparent !important;
-  font-weight: 900 !important;
-  letter-spacing: -0.03em !important;
   filter: drop-shadow(0 2px 12px rgba(234, 88, 12, 0.15));
 }
 
@@ -89,22 +75,26 @@ section span.text-slate-400 {
 /* ==========================================================================
    3. HEADER & NAVIGATION
    ========================================================================== */
-header {
-  background: rgba(255, 255, 255, 0.9) !important;
+header, #main-header {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
+  z-index: 50 !important;
+  background: rgba(255, 255, 255, 0.95) !important;
   backdrop-filter: blur(24px) saturate(200%) !important;
   border-bottom: 1px solid rgba(226, 232, 240, 0.8) !important;
   box-shadow: 0 4px 20px -5px rgba(15, 23, 42, 0.04) !important;
 }
 header a span.text-white { 
   color: #0F172A !important; 
-  font-weight: 800 !important; 
 }
 header a span.text-brand-400 { 
   color: #EA580C !important; 
 }
 header nav a.text-slate-300 { 
   color: #475569 !important; 
-  font-weight: 600 !important; 
 }
 header nav a.text-slate-300:hover { 
   color: #EA580C !important; 
@@ -325,7 +315,6 @@ section#giai-thuong .inline-flex.p-1\.5.rounded-2xl {
 }
 section#giai-thuong .inline-flex.p-1\.5.rounded-2xl button:not(.bg-gradient-to-r) {
   color: #475569 !important;
-  font-weight: 700 !important;
 }
 section#giai-thuong .inline-flex.p-1\.5.rounded-2xl button:not(.bg-gradient-to-r):hover {
   color: #0F172A !important;
@@ -408,15 +397,12 @@ section#giai-thuong .inline-flex.p-1\.5.rounded-2xl button.bg-gradient-to-r {
 #tab-content-giai-phu h4,
 #tab-content-giai-phu .font-black {
   color: #0F172A !important;
-  font-weight: 800 !important;
 }
 #tab-content-giai-phu .text-amber-400 {
   color: #EA580C !important;
-  font-weight: 900 !important;
 }
 #tab-content-giai-phu p {
   color: #475569 !important;
-  font-weight: 500 !important;
 }
 #tab-content-giai-phu .w-12.h-12 {
   background: rgba(248, 250, 252, 0.95) !important;
@@ -452,7 +438,6 @@ section#giai-thuong .inline-flex.p-1\.5.rounded-2xl button.bg-gradient-to-r {
 }
 #tab-content-m05-tri-an h3 {
   color: #0F172A !important;
-  font-weight: 800 !important;
 }
 #tab-content-m05-tri-an p {
   color: #475569 !important;
@@ -466,7 +451,6 @@ section#giai-thuong .inline-flex.p-1\.5.rounded-2xl button.bg-gradient-to-r {
   background: #F1F5F9 !important;
   color: #0284C7 !important;
   border: 1px solid #BAE6FD !important;
-  font-weight: 800 !important;
 }
 
 /* Tab 4: Cột Mốc VIP+1 Cards */
@@ -490,7 +474,6 @@ section#giai-thuong .inline-flex.p-1\.5.rounded-2xl button.bg-gradient-to-r {
 }
 #tab-content-vip-dac-quyen h3 {
   color: #0F172A !important;
-  font-weight: 800 !important;
 }
 #tab-content-vip-dac-quyen p {
   color: #475569 !important;
@@ -509,7 +492,6 @@ section#giai-thuong .inline-flex.p-1\.5.rounded-2xl button.bg-gradient-to-r {
 }
 #tab-content-vip-dac-quyen .grid > div span.text-white {
   color: #0F172A !important;
-  font-weight: 800 !important;
 }
 #tab-content-vip-dac-quyen .grid > div p.text-slate-300,
 #tab-content-vip-dac-quyen .grid > div p.text-slate-400 {
@@ -610,7 +592,6 @@ section#vong-quay-mung-05 #m05-user-notice p {
   background: #FEF3C7 !important;
   color: #B45309 !important;
   border: 1px solid #FDE68A !important;
-  font-weight: 700 !important;
 }
 
 /* ==========================================================================
@@ -650,7 +631,6 @@ section#cot-moc-vip .grid.grid-cols-1.md\:grid-cols-3.gap-6 > div:hover {
 }
 section#cot-moc-vip .grid.grid-cols-1.md\:grid-cols-3.gap-6 h3 {
   color: #0F172A !important;
-  font-weight: 800 !important;
 }
 section#cot-moc-vip .grid.grid-cols-1.md\:grid-cols-3.gap-6 p {
   color: #475569 !important;
@@ -666,7 +646,6 @@ section#cot-moc-vip .grid.grid-cols-1.md\:grid-cols-3.gap-6 .bg-slate-800\/80 sp
 section#cot-moc-vip .grid.grid-cols-1.md\:grid-cols-3.gap-6 .bg-slate-800\/80 span[class*="text-brand"],
 section#cot-moc-vip .grid.grid-cols-1.md\:grid-cols-3.gap-6 .bg-slate-800\/80 span[class*="text-blue"] {
   color: #EA580C !important;
-  font-weight: 800 !important;
 }
 
 /* VIP Comparison Table */
@@ -679,7 +658,6 @@ section#cot-moc-vip table thead tr {
 }
 section#cot-moc-vip table thead th {
   color: #475569 !important;
-  font-weight: 700 !important;
 }
 section#cot-moc-vip table tbody {
   color: #334155 !important;
@@ -753,7 +731,6 @@ section#bxh-truc-tuyen .glass-card {
 }
 #leaderboard-table thead th {
   color: #475569 !important;
-  font-weight: 800 !important;
 }
 
 /* Table Rows & Cells */
@@ -769,7 +746,6 @@ section#bxh-truc-tuyen .glass-card {
 #leaderboard-table tbody tr td span.font-bold.text-white,
 #leaderboard-table tbody tr td .font-bold.text-white {
   color: #0F172A !important;
-  font-weight: 800 !important;
 }
 #leaderboard-table tbody tr td .text-slate-300 {
   color: #475569 !important;
@@ -846,7 +822,6 @@ section#the-le .space-y-4 .glass-card:hover {
 /* Question Button */
 section#the-le button.text-white {
   color: #0F172A !important;
-  font-weight: 700 !important;
 }
 section#the-le button:hover {
   color: #EA580C !important;
@@ -888,11 +863,9 @@ section#the-le div[id^="faq-content-"] strong {
 }
 .cta-prism-card h2 {
   color: #0F172A !important;
-  font-weight: 900 !important;
 }
 .cta-prism-card p {
   color: #475569 !important;
-  font-weight: 500 !important;
 }
 
 /* ==========================================================================
@@ -930,7 +903,6 @@ button.bg-brand-600 {
   box-shadow: 0 10px 25px -4px rgba(234, 88, 12, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.45) !important;
   color: #FFFFFF !important;
   border: none !important;
-  font-weight: 700 !important;
 }
 
 /* Floating Voucher Button */
@@ -971,7 +943,6 @@ button.fixed.bottom-6 {
 
 #welcome-wheel-modal h3 {
   color: #0F172A !important;
-  font-weight: 900 !important;
 }
 
 #welcome-wheel-modal p {
@@ -1013,7 +984,6 @@ button.fixed.bottom-6 {
 #winner-ticker-list span.text-emerald-400,
 #winner-ticker-list span.text-emerald-600 {
   color: #059669 !important;
-  font-weight: 800 !important;
 }
 
 /* Win Announcement Modal */
@@ -1026,7 +996,6 @@ button.fixed.bottom-6 {
 
 #win-modal h3 {
   color: #0F172A !important;
-  font-weight: 900 !important;
 }
 
 #win-modal p {
@@ -1037,7 +1006,6 @@ button.fixed.bottom-6 {
   background: #FEF3C7 !important;
   color: #B45309 !important;
   border: 1.5px solid #FCD34D !important;
-  font-weight: 900 !important;
 }
 
 /* M05 Notice Modal */
@@ -1081,14 +1049,11 @@ button.fixed.bottom-6 {
 #hero-podium-gold h3,
 #podium-card-gold h3 {
   color: #0F172A !important;
-  font-weight: 900 !important;
-  letter-spacing: -0.025em !important;
 }
 
 #hero-podium-gold p.text-amber-700,
 #podium-card-gold p.text-amber-400 {
   color: #D97706 !important;
-  font-weight: 700 !important;
 }
 
 #hero-podium-gold .gold-gradient-text,
@@ -1096,7 +1061,6 @@ button.fixed.bottom-6 {
   background: linear-gradient(135deg, #B45309 0%, #D97706 50%, #EA580C 100%) !important;
   -webkit-background-clip: text !important;
   -webkit-text-fill-color: transparent !important;
-  font-weight: 900 !important;
 }
 
 /* ==========================================================================
@@ -1766,10 +1730,6 @@ section {
 }
 
 .pedestal-logo {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-weight: 900;
-  font-size: 12px;
-  letter-spacing: 0.18em;
   color: #FFFFFF;
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6), 0 0 10px rgba(232, 121, 249, 0.9);
 }
@@ -1818,35 +1778,28 @@ section {
 /* 1. Tiêu đề lớn (Section H1/H2): #0F172A */
 h1, h2 {
   color: #0F172A !important;
-  font-weight: 900 !important;
-  letter-spacing: -0.03em !important;
 }
 
 /* 2. Tiêu đề nhỏ (Card Titles H3/H4): #1E293B */
 h3, h4 {
   color: #1E293B !important;
-  font-weight: 800 !important;
-  letter-spacing: -0.02em !important;
 }
 
 /* 3. Nội dung chính / Body text: #334155 (Tương phản cao trên nền sáng) */
 p, .body-text {
   color: #334155 !important;
-  font-weight: 500 !important;
 }
 
 /* 4. Phụ đề & mô tả phụ: #475569 */
 .subtitle-text,
 .card-subtitle {
   color: #475569 !important;
-  font-weight: 600 !important;
 }
 
 /* 5. Ghi chú & micro-copy: #64748B */
 .note-text,
 .micro-copy {
   color: #64748B !important;
-  font-weight: 500 !important;
 }
 
 /* ==========================================================================
@@ -1956,7 +1909,6 @@ section li {
 #bxh-truc-tuyen table thead th {
   background: #F1F5F9 !important;
   color: #475569 !important;
-  font-weight: 800 !important;
   border-bottom: 2px solid #E2E8F0 !important;
 }
 
@@ -2001,7 +1953,6 @@ section li {
 
 #the-le .space-y-4 button span {
   color: #0F172A !important;
-  font-weight: 700 !important;
 }
 
 #the-le [id^="faq-content-"] {
@@ -2054,4 +2005,753 @@ section li {
 #the-le .group .absolute p,
 #the-le .group .absolute span {
   color: #FFFFFF !important;
+}
+/* ==========================================================================
+   27. HIGH CONTRAST SECURITY SYSTEM (PREVENT SAME-BRIGHTNESS CONFLICTS)
+   Khóa cứng tương phản WCAG AAA: Nền sáng chữ tối than chì, Nền tối chữ trắng sáng
+   ========================================================================== */
+
+/* 1. Đảm bảo toàn bộ thẻ Select và Input trong các Section nền sáng có nền trắng chữ tối */
+#m05-period-select {
+  background-color: #FFFFFF !important;
+  color: #0F172A !important;
+  border: 1.5px solid #CBD5E1 !important;
+}
+#m05-period-select option {
+  background-color: #FFFFFF !important;
+  color: #0F172A !important;
+}
+
+/* 2. Spotlight Top Tuần Banner: Chữ giải thưởng và text-white chuyển sang màu tương phản cao */
+#weekly-winner-spotlight #spotlight-prize-tag,
+#weekly-winner-spotlight .text-white {
+  color: #B45309 !important;
+}
+
+/* 3. Phụ đề bảng xếp hạng và các badge trong danh sách */
+#bxh-truc-tuyen p,
+#bxh-truc-tuyen .text-slate-400 {
+  color: #475569 !important;
+}
+
+/* 4. Thể Lệ Top Tuần & Nhiệm Vụ: Chống chữ trắng trên nền thẻ trắng */
+#tab-content-top-tuan ul li strong.text-white,
+#tab-content-nhiem-vu ul li strong.text-white,
+#tab-content-top-tuan strong,
+#tab-content-nhiem-vu strong {
+  color: #0F172A !important;
+}
+
+/* 5. Khóa bảo vệ chung: Mọi phần tử có class text-white nằm trên card trắng (không phải badge/nút) chuyển về than chì */
+section .glass-card .text-white:not(button):not(.bg-gradient-to-r):not([class*="bg-amber-700"]):not([class*="bg-sky"]):not([class*="bg-brand"]):not([class*="bg-blue"]):not([class*="bg-emerald"]):not([class*="bg-purple"]):not([class*="bg-red"]):not([class*="bg-slate-900"]),
+section [class*="bg-slate-900/"] .text-white:not(button):not(.bg-gradient-to-r):not([class*="bg-amber-700"]):not([class*="bg-sky"]):not([class*="bg-brand"]):not([class*="bg-blue"]):not([class*="bg-emerald"]):not([class*="bg-purple"]):not([class*="bg-red"]):not([class*="bg-slate-900"]),
+section [class*="bg-slate-800/"] .text-white:not(button):not(.bg-gradient-to-r):not([class*="bg-amber-700"]):not([class*="bg-sky"]):not([class*="bg-brand"]):not([class*="bg-blue"]):not([class*="bg-emerald"]):not([class*="bg-purple"]):not([class*="bg-red"]):not([class*="bg-slate-900"]) {
+  color: #0F172A !important;
+}
+
+/* ==================== BULLETPROOF DRAWER CONTROLS ==================== */
+#mobile-side-menu {
+  position: fixed !important;
+  top: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  height: 100vh !important;
+  z-index: 65 !important;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+#mobile-side-menu.drawer-open {
+  transform: translateX(0) !important;
+}
+
+#mobile-drawer-overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 60 !important;
+  transition: opacity 0.3s ease !important;
+}
+
+#mobile-drawer-overlay.overlay-open {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+
+
+/* ==========================================================================
+   28. USER REVISION: BORDER REFINEMENTS & COMPREHENSIVE CONTRAST GUARANTEES
+   ========================================================================== */
+
+/* --- 1. CHUYỂN BORDER ĐEN SANG CAM / HỒNG (ẢNH 1, 3) --- */
+
+/* Đường kẻ phân cách ngang trong khối Gala (Ảnh 2, 3) */
+#gala-awards-section div[class*="border-t"],
+#gala-awards-section .border-t.border-slate-800,
+#gala-awards-section .border-slate-800 {
+  border-top: 1.5px solid rgba(249, 115, 22, 0.35) !important;
+  border-color: rgba(249, 115, 22, 0.35) !important;
+}
+
+/* Đường viền bao ngoài & viền phân cách bảng xếp hạng (Ảnh 1) */
+#bxh-truc-tuyen .overflow-x-auto,
+#bxh-truc-tuyen div[class*="border-slate-800"],
+#leaderboard-table {
+  border-color: rgba(249, 115, 22, 0.3) !important;
+}
+
+#bxh-truc-tuyen .overflow-x-auto {
+  border: 1.5px solid rgba(249, 115, 22, 0.32) !important;
+  border-radius: 1.5rem !important;
+  box-shadow: 0 10px 30px -10px rgba(249, 115, 22, 0.08) !important;
+}
+
+#bxh-truc-tuyen table thead {
+  border-bottom: 2px solid rgba(249, 115, 22, 0.35) !important;
+}
+
+#bxh-truc-tuyen table thead th {
+  background: linear-gradient(180deg, #FFF7ED 0%, #FFEDD5 100%) !important;
+  color: #9A3412 !important;
+  border-bottom: 2px solid rgba(249, 115, 22, 0.3) !important;
+}
+
+#bxh-truc-tuyen table tbody tr {
+  border-bottom: 1px solid rgba(249, 115, 22, 0.15) !important;
+}
+
+#bxh-truc-tuyen table tbody tr:hover {
+  background: rgba(255, 237, 213, 0.45) !important;
+}
+
+/* Các đường kẻ border-slate-700/800 khác trên giao diện */
+section hr,
+section .border-slate-800,
+section .border-slate-700 {
+  border-color: rgba(249, 115, 22, 0.25) !important;
+}
+
+
+/* --- 2. BORDER CAM DÀY (ẢNH 2) CHUYỂN SANG MỎNG NỔI (ẢNH 4) --- */
+
+#gala-awards-section > div,
+#gala-awards-section .mb-10,
+#gala-awards-section .mb-12,
+#weekly-winner-spotlight > div,
+section#cot-moc-vip .glass-card,
+section#vong-quay-mung-05 .glass-card {
+  background: rgba(255, 255, 255, 0.88) !important;
+  backdrop-filter: blur(28px) saturate(200%) !important;
+  -webkit-backdrop-filter: blur(28px) saturate(200%) !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.95) !important;
+  border-radius: 2rem !important;
+  box-shadow: 0 22px 55px -14px rgba(234, 88, 12, 0.15),
+              0 0 0 1px rgba(255, 106, 0, 0.16),
+              inset 0 1px 3px 0 rgba(255, 255, 255, 0.95) !important;
+}
+
+
+/* --- 3. KHẮC PHỤC CHỮ VÀ NỀN TRÙNG MÀU (ẢNH 5, ẢNH 2, ẢNH 1 & ADMIN) --- */
+
+/* A. HUY HIỆU PHÂN HẠNG TRONG BẢNG XẾP HẠNG (ẢNH 5) */
+#bxh-truc-tuyen a[title*="BASIC"],
+#leaderboard-table a[title*="BASIC"],
+a[class*="bg-slate-700"][title*="BASIC"],
+a[class*="bg-slate-700"][href*="pricing"] {
+  background: #F1F5F9 !important;
+  color: #1E293B !important;
+  border: 1.5px solid #CBD5E1 !important;
+  font-weight: 700 !important;
+}
+
+#bxh-truc-tuyen a[title*="KH CŨ"],
+#leaderboard-table a[title*="KH CŨ"],
+a[class*="bg-slate-700"][title*="KH CŨ"] {
+  background: #F8FAFC !important;
+  color: #334155 !important;
+  border: 1.5px solid #CBD5E1 !important;
+  font-weight: 700 !important;
+}
+
+#bxh-truc-tuyen a[title*="KH MỚI"],
+#leaderboard-table a[title*="KH MỚI"],
+a[class*="bg-emerald-500"][title*="KH MỚI"] {
+  background: #ECFDF5 !important;
+  color: #065F46 !important;
+  border: 1.5px solid #6EE7B7 !important;
+  font-weight: 700 !important;
+}
+
+#bxh-truc-tuyen a[title*="PRO"],
+#leaderboard-table a[title*="PRO"],
+a[title*="VIP PRO"] {
+  background: #EFF6FF !important;
+  color: #1E40AF !important;
+  border: 1.5px solid #93C5FD !important;
+  font-weight: 700 !important;
+}
+
+#bxh-truc-tuyen a[title*="PREMIUM"],
+#leaderboard-table a[title*="PREMIUM"],
+a[title*="VIP PREMIUM"] {
+  background: #EEF2FF !important;
+  color: #3730A3 !important;
+  border: 1.5px solid #A5B4FC !important;
+  font-weight: 700 !important;
+}
+
+#bxh-truc-tuyen a[title*="ELITE"],
+#leaderboard-table a[title*="ELITE"],
+a[title*="VIP ELITE"] {
+  background: #FAF5FF !important;
+  color: #6B21A8 !important;
+  border: 1.5px solid #D8B4FE !important;
+  font-weight: 700 !important;
+}
+
+/* B. CHI TIẾT TRONG BẢNG XẾP HẠNG (ẢNH 1) */
+#leaderboard-table td span.font-bold.text-white,
+#leaderboard-table td .font-bold.text-white {
+  color: #0F172A !important;
+}
+
+#leaderboard-table td.text-white {
+  color: #0F172A !important;
+}
+
+#leaderboard-table span.text-amber-300 {
+  color: #9A3412 !important;
+}
+
+#leaderboard-table span[class*="bg-amber-400"] {
+  background: #FFEDD5 !important;
+  border-color: #FDBA74 !important;
+}
+
+#leaderboard-table span.text-sky-300 {
+  color: #0284C7 !important;
+}
+
+#leaderboard-table td.font-black,
+#leaderboard-table td[class*="text-slate-200"] {
+  color: #0F172A !important;
+}
+
+#leaderboard-table tbody tr:first-child td[class*="font-black"] {
+  color: #B45309 !important;
+}
+
+#leaderboard-table tbody tr:nth-child(2) td[class*="font-black"] {
+  color: #0369A1 !important;
+}
+
+#leaderboard-table tbody tr:nth-child(3) td[class*="font-black"] {
+  color: #BE123C !important;
+}
+
+#leaderboard-table .text-slate-400 {
+  color: #475569 !important;
+}
+
+
+/* C. KHỐI GALA VINH DANH & TOP 3 CHIẾN TƯỚNG (ẢNH 2) */
+
+/* Thẻ Quán Quân: Chuyển sang Light Luxury Gold, xóa bỏ nền đen chữ đen */
+#gala-awards-section div[class*="from-amber-500/20"] {
+  background: linear-gradient(180deg, #FFFFFF 0%, #FFFDF2 40%, #FEF3C7 100%) !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.95) !important;
+  box-shadow: 0 22px 55px -14px rgba(245, 158, 11, 0.25), 0 0 0 1px rgba(245, 158, 11, 0.35) !important;
+}
+
+#gala-top1-name {
+  color: #0F172A !important;
+}
+
+#gala-top1-fee {
+  color: #B45309 !important;
+}
+
+#gala-top1-code {
+  color: #9A3412 !important;
+}
+
+#gala-awards-section div[class*="from-amber-500/20"] .bg-slate-950\/70 {
+  background: rgba(255, 255, 255, 0.9) !important;
+  border: 1px solid #FDE68A !important;
+}
+
+#gala-awards-section div[class*="from-amber-500/20"] .bg-slate-950\/70 strong {
+  color: #0F172A !important;
+}
+
+#gala-awards-section div[class*="from-amber-500/20"] .bg-slate-950\/70 span {
+  color: #B45309 !important;
+}
+
+#gala-awards-section div[class*="from-amber-500/20"] p {
+  color: #475569 !important;
+}
+
+/* Thẻ Á Quân 1 & Á Quân 2: Xóa bỏ chữ trắng tàng hình */
+#gala-top2-fee {
+  color: #0369A1 !important;
+}
+
+#gala-top3-fee {
+  color: #BE123C !important;
+}
+
+#gala-top2-name,
+#gala-top3-name {
+  color: #0F172A !important;
+}
+
+#gala-awards-section [id^="gala-top"] .text-slate-300,
+#gala-awards-section [id^="gala-top"] .text-slate-400 {
+  color: #475569 !important;
+}
+
+/* 4 Thẻ chỉ số tổng kết Gala */
+#gala-awards-section .grid.grid-cols-2.md\:grid-cols-4 > div {
+  background: rgba(255, 255, 255, 0.9) !important;
+  border: 1px solid rgba(249, 115, 22, 0.25) !important;
+  box-shadow: 0 4px 15px -3px rgba(249, 115, 22, 0.08) !important;
+}
+
+#gala-awards-section .grid.grid-cols-2.md\:grid-cols-4 span[class*="text-slate-400"] {
+  color: #475569 !important;
+}
+
+#gala-stat-total-customers { color: #B45309 !important; }
+#gala-stat-total-orders { color: #047857 !important; }
+#gala-stat-total-volume { color: #0369A1 !important; }
+#gala-stat-total-revenue { color: #EA580C !important; }
+
+
+/* ==========================================================================
+   27. SECTION IMAGE CONTRAST & READABILITY (FIX LOW CONTRAST OVERLAYS)
+   Đảm bảo toàn bộ chữ nằm trên ảnh hoặc cạnh ảnh có độ tương phản cao, 
+   không che mờ ảnh, không bị chữ trắng/vàng chìm trên nền sáng.
+   ========================================================================== */
+
+/* 1. Poster Gala Year-End Party (assets/images/bg-gala-awards.jpg) */
+#the-le div:has(> img[src*="bg-gala-awards"]) h3,
+#the-le .relative:has(img[src*="bg-gala-awards"]) h3 {
+  color: #FDE68A !important;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.95), 0 0 2px #000 !important;
+}
+
+#the-le div:has(> img[src*="bg-gala-awards"]) p,
+#the-le .relative:has(img[src*="bg-gala-awards"]) p {
+  color: #F8FAFC !important;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.9) !important;
+}
+
+#the-le div:has(> img[src*="bg-gala-awards"]) div[class*="bg-gradient-to-t"],
+#the-le .relative:has(img[src*="bg-gala-awards"]) div[class*="bg-gradient-to-t"] {
+  background: linear-gradient(to top, rgba(2, 6, 23, 0.95) 0%, rgba(2, 6, 23, 0.6) 50%, transparent 100%) !important;
+}
+
+/* 2. Gala Top 3 Quán Quân / Á Quân 1 / Á Quân 2 Hero Podium */
+#gala-top1-name,
+#gala-top2-name,
+#gala-top3-name {
+  color: #0F172A !important;
+  font-weight: 900 !important;
+}
+
+#gala-top1-fee { color: #D97706 !important; font-weight: 900 !important; }
+#gala-top2-fee { color: #0284C7 !important; font-weight: 900 !important; }
+#gala-top3-fee { color: #B45309 !important; font-weight: 900 !important; }
+#gala-top1-code { color: #B45309 !important; font-weight: 800 !important; }
+#gala-top2-code { color: #0369A1 !important; font-weight: 800 !important; }
+#gala-top3-code { color: #B45309 !important; font-weight: 800 !important; }
+
+/* Khung kính luxury dark badge bao quanh ảnh giải thưởng công nghệ (Surface, iPad, Dyson) */
+#gala-awards-section .p-3.rounded-2xl.border:has(img) {
+  background: #0B1120 !important;
+  border: 1.5px solid rgba(245, 158, 11, 0.5) !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25) !important;
+}
+
+#gala-awards-section .p-3.rounded-2xl.border:has(img) span.text-\[11px\] {
+  color: #FBBF24 !important;
+  font-weight: 800 !important;
+}
+
+#gala-awards-section .p-3.rounded-2xl.border:has(img) strong {
+  color: #FFFFFF !important;
+  font-weight: 800 !important;
+}
+
+#gala-awards-section .p-3.rounded-2xl.border:has(img) span.text-xs {
+  color: #94A3B8 !important;
+}
+
+/* 3. Gala 05 Khách Hàng Đạt Giải Phụ Chuyên Môn (Section 1) */
+#gala-award-don-name,
+#gala-award-new-name,
+#gala-award-return-name,
+#gala-award-weight-name,
+#gala-award-volume-name {
+  color: #0F172A !important;
+  font-weight: 800 !important;
+}
+
+#gala-award-don-code,
+#gala-award-new-code,
+#gala-award-return-code,
+#gala-award-weight-code,
+#gala-award-volume-code {
+  color: #B45309 !important;
+  font-weight: 800 !important;
+}
+
+#gala-award-don-val,
+#gala-award-new-val,
+#gala-award-return-val,
+#gala-award-weight-val,
+#gala-award-volume-val {
+  color: #D97706 !important;
+  font-weight: 900 !important;
+}
+
+/* 4. Section 2 Tab 1: Top 3 Chung Cuộc Podium Cards */
+#podium-card-silver h3,
+#podium-card-gold h3,
+#podium-card-copper h3 {
+  color: #0F172A !important;
+  font-weight: 900 !important;
+}
+
+#podium-card-gold p.text-amber-400 {
+  color: #B45309 !important;
+  font-weight: 700 !important;
+}
+
+#podium-card-gold .gold-gradient-text {
+  background: linear-gradient(135deg, #D97706 0%, #B45309 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+#podium-card-silver .text-2xl.font-black {
+  color: #0284C7 !important;
+}
+
+#podium-card-copper .text-2xl.font-black {
+  color: #B45309 !important;
+}
+
+#podium-card-silver .crystal-plate,
+#podium-card-gold .crystal-plate,
+#podium-card-copper .crystal-plate {
+  background: #F8FAFC !important;
+  border: 1.5px solid #E2E8F0 !important;
+}
+
+#podium-card-silver span.text-xs,
+#podium-card-gold span.text-sm,
+#podium-card-copper span.text-xs {
+  color: #334155 !important;
+  font-weight: 600 !important;
+}
+
+/* 5. Section 2 Tab 2: 05 Giải Phụ Chuyên Môn Cards (#tab-content-giai-phu) */
+#tab-content-giai-phu h4 {
+  color: #0F172A !important;
+  font-weight: 800 !important;
+}
+
+#tab-content-giai-phu .group:hover h4 {
+  color: #D97706 !important;
+}
+
+#tab-content-giai-phu .text-lg.font-black {
+  color: #D97706 !important;
+  font-weight: 900 !important;
+}
+
+#tab-content-giai-phu span.px-2.py-0\.5.rounded-lg {
+  background: #FEF3C7 !important;
+  color: #92400E !important;
+  border: 1px solid #FDE68A !important;
+  font-weight: 800 !important;
+}
+
+/* 6. Section 2 Tab 3: Voucher Banners (Tháng 10, 11, 12) */
+#tab-content-m05-tri-an h3 {
+  color: #0F172A !important;
+  font-weight: 900 !important;
+}
+
+#tab-content-m05-tri-an span.inline-block {
+  background: #E0F2FE !important;
+  color: #0369A1 !important;
+  border: 1px solid #BAE6FD !important;
+  font-weight: 700 !important;
+}
+
+#tab-content-m05-tri-an a {
+  color: #0284C7 !important;
+  font-weight: 800 !important;
+}
+
+#tab-content-m05-tri-an a:hover {
+  color: #0369A1 !important;
+}
+
+/* 7. FAQ Accordion Buttons (#the-le) - Chống chữ trắng trên thẻ kính */
+#the-le .glass-card button[onclick*="toggleFaq"] {
+  color: #0F172A !important;
+  font-weight: 800 !important;
+}
+
+#the-le .glass-card button[onclick*="toggleFaq"]:hover {
+  color: #D97706 !important;
+}
+
+#the-le .glass-card button[onclick*="toggleFaq"] span[id*="faq-icon"] {
+  color: #EA580C !important;
+}
+
+#the-le [id*="faq-content"] {
+  color: #334155 !important;
+  border-top: 1px solid #E2E8F0 !important;
+}
+
+/* 8. VIP+1 Privileges Table (#cot-moc-vip) */
+#cot-moc-vip table thead th {
+  color: #475569 !important;
+  border-bottom: 2px solid #CBD5E1 !important;
+  font-weight: 700 !important;
+}
+
+#cot-moc-vip table tbody tr {
+  border-bottom: 1px solid #E2E8F0 !important;
+}
+
+#cot-moc-vip table tbody tr:hover {
+  background: #FEF3C7 !important;
+}
+
+#cot-moc-vip table td font-bold,
+#cot-moc-vip table td a span:first-child {
+  color: #0F172A !important;
+  font-weight: 800 !important;
+}
+
+#cot-moc-vip table td.text-emerald-400 {
+  color: #047857 !important;
+  font-weight: 700 !important;
+}
+
+#cot-moc-vip table td.text-slate-300 {
+  color: #334155 !important;
+}
+
+#cot-moc-vip table td.text-amber-300 a span:first-child {
+  color: #B45309 !important;
+}
+
+#cot-moc-vip table td.text-amber-400 {
+  color: #92400E !important;
+  font-weight: 700 !important;
+}
+
+#cot-moc-vip table span.bg-amber-400\/20 {
+  background: #FEF3C7 !important;
+  color: #92400E !important;
+  border: 1px solid #FDE68A !important;
+}
+
+/* 9. Mùng 05 Badges & Notice Box */
+#m05-public-prize-badge { color: #92400E !important; font-weight: 800 !important; }
+#m05-public-count-badge { color: #0369A1 !important; font-weight: 800 !important; }
+#m05-user-notice {
+  background: #F0F9FF !important;
+  border: 1px solid #BAE6FD !important;
+  color: #0369A1 !important;
+}
+
+/* ==========================================================================
+   28. UNIFIED TEMPLATE FOR ADMIN DASHBOARD & ALL MODALS
+   Đồng bộ toàn diện hệ thống bảng quản trị Admin theo mẫu giao diện mới:
+   Sang trọng, sáng sủa, độ tương phản tuyệt đối (WCAG AAA), 
+   mã voucher nổi bật không bị chìm hay trùng màu.
+   ========================================================================== */
+
+/* Container Modal Admin & Các Modal Tra Cứu */
+#admin-dashboard-modal > div,
+#admin-login-modal > div,
+#admin-change-password-modal > div,
+#giai-phu-modal > div,
+#m05-notice-modal > div {
+  background: #FFFFFF !important;
+  border: 1.5px solid rgba(245, 158, 11, 0.45) !important;
+  box-shadow: 0 25px 60px -15px rgba(15, 23, 42, 0.25), 0 0 30px rgba(245, 158, 11, 0.12) !important;
+  color: #0F172A !important;
+}
+
+/* Tiêu đề trong Admin & Modals */
+#admin-dashboard-modal h2,
+#admin-dashboard-modal h3,
+#admin-dashboard-modal h4,
+#admin-dashboard-modal h5,
+#admin-login-modal h2,
+#admin-login-modal h3,
+#admin-change-password-modal h2,
+#admin-change-password-modal h3,
+#giai-phu-modal h2,
+#giai-phu-modal h3,
+#giai-phu-modal h4,
+#m05-notice-modal h2,
+#m05-notice-modal h3,
+#m05-notice-modal h4 {
+  color: #0F172A !important;
+}
+
+#admin-dashboard-modal p,
+#admin-dashboard-modal label,
+#admin-login-modal p,
+#admin-change-password-modal p,
+#admin-change-password-modal label,
+#giai-phu-modal p {
+  color: #334155 !important;
+}
+
+/* Thanh chuyển Tab 6 Mục trong Admin */
+#admin-dashboard-modal .admin-tab-btn:not(.bg-brand-600):not(.active) {
+  background: #F8FAFC !important;
+  color: #475569 !important;
+  border: 1px solid #CBD5E1 !important;
+}
+
+#admin-dashboard-modal .admin-tab-btn:not(.bg-brand-600):not(.active):hover {
+  background: #F1F5F9 !important;
+  color: #0F172A !important;
+  border-color: #94A3B8 !important;
+}
+
+#admin-dashboard-modal .admin-tab-btn.bg-brand-600,
+#admin-dashboard-modal .admin-tab-btn.active,
+#admin-btn-wheel-config.bg-brand-600 {
+  background: linear-gradient(135deg, #EA580C 0%, #D97706 100%) !important;
+  color: #FFFFFF !important;
+  border: 1px solid #F59E0B !important;
+  box-shadow: 0 4px 12px rgba(234, 88, 12, 0.25) !important;
+}
+
+#admin-btn-sheets-sync:not(.active) {
+  background: #F0F9FF !important;
+  color: #0369A1 !important;
+  border: 1px solid #BAE6FD !important;
+}
+
+/* Bảng dữ liệu trong Admin (Desktop Table) */
+#admin-dashboard-modal table thead th,
+#giai-phu-modal table thead th {
+  background: #F1F5F9 !important;
+  color: #475569 !important;
+  border-bottom: 2px solid #CBD5E1 !important;
+  font-weight: 700 !important;
+}
+
+#admin-dashboard-modal table tbody tr,
+#giai-phu-modal table tbody tr {
+  background: #FFFFFF !important;
+  border-bottom: 1px solid #E2E8F0 !important;
+}
+
+#admin-dashboard-modal table tbody tr:hover,
+#giai-phu-modal table tbody tr:hover {
+  background: #FEF3C7 !important;
+}
+
+#admin-dashboard-modal table tbody td,
+#giai-phu-modal table tbody td {
+  color: #0F172A !important;
+}
+
+/* Huy hiệu Mã Voucher Admin - Sắc nét, tương phản tối đa */
+.admin-voucher-badge,
+#admin-dashboard-modal .admin-voucher-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  background-color: #0F172A !important;
+  color: #F59E0B !important;
+  border: 1px solid #334155 !important;
+  padding: 3px 8px !important;
+  border-radius: 6px !important;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.05em !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Ô nhập liệu Input, Select, Textarea trong Admin */
+#admin-dashboard-modal input,
+#admin-dashboard-modal select,
+#admin-dashboard-modal textarea,
+#admin-login-modal input,
+#admin-change-password-modal input,
+#giai-phu-modal input {
+  background-color: #FFFFFF !important;
+  color: #0F172A !important;
+  border: 1.5px solid #CBD5E1 !important;
+}
+
+#admin-dashboard-modal input:focus,
+#admin-dashboard-modal select:focus,
+#admin-dashboard-modal textarea:focus,
+#admin-login-modal input:focus,
+#admin-change-password-modal input:focus,
+#giai-phu-modal input:focus {
+  border-color: #F59E0B !important;
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2) !important;
+  outline: none !important;
+}
+
+/* Khối hộp phụ (Subpanels / Cards) trong Admin */
+#admin-dashboard-modal .p-4.rounded-2xl,
+#admin-dashboard-modal .p-5.rounded-2xl,
+#admin-dashboard-modal [class*="bg-slate-900"],
+#admin-dashboard-modal [class*="bg-slate-950"] {
+  background: #F8FAFC !important;
+  border: 1px solid #E2E8F0 !important;
+  color: #0F172A !important;
+}
+
+#admin-dashboard-modal .p-4.rounded-xl,
+#admin-dashboard-modal .p-3\.5.rounded-xl {
+  background: #FFFFFF !important;
+  border: 1px solid #E2E8F0 !important;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04) !important;
+}
+
+/* Thẻ Mobile Cards trong Admin (Không bị tràn ngang, tương phản cao) */
+#admin-wheel-config-mobile > div,
+#admin-leads-cards-mobile > div,
+#admin-winners-cards-mobile > div,
+#admin-affiliate-cards-mobile > div,
+#affiliate-detail-cards-mobile > div {
+  background: #FFFFFF !important;
+  border: 1px solid #E2E8F0 !important;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.05) !important;
+  color: #0F172A !important;
+}
+
+/* Nút bấm đóng & hành động phụ trong Admin */
+#admin-dashboard-modal button[onclick*="close"],
+#admin-login-modal button[onclick*="close"],
+#admin-change-password-modal button[onclick*="close"],
+#giai-phu-modal button[onclick*="close"] {
+  background: #F1F5F9 !important;
+  color: #475569 !important;
+}
+
+#admin-dashboard-modal button[onclick*="close"]:hover,
+#admin-login-modal button[onclick*="close"]:hover,
+#admin-change-password-modal button[onclick*="close"]:hover,
+#giai-phu-modal button[onclick*="close"]:hover {
+  background: #E2E8F0 !important;
+  color: #0F172A !important;
 }
