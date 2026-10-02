@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Eureka Customer Awards 2026 — Chương Trình Tri Ân Khách Hàng 2026</title>
-  <link rel="icon" type="image/png" href="https://erktransport.com/logo.png" />
+  <link rel="icon" type="image/png" href="assets/images/eureka-logo.png" />
   <meta name="description" content="Chương trình tri ân lớn nhất năm 2026 từ Eureka Logistics - Chương trình tri ân khách hàng 2026 rinh Laptop Surface Pro 12, iPad Air M3, Dyson. Vòng quay may mắn & đặc quyền VIP+1." />
   
   <!-- Font đồng bộ 100% với erktransport.com: Plus Jakarta Sans & Google Sans -->
@@ -264,12 +264,8 @@
   <header id="main-header" style="position: fixed !important; top: 0 !important; left: 0 !important; right: 0 !important; width: 100% !important; z-index: 50 !important;" class="fixed top-0 left-0 right-0 w-full z-50 border-b border-slate-200/90 backdrop-blur-xl bg-white/95 shadow-sm transition-all duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
       <!-- Logo Brand -->
-      <a href="https://www.erktransport.com/" class="flex items-center gap-3 group">
-        <img src="https://erktransport.com/logo.png" alt="Eureka Logistics" class="h-10 sm:h-12 w-auto object-contain transition-transform group-hover:scale-105" />
-        <div class="hidden sm:block">
-          <span class="block text-xs font-semibold tracking-wider text-brand-400 uppercase">Customer Awards 2026</span>
-          <span class="block text-sm font-bold text-white tracking-tight">Đại Tiệc Tri Ân Triệu Lộc</span>
-        </div>
+      <a href="https://www.erktransport.com/" class="flex items-center gap-3 group" title="Eureka Logistics">
+        <img src="assets/images/eureka-logo.png" alt="Eureka Logistics" class="h-10 sm:h-12 w-auto object-contain transition-transform group-hover:scale-105" />
       </a>
 
       <!-- Navigation Menu -->
@@ -325,11 +321,8 @@
     <!-- Drawer Header -->
     <div class="p-4 sm:p-5 border-b border-slate-200 flex items-center justify-between bg-slate-50/80">
       <div class="flex items-center gap-2.5">
-        <img src="https://erktransport.com/logo.png" alt="Eureka Logistics" class="h-8 w-auto object-contain" />
-        <div>
-          <span class="block text-[10px] font-bold tracking-wider text-amber-600 uppercase">Customer Awards 2026</span>
-          <span class="block text-xs font-bold text-slate-900">Eureka Logistics</span>
-        </div>
+        <img src="assets/images/eureka-logo.png" alt="Eureka Logistics" class="h-8 w-auto object-contain" />
+        <span class="block text-sm font-bold text-slate-900">Eureka Logistics</span>
       </div>
       <button onclick="closeMobileMenu()" aria-label="Đóng menu" class="w-9 h-9 rounded-xl bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-600 hover:text-slate-900 flex items-center justify-center transition-colors">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1879,7 +1872,7 @@
       
       <!-- Col 1: Brand Info -->
       <div class="md:col-span-2">
-        <img src="https://erktransport.com/logo.png" alt="Eureka Logistics" class="h-10 w-auto mb-4" />
+        <img src="assets/images/eureka-logo.png" alt="Eureka Logistics" class="h-10 w-auto mb-4 object-contain" />
         <p class="text-slate-300 font-bold text-sm mb-1">CÔNG TY TNHH THƯƠNG MẠI VÀ XUẤT NHẬP KHẨU EUREKA</p>
         <p class="text-slate-400 leading-relaxed max-w-md mb-3">
           Chuyên cung cấp các giải pháp logistics an toàn, uy tín và tối ưu chuỗi cung ứng nhờ mạng lưới kết nối toàn cầu cùng kho bãi hiện đại tại Việt Nam và Trung Quốc.
@@ -1942,7 +1935,7 @@
       <div class="absolute -bottom-20 -right-20 w-48 h-48 bg-amber-100 rounded-full blur-3xl pointer-events-none"></div>
 
       <!-- Close Button -->
-      <button onclick="closeWelcomeWheelModal()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 hover:text-slate-900 border border-slate-200 flex items-center justify-center font-bold text-lg transition-all cursor-pointer z-30" title="Đóng"></button>
+      <button onclick="closeWelcomeWheelModal()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 hover:text-slate-900 border border-slate-300 flex items-center justify-center font-bold transition-all cursor-pointer z-30 shadow-sm" title="Đóng" aria-label="Đóng"><svg class="w-4 h-4 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg></button>
 
       <!-- Modal Header -->
       <div class="text-center max-w-xl mx-auto mb-6">
@@ -2064,7 +2057,7 @@
   <!-- ==================== MODAL 1: CHÚC MỪNG TRÚNG THƯỞNG VÒNG 1 ==================== -->
   <div id="win-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-md hidden transition-opacity duration-300">
     <div class="glass-card rounded-3xl p-6 sm:p-8 max-w-md w-full border-2 border-amber-400 text-center relative glow-gold animate-float">
-      <button onclick="closeWinModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-800 text-xl font-bold w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 border border-slate-200 flex items-center justify-center"></button>
+      <button onclick="closeWinModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 hover:text-slate-900 border border-slate-300 flex items-center justify-center cursor-pointer transition-colors shadow-sm" title="Đóng" aria-label="Đóng"><svg class="w-4 h-4 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg></button>
       
       <div class="w-20 h-20 mx-auto rounded-full bg-gradient-to-tr from-amber-500 to-amber-300 flex items-center justify-center text-4xl mb-4 shadow-lg shadow-amber-500/50">
         
@@ -2104,7 +2097,7 @@
   <!-- ==================== MODAL 2: THÔNG BÁO VÒNG QUAY MÙNG 05 (USER NOTICE) ==================== -->
   <div id="m05-notice-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-md hidden transition-opacity duration-300">
     <div class="glass-card rounded-3xl p-6 sm:p-8 max-w-lg w-full border-2 border-sky-400 text-center relative">
-      <button onclick="closeM05NoticeModal()" class="absolute top-4 right-4 text-slate-500 hover:text-slate-900 text-xl font-bold w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 border border-slate-200 flex items-center justify-center"></button>
+      <button onclick="closeM05NoticeModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 hover:text-slate-900 border border-slate-300 flex items-center justify-center cursor-pointer transition-colors shadow-sm" title="Đóng" aria-label="Đóng"><svg class="w-4 h-4 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg></button>
       
       <div class="w-16 h-16 mx-auto rounded-full bg-sky-50 text-sky-900 flex items-center justify-center text-3xl mb-4 border border-sky-300">
         
@@ -2133,7 +2126,7 @@
   <!-- ==================== MODAL 3: ĐĂNG NHẬP ADMIN ==================== -->
   <div id="admin-login-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-md hidden transition-opacity duration-300">
     <div class="glass-card rounded-3xl p-6 sm:p-8 max-w-sm w-full border border-amber-300 text-center relative glow-gold">
-      <button onclick="closeAdminLoginModal()" class="absolute top-4 right-4 text-slate-500 hover:text-slate-900 text-xl font-bold w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 border border-slate-200 flex items-center justify-center"></button>
+      <button onclick="closeAdminLoginModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 hover:text-slate-900 border border-slate-300 flex items-center justify-center cursor-pointer transition-colors shadow-sm" title="Đóng" aria-label="Đóng"><svg class="w-4 h-4 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg></button>
       
       <div class="w-14 h-14 mx-auto rounded-2xl bg-amber-100 flex items-center justify-center text-3xl mb-3 text-amber-900">
         
@@ -2161,7 +2154,7 @@
   <!-- ==================== MODAL 3.5: ĐỔI MẬT KHẨU QUẢN TRỊ VIÊN ==================== -->
   <div id="admin-change-password-modal" class="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-md hidden transition-opacity duration-300">
     <div class="glass-card rounded-3xl p-6 sm:p-8 max-w-md w-full border border-amber-300 text-left relative glow-gold shadow-2xl">
-      <button onclick="closeChangeAdminPasswordModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-800 text-xl font-bold w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 border border-slate-200 flex items-center justify-center cursor-pointer transition-colors"></button>
+      <button onclick="closeChangeAdminPasswordModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 hover:text-slate-900 border border-slate-300 flex items-center justify-center cursor-pointer transition-colors shadow-sm" title="Đóng" aria-label="Đóng"><svg class="w-4 h-4 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg></button>
       
       <div class="flex items-center gap-3 mb-4 pb-3 border-b border-slate-200">
         <div class="w-12 h-12 rounded-2xl bg-amber-100 flex items-center justify-center text-2xl text-amber-900 shrink-0 border border-amber-300">
@@ -2236,7 +2229,7 @@
             <span class="sm:hidden">Đổi MK</span>
           </button>
           <button onclick="adminLogout()" class="px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg bg-rose-500/20 text-rose-300 border border-rose-500/30 text-[11px] sm:text-xs font-bold hover:bg-rose-500/30 cursor-pointer">Đăng Xuất</button>
-          <button onclick="closeAdminDashboard()" class="text-slate-500 hover:text-slate-900 text-lg sm:text-xl font-bold w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-slate-100 hover:bg-slate-200 border border-slate-200 flex items-center justify-center cursor-pointer"></button>
+          <button onclick="closeAdminDashboard()" class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 hover:text-slate-900 border border-slate-300 flex items-center justify-center cursor-pointer transition-colors shadow-sm" title="Đóng" aria-label="Đóng"><svg class="w-4 h-4 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg></button>
         </div>
       </div>
 
@@ -3143,7 +3136,7 @@
       <div class="absolute -bottom-24 -right-24 w-60 h-60 bg-brand-500/15 rounded-full blur-3xl pointer-events-none"></div>
 
       <!-- Close Button -->
-      <button onclick="closeGiaiPhuModal()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 hover:text-slate-900 border border-slate-200 flex items-center justify-center font-bold text-lg transition-all cursor-pointer z-30" title="Đóng"></button>
+      <button onclick="closeGiaiPhuModal()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 hover:text-slate-900 border border-slate-300 flex items-center justify-center font-bold transition-all cursor-pointer z-30 shadow-sm" title="Đóng" aria-label="Đóng"><svg class="w-4 h-4 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg></button>
 
       <!-- Modal Header -->
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4 pb-4 border-b border-slate-200 pr-10">

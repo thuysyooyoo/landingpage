@@ -2887,3 +2887,45 @@ span[class*="bg-emerald-500/"] {
   font-weight: 900 !important;
 }
 
+
+/* ==========================================================================
+   HIGH-CONTRAST MODAL CLOSE BUTTONS (X ICON VISIBILITY)
+   ========================================================================== */
+button[onclick*="closeWelcomeWheelModal"],
+button[onclick*="closeWinModal"],
+button[onclick*="closeM05NoticeModal"],
+button[onclick*="closeAdminLoginModal"],
+button[onclick*="closeChangeAdminPasswordModal"],
+button[onclick*="closeAdminDashboard"],
+button[onclick*="closeGiaiPhuModal"],
+button[onclick*="closeMobileMenu"],
+button[onclick*="closeLiveVoucherToast"] {
+  background-color: #F1F5F9 !important;
+  color: #0F172A !important;
+  border: 1px solid #CBD5E1 !important;
+}
+
+button[onclick*="closeWelcomeWheelModal"]:hover,
+button[onclick*="closeWinModal"]:hover,
+button[onclick*="closeM05NoticeModal"]:hover,
+button[onclick*="closeAdminLoginModal"]:hover,
+button[onclick*="closeChangeAdminPasswordModal"]:hover,
+button[onclick*="closeAdminDashboard"]:hover,
+button[onclick*="closeGiaiPhuModal"]:hover,
+button[onclick*="closeMobileMenu"]:hover,
+button[onclick*="closeLiveVoucherToast"]:hover {
+  background-color: #E2E8F0 !important;
+  color: #DC2626 !important;
+  border-color: #94A3B8 !important;
+}
+
+button[onclick*="close"] svg,
+button[aria-label="Đóng menu"] svg {
+  stroke: #0F172A !important;
+  display: block !important;
+}
+
+button[onclick*="close"]:hover svg,
+button[aria-label="Đóng menu"]:hover svg {
+  stroke: #DC2626 !important;
+}
