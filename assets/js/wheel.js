@@ -1,12 +1,3 @@
-
-function initGalaLedBulbs() {
-  startArcadeChasingBulbs();
-}
-function toggleGalaLedBulbs(speed) {}
-function initM05Segments() {
-  if (typeof initM05WheelSegments === 'function') initM05WheelSegments();
-}
-
 /**
  * Dual Lucky Wheel Engine for Eureka Customer Awards 2026
  * 1. Wheel 1: Vòng Quay Trải Nghiệm Khách Hàng (100% Popup Modal, lưu SĐT Lead vào Admin)
@@ -238,341 +229,56 @@ function getWheelCanvas1() {
 
 let galaLedInterval = null;
 
-
-function initArcadeBulbs(containerId) {
-  const container = document.getElementById(containerId);
-  if (!container) return;
-  container.innerHTML = '';
-  const numBulbs = 10; // Exactly 10 large 3D glowing pearl bulbs as in reference arcade wheel
-  const rect = container.getBoundingClientRect();
-  const size = rect.width > 0 ? rect.width : 300;
-  const center = size / 2;
-  const radius = center - 4;
-
+function initGalaLedBulbs() {
+  const container = document.getElementById('led-bulbs-container');
+  if (!container || container.children.length > 0) return;
+  const numBulbs = 16;
+  const radius = 138;
+  const center = 144;
   for (let i = 0; i < numBulbs; i++) {
-    const angle = (i * 2 * Math.PI) / numBulbs - Math.PI / 2;
+    const angle = (i * 2 * Math.PI) / numBulbs;
     const x = center + radius * Math.cos(angle);
     const y = center + radius * Math.sin(angle);
-
     const bulb = document.createElement('div');
-    bulb.className = 'arcade-bulb';
-    bulb.style.left = `${x}px`;
-    bulb.style.top = `${y}px`;
+    bulb.className = 'led-bulb' + (i % 2 === 0 ? ' bulb-on' : '');
+    bulb.style.left = x + 'px';
+    bulb.style.top = y + 'px';
     container.appendChild(bulb);
   }
 }
 
-let arcadeBulbInterval1 = null;
-let arcadeBulbInterval2 = null;
-
-function startArcadeChasingBulbs() {
-  initArcadeBulbs('led-bulbs-container');
-  initArcadeBulbs('m05-led-bulbs-container');
-
-  const bulbs1 = document.querySelectorAll('#led-bulbs-container .arcade-bulb');
-  const bulbs2 = document.querySelectorAll('#m05-led-bulbs-container .arcade-bulb');
-  let step = 0;
-
-  if (arcadeBulbInterval1) clearInterval(arcadeBulbInterval1);
-  arcadeBulbInterval1 = setInterval(() => {
-    bulbs1.forEach((b, idx) => {
-      if ((idx + step) % 2 === 0) {
-        b.classList.add('bulb-on');
-      } else {
-        b.classList.remove('bulb-on');
-      }
+function toggleGalaLedBulbs(chaseSpeed = 400) {
+  if (galaLedInterval) clearInterval(galaLedInterval);
+  galaLedInterval = setInterval(() => {
+    document.querySelectorAll('.led-bulb').forEach((bulb) => {
+      bulb.classList.toggle('bulb-on');
     });
-    bulbs2.forEach((b, idx) => {
-      if ((idx + step) % 2 === 0) {
-        b.classList.add('bulb-on');
-      } else {
-        b.classList.remove('bulb-on');
-      }
-    });
-    step++;
-  }, 280);
+  }, chaseSpeed);
 }
-
-
-// ==================== LUXURY 3D PASTEL PALETTE & ENGINE ====================
-// ==================== UNIFIED 3D ARCADE LUCKY WHEEL ENGINE (REF MATCH) ====================
-// Alternating Luxury Lilac Pastel & Cream White (Exact Match to Reference Arcade Wheel)
-const ARCADE_PASTEL_PALETTE = [
-  { baseColor: '#EDE9FE', apexColor: '#F5F3FF', textColor: '#4C1D95' }, // Soft Lilac
-  { baseColor: '#FFFFFF', apexColor: '#F8FAFC', textColor: '#0F172A' }, // Pure Cream White
-  { baseColor: '#FCE7F3', apexColor: '#FDF2F8', textColor: '#831843' }, // Soft Rose Macaron
-  { baseColor: '#FFFFFF', apexColor: '#F8FAFC', textColor: '#0F172A' }, // Pure Cream White
-  { baseColor: '#E0F2FE', apexColor: '#F0F9FF', textColor: '#0369A1' }, // Soft Ice Cyan
-  { baseColor: '#FFFFFF', apexColor: '#F8FAFC', textColor: '#0F172A' }, // Pure Cream White
-  { baseColor: '#FEF9C3', apexColor: '#FEFCE8', textColor: '#713F12' }, // Soft Butter Vanilla
-  { baseColor: '#FFFFFF', apexColor: '#F8FAFC', textColor: '#0F172A' }  // Pure Cream White
-];
-
-// Presets for Welcome Wheel (Modal)
-const ARCADE_WELCOME_PRESETS = [
-  { id: 1, text: 'VOUCHER 400K', sub: 'LỘC XUÂN', baseColor: '#EDE9FE', apexColor: '#F5F3FF', textColor: '#4C1D95', prize: 'Voucher 400.000 đ Lộc Xuân', probability_weight: 10, stock_quantity: 8 },
-  { id: 2, text: 'VOUCHER 300K', sub: 'CHIẾT KHẤU', baseColor: '#FFFFFF', apexColor: '#F8FAFC', textColor: '#0F172A', prize: 'Voucher Chiết Khấu 300.000 đ', probability_weight: 20, stock_quantity: 25 },
-  { id: 3, text: 'XẾP CONT VIP', sub: 'ƯU TIÊN SỚM', baseColor: '#FCE7F3', apexColor: '#FDF2F8', textColor: '#831843', prize: 'Vé Ưu Tiên Xếp Cont Sớm', probability_weight: 15, stock_quantity: 18 },
-  { id: 4, text: 'GIẢM 50% PHÍ', sub: 'LƯU KHO BÃI', baseColor: '#FFFFFF', apexColor: '#F8FAFC', textColor: '#0F172A', prize: 'Giảm 50% Phí Lưu Kho Bãi', probability_weight: 15, stock_quantity: 15 },
-  { id: 5, text: 'VOUCHER 300K', sub: 'LỘC XUÂN', baseColor: '#E0F2FE', apexColor: '#F0F9FF', textColor: '#0369A1', prize: 'Voucher Chiết Khấu 300.000 đ', probability_weight: 15, stock_quantity: 20 },
-  { id: 6, text: 'SQUAD 2-IN-1', sub: 'HỖ TRỢ VIP', baseColor: '#FFFFFF', apexColor: '#F8FAFC', textColor: '#0F172A', prize: 'Gói Hỗ Trợ Squad 2-in-1', probability_weight: 10, stock_quantity: 12 },
-  { id: 7, text: 'VOUCHER 400K', sub: 'LỘC XUÂN', baseColor: '#FEF9C3', apexColor: '#FEFCE8', textColor: '#713F12', prize: 'Voucher 400.000 đ Lộc Xuân', probability_weight: 10, stock_quantity: 10 },
-  { id: 8, text: 'VÉ MAY MẮN', sub: 'QUAY MÙNG 05', baseColor: '#FFFFFF', apexColor: '#F8FAFC', textColor: '#0F172A', prize: 'Vé Tích Lũy Quay Mùng 05', probability_weight: 5, stock_quantity: 999 }
-];
 
 let welcomeSegments = [];
 
 function initWelcomeWheelData() {
-  welcomeSegments = JSON.parse(JSON.stringify(ARCADE_WELCOME_PRESETS));
-  try {
-    localStorage.setItem('eureka_welcome_wheel_config', JSON.stringify(welcomeSegments));
-  } catch (e) {}
+  if (typeof getActiveWheelSegments === 'function') {
+    welcomeSegments = getActiveWheelSegments();
+  } else if (typeof DEFAULT_WHEEL_SEGMENTS !== 'undefined') {
+    welcomeSegments = JSON.parse(JSON.stringify(DEFAULT_WHEEL_SEGMENTS));
+  } else {
+    welcomeSegments = [
+      { id: 1, text: 'GIẢM GIÁ 10% CƯỚC', color: '#ea580c', textColor: '#FFFFFF', prize: 'Giảm giá 10% chi phí vận chuyển', probability_weight: 100, stock_quantity: 9999 },
+      { id: 2, text: 'VOUCHER 300K', color: '#1e293b', textColor: '#FBBF24', prize: 'Voucher Chiết Khấu 300.000 đ', probability_weight: 0, stock_quantity: 25 },
+      { id: 3, text: 'ƯU TIÊN XẾP CONT', color: '#f59e0b', textColor: '#0F172A', prize: 'Vé Ưu Tiên Xếp Cont Sớm', probability_weight: 0, stock_quantity: 18 },
+      { id: 4, text: 'GIẢM 50% LƯU KHO', color: '#0f172a', textColor: '#FFFFFF', prize: 'Giảm 50% Phí Lưu Kho Bãi', probability_weight: 0, stock_quantity: 15 },
+      { id: 5, text: 'VOUCHER 300K', color: '#ea580c', textColor: '#FFFFFF', prize: 'Voucher Chiết Khấu 300.000 đ', probability_weight: 0, stock_quantity: 20 },
+      { id: 6, text: 'GÓI SQUAD 2-IN-1', color: '#1e293b', textColor: '#38BDF8', prize: 'Gói Hỗ Trợ Squad 2–in–1', probability_weight: 0, stock_quantity: 11 },
+      { id: 7, text: 'VOUCHER 400K', color: '#f59e0b', textColor: '#0F172A', prize: 'Voucher 400.000 đ Lộc Xuân', probability_weight: 0, stock_quantity: 10 },
+      { id: 8, text: 'MAY MẮN LẦN SAU', color: '#0f172a', textColor: '#94A3B8', prize: 'Vé Tích Lũy Quay Mùng 05', probability_weight: 0, stock_quantity: 999 }
+    ];
+  }
 }
 
 let currentAngle1 = 0;
 let isSpinning1 = false;
-
-// Unified 3D Render Engine shared 100% by both wheels
-function render3DLuckyWheel(ctx, canvas, segments, currentAngle, isM05 = false) {
-  const width = canvas.width;
-  const height = canvas.height;
-  const centerX = width / 2;
-  const centerY = height / 2;
-  const outerRadius = (width / 2) - 8;
-  const numSegments = segments.length;
-  const arcSize = (2 * Math.PI) / numSegments;
-
-  ctx.clearRect(0, 0, width, height);
-
-  // 1. CHROME & MAGENTA 3D BEVEL (Khung kim loại chém cạnh sáng loáng)
-  ctx.save();
-  // Outer Ambient Shadow
-  ctx.beginPath();
-  ctx.arc(centerX, centerY, outerRadius + 4, 0, 2 * Math.PI);
-  ctx.lineWidth = 8;
-  const chassisShadow = ctx.createLinearGradient(0, 0, width, height);
-  chassisShadow.addColorStop(0, '#E879F9');
-  chassisShadow.addColorStop(0.5, '#A855F7');
-  chassisShadow.addColorStop(1, '#6B21A8');
-  ctx.strokeStyle = chassisShadow;
-  ctx.stroke();
-
-  // Polished Chrome Mirror Ring
-  ctx.beginPath();
-  ctx.arc(centerX, centerY, outerRadius + 1, 0, 2 * Math.PI);
-  ctx.lineWidth = 5;
-  const chromeRing = ctx.createLinearGradient(0, 0, width, height);
-  chromeRing.addColorStop(0, '#FFFFFF');
-  chromeRing.addColorStop(0.25, '#E2E8F0');
-  chromeRing.addColorStop(0.5, '#94A3B8');
-  chromeRing.addColorStop(0.75, '#FFFFFF');
-  chromeRing.addColorStop(1, '#64748B');
-  ctx.strokeStyle = chromeRing;
-  ctx.stroke();
-
-  // Inner Beveled Lip
-  ctx.beginPath();
-  ctx.arc(centerX, centerY, outerRadius - 3, 0, 2 * Math.PI);
-  ctx.lineWidth = 3.5;
-  ctx.strokeStyle = 'rgba(255, 255, 255, 0.95)';
-  ctx.stroke();
-  ctx.restore();
-
-  // 2. CONVEX PASTEL ROTOR SEGMENTS
-  const rotorRadius = outerRadius - 5;
-
-  segments.forEach((seg, i) => {
-    const angle = currentAngle + i * arcSize;
-    const midAngle = angle + arcSize / 2;
-    const baseCol = seg.baseColor || (i % 2 === 0 ? '#EDE9FE' : '#FFFFFF');
-    const apexCol = seg.apexColor || (i % 2 === 0 ? '#F5F3FF' : '#F8FAFC');
-    const textCol = seg.textColor || (i % 2 === 0 ? '#4C1D95' : '#0F172A');
-
-    ctx.save();
-    ctx.beginPath();
-    ctx.moveTo(centerX, centerY);
-    ctx.arc(centerX, centerY, rotorRadius, angle, angle + arcSize);
-    ctx.closePath();
-
-    // A. Radial Gradient
-    const radGrad = ctx.createRadialGradient(
-      centerX + (rotorRadius * 0.4) * Math.cos(midAngle),
-      centerY + (rotorRadius * 0.4) * Math.sin(midAngle),
-      5,
-      centerX, centerY, rotorRadius
-    );
-    radGrad.addColorStop(0, apexCol);
-    radGrad.addColorStop(0.7, baseCol);
-    radGrad.addColorStop(1, baseCol);
-    ctx.fillStyle = radGrad;
-    ctx.fill();
-
-    // B. Pillowed Convex Spine Highlight (Sống lưng múi cong 3D)
-    const perpAngle = midAngle + Math.PI / 2;
-    const ribWidth = rotorRadius * Math.sin(arcSize / 2);
-    const p1X = centerX + Math.cos(midAngle) * (rotorRadius * 0.55) - Math.cos(perpAngle) * ribWidth;
-    const p1Y = centerY + Math.sin(midAngle) * (rotorRadius * 0.55) - Math.sin(perpAngle) * ribWidth;
-    const p2X = centerX + Math.cos(midAngle) * (rotorRadius * 0.55) + Math.cos(perpAngle) * ribWidth;
-    const p2Y = centerY + Math.sin(midAngle) * (rotorRadius * 0.55) + Math.sin(perpAngle) * ribWidth;
-
-    const spineGrad = ctx.createLinearGradient(p1X, p1Y, p2X, p2Y);
-    spineGrad.addColorStop(0, 'rgba(15, 23, 42, 0.08)');
-    spineGrad.addColorStop(0.2, 'rgba(255, 255, 255, 0.05)');
-    spineGrad.addColorStop(0.5, 'rgba(255, 255, 255, 0.7)'); // Highlight spine
-    spineGrad.addColorStop(0.8, 'rgba(255, 255, 255, 0.05)');
-    spineGrad.addColorStop(1, 'rgba(15, 23, 42, 0.08)');
-    ctx.fillStyle = spineGrad;
-    ctx.fill();
-
-    // C. Metallic Spoke Dividers
-    ctx.save();
-    ctx.beginPath();
-    ctx.moveTo(centerX, centerY);
-    ctx.lineTo(centerX + rotorRadius * Math.cos(angle), centerY + rotorRadius * Math.sin(angle));
-    ctx.lineWidth = 2.5;
-    ctx.strokeStyle = 'rgba(255, 255, 255, 0.95)';
-    ctx.shadowColor = 'rgba(15, 23, 42, 0.2)';
-    ctx.shadowBlur = 3;
-    ctx.stroke();
-    ctx.restore();
-
-    // D. Outer Terminus Pearl Rivet
-    const beadX = centerX + (rotorRadius - 6) * Math.cos(angle);
-    const beadY = centerY + (rotorRadius - 6) * Math.sin(angle);
-    ctx.save();
-    ctx.beginPath();
-    ctx.arc(beadX, beadY, 3, 0, 2 * Math.PI);
-    const beadGrad = ctx.createRadialGradient(beadX - 1, beadY - 1, 0.5, beadX, beadY, 3);
-    beadGrad.addColorStop(0, '#FFFFFF');
-    beadGrad.addColorStop(0.5, '#FEF08A');
-    beadGrad.addColorStop(1, '#D97706');
-    ctx.fillStyle = beadGrad;
-    ctx.fill();
-    ctx.restore();
-
-    // E. Segment Typography (High-Contrast, WCAG AAA Sharp)
-    const normAngle = ((midAngle % (2 * Math.PI)) + (2 * Math.PI)) % (2 * Math.PI);
-    const isFlipped = normAngle > Math.PI / 2 && normAngle < 3 * Math.PI / 2;
-
-    ctx.save();
-    ctx.translate(centerX, centerY);
-    ctx.rotate(midAngle);
-
-    ctx.fillStyle = textCol;
-    ctx.font = isM05 
-      ? '900 11px monospace, "Plus Jakarta Sans", sans-serif'
-      : '900 11px "Plus Jakarta Sans", sans-serif';
-    ctx.shadowColor = 'rgba(255, 255, 255, 0.9)';
-    ctx.shadowBlur = 2;
-
-    if (isFlipped) {
-      ctx.rotate(Math.PI);
-      ctx.textAlign = 'left';
-      ctx.textBaseline = 'middle';
-      ctx.fillText(seg.text, -(rotorRadius - 18), isM05 ? 0 : -3);
-      if (!isM05 && seg.sub) {
-        ctx.font = '800 8.5px "Plus Jakarta Sans", sans-serif';
-        ctx.fillStyle = textCol;
-        ctx.fillText(seg.sub, -(rotorRadius - 18), 9);
-      }
-    } else {
-      ctx.textAlign = 'right';
-      ctx.textBaseline = 'middle';
-      ctx.fillText(seg.text, rotorRadius - 18, isM05 ? 0 : -3);
-      if (!isM05 && seg.sub) {
-        ctx.font = '800 8.5px "Plus Jakarta Sans", sans-serif';
-        ctx.fillStyle = textCol;
-        ctx.fillText(seg.sub, rotorRadius - 18, 9);
-      }
-    }
-    ctx.restore();
-    ctx.restore();
-  });
-
-  // 3. CURVED SAPPHIRE CRYSTAL DOME GLARE
-  ctx.save();
-  ctx.beginPath();
-  ctx.arc(centerX, centerY, rotorRadius, 0, 2 * Math.PI);
-  ctx.clip();
-  const domeGlare = ctx.createLinearGradient(centerX * 0.2, 0, centerX * 1.8, centerY * 1.6);
-  domeGlare.addColorStop(0, 'rgba(255, 255, 255, 0.5)');
-  domeGlare.addColorStop(0.3, 'rgba(255, 255, 255, 0.15)');
-  domeGlare.addColorStop(0.55, 'rgba(255, 255, 255, 0)');
-  domeGlare.addColorStop(0.85, 'rgba(255, 255, 255, 0.08)');
-  domeGlare.addColorStop(1, 'rgba(255, 255, 255, 0.25)');
-  ctx.fillStyle = domeGlare;
-  ctx.fill();
-  ctx.restore();
-
-  // 4. MAGNIFICENT 3D MAGENTA/GOLD CENTER HUB (Khớp 100% Ảnh Tham Chiếu)
-  ctx.save();
-  const hubRadius = isM05 ? 38 : 34;
-
-  // Recessed Cavity Shadow
-  ctx.beginPath();
-  ctx.arc(centerX, centerY, hubRadius + 5, 0, 2 * Math.PI);
-  ctx.fillStyle = 'rgba(15, 23, 42, 0.45)';
-  ctx.shadowColor = 'rgba(15, 23, 42, 0.65)';
-  ctx.shadowBlur = 14;
-  ctx.fill();
-
-  // Tier 1: Polished Chrome Ring
-  ctx.beginPath();
-  ctx.arc(centerX, centerY, hubRadius, 0, 2 * Math.PI);
-  const hubChrome = ctx.createLinearGradient(centerX - hubRadius, centerY - hubRadius, centerX + hubRadius, centerY + hubRadius);
-  hubChrome.addColorStop(0, '#FFFFFF');
-  hubChrome.addColorStop(0.4, '#E2E8F0');
-  hubChrome.addColorStop(0.8, '#94A3B8');
-  hubChrome.addColorStop(1, '#64748B');
-  ctx.fillStyle = hubChrome;
-  ctx.fill();
-
-  // Tier 2: Magenta Glow Outer Collar
-  ctx.beginPath();
-  ctx.arc(centerX, centerY, hubRadius - 3.5, 0, 2 * Math.PI);
-  const hubMagenta = ctx.createLinearGradient(centerX - hubRadius, centerY - hubRadius, centerX + hubRadius, centerY + hubRadius);
-  hubMagenta.addColorStop(0, '#F472B6');
-  hubMagenta.addColorStop(0.5, '#D946EF');
-  hubMagenta.addColorStop(1, '#A855F7');
-  ctx.fillStyle = hubMagenta;
-  ctx.shadowColor = 'rgba(217, 70, 239, 0.6)';
-  ctx.shadowBlur = 8;
-  ctx.fill();
-
-  // Tier 3: 3D Spherical Push Dome
-  ctx.beginPath();
-  ctx.arc(centerX, centerY, hubRadius - 7, 0, 2 * Math.PI);
-  const hubDome = ctx.createRadialGradient(
-    centerX - (hubRadius * 0.35),
-    centerY - (hubRadius * 0.35),
-    2,
-    centerX, centerY, hubRadius - 7
-  );
-  hubDome.addColorStop(0, '#FFFFFF');
-  hubDome.addColorStop(0.3, '#F472B6');
-  hubDome.addColorStop(0.7, '#C026D3');
-  hubDome.addColorStop(1, '#86198F');
-  ctx.fillStyle = hubDome;
-  ctx.shadowColor = 'rgba(0, 0, 0, 0.35)';
-  ctx.shadowBlur = 6;
-  ctx.fill();
-
-  // Integrated Pointer Arrow (Mũi chỉ 3D chém cạnh chỉ lên cung trúng thưởng)
-  ctx.beginPath();
-  ctx.moveTo(centerX, centerY - hubRadius - 8);
-  ctx.lineTo(centerX - 9, centerY - hubRadius + 3);
-  ctx.lineTo(centerX + 9, centerY - hubRadius + 3);
-  ctx.closePath();
-  const arrowGrad = ctx.createLinearGradient(centerX - 9, 0, centerX + 9, 0);
-  arrowGrad.addColorStop(0, '#F472B6');
-  arrowGrad.addColorStop(0.5, '#FFFFFF');
-  arrowGrad.addColorStop(1, '#D946EF');
-  ctx.fillStyle = arrowGrad;
-  ctx.shadowColor = 'rgba(217, 70, 239, 0.8)';
-  ctx.shadowBlur = 6;
-  ctx.fill();
-  ctx.restore();
-}
 
 function drawWheel() {
   const canvas1 = getWheelCanvas1();
@@ -584,7 +290,63 @@ function drawWheel() {
     initWelcomeWheelData();
   }
 
-  render3DLuckyWheel(ctx1, canvas1, welcomeSegments, currentAngle1, false);
+  const numSegments = welcomeSegments.length;
+  const arcSize = (2 * Math.PI) / numSegments;
+  const centerX = canvas1.width / 2;
+  const centerY = canvas1.height / 2;
+  const radius = centerX - 10;
+
+  ctx1.clearRect(0, 0, canvas1.width, canvas1.height);
+
+  // Outer Gold Rim Glow
+  ctx1.save();
+  ctx1.beginPath();
+  ctx1.arc(centerX, centerY, radius + 6, 0, 2 * Math.PI);
+  ctx1.lineWidth = 10;
+  ctx1.strokeStyle = '#F59E0B';
+  ctx1.shadowColor = '#F59E0B';
+  ctx1.shadowBlur = 18;
+  ctx1.stroke();
+  ctx1.restore();
+
+  // Draw Segments
+  welcomeSegments.forEach((seg, i) => {
+    const angle = currentAngle1 + i * arcSize;
+    ctx1.beginPath();
+    ctx1.moveTo(centerX, centerY);
+    ctx1.arc(centerX, centerY, radius, angle, angle + arcSize);
+    ctx1.fillStyle = seg.color;
+    ctx1.fill();
+    ctx1.lineWidth = 1.5;
+    ctx1.strokeStyle = '#0F172A';
+    ctx1.stroke();
+
+    // Segment Text
+    ctx1.save();
+    ctx1.translate(centerX, centerY);
+    ctx1.rotate(angle + arcSize / 2);
+    ctx1.textAlign = 'right';
+    ctx1.fillStyle = seg.textColor || '#FFFFFF';
+    ctx1.font = 'bold 12px "Plus Jakarta Sans", sans-serif';
+    ctx1.shadowColor = 'rgba(0,0,0,0.8)';
+    ctx1.shadowBlur = 4;
+    ctx1.fillText(seg.text, radius - 24, 4);
+    ctx1.restore();
+  });
+
+  // Center Inner Ring & Indicator
+  ctx1.beginPath();
+  ctx1.arc(centerX, centerY, 38, 0, 2 * Math.PI);
+  ctx1.fillStyle = '#0F172A';
+  ctx1.fill();
+  ctx1.lineWidth = 4;
+  ctx1.strokeStyle = '#FBBF24';
+  ctx1.stroke();
+
+  ctx1.beginPath();
+  ctx1.arc(centerX, centerY, 30, 0, 2 * Math.PI);
+  ctx1.fillStyle = '#F59E0B';
+  ctx1.fill();
 }
 
 function pickWinningIndexByWeight(segments) {
@@ -978,18 +740,86 @@ let currentAngle2 = 0;
 let isSpinning2 = false;
 
 function drawM05Wheel() {
-  const m05Canvas = document.getElementById('m05-wheel-canvas');
   if (!m05Canvas) return;
-  const m05Ctx = m05Canvas.getContext('2d');
+  if (!m05Ctx) m05Ctx = m05Canvas.getContext('2d');
   if (!m05Ctx) return;
 
   if (!m05Segments || m05Segments.length === 0) {
     initM05WheelSegments();
   }
 
-  render3DLuckyWheel(m05Ctx, m05Canvas, m05Segments, currentAngle2, true);
+  const numSegments = m05Segments.length;
+  const arcSize = (2 * Math.PI) / numSegments;
+  const centerX = m05Canvas.width / 2;
+  const centerY = m05Canvas.height / 2;
+  const radius = centerX - 10;
+
+  m05Ctx.clearRect(0, 0, m05Canvas.width, m05Canvas.height);
+
+  // Outer Rim Glow
+  m05Ctx.save();
+  m05Ctx.beginPath();
+  m05Ctx.arc(centerX, centerY, radius + 6, 0, 2 * Math.PI);
+  m05Ctx.lineWidth = 10;
+  m05Ctx.strokeStyle = '#38BDF8';
+  m05Ctx.shadowColor = '#38BDF8';
+  m05Ctx.shadowBlur = 18;
+  m05Ctx.stroke();
+  m05Ctx.restore();
+
+  // Draw Segments
+  m05Segments.forEach((seg, i) => {
+    const angle = currentAngle2 + i * arcSize;
+    m05Ctx.beginPath();
+    m05Ctx.moveTo(centerX, centerY);
+    m05Ctx.arc(centerX, centerY, radius, angle, angle + arcSize);
+    m05Ctx.fillStyle = seg.color;
+    m05Ctx.fill();
+    m05Ctx.lineWidth = 1.5;
+    m05Ctx.strokeStyle = '#0F172A';
+    m05Ctx.stroke();
+
+    // Segment Text (Mã Booking)
+    m05Ctx.save();
+    m05Ctx.translate(centerX, centerY);
+    m05Ctx.rotate(angle + arcSize / 2);
+    m05Ctx.textAlign = 'right';
+    m05Ctx.fillStyle = seg.textColor || '#FFFFFF';
+    m05Ctx.font = 'bold 11px monospace, "Plus Jakarta Sans", sans-serif';
+    m05Ctx.shadowColor = 'rgba(0,0,0,0.85)';
+    m05Ctx.shadowBlur = 4;
+    m05Ctx.fillText(seg.text, radius - 20, 4);
+    m05Ctx.restore();
+  });
+
+  // Center Ring
+  m05Ctx.beginPath();
+  m05Ctx.arc(centerX, centerY, 38, 0, 2 * Math.PI);
+  m05Ctx.fillStyle = '#0F172A';
+  m05Ctx.fill();
+  m05Ctx.lineWidth = 4;
+  m05Ctx.strokeStyle = '#38BDF8';
+  m05Ctx.stroke();
+
+  m05Ctx.beginPath();
+  m05Ctx.arc(centerX, centerY, 30, 0, 2 * Math.PI);
+  m05Ctx.fillStyle = '#0284C7';
+  m05Ctx.fill();
 }
 
+function triggerM05UserClick() {
+  if (typeof isAdminLoggedIn === 'function' && isAdminLoggedIn()) {
+    spinM05Admin();
+  } else {
+    const modal = document.getElementById('m05-notice-modal');
+    if (modal) modal.classList.remove('hidden');
+  }
+}
+
+function closeM05NoticeModal() {
+  const modal = document.getElementById('m05-notice-modal');
+  if (modal) modal.classList.add('hidden');
+}
 
 function spinM05Admin() {
   if (isSpinning2) return;
@@ -1168,16 +998,4 @@ if (document.readyState === 'loading') {
   window.addEventListener('DOMContentLoaded', initAllWheelEngines);
 } else {
   initAllWheelEngines();
-}
-
-
-document.addEventListener('DOMContentLoaded', () => {
-  startArcadeChasingBulbs();
-  if (typeof drawWheel === 'function') drawWheel();
-  if (typeof drawM05Wheel === 'function') drawM05Wheel();
-});
-if (document.readyState === 'complete' || document.readyState === 'interactive') {
-  startArcadeChasingBulbs();
-  if (typeof drawWheel === 'function') drawWheel();
-  if (typeof drawM05Wheel === 'function') drawM05Wheel();
 }
