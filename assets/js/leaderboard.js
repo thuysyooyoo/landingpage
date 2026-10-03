@@ -459,42 +459,42 @@ function renderLeaderboard(data) {
     if (item.rank === 1) {
       rowClass = 'bg-amber-50/80 hover:bg-amber-100/60 transition-colors border-b border-amber-200';
       rankBadge = `
-        <div class="w-8 h-8 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 text-white font-black flex items-center justify-center text-sm shadow">
+        <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 text-white font-black flex items-center justify-center text-xs sm:text-sm shadow mx-auto sm:mx-0">
           1
         </div>
       `;
       prizeBadge = `
-        <span class="px-3 py-1 rounded-full bg-amber-100 text-amber-900 border border-amber-300 font-extrabold text-[10px] uppercase tracking-wide shadow-sm">
+        <span class="whitespace-nowrap inline-flex items-center px-2 sm:px-3 py-0.5 sm:py-1 rounded-full bg-amber-100 text-amber-900 border border-amber-300 font-extrabold text-[9px] sm:text-[10px] uppercase tracking-wide shadow-sm">
           ${formatLeaderboardPrizeTag(item.prize_tag)}
         </span>
       `;
     } else if (item.rank === 2) {
       rowClass = 'bg-sky-50/70 hover:bg-sky-100/60 transition-colors border-b border-sky-200';
       rankBadge = `
-        <div class="w-8 h-8 rounded-full bg-sky-100 text-sky-900 border border-sky-300 font-black flex items-center justify-center text-sm shadow">
+        <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-sky-100 text-sky-900 border border-sky-300 font-black flex items-center justify-center text-xs sm:text-sm shadow mx-auto sm:mx-0">
           2
         </div>
       `;
       prizeBadge = `
-        <span class="px-3 py-1 rounded-full bg-sky-100 text-sky-900 border border-sky-300 font-extrabold text-[10px] uppercase tracking-wide shadow-sm">
+        <span class="whitespace-nowrap inline-flex items-center px-2 sm:px-3 py-0.5 sm:py-1 rounded-full bg-sky-100 text-sky-900 border border-sky-300 font-extrabold text-[9px] sm:text-[10px] uppercase tracking-wide shadow-sm">
           ${formatLeaderboardPrizeTag(item.prize_tag)}
         </span>
       `;
     } else if (item.rank === 3) {
       rowClass = 'bg-orange-50/70 hover:bg-orange-100/60 transition-colors border-b border-orange-200';
       rankBadge = `
-        <div class="w-8 h-8 rounded-full bg-amber-600 text-white font-black flex items-center justify-center text-sm shadow">
+        <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-amber-600 text-white font-black flex items-center justify-center text-xs sm:text-sm shadow mx-auto sm:mx-0">
           3
         </div>
       `;
       prizeBadge = `
-        <span class="px-3 py-1 rounded-full bg-amber-100 text-amber-900 border border-amber-300 font-extrabold text-[10px] uppercase tracking-wide shadow-sm">
+        <span class="whitespace-nowrap inline-flex items-center px-2 sm:px-3 py-0.5 sm:py-1 rounded-full bg-amber-100 text-amber-900 border border-amber-300 font-extrabold text-[9px] sm:text-[10px] uppercase tracking-wide shadow-sm">
           ${formatLeaderboardPrizeTag(item.prize_tag)}
         </span>
       `;
     } else {
-      rankBadge = `<span class="font-bold text-slate-700 text-sm ml-2">${item.rank}</span>`;
-      prizeBadge = `<span class="text-slate-700 text-xs font-medium">${formatLeaderboardPrizeTag(item.prize_tag)}</span>`;
+      rankBadge = `<span class="font-bold text-slate-700 text-xs sm:text-sm text-center block sm:inline sm:ml-2">${item.rank}</span>`;
+      prizeBadge = `<span class="text-slate-700 text-[10px] sm:text-xs font-medium whitespace-nowrap inline-block">${formatLeaderboardPrizeTag(item.prize_tag)}</span>`;
     }
 
     let vipBadgeClass = 'bg-slate-100 text-slate-800 border border-slate-300';
@@ -509,40 +509,42 @@ function renderLeaderboard(data) {
 
     tr.className = rowClass;
     tr.innerHTML = `
-      <td class="py-3 sm:py-3.5 px-2 sm:px-3 whitespace-nowrap">${rankBadge}</td>
-      <td class="py-3 sm:py-3.5 px-2 sm:px-3">
+      <td class="py-2.5 sm:py-3.5 px-1.5 sm:px-3 whitespace-nowrap text-center">${rankBadge}</td>
+      <td class="py-2.5 sm:py-3.5 px-2 sm:px-3">
         <div class="flex items-center gap-1.5 flex-wrap">
           <span class="font-bold text-slate-900 text-xs sm:text-sm leading-snug">${displayName}</span>
-          <a href="https://www.erktransport.com/pricing" target="_blank" rel="noopener noreferrer" class="sm:hidden px-2 py-0.5 rounded text-[10px] font-bold ${vipBadgeClass} inline-flex items-center gap-0.5 shadow-sm" title="Chi tiết gói ${item.vip_tier}">
+          <a href="https://www.erktransport.com/pricing" target="_blank" rel="noopener noreferrer" class="sm:hidden px-1.5 py-0.5 rounded text-[9px] font-bold ${vipBadgeClass} inline-flex items-center gap-0.5 shadow-sm whitespace-nowrap" title="Chi tiết gói ${item.vip_tier}">
             <span>${item.vip_tier}</span>
             <span class="text-[8px] opacity-70">↗</span>
           </a>
         </div>
-        <div class="flex items-center gap-1.5 mt-1 flex-wrap">
-          <span class="text-[10px] sm:text-[11px] font-bold text-amber-900 bg-amber-100 border border-amber-300 px-2 py-0.5 rounded tracking-wide inline-flex items-center gap-1 shadow-sm">
+        <div class="flex items-center gap-1.5 mt-1 flex-wrap text-[10px] sm:text-[11px]">
+          <span class="font-bold text-amber-900 bg-amber-100 border border-amber-300 px-1.5 sm:px-2 py-0.5 rounded tracking-wide inline-flex items-center gap-1 shadow-sm whitespace-nowrap">
             <span class="text-[9px] opacity-80 text-amber-800">MÃ:</span>${customerCode}
           </span>
-          <span class="md:hidden text-[10px] text-slate-500 font-medium">
-            · ${item.order_count} đơn · <span class="text-amber-900 font-black">${weightKg.toLocaleString('vi-VN')} kg</span> · <span class="text-sky-900 font-black">${volumeM3.toLocaleString('vi-VN')} m³</span>
+          <span class="md:hidden text-slate-500 font-medium inline-flex items-center gap-1 flex-wrap">
+            <span class="whitespace-nowrap">· ${item.order_count} đơn</span>
+            <span class="whitespace-nowrap text-amber-900 font-bold">· ${weightKg.toLocaleString('vi-VN')} kg</span>
+            <span class="whitespace-nowrap text-sky-900 font-bold">· ${volumeM3.toLocaleString('vi-VN')} m³</span>
           </span>
         </div>
         <div class="sm:hidden mt-1.5">
           ${prizeBadge}
         </div>
       </td>
-      <td class="py-3.5 px-3 whitespace-nowrap hidden sm:table-cell">
+      <td class="py-2.5 sm:py-3.5 px-3 whitespace-nowrap hidden sm:table-cell">
         <a href="https://www.erktransport.com/pricing" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1 rounded text-xs font-bold ${vipBadgeClass} hover:scale-105 transition-transform inline-flex items-center gap-1 cursor-pointer shadow-sm" title="Bấm để xem chi tiết quyền lợi gói ${item.vip_tier} tại bảng giá Eureka Logistics">
           <span>${item.vip_tier}</span>
           <span class="text-[9px] opacity-70">↗</span>
         </a>
       </td>
-      <td class="py-3.5 px-3 text-right font-bold text-slate-800 whitespace-nowrap hidden md:table-cell">${item.order_count} đơn</td>
-      <td class="py-3.5 px-3 text-right whitespace-nowrap hidden md:table-cell">${formatWeightDisplay(weightKg)}</td>
-      <td class="py-3.5 px-3 text-right whitespace-nowrap hidden md:table-cell">${formatVolumeDisplay(volumeM3)}</td>
-      <td class="py-3 sm:py-3.5 px-2 sm:px-3 text-right font-black whitespace-nowrap ${item.rank === 1 ? 'text-amber-900 text-sm sm:text-base' : item.rank === 2 ? 'text-sky-900 text-sm sm:text-base' : item.rank === 3 ? 'text-orange-950 text-sm sm:text-base' : 'text-slate-900 text-xs sm:text-sm'}">
+      <td class="py-2.5 sm:py-3.5 px-3 text-right font-bold text-slate-800 whitespace-nowrap hidden md:table-cell">${item.order_count} đơn</td>
+      <td class="py-2.5 sm:py-3.5 px-3 text-right whitespace-nowrap hidden md:table-cell">${formatWeightDisplay(weightKg)}</td>
+      <td class="py-2.5 sm:py-3.5 px-3 text-right whitespace-nowrap hidden md:table-cell">${formatVolumeDisplay(volumeM3)}</td>
+      <td class="py-2.5 sm:py-3.5 px-2 sm:px-3 text-right font-black whitespace-nowrap font-mono ${item.rank === 1 ? 'text-amber-900 text-xs sm:text-base' : item.rank === 2 ? 'text-sky-900 text-xs sm:text-base' : item.rank === 3 ? 'text-orange-950 text-xs sm:text-base' : 'text-slate-900 text-[11px] sm:text-sm'}">
         ${formatCurrency(item.service_fee)}
       </td>
-      <td class="py-3.5 px-3 text-center whitespace-nowrap hidden sm:table-cell">${prizeBadge}</td>
+      <td class="py-2.5 sm:py-3.5 px-3 text-center whitespace-nowrap hidden sm:table-cell">${prizeBadge}</td>
     `;
     tbody.appendChild(tr);
   });
