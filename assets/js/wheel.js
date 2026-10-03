@@ -1304,16 +1304,19 @@ function renderPublicMonthlyWinners() {
   let winners = [];
   if (typeof getMonthlyWinners === 'function') {
     winners = getMonthlyWinners();
-  } else {
-    winners = [
-      { period: "Kỳ 10/2026 (Mùng 05/11)", booking_code: "ERK-BK-2026-8891", prize: "Voucher Chiết Khấu 300.000 đ", draw_time: "10:05 · 05/11/2026", status: "Đã đối soát & trừ cước" },
-      { period: "Kỳ 10/2026 (Mùng 05/11)", booking_code: "ERK-BK-2026-4432", prize: "Vé Ưu Tiên Xếp Cont Sớm", draw_time: "10:10 · 05/11/2026", status: "Đã cấp vé ưu tiên" },
-      { period: "Kỳ 10/2026 (Mùng 05/11)", booking_code: "ERK-BK-2026-1205", prize: "Voucher Chiết Khấu 300.000 đ", draw_time: "10:15 · 05/11/2026", status: "Đã đối soát & trừ cước" },
-      { period: "Kỳ 09/2026 (Mùng 05/10)", booking_code: "ERK-BK-2026-7731", prize: "Giảm 50% Phí Lưu Kho Bãi", draw_time: "10:08 · 05/10/2026", status: "Đã hoàn tất trừ phí" }
-    ];
   }
 
   container.innerHTML = '';
+  if (!winners || winners.length === 0) {
+    container.innerHTML = `
+      <tr>
+        <td colspan="4" class="py-8 px-4 text-center text-xs sm:text-sm font-semibold text-amber-900/70">
+          Chưa có kết quả quay thưởng. Danh sách sẽ được công bố công khai sau mỗi kỳ quay Mùng 05.
+        </td>
+      </tr>
+    `;
+    return;
+  }
   winners.forEach((w, idx) => {
     const tr = document.createElement('tr');
     const isAlt = idx % 2 === 1;

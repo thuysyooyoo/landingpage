@@ -88,8 +88,8 @@ async function fetchCloudData(silent = true) {
         } catch (e) {}
       }
 
-      // 2. Đồng bộ Danh sách Trúng Thưởng M05
-      if (Array.isArray(data.monthlyWinners) && data.monthlyWinners.length > 0) {
+      // 2. Đồng bộ Danh sách Trúng Thưởng M05 (Sheet là nguồn gốc - kể cả khi trống)
+      if (Array.isArray(data.monthlyWinners)) {
         try {
           data.monthlyWinners.forEach(w => {
             if (w && w.status) w.status = w.status.replace(/[\u{1F300}-\u{1F9FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/gu, '').trim();

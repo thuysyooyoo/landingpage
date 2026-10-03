@@ -825,12 +825,7 @@ function getMonthlyWinners() {
       }
     } catch (e) {}
   }
-  return [
-    { period: "Kỳ 10/2026 (Mùng 05/11)", booking_code: "ERK-BK-2026-8891", prize: "Voucher Chiết Khấu 300.000 đ", draw_time: "10h05 - 05/11/2026", status: "Đã đối soát & trừ cước" },
-    { period: "Kỳ 10/2026 (Mùng 05/11)", booking_code: "ERK-BK-2026-4432", prize: "Voucher Chiết Khấu 300.000 đ", draw_time: "10h10 - 05/11/2026", status: "Đã đối soát & trừ cước" },
-    { period: "Kỳ 10/2026 (Mùng 05/11)", booking_code: "ERK-BK-2026-1205", prize: "Voucher Chiết Khấu 300.000 đ", draw_time: "10h15 - 05/11/2026", status: "Đã đối soát & trừ cước" },
-    { period: "Kỳ 09/2026 (Mùng 05/10)", booking_code: "ERK-BK-2026-7731", prize: "Voucher Chiết Khấu 300.000 đ", draw_time: "10h08 - 05/10/2026", status: "Đã hoàn tất trừ phí" }
-  ];
+  return [];
 }
 
 function renderAdminWinnersTable() {
