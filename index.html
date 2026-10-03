@@ -188,9 +188,12 @@
         background: rgba(255, 255, 255, 0.90) !important;
         box-shadow: 0 2px 10px rgba(180, 130, 60, 0.12) !important;
       }
-      #tong-quan .max-w-xl h1,
-      #tong-quan .max-w-xl p {
-        text-shadow: 0 1px 2px rgba(255, 255, 255, 0.7);
+      /* Đảm bảo chữ AWARDS 2026 trên điện thoại hiển thị gradient đậm nét, nổi bật y hệt bản máy tính, tuyệt đối không bị bóng mờ làm chìm */
+      #tong-quan h1 span.bg-clip-text {
+        text-shadow: none !important;
+        -webkit-text-fill-color: transparent !important;
+        background-clip: text !important;
+        -webkit-background-clip: text !important;
       }
     }
 
@@ -780,7 +783,7 @@
           <span class="block text-xs sm:text-sm font-black tracking-[0.25em] text-brand-600 uppercase mb-1 font-display">Grand Appreciation Gala</span>
           <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight leading-[1.04] mb-2 font-display">
             <span class="block text-slate-900 drop-shadow-sm">EUREKA CUSTOMER</span>
-            <span class="block text-transparent bg-clip-text bg-gradient-to-r from-orange-500 via-amber-500 to-red-500 drop-shadow-sm">AWARDS 2026</span>
+            <span class="block text-transparent bg-clip-text bg-gradient-to-r from-orange-500 via-amber-500 to-red-500 drop-shadow-sm" style="-webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: none !important;">AWARDS 2026</span>
           </h1>
           <p class="text-base sm:text-xl font-black text-brand-600 tracking-tight mb-2 font-display">
             "Lên Đơn Sớm – Về Đích Nhanh – Rinh Trọn Quà Khủng"
@@ -917,7 +920,7 @@
               <div class="my-1">
                 <span id="gala-stat-total-volume" class="text-xl sm:text-2xl font-black text-slate-900 font-display whitespace-nowrap">794 <span class="text-xs font-bold text-slate-600">Tấn</span> <span class="text-slate-400 font-normal">/</span> 1.181 <span class="text-xs font-bold text-slate-600">m³</span></span>
               </div>
-              <span class="text-xs font-medium text-slate-500">Tuyến Trung – Việt</span>
+              <span class="text-xs font-medium text-slate-500">Vận chuyển quốc tế</span>
             </div>
 
             <!-- Card 4 -->
