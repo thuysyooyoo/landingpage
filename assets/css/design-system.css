@@ -3445,6 +3445,60 @@ button[aria-label="Đóng menu"]:hover svg {
     text-align: center !important;
   }
 
+  /* Tab 5 (Giải thưởng) - 3 chặng tóm tắt: chữ lớn hơn vì nội dung đã rút gọn */
+  #nhiem-vu-preview-cards > div {
+    padding: 0.55rem 0.35rem 0.6rem !important;
+    min-width: 0 !important;
+  }
+  #nhiem-vu-preview-cards > div .flex.items-center.justify-between {
+    margin-bottom: 0.4rem !important;
+    gap: 3px !important;
+  }
+  #nhiem-vu-preview-cards > div .flex.items-center.justify-between span:first-child {
+    font-size: 10px !important;
+    padding: 2px 5px !important;
+    letter-spacing: 0 !important;
+  }
+  #nhiem-vu-preview-cards > div .flex.items-center.justify-between span:last-child {
+    font-size: 10.5px !important;
+    line-height: 1.1 !important;
+    font-weight: 700 !important;
+  }
+  #nhiem-vu-preview-cards h4 {
+    font-size: 13px !important;
+    line-height: 1.2 !important;
+    min-height: 32px !important;
+    margin-bottom: 4px !important;
+  }
+  #nhiem-vu-preview-cards .p-3.rounded-xl {
+    padding: 0.4rem 0.25rem !important;
+    margin-bottom: 0.4rem !important;
+  }
+  #nhiem-vu-preview-cards .p-3.rounded-xl strong {
+    font-size: 12px !important;
+    line-height: 1.2 !important;
+  }
+  #nhiem-vu-preview-cards .p-3.rounded-xl span {
+    font-size: 10.5px !important;
+    line-height: 1.2 !important;
+    margin-top: 2px !important;
+  }
+  #nhiem-vu-preview-cards > div .pt-3.border-t {
+    padding-top: 5px !important;
+    gap: 3px !important;
+  }
+  #nhiem-vu-preview-cards > div .pt-3.border-t span:first-child {
+    font-size: 10.5px !important;
+    font-weight: 700 !important;
+  }
+  #nhiem-vu-preview-cards > div .pt-3.border-t span:last-child {
+    font-size: 11.5px !important;
+    line-height: 1.2 !important;
+    font-weight: 900 !important;
+    padding: 3px 4px !important;
+    width: 100% !important;
+  }
+
   /* Super VIP Banner dưới 3 chặng */
   #cot-moc-vip #nhiem-vu-display-wrapper .bg-gradient-to-r.from-amber-50 {
     padding: 0.75rem 0.65rem !important;
