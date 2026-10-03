@@ -1275,9 +1275,10 @@ function renderGalaSummaryData() {
   if (elTotalCust) elTotalCust.innerHTML = `${totalCustomers.toLocaleString('vi-VN')} <span class="text-xs sm:text-sm font-semibold opacity-75">Doanh nghiệp</span>`;
   if (elTotalOrders) elTotalOrders.innerHTML = `${totalOrders.toLocaleString('vi-VN')} <span class="text-xs sm:text-sm font-semibold opacity-75">Đơn</span>`;
   if (elTotalVol) {
-    const kgStr = totalKg >= 1000 ? `${(Math.round(totalKg / 1000)).toLocaleString('vi-VN')} Tấn` : `${Math.round(totalKg).toLocaleString('vi-VN')} Kg`;
-    const m3Str = `${Math.round(totalM3).toLocaleString('vi-VN')} m³`;
-    elTotalVol.innerHTML = `${kgStr} <span class="opacity-60">/</span> ${m3Str}`;
+    const kgVal = totalKg >= 1000 ? (Math.round(totalKg / 1000)).toLocaleString('vi-VN') : Math.round(totalKg).toLocaleString('vi-VN');
+    const kgUnit = totalKg >= 1000 ? 'Tấn' : 'Kg';
+    const m3Val = Math.round(totalM3).toLocaleString('vi-VN');
+    elTotalVol.innerHTML = `${kgVal} <span class="text-xs sm:text-sm font-semibold opacity-75">${kgUnit}</span> <span class="opacity-60">/</span> ${m3Val} <span class="text-xs sm:text-sm font-semibold opacity-75">m³</span>`;
   }
   if (elTotalRev) elTotalRev.innerHTML = `135 <span class="text-xs sm:text-sm font-semibold opacity-75">Triệu</span>`;
 
