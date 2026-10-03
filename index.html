@@ -749,7 +749,7 @@
     }
   </style>
 
-  <section id="tong-quan" class="relative w-full overflow-hidden" style="background-color: transparent; min-height: 100vh; display: flex; align-items: center; padding-top: 85px;">
+  <section id="tong-quan" class="relative w-full overflow-hidden flex flex-col justify-center pt-20 sm:pt-24 pb-4 sm:pb-8 min-h-0 sm:min-h-screen" style="background-color: transparent;">
     
     <!-- Layer 1 (Z: 1): Video 3D Dải Lụa Vàng Chuyển Động Chân Thực -->
     <video id="hero-bg-video" autoplay muted loop playsinline preload="auto" poster="assets/img/hero-layers/trung-bay-cong-nghe-tren-lua-vang.png">
@@ -761,13 +761,13 @@
     <div id="hero-mobile-blur-overlay" class="md:hidden absolute inset-0 z-[2] pointer-events-none" style="background: linear-gradient(180deg, rgba(253, 250, 246, 0.72) 0%, rgba(253, 250, 246, 0.82) 40%, rgba(253, 250, 246, 0.92) 100%); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);" aria-hidden="true"></div>
 
     <!-- 1. Kỹ thuật làm mờ chân video Section 1: Lớp đệm gradient overlay hòa tan vào nền kem ngọc trai (90% -> 100%) -->
-    <div id="hero-bottom-fade-mask" class="pointer-events-none absolute bottom-0 left-0 w-full h-44 z-[2]" style="width: 100% !important; left: 0 !important; right: 0 !important; position: absolute !important; bottom: 0 !important; height: 260px !important; background: linear-gradient(to bottom, rgba(253, 250, 246, 0) 0%, rgba(253, 250, 246, 0.45) 45%, rgba(253, 250, 246, 0.85) 75%, #FDFAF6 100%) !important;" aria-hidden="true"></div>
+    <div id="hero-bottom-fade-mask" class="pointer-events-none absolute bottom-0 left-0 w-full z-[2]" style="width: 100% !important; left: 0 !important; right: 0 !important; position: absolute !important; bottom: 0 !important; background: linear-gradient(to bottom, rgba(253, 250, 246, 0) 0%, rgba(253, 250, 246, 0.45) 45%, rgba(253, 250, 246, 0.85) 75%, #FDFAF6 100%) !important;" aria-hidden="true"></div>
 
     <!-- Layer 3 (Z: 5): Hạt bụi vàng bay từ dưới lên -->
     <canvas id="hero-golden-particles-canvas" aria-hidden="true"></canvas>
 
     <!-- Layer 4 (Z: 10): Toàn bộ hộp kính mờ và nội dung text -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-8 sm:py-12 relative z-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-4 sm:py-8 relative z-10">
       
       <!-- Khối Text Nằm Bên Trái (Rộng tối đa 580px, để lộ 100% bục & giải thưởng 3D bên phải) -->
       <div class="max-w-xl text-left space-y-4">
@@ -868,10 +868,10 @@
   </section>
 
   <!-- Container bao bọc các section tiếp theo -->
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 pt-10">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 pt-3 sm:pt-6">
 
       <!-- ==================== TỔNG KẾT CHƯƠNG TRÌNH & VINH DANH ĐÊM GALA 2026 ==================== -->
-      <div id="gala-awards-section" class="relative z-20 mb-16">
+      <div id="gala-awards-section" class="relative z-20 mb-8 sm:mb-12">
         
         <!-- Header & 4 Stats Cards (Part 1) -->
         <div class="box-pearl-glass mb-10 p-6 sm:p-10 relative overflow-hidden">
@@ -950,7 +950,7 @@
           </div>
 
           <!-- 3 Symmetrical Cards Grid -->
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-end pt-4 text-left">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6 items-stretch pt-4 text-left">
             
             <!-- TOP 2: Á QUÂN 1 (Trái) -->
             <div class="relative order-2 md:order-1">
@@ -959,7 +959,7 @@
                 GIẢI Á QUÂN 1
               </div>
               
-              <div class="box-pearl-glass p-6 pt-7 flex flex-col justify-between" style="min-height: 485px;">
+              <div class="box-pearl-glass p-5 sm:p-6 pt-7 flex flex-col justify-between h-auto md:min-h-[420px]">
                 <div>
                   <!-- Tags Row -->
                   <div class="mb-3 flex items-center justify-between">
@@ -993,13 +993,13 @@
             </div>
 
             <!-- TOP 1: QUÁN QUÂN (Giữa - Nhô cao, Box Amber Glass) -->
-            <div class="relative order-1 md:order-2 md:-translate-y-5">
+            <div class="relative order-1 md:order-2 md:-translate-y-4">
               <!-- Top Badge Floating -->
               <div class="absolute -top-4 left-1/2 -translate-x-1/2 px-5 py-1.5 rounded-full bg-gradient-to-r from-amber-400 via-amber-500 to-orange-500 text-slate-950 font-black text-xs uppercase tracking-wider shadow-md font-display flex items-center gap-1.5 border border-amber-300 z-20">
                 👑 GIẢI QUÁN QUÂN
               </div>
 
-              <div class="box-amber-glass p-7 pt-8 flex flex-col justify-between shadow-2xl" style="min-height: 520px;">
+              <div class="box-amber-glass p-5 sm:p-7 pt-8 flex flex-col justify-between shadow-2xl h-auto md:min-h-[450px]">
                 <div>
                   <!-- Tags Row -->
                   <div class="mb-3 flex items-center justify-between">
@@ -1039,7 +1039,7 @@
                 GIẢI Á QUÂN 2
               </div>
 
-              <div class="box-pearl-glass p-6 pt-7 flex flex-col justify-between" style="min-height: 485px;">
+              <div class="box-pearl-glass p-5 sm:p-6 pt-7 flex flex-col justify-between h-auto md:min-h-[420px]">
                 <div>
                   <!-- Tags Row -->
                   <div class="mb-3 flex items-center justify-between">
@@ -1101,7 +1101,7 @@
           <!-- 5 Cards Grid -->
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 text-left">
             <!-- Card 1 -->
-            <div onclick="openGiaiPhuModal('vua-so-luong-don')" class="box-pearl-glass p-4 flex flex-col justify-between cursor-pointer group hover:scale-[1.02] transition-all" style="min-height: 360px;">
+            <div onclick="openGiaiPhuModal('vua-so-luong-don')" class="box-pearl-glass p-4 flex flex-col justify-between cursor-pointer group hover:scale-[1.02] transition-all h-auto md:min-h-[330px]">
               <div>
                 <!-- Thumbnail Image with Badge -->
                 <div class="h-28 rounded-2xl overflow-hidden mb-3 relative shadow-inner">
@@ -1120,7 +1120,7 @@
             </div>
 
             <!-- Card 2 -->
-            <div onclick="openGiaiPhuModal('tan-binh-xuat-sac')" class="box-pearl-glass p-4 flex flex-col justify-between cursor-pointer group hover:scale-[1.02] transition-all" style="min-height: 360px;">
+            <div onclick="openGiaiPhuModal('tan-binh-xuat-sac')" class="box-pearl-glass p-4 flex flex-col justify-between cursor-pointer group hover:scale-[1.02] transition-all h-auto md:min-h-[330px]">
               <div>
                 <div class="h-28 rounded-2xl overflow-hidden mb-3 relative shadow-inner">
                   <img src="assets/images/award-tan-binh.jpg" class="w-full h-full object-cover group-hover:scale-105 transition-transform" />
@@ -1138,7 +1138,7 @@
             </div>
 
             <!-- Card 3 -->
-            <div onclick="openGiaiPhuModal('su-tro-lai-an-tuong')" class="box-pearl-glass p-4 flex flex-col justify-between cursor-pointer group hover:scale-[1.02] transition-all" style="min-height: 360px;">
+            <div onclick="openGiaiPhuModal('su-tro-lai-an-tuong')" class="box-pearl-glass p-4 flex flex-col justify-between cursor-pointer group hover:scale-[1.02] transition-all h-auto md:min-h-[330px]">
               <div>
                 <div class="h-28 rounded-2xl overflow-hidden mb-3 relative shadow-inner">
                   <img src="assets/images/award-tro-lai.jpg" class="w-full h-full object-cover group-hover:scale-105 transition-transform" />
@@ -1156,7 +1156,7 @@
             </div>
 
             <!-- Card 4 -->
-            <div onclick="openGiaiPhuModal('vua-tai-trong')" class="box-pearl-glass p-4 flex flex-col justify-between cursor-pointer group hover:scale-[1.02] transition-all" style="min-height: 360px;">
+            <div onclick="openGiaiPhuModal('vua-tai-trong')" class="box-pearl-glass p-4 flex flex-col justify-between cursor-pointer group hover:scale-[1.02] transition-all h-auto md:min-h-[330px]">
               <div>
                 <div class="h-28 rounded-2xl overflow-hidden mb-3 relative shadow-inner">
                   <img src="assets/images/award-tai-trong.jpg" class="w-full h-full object-cover group-hover:scale-105 transition-transform" />
@@ -1174,7 +1174,7 @@
             </div>
 
             <!-- Card 5 -->
-            <div onclick="openGiaiPhuModal('vua-khoi-luong')" class="box-pearl-glass p-4 flex flex-col justify-between cursor-pointer group hover:scale-[1.02] transition-all" style="min-height: 360px;">
+            <div onclick="openGiaiPhuModal('vua-khoi-luong')" class="box-pearl-glass p-4 flex flex-col justify-between cursor-pointer group hover:scale-[1.02] transition-all h-auto md:min-h-[330px]">
               <div>
                 <div class="h-28 rounded-2xl overflow-hidden mb-3 relative shadow-inner">
                   <img src="assets/images/award-khoi-luong.jpg" class="w-full h-full object-cover group-hover:scale-105 transition-transform" />
@@ -1239,15 +1239,14 @@
       </div><!-- /gala-awards-section -->
 
     </div>
-  </section>
 
   <!-- ==================== SECTION 2 (CƠ CẤU GIẢI THƯỞNG 5 TAB) ==================== -->
   <!-- NẰM TRỰC TIẾP TRÊN NỀN CHUNG LIỀN MẠCH, KHÔNG CÓ BORDER CẮT -->
-  <section id="giai-thuong" class="relative w-full pt-8 pb-8 sm:py-16 px-4 sm:px-6 lg:px-8">
+  <section id="giai-thuong" class="relative w-full pt-4 pb-6 sm:py-12 px-4 sm:px-6 lg:px-8">
     <div class="max-w-6xl mx-auto text-center">
       
       <!-- Tiêu đề Section 2 -->
-      <div class="mb-8">
+      <div class="mb-5 sm:mb-8">
         <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/70 backdrop-blur-md border border-amber-200 text-amber-900 text-xs font-black uppercase tracking-widest shadow-sm mb-3">
           <span>HỆ THỐNG GIẢI THƯỞNG CHÍNH THỨC</span>
         </div>
@@ -1689,10 +1688,10 @@
   </section>
 
   <!-- ==================== VÒNG QUAY 2: VÒNG QUAY TRI ÂN (CRYSTAL GLASS EDITION) ==================== -->
-  <section id="vong-quay-mung-05" class="pt-8 pb-14 sm:py-20 relative bg-transparent border-t border-amber-200/50">
+  <section id="vong-quay-mung-05" class="pt-6 pb-8 sm:py-14 relative bg-transparent border-t border-amber-200/50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       
-      <div class="text-center max-w-3xl mx-auto mb-6 sm:mb-12 relative">
+      <div class="text-center max-w-3xl mx-auto mb-4 sm:mb-8 relative">
         <!-- Ambient lighting glow (Đồng bộ sắc hổ phách ấm Section 1) -->
         <div class="absolute -top-32 -right-32 w-80 h-80 bg-amber-200/30 rounded-full blur-3xl pointer-events-none"></div>
         <div class="absolute -bottom-32 -left-32 w-80 h-80 bg-orange-200/25 rounded-full blur-3xl pointer-events-none"></div>
@@ -1706,7 +1705,7 @@
         <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 mb-3 font-display tracking-tight">
           Vòng Quay <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 via-amber-500 to-red-500">Tri Ân Mùng 05</span>
         </h2>
-        <p class="text-slate-700 text-xs sm:text-sm max-w-2xl mx-auto mb-6 font-semibold leading-relaxed">
+        <p class="text-slate-700 text-xs sm:text-sm max-w-2xl mx-auto mb-4 font-semibold leading-relaxed">
           Vòng quay số may mắn chọn ra Mã Booking trúng giải thưởng tri ân định kỳ hàng tháng.
         </p>
 
@@ -1729,7 +1728,7 @@
         </div>
       </div>
 
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center max-w-6xl mx-auto mb-12">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center max-w-6xl mx-auto mb-6 sm:mb-8">
         
         <!-- Mùng 05 Wheel Canvas (Crystal Glass Wheel Container) -->
         <div class="lg:col-span-6 flex flex-col items-center justify-center">
@@ -1881,10 +1880,10 @@
   </section>
 
   <!-- ==================== CỘT MỐC CHẶNG & NÂNG HẠNG VIP+1 ==================== -->
-  <section id="cot-moc-vip" class="py-20 relative border-t border-slate-200">
+  <section id="cot-moc-vip" class="py-8 sm:py-14 relative border-t border-slate-200">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       
-      <div class="text-center max-w-3xl mx-auto mb-14 relative">
+      <div class="text-center max-w-3xl mx-auto mb-5 sm:mb-8 relative">
         <!-- Ambient lighting glow -->
         <div class="absolute -top-32 -left-32 w-80 h-80 bg-amber-200/35 rounded-full blur-3xl pointer-events-none"></div>
         <div class="absolute -bottom-32 -right-32 w-80 h-80 bg-sky-200/35 rounded-full blur-3xl pointer-events-none"></div>
@@ -1903,7 +1902,7 @@
       </div>
 
       <!-- Dynamic Nhiệm Vụ Hệ Thống Display (Single Chặng hoặc Bản Tổng Kết 3 Chặng) -->
-      <div id="nhiem-vu-display-wrapper" class="mb-16"></div>
+      <div id="nhiem-vu-display-wrapper" class="mb-6 sm:mb-10"></div>
 
       <!-- VIP+1 Privileges Table -->
       <div class="glass-countdown-strip p-3.5 sm:p-8 overflow-hidden">
@@ -2046,14 +2045,14 @@
   </section>
 
   <!-- ==================== BẢNG XẾP HẠNG TRỰC TUYẾN (BẢO MẬT TÊN & SĐT) ==================== -->
-  <section id="bxh-truc-tuyen" class="py-20 relative bg-transparent border-t border-slate-200 overflow-hidden">
+  <section id="bxh-truc-tuyen" class="py-8 sm:py-14 relative bg-transparent border-t border-slate-200 overflow-hidden">
     <!-- Nền ảnh đoàn xe logistics cao tốc đêm với blur đen cao cấp -->
     <div class="absolute inset-0 -z-10 bg-cover bg-center bg-no-repeat opacity-15 scale-105 pointer-events-none" style="background-image: url('assets/images/bg-bxh-fleet.jpg'); filter: blur(8px);"></div>
     <div class="absolute inset-0 -z-10 bg-gradient-to-b from-amber-50/30 via-white to-amber-50/20 pointer-events-none"></div>
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
       
-      <div class="relative mb-8">
+      <div class="relative mb-5 sm:mb-8">
         <!-- Ambient lighting glow -->
         <div class="absolute -top-32 -left-32 w-80 h-80 bg-amber-200/35 rounded-full blur-3xl pointer-events-none"></div>
         <div class="absolute -bottom-32 -right-32 w-80 h-80 bg-sky-200/35 rounded-full blur-3xl pointer-events-none"></div>
@@ -2187,10 +2186,10 @@
   </section>
 
   <!-- ==================== THỂ LỆ & CÂU HỎI THƯỜNG GẶP (FAQ ACCORDION) ==================== -->
-  <section id="the-le" class="py-20 relative border-t border-slate-200 bg-transparent overflow-hidden">
+  <section id="the-le" class="py-8 sm:py-14 relative border-t border-slate-200 bg-transparent overflow-hidden">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
       
-      <div class="text-center max-w-3xl mx-auto mb-14 relative">
+      <div class="text-center max-w-3xl mx-auto mb-5 sm:mb-8 relative">
         <!-- Ambient lighting glow -->
         <div class="absolute -top-32 -left-32 w-80 h-80 bg-amber-200/35 rounded-full blur-3xl pointer-events-none"></div>
         <div class="absolute -bottom-32 -right-32 w-80 h-80 bg-sky-200/35 rounded-full blur-3xl pointer-events-none"></div>
@@ -2387,12 +2386,12 @@
   </section>
 
   <!-- ==================== CALL TO ACTION BOTTOM ==================== -->
-  <section class="py-16 relative bg-gradient-to-r from-brand-700 via-brand-600 to-amber-600 text-white overflow-hidden gala-hidden-section">
+  <section class="py-10 sm:py-14 relative bg-gradient-to-r from-brand-700 via-brand-600 to-amber-600 text-white overflow-hidden gala-hidden-section">
     <div class="max-w-5xl mx-auto px-4 text-center relative z-10">
       <h2 class="text-3xl sm:text-4xl font-black mb-3">
         Sẵn Sàng Bước Vào Chương Trình Tri Ân Khách Hàng 2026?
       </h2>
-      <p class="text-amber-100 text-sm sm:text-base max-w-2xl mx-auto mb-8">
+      <p class="text-amber-100 text-sm sm:text-base max-w-2xl mx-auto mb-6">
         Mở mã ngay hôm nay để nhận bảng báo giá cước chính ngạch ưu đãi đầu mùa và bắt đầu tích lũy điểm số xét quà Laptop Surface Pro 12, iPad M3 và Dyson!
       </p>
       <div class="flex flex-wrap items-center justify-center gap-4">
