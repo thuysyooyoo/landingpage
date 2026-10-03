@@ -935,20 +935,9 @@ function drawM05Wheel() {
   const arcSize = (2 * Math.PI) / numSegments;
   const centerX = m05Canvas.width / 2;
   const centerY = m05Canvas.height / 2;
-  const radius = centerX - 10;
+  const radius = centerX - 3;
 
   m05Ctx.clearRect(0, 0, m05Canvas.width, m05Canvas.height);
-
-  // Outer Rim Glow
-  m05Ctx.save();
-  m05Ctx.beginPath();
-  m05Ctx.arc(centerX, centerY, radius + 6, 0, 2 * Math.PI);
-  m05Ctx.lineWidth = 10;
-  m05Ctx.strokeStyle = '#38BDF8';
-  m05Ctx.shadowColor = '#38BDF8';
-  m05Ctx.shadowBlur = 18;
-  m05Ctx.stroke();
-  m05Ctx.restore();
 
   // Draw Segments
   m05Segments.forEach((seg, i) => {
@@ -974,6 +963,15 @@ function drawM05Wheel() {
     m05Ctx.fillText(seg.text, radius - 20, 4);
     m05Ctx.restore();
   });
+
+  // Viền tròn chu vi mảnh tinh tế (chính xác 1 lớp)
+  m05Ctx.save();
+  m05Ctx.beginPath();
+  m05Ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+  m05Ctx.lineWidth = 2.5;
+  m05Ctx.strokeStyle = 'rgba(255, 255, 255, 0.85)';
+  m05Ctx.stroke();
+  m05Ctx.restore();
 
   // Center Ring
   m05Ctx.beginPath();

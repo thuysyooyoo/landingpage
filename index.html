@@ -1573,10 +1573,9 @@
 
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center max-w-6xl mx-auto mb-12">
         
-        <!-- Mùng 05 Wheel Canvas -->
+        <!-- Mùng 05 Wheel Canvas (1 Lớp Tinh Gọn & Đổ Bóng Chiều Sâu) -->
         <div class="lg:col-span-6 flex flex-col items-center justify-center">
-          <div class="wheel-container relative w-[300px] h-[300px] sm:w-[380px] sm:h-[380px] arcade-wheel-rim">
-              <div id="m05-led-bulbs-container" class="absolute inset-0 pointer-events-none z-20"></div>
+          <div class="wheel-container relative w-[300px] h-[300px] sm:w-[380px] sm:h-[380px] flex items-center justify-center">
             <div class="wheel-pointer">
               <svg width="44" height="50" viewBox="0 0 48 54" fill="none">
                 <path d="M24 54L4 14C0.5 7 5.5 0 13.5 0H34.5C42.5 0 47.5 7 44 14L24 54Z" fill="#38BDF8" stroke="#FFF" stroke-width="2"/>
@@ -1584,10 +1583,10 @@
                 <circle cx="24" cy="18" r="4" fill="#0284C7"/>
               </svg>
             </div>
-            <canvas id="m05-wheel-canvas" width="380" height="380" class="w-full h-full rounded-full shadow-2xl"></canvas>
+            <canvas id="m05-wheel-canvas" width="380" height="380" class="w-full h-full rounded-full"></canvas>
 
             <!-- Center Trigger Button -->
-            <button onclick="triggerM05UserClick()" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 rounded-full bg-gradient-to-tr from-sky-600 via-sky-500 to-cyan-400 text-white font-black text-xs uppercase tracking-wider shadow-2xl border-4 border-slate-900 flex flex-col items-center justify-center transition-transform hover:scale-110 active:scale-95 z-20">
+            <button onclick="triggerM05UserClick()" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 rounded-full bg-gradient-to-tr from-sky-600 via-sky-500 to-cyan-400 text-white font-black text-xs uppercase tracking-wider shadow-2xl border-4 border-slate-900 flex flex-col items-center justify-center transition-transform hover:scale-110 active:scale-95 z-20 cursor-pointer">
               <span class="text-[11px] leading-tight font-extrabold">MÃ BOOKING</span>
               <span class="text-[9px] opacity-90 font-medium">MÙNG 05</span>
             </button>

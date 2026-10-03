@@ -511,15 +511,17 @@ section#vong-quay-mung-05 .p-2.rounded-2xl.bg-slate-950\/60 {
 }
 
 /* Lucky Wheel Canvas & Bezel */
+/* Lucky Wheel Canvas: 1 Lớp Duy Nhất & Đổ Bóng Chiều Sâu Nổi Bật */
 .wheel-container {
   position: relative !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  padding: 8px !important;
-  background: linear-gradient(135deg, #FFFFFF 0%, #FEF3C7 50%, #E0F2FE 100%) !important;
-  border-radius: 9999px !important;
-  box-shadow: 0 25px 60px -15px rgba(15, 23, 42, 0.12), 0 0 0 4px #FFFFFF, 0 0 0 6px #F59E0B !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border-radius: 50% !important;
+  border: none !important;
+  box-shadow: none !important;
 }
 
 .wheel-pointer {
@@ -536,8 +538,13 @@ section#vong-quay-mung-05 .p-2.rounded-2xl.bg-slate-950\/60 {
   display: block !important;
   width: 100% !important;
   height: 100% !important;
-  border-radius: 9999px !important;
-  box-shadow: inset 0 0 25px rgba(0, 0, 0, 0.15) !important;
+  border-radius: 50% !important;
+  /* Đổ bóng chiều sâu đa tầng mềm mại, tạo cảm giác nổi khối 3D cao cấp */
+  box-shadow: 
+    0 25px 50px -12px rgba(15, 23, 42, 0.35),
+    0 12px 24px -8px rgba(15, 23, 42, 0.20),
+    0 4px 10px rgba(15, 23, 42, 0.10),
+    0 0 0 1px rgba(255, 255, 255, 0.7) !important;
 }
 
 /* Center Button on Wheel */
@@ -1725,35 +1732,16 @@ section {
   margin: 0 auto;
 }
 
-/* 3D Extruded Outer Cylinder Rim: Tím Magenta / Pastel Bevel như ảnh tham chiếu */
+/* Tối giản hóa arcade-wheel-rim: loại bỏ hoàn toàn các lớp đè màu tím / bậc thang đa tầng */
 .arcade-wheel-rim {
   position: relative;
-  width: 300px;
-  height: 300px;
+  width: 100% !important;
+  height: 100% !important;
   border-radius: 50%;
-  padding: 12px;
-  background: conic-gradient(
-    from 180deg,
-    #D8B4FE 0deg,
-    #C084FC 45deg,
-    #F472B6 90deg,
-    #E879F9 135deg,
-    #C084FC 180deg,
-    #A855F7 225deg,
-    #F472B6 270deg,
-    #D8B4FE 315deg,
-    #D8B4FE 360deg
-  ) !important;
-  box-shadow: 
-    0 0 0 2.5px rgba(255, 255, 255, 0.95),
-    0 0 0 5px #F3E8FF,
-    0 5px 0 5px #C084FC,
-    0 10px 0 5px #9333EA,
-    0 15px 0 5px #6B21A8,
-    0 20px 0 5px #4A044E,
-    0 26px 35px 8px rgba(147, 51, 234, 0.35),
-    0 40px 70px 15px rgba(15, 23, 42, 0.25) !important;
-  border: 4px solid #FFFFFF !important;
+  padding: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1762,8 +1750,8 @@ section {
 
 @media (min-width: 640px) {
   .arcade-wheel-rim {
-    width: 340px;
-    height: 340px;
+    width: 100% !important;
+    height: 100% !important;
   }
 }
 
