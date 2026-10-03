@@ -1272,7 +1272,7 @@ function renderGalaSummaryData() {
   const elTotalVol = document.getElementById('gala-stat-total-volume');
   const elTotalRev = document.getElementById('gala-stat-total-revenue');
 
-  if (elTotalCust) elTotalCust.innerHTML = `${totalCustomers.toLocaleString('vi-VN')} <span class="text-xs sm:text-sm font-semibold opacity-75">Doanh nghiệp</span>`;
+  if (elTotalCust) elTotalCust.innerHTML = `${totalCustomers.toLocaleString('vi-VN')} <span class="text-xs sm:text-sm font-semibold opacity-75">Khách hàng</span>`;
   if (elTotalOrders) elTotalOrders.innerHTML = `${totalOrders.toLocaleString('vi-VN')} <span class="text-xs sm:text-sm font-semibold opacity-75">Đơn</span>`;
   if (elTotalVol) {
     const kgVal = totalKg >= 1000 ? (Math.round(totalKg / 1000)).toLocaleString('vi-VN') : Math.round(totalKg).toLocaleString('vi-VN');
