@@ -882,44 +882,37 @@ function updateM05PublicInfo() {
   if (adminSpinPrize) adminSpinPrize.textContent = currentPrize;
 }
 
-// ==================== WHEEL 2: VÒNG QUAY TRI ÂN ====================
+// ==================== WHEEL 2: VÒNG QUAY TRI ÂN (CRYSTAL GLASS EDITION) ====================
 const m05Canvas = document.getElementById('m05-wheel-canvas');
 let m05Ctx = m05Canvas ? m05Canvas.getContext('2d') : null;
 
-const M05_PALETTE = [
-  { bg: '#0284C7', text: '#FFFFFF' },
-  { bg: '#0F172A', text: '#38BDF8' },
-  { bg: '#EA580C', text: '#FFFFFF' },
-  { bg: '#1E293B', text: '#FBBF24' },
-  { bg: '#0369A1', text: '#FFFFFF' },
-  { bg: '#F59E0B', text: '#0F172A' },
-  { bg: '#0F172A', text: '#34D399' },
-  { bg: '#0284C7', text: '#FFFFFF' },
-  { bg: '#1E293B', text: '#38BDF8' },
-  { bg: '#D97706', text: '#0F172A' },
-  { bg: '#0369A1', text: '#FFFFFF' },
-  { bg: '#0F172A', text: '#F87171' }
-];
-
+// Crystal Glass Palette for Booking Code Wedges (Alternating Ivory, Champagne Gold, and Sunset Amber)
 let m05Segments = [];
 
 function initM05WheelSegments() {
   const pool = getM05BookingPool();
   // Display between 8 and 12 slices for visual clarity and readability
-  const sliceCount = Math.min(Math.max(pool.length, 6), 12);
+  const sliceCount = Math.min(Math.max(pool.length, 8), 12);
   m05Segments = [];
+  
   for (let i = 0; i < sliceCount; i++) {
     const code = pool[i % pool.length];
-    const colorScheme = M05_PALETTE[i % M05_PALETTE.length];
+    // Color scheme: every 3rd or 4th is Amber, alternating Ivory and Champagne Gold
+    let type = 'champagne';
+    if (i % 3 === 0) {
+      type = 'amber';
+    } else if (i % 2 === 0) {
+      type = 'ivory';
+    }
+    
     m05Segments.push({
       text: code,
-      color: colorScheme.bg,
-      textColor: colorScheme.text
+      type: type
     });
   }
 }
 
-let currentAngle2 = 0;
+let currentAngle2 = -5 * Math.PI / 8;
 let isSpinning2 = false;
 
 function drawM05Wheel() {
@@ -931,63 +924,207 @@ function drawM05Wheel() {
     initM05WheelSegments();
   }
 
+  const dpr = window.devicePixelRatio || 1;
+  const displaySize = 380;
+  if (m05Canvas.width !== displaySize * dpr || m05Canvas.height !== displaySize * dpr) {
+    m05Canvas.width = displaySize * dpr;
+    m05Canvas.height = displaySize * dpr;
+    m05Canvas.style.width = displaySize + 'px';
+    m05Canvas.style.height = displaySize + 'px';
+  }
+
+  m05Ctx.save();
+  m05Ctx.scale(dpr, dpr);
+  m05Ctx.clearRect(0, 0, displaySize, displaySize);
+
   const numSegments = m05Segments.length;
   const arcSize = (2 * Math.PI) / numSegments;
-  const centerX = m05Canvas.width / 2;
-  const centerY = m05Canvas.height / 2;
-  const radius = centerX - 10;
+  const centerX = displaySize / 2;
+  const centerY = displaySize / 2;
+  const outerRadius = centerX - 8; // 182px
+  const bevelWidth = 16;
+  const segmentRadius = outerRadius - bevelWidth; // 166px
+  const innerRadius = 46; // Center hub radius
 
-  m05Ctx.clearRect(0, 0, m05Canvas.width, m05Canvas.height);
-
-  // Outer Rim Glow
-  m05Ctx.save();
+  // --- 1. OUTER FACETED CRYSTAL BEVEL RIM (24 Facets with Gold Bevel Lines) ---
   m05Ctx.beginPath();
-  m05Ctx.arc(centerX, centerY, radius + 6, 0, 2 * Math.PI);
-  m05Ctx.lineWidth = 10;
-  m05Ctx.strokeStyle = '#38BDF8';
-  m05Ctx.shadowColor = '#38BDF8';
-  m05Ctx.shadowBlur = 18;
-  m05Ctx.stroke();
-  m05Ctx.restore();
+  m05Ctx.arc(centerX, centerY, outerRadius, 0, 2 * Math.PI);
+  m05Ctx.fillStyle = 'rgba(255, 250, 240, 0.22)';
+  m05Ctx.fill();
 
-  // Draw Segments
+  const numBevelFacets = 24;
+  const bevelArc = (2 * Math.PI) / numBevelFacets;
+  for (let k = 0; k < numBevelFacets; k++) {
+    const bStart = k * bevelArc;
+    const bEnd = (k + 1) * bevelArc;
+
+    m05Ctx.beginPath();
+    m05Ctx.arc(centerX, centerY, outerRadius, bStart, bEnd);
+    m05Ctx.arc(centerX, centerY, segmentRadius, bEnd, bStart, true);
+    m05Ctx.closePath();
+
+    if (k % 2 === 0) {
+      m05Ctx.fillStyle = 'rgba(255, 252, 245, 0.55)';
+    } else {
+      m05Ctx.fillStyle = 'rgba(235, 215, 185, 0.32)';
+    }
+    m05Ctx.fill();
+
+    // Delicate facet boundary line
+    m05Ctx.beginPath();
+    m05Ctx.moveTo(centerX + segmentRadius * Math.cos(bStart), centerY + segmentRadius * Math.sin(bStart));
+    m05Ctx.lineTo(centerX + outerRadius * Math.cos(bStart), centerY + outerRadius * Math.sin(bStart));
+    m05Ctx.strokeStyle = 'rgba(212, 175, 55, 0.45)';
+    m05Ctx.lineWidth = 0.75;
+    m05Ctx.stroke();
+  }
+
+  // Outer gold rim line
+  m05Ctx.beginPath();
+  m05Ctx.arc(centerX, centerY, outerRadius, 0, 2 * Math.PI);
+  m05Ctx.strokeStyle = '#D4AF37';
+  m05Ctx.lineWidth = 1.85;
+  m05Ctx.stroke();
+
+  // Inner rim gold line
+  m05Ctx.beginPath();
+  m05Ctx.arc(centerX, centerY, segmentRadius, 0, 2 * Math.PI);
+  m05Ctx.strokeStyle = '#E2C78E';
+  m05Ctx.lineWidth = 1.35;
+  m05Ctx.stroke();
+
+  // --- 2. CRYSTAL WEDGES & BOOKING CODE TYPOGRAPHY ---
   m05Segments.forEach((seg, i) => {
     const angle = currentAngle2 + i * arcSize;
+    const midAngle = angle + arcSize / 2;
+
+    // Wedge path
     m05Ctx.beginPath();
     m05Ctx.moveTo(centerX, centerY);
-    m05Ctx.arc(centerX, centerY, radius, angle, angle + arcSize);
-    m05Ctx.fillStyle = seg.color;
+    m05Ctx.arc(centerX, centerY, segmentRadius, angle, angle + arcSize);
+    m05Ctx.closePath();
+
+    const isAmber = seg.type === 'amber';
+    const isIvory = seg.type === 'ivory';
+
+    if (isAmber) {
+      const grad = m05Ctx.createRadialGradient(centerX, centerY, innerRadius, centerX, centerY, segmentRadius);
+      grad.addColorStop(0, 'rgba(245, 158, 11, 0.94)');
+      grad.addColorStop(0.4, 'rgba(217, 119, 6, 0.90)');
+      grad.addColorStop(1, 'rgba(154, 52, 18, 0.85)');
+      m05Ctx.fillStyle = grad;
+    } else if (isIvory) {
+      const grad = m05Ctx.createRadialGradient(centerX, centerY, innerRadius, centerX, centerY, segmentRadius);
+      grad.addColorStop(0, 'rgba(255, 255, 255, 0.72)');
+      grad.addColorStop(0.5, 'rgba(255, 253, 248, 0.46)');
+      grad.addColorStop(1, 'rgba(246, 238, 225, 0.32)');
+      m05Ctx.fillStyle = grad;
+    } else {
+      // Champagne Gold
+      const grad = m05Ctx.createRadialGradient(centerX, centerY, innerRadius, centerX, centerY, segmentRadius);
+      grad.addColorStop(0, 'rgba(255, 252, 245, 0.72)');
+      grad.addColorStop(0.5, 'rgba(249, 235, 210, 0.48)');
+      grad.addColorStop(1, 'rgba(233, 212, 175, 0.32)');
+      m05Ctx.fillStyle = grad;
+    }
     m05Ctx.fill();
-    m05Ctx.lineWidth = 1.5;
-    m05Ctx.strokeStyle = '#0F172A';
+
+    // Laser-etched diamond facet lines
+    m05Ctx.beginPath();
+    m05Ctx.moveTo(centerX + (innerRadius + 6) * Math.cos(midAngle), centerY + (innerRadius + 6) * Math.sin(midAngle));
+    m05Ctx.lineTo(centerX + (segmentRadius - 2) * Math.cos(midAngle), centerY + (segmentRadius - 2) * Math.sin(midAngle));
+    m05Ctx.strokeStyle = isAmber ? 'rgba(255, 255, 255, 0.4)' : 'rgba(212, 175, 55, 0.38)';
+    m05Ctx.lineWidth = 0.85;
     m05Ctx.stroke();
 
-    // Segment Text (Mã Booking)
+    // Diamond chevron facets near the rim
+    const rChevron = segmentRadius * 0.76;
+    const mx = centerX + rChevron * Math.cos(midAngle);
+    const my = centerY + rChevron * Math.sin(midAngle);
+    const lx = centerX + (segmentRadius - 2) * Math.cos(angle);
+    const ly = centerY + (segmentRadius - 2) * Math.sin(angle);
+    const rx = centerX + (segmentRadius - 2) * Math.cos(angle + arcSize);
+    const ry = centerY + (segmentRadius - 2) * Math.sin(angle + arcSize);
+
+    m05Ctx.beginPath();
+    m05Ctx.moveTo(lx, ly);
+    m05Ctx.lineTo(mx, my);
+    m05Ctx.lineTo(rx, ry);
+    m05Ctx.strokeStyle = isAmber ? 'rgba(255, 255, 255, 0.32)' : 'rgba(200, 160, 80, 0.30)';
+    m05Ctx.lineWidth = 0.85;
+    m05Ctx.stroke();
+
+    // Segment divider hairline
+    m05Ctx.beginPath();
+    m05Ctx.moveTo(centerX + innerRadius * Math.cos(angle), centerY + innerRadius * Math.sin(angle));
+    m05Ctx.lineTo(centerX + segmentRadius * Math.cos(angle), centerY + segmentRadius * Math.sin(angle));
+    m05Ctx.strokeStyle = 'rgba(212, 175, 55, 0.72)';
+    m05Ctx.lineWidth = 1.35;
+    m05Ctx.stroke();
+
+    // Booking Code Typography (Radial spoke layout)
     m05Ctx.save();
     m05Ctx.translate(centerX, centerY);
-    m05Ctx.rotate(angle + arcSize / 2);
+    m05Ctx.rotate(midAngle);
     m05Ctx.textAlign = 'right';
-    m05Ctx.fillStyle = seg.textColor || '#FFFFFF';
+    m05Ctx.textBaseline = 'middle';
+
+    if (isAmber) {
+      m05Ctx.fillStyle = '#FFFFFF';
+      m05Ctx.shadowColor = 'rgba(0,0,0,0.55)';
+      m05Ctx.shadowBlur = 3;
+    } else {
+      m05Ctx.fillStyle = '#382210';
+      m05Ctx.shadowColor = 'rgba(255,255,255,0.85)';
+      m05Ctx.shadowBlur = 1;
+    }
+
     m05Ctx.font = 'bold 11px monospace, "Plus Jakarta Sans", sans-serif';
-    m05Ctx.shadowColor = 'rgba(0,0,0,0.85)';
-    m05Ctx.shadowBlur = 4;
-    m05Ctx.fillText(seg.text, radius - 20, 4);
+    m05Ctx.fillText(seg.text, segmentRadius - 16, 0);
     m05Ctx.restore();
   });
 
-  // Center Ring
+  // --- 3. CENTER HUB (3D FACETED DIAMOND CRYSTAL BEZEL) ---
   m05Ctx.beginPath();
-  m05Ctx.arc(centerX, centerY, 38, 0, 2 * Math.PI);
-  m05Ctx.fillStyle = '#0F172A';
+  m05Ctx.arc(centerX, centerY, innerRadius, 0, 2 * Math.PI);
+  m05Ctx.fillStyle = '#D4AF37';
   m05Ctx.fill();
-  m05Ctx.lineWidth = 4;
-  m05Ctx.strokeStyle = '#38BDF8';
-  m05Ctx.stroke();
+
+  const numCenterFacets = 12;
+  const cArc = (2 * Math.PI) / numCenterFacets;
+  for (let j = 0; j < numCenterFacets; j++) {
+    const cStart = j * cArc;
+    const cEnd = (j + 1) * cArc;
+
+    m05Ctx.beginPath();
+    m05Ctx.arc(centerX, centerY, innerRadius, cStart, cEnd);
+    m05Ctx.arc(centerX, centerY, innerRadius - 5, cEnd, cStart, true);
+    m05Ctx.closePath();
+
+    m05Ctx.fillStyle = (j % 2 === 0) ? '#FFFDF8' : '#EBD5B0';
+    m05Ctx.fill();
+    m05Ctx.strokeStyle = 'rgba(212, 175, 55, 0.4)';
+    m05Ctx.lineWidth = 0.5;
+    m05Ctx.stroke();
+  }
+
+  // Inner sparkling cabochon base
+  const cabochonRadius = innerRadius - 5;
+  const cabGrad = m05Ctx.createRadialGradient(centerX - 4, centerY - 4, 2, centerX, centerY, cabochonRadius);
+  cabGrad.addColorStop(0, '#FFFFFF');
+  cabGrad.addColorStop(0.35, '#FFFBF4');
+  cabGrad.addColorStop(0.8, '#F7EBD7');
+  cabGrad.addColorStop(1, '#D8BA84');
 
   m05Ctx.beginPath();
-  m05Ctx.arc(centerX, centerY, 30, 0, 2 * Math.PI);
-  m05Ctx.fillStyle = '#0284C7';
+  m05Ctx.arc(centerX, centerY, cabochonRadius, 0, 2 * Math.PI);
+  m05Ctx.fillStyle = cabGrad;
   m05Ctx.fill();
+  m05Ctx.strokeStyle = '#D4AF37';
+  m05Ctx.lineWidth = 1.5;
+  m05Ctx.stroke();
+
+  m05Ctx.restore();
 }
 
 function triggerM05UserClick() {
@@ -1116,7 +1253,50 @@ function spinM05Admin() {
   requestAnimationFrame(animateSpin2);
 }
 
-// Render Public Monthly Winners Table (CHỈ ĐỂ MÃ BOOKING TRÚNG THƯỞNG, KHÔNG CẦN CHE)
+// Helper functions for Clean Formatted Table Data
+function formatDrawTime(rawTime) {
+  if (!rawTime) return '10:00 · 05/11/2026';
+  // Check if string contains GMT or is a parseable date
+  if (rawTime.includes('GMT') || (rawTime.includes('T') && rawTime.includes('Z'))) {
+    const d = new Date(rawTime);
+    if (!isNaN(d.getTime())) {
+      const hh = String(d.getHours()).padStart(2, '0');
+      const mm = String(d.getMinutes()).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
+      const month = String(d.getMonth() + 1).padStart(2, '0');
+      const year = d.getFullYear();
+      return `${hh}:${mm} · ${day}/${month}/${year}`;
+    }
+  }
+  // Normalize string like "10h05 - 05/11/2026" or "18:12 - 03/10/2026"
+  return rawTime.replace(' - ', ' · ').replace('h', ':');
+}
+
+function formatPrizeDisplay(prizeText) {
+  if (!prizeText) return 'Voucher Tri Ân';
+  const amountMatch = prizeText.match(/(\d+[\d\.,]*\s*(?:đ|VNĐ|K|%)?)/i);
+  if (amountMatch) {
+    const amount = amountMatch[0];
+    const prefix = prizeText.replace(amount, '').trim();
+    return `
+      <div class="flex items-center gap-2">
+        <span class="w-6 h-6 sm:w-7 sm:h-7 rounded-lg bg-orange-100/90 border border-orange-300/80 flex items-center justify-center text-xs shrink-0 shadow-2xs">🎁</span>
+        <div class="flex flex-wrap items-center gap-1.5">
+          <span class="font-bold text-slate-800 text-xs sm:text-sm">${prefix}</span>
+          <span class="font-black text-brand-600 text-xs sm:text-sm bg-orange-50/90 px-2 py-0.5 rounded-lg border border-orange-200/90 shadow-2xs">${amount}</span>
+        </div>
+      </div>
+    `;
+  }
+  return `
+    <div class="flex items-center gap-2">
+      <span class="w-6 h-6 sm:w-7 sm:h-7 rounded-lg bg-orange-100/90 border border-orange-300/80 flex items-center justify-center text-xs shrink-0 shadow-2xs">🎁</span>
+      <span class="font-bold text-slate-800 text-xs sm:text-sm">${prizeText}</span>
+    </div>
+  `;
+}
+
+// Render Public Monthly Winners Table (Strip Card Crystal Glassmorphism)
 function renderPublicMonthlyWinners() {
   const container = document.getElementById('public-m05-winners-body');
   if (!container) return;
@@ -1126,31 +1306,46 @@ function renderPublicMonthlyWinners() {
     winners = getMonthlyWinners();
   } else {
     winners = [
-      { period: "Kỳ 10/2026 (Mùng 05/11)", booking_code: "ERK-BK-2026-8891", prize: "Voucher Chiết Khấu 300.000 đ", draw_time: "10h05 - 05/11/2026", status: "Đã đối soát & trừ cước" },
-      { period: "Kỳ 10/2026 (Mùng 05/11)", booking_code: "ERK-BK-2026-4432", prize: "Vé Ưu Tiên Xếp Cont Sớm", draw_time: "10h10 - 05/11/2026", status: "Đã cấp vé ưu tiên" },
-      { period: "Kỳ 10/2026 (Mùng 05/11)", booking_code: "ERK-BK-2026-1205", prize: "Voucher Chiết Khấu 300.000 đ", draw_time: "10h15 - 05/11/2026", status: "Đã đối soát & trừ cước" },
-      { period: "Kỳ 09/2026 (Mùng 05/10)", booking_code: "ERK-BK-2026-7731", prize: "Giảm 50% Phí Lưu Kho Bãi", draw_time: "10h08 - 05/10/2026", status: "Đã hoàn tất trừ phí" }
+      { period: "Kỳ 10/2026 (Mùng 05/11)", booking_code: "ERK-BK-2026-8891", prize: "Voucher Chiết Khấu 300.000 đ", draw_time: "10:05 · 05/11/2026", status: "Đã đối soát & trừ cước" },
+      { period: "Kỳ 10/2026 (Mùng 05/11)", booking_code: "ERK-BK-2026-4432", prize: "Vé Ưu Tiên Xếp Cont Sớm", draw_time: "10:10 · 05/11/2026", status: "Đã cấp vé ưu tiên" },
+      { period: "Kỳ 10/2026 (Mùng 05/11)", booking_code: "ERK-BK-2026-1205", prize: "Voucher Chiết Khấu 300.000 đ", draw_time: "10:15 · 05/11/2026", status: "Đã đối soát & trừ cước" },
+      { period: "Kỳ 09/2026 (Mùng 05/10)", booking_code: "ERK-BK-2026-7731", prize: "Giảm 50% Phí Lưu Kho Bãi", draw_time: "10:08 · 05/10/2026", status: "Đã hoàn tất trừ phí" }
     ];
   }
 
   container.innerHTML = '';
-  winners.forEach(w => {
+  winners.forEach((w, idx) => {
     const tr = document.createElement('tr');
-    tr.className = 'border-b border-slate-200 hover:bg-amber-50/60 text-xs text-slate-800 transition-colors';
+    const isAlt = idx % 2 === 1;
+    tr.className = `group transition-all duration-200 border-b border-amber-200/50 hover:bg-white/80 ${isAlt ? 'bg-amber-50/30' : 'bg-transparent'}`;
     tr.innerHTML = `
-      <td class="py-2.5 sm:py-3 px-2 sm:px-3 hidden sm:table-cell">
-        <span class="px-2 py-0.5 rounded bg-blue-50 text-blue-900 font-bold border border-blue-200 text-[11px] whitespace-nowrap">${w.period}</span>
-      </td>
-      <td class="py-2 sm:py-3 px-2 sm:px-3 whitespace-nowrap">
-        <span class="font-mono font-bold text-amber-900 tracking-tight sm:tracking-normal text-[10px] sm:text-xs bg-amber-50 px-1.5 sm:px-2.5 py-0.5 sm:py-1 rounded border border-amber-300 inline-block shadow-sm">
-          ${w.booking_code || w.order_masked || 'ERK-BK-' + Math.floor(1000 + Math.random() * 9000)}
+      <td class="py-3 px-3 sm:px-4 hidden sm:table-cell">
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gradient-to-r from-amber-100/90 to-orange-100/70 text-amber-950 font-bold border border-amber-300/80 text-xs shadow-2xs whitespace-nowrap font-display">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
+          <span>${w.period}</span>
         </span>
-        <div class="sm:hidden text-[9px] text-sky-900 mt-0.5 font-semibold">
-          Kỳ: ${w.period}
+      </td>
+      <td class="py-3 px-3 sm:px-4 whitespace-nowrap">
+        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-gradient-to-r from-amber-100/90 via-orange-100/60 to-amber-100/90 border border-amber-300/90 shadow-2xs group-hover:scale-102 transition-transform">
+          <span class="text-xs">🎟️</span>
+          <span class="font-mono font-black text-amber-950 text-xs sm:text-sm tracking-wide">
+            ${w.booking_code || w.order_masked || 'ERK-BK-' + Math.floor(1000 + Math.random() * 9000)}
+          </span>
+        </div>
+        <div class="sm:hidden text-[10px] text-amber-800 mt-1 font-semibold flex items-center gap-1">
+          <span class="w-1 h-1 rounded-full bg-amber-500"></span>
+          <span>Kỳ: ${w.period}</span>
         </div>
       </td>
-      <td class="py-2 sm:py-3 px-2 sm:px-3 font-bold text-slate-900 text-xs sm:text-sm leading-snug">${w.prize}</td>
-      <td class="py-2.5 sm:py-3 px-3 text-slate-500 font-mono text-[11px] hidden md:table-cell">${w.draw_time || '10h00 - Mùng 05'}</td>
+      <td class="py-3 px-3 sm:px-4 leading-snug">
+        ${formatPrizeDisplay(w.prize)}
+      </td>
+      <td class="py-3 px-3 sm:px-4 hidden md:table-cell whitespace-nowrap">
+        <div class="flex items-center gap-1.5 font-mono text-slate-600 text-xs font-semibold">
+          <svg class="w-3.5 h-3.5 text-amber-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          <span>${formatDrawTime(w.draw_time)}</span>
+        </div>
+      </td>
     `;
     container.appendChild(tr);
   });

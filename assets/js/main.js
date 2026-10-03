@@ -1445,8 +1445,8 @@ function applyGalaCelebrationState(active) {
   const toggleBtnIcon = document.getElementById('gala-mode-icon');
   if (toggleBtnText) {
     toggleBtnText.textContent = active 
-      ? 'Chế Độ Vinh Danh Gala (Đang Bật) ⇋ Bấm xem Toàn Bộ' 
-      : 'Bật Chế Độ Vinh Danh Gala (Chỉ Hiện Tổng Kết & BXH)';
+      ? 'Chế Độ Gala (Đang Bật) ⇋ Bấm xem Toàn Bộ 7 Mục' 
+      : 'Đang Xem Toàn Bộ 7 Mục ⇋ Bấm sang Chế Độ Gala';
   }
   if (toggleBtnIcon) {
     toggleBtnIcon.textContent = '';
@@ -1474,7 +1474,7 @@ document.addEventListener('DOMContentLoaded', () => {
     saved = localStorage.getItem('eureka_gala_celebration_mode');
   } catch (e) {}
   // Mặc định active = true (chế độ vinh danh đêm gala)
-  const shouldBeActive = saved === null ? true : saved === '1';
+  const shouldBeActive = saved === null ? false : saved === '1';
   applyGalaCelebrationState(shouldBeActive);
   setTimeout(renderGalaSummaryData, 300);
 });
@@ -1483,7 +1483,7 @@ if (document.readyState === 'complete' || document.readyState === 'interactive')
   try {
     saved = localStorage.getItem('eureka_gala_celebration_mode');
   } catch (e) {}
-  const shouldBeActive = saved === null ? true : saved === '1';
+  const shouldBeActive = saved === null ? false : saved === '1';
   applyGalaCelebrationState(shouldBeActive);
   setTimeout(renderGalaSummaryData, 300);
 }
