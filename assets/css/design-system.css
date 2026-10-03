@@ -545,6 +545,17 @@ section#vong-quay-mung-05 .p-2.rounded-2xl.bg-slate-950\/60 {
     0 0 0 1px rgba(255, 255, 255, 0.7) !important;
 }
 
+#wheel-canvas {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  border-radius: 50% !important;
+  box-shadow: 
+    0 20px 45px -10px rgba(180, 130, 60, 0.30),
+    0 8px 20px -6px rgba(180, 130, 60, 0.18),
+    0 0 0 1px rgba(255, 255, 255, 0.8) !important;
+}
+
 /* Center Button on Wheel */
 .wheel-container button {
   background: linear-gradient(135deg, #0284C7 0%, #0369A1 100%) !important;
@@ -1180,6 +1191,45 @@ button.fixed.bottom-6 {
 
 #spin-center-btn:active {
   transform: translate(-50%, -50%) scale(0.95) !important;
+}
+
+@media (max-width: 639px) {
+  #wheel-canvas {
+    width: 250px !important;
+    height: 250px !important;
+    max-width: 250px !important;
+    max-height: 250px !important;
+  }
+  #m05-wheel-canvas {
+    width: 270px !important;
+    height: 270px !important;
+    max-width: 270px !important;
+    max-height: 270px !important;
+  }
+  #spin-center-btn {
+    width: 56px !important;
+    height: 56px !important;
+    border-width: 2px !important;
+  }
+  #spin-center-btn span:first-child {
+    font-size: 10px !important;
+  }
+  #spin-center-btn span:last-child {
+    font-size: 8px !important;
+  }
+  #wheel-needle, #m05-wheel-needle {
+    transform: translateX(-50%) scale(0.82) !important;
+    top: -11px !important;
+  }
+  #wheel-needle.needle-vibrating, #m05-wheel-needle.needle-vibrating {
+    animation: needleTickWobbleMobile 0.1s ease-in-out infinite !important;
+  }
+}
+
+@keyframes needleTickWobbleMobile {
+  0%, 100% { transform: translateX(-50%) scale(0.82) rotate(0deg); }
+  25% { transform: translateX(-50%) scale(0.82) rotate(-9deg); }
+  75% { transform: translateX(-50%) scale(0.82) rotate(7deg); }
 }
 
 /* ==========================================================================
@@ -3638,12 +3688,19 @@ button[aria-label="Đóng menu"]:hover svg {
   }
 }
 
-.top1-elevated {
-  transform: translateY(-16px);
-  transition: all 0.35s ease;
+@media (min-width: 768px) {
+  .top1-elevated {
+    transform: translateY(-16px);
+    transition: all 0.35s ease;
+  }
+  .top1-elevated:hover {
+    transform: translateY(-22px);
+  }
 }
-.top1-elevated:hover {
-  transform: translateY(-22px);
+@media (max-width: 767px) {
+  .top1-elevated {
+    transform: none !important;
+  }
 }
 
 

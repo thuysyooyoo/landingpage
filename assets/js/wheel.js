@@ -295,6 +295,20 @@ function initWelcomeWheelData() {
 let currentAngle1 = -5 * Math.PI / 8; // Slice 0 (VOUCHER 400K) at top-left, Slice 1 (GIẢM 10% CƯỚC) at top-right
 let isSpinning1 = false;
 
+function getWheel1DisplaySize() {
+  if (typeof window !== 'undefined' && window.innerWidth < 640) {
+    return Math.min(250, Math.max(240, window.innerWidth - 70));
+  }
+  return 360;
+}
+
+function getM05WheelDisplaySize() {
+  if (typeof window !== 'undefined' && window.innerWidth < 640) {
+    return Math.min(270, Math.max(250, window.innerWidth - 60));
+  }
+  return 380;
+}
+
 function drawWheel() {
   const canvas1 = getWheelCanvas1();
   if (!canvas1) return;
@@ -302,13 +316,14 @@ function drawWheel() {
   if (!ctx1) return;
 
   const dpr = window.devicePixelRatio || 1;
-  const displaySize = 360;
+  const displaySize = getWheel1DisplaySize();
+  const isMobile = displaySize < 320;
   if (canvas1.width !== displaySize * dpr || canvas1.height !== displaySize * dpr) {
     canvas1.width = displaySize * dpr;
     canvas1.height = displaySize * dpr;
-    canvas1.style.width = displaySize + 'px';
-    canvas1.style.height = displaySize + 'px';
   }
+  canvas1.style.width = displaySize + 'px';
+  canvas1.style.height = displaySize + 'px';
 
   ctx1.save();
   ctx1.scale(dpr, dpr);
@@ -322,10 +337,10 @@ function drawWheel() {
   const arcSize = (2 * Math.PI) / numSegments;
   const centerX = displaySize / 2;
   const centerY = displaySize / 2;
-  const outerRadius = centerX - 8; // 172px
-  const bevelWidth = 15;
-  const segmentRadius = outerRadius - bevelWidth; // 157px
-  const innerRadius = 42; // Center hub radius
+  const outerRadius = centerX - (isMobile ? 6 : 8);
+  const bevelWidth = isMobile ? 11 : 15;
+  const segmentRadius = outerRadius - bevelWidth;
+  const innerRadius = isMobile ? 32 : 42;
 
   // --- 1. OUTER FACETED CRYSTAL BEVEL RIM ---
   ctx1.beginPath();
@@ -473,13 +488,13 @@ function drawWheel() {
 
     if (l2) {
       // Line 1 (closer to rim)
-      ctx1.font = 'bold 11px "Plus Jakarta Sans", sans-serif';
-      ctx1.fillText(l1, 0, -8);
+      ctx1.font = isMobile ? 'bold 9px "Plus Jakarta Sans", sans-serif' : 'bold 11px "Plus Jakarta Sans", sans-serif';
+      ctx1.fillText(l1, 0, isMobile ? -6 : -8);
       // Line 2 (closer to center)
-      ctx1.font = '800 12px "Plus Jakarta Sans", sans-serif';
-      ctx1.fillText(l2, 0, 7);
+      ctx1.font = isMobile ? '800 10px "Plus Jakarta Sans", sans-serif' : '800 12px "Plus Jakarta Sans", sans-serif';
+      ctx1.fillText(l2, 0, isMobile ? 6 : 7);
     } else {
-      ctx1.font = '800 12px "Plus Jakarta Sans", sans-serif';
+      ctx1.font = isMobile ? '800 10px "Plus Jakarta Sans", sans-serif' : '800 12px "Plus Jakarta Sans", sans-serif';
       ctx1.fillText(l1, 0, 0);
     }
 
@@ -925,13 +940,14 @@ function drawM05Wheel() {
   }
 
   const dpr = window.devicePixelRatio || 1;
-  const displaySize = 380;
+  const displaySize = getM05WheelDisplaySize();
+  const isMobile = displaySize < 320;
   if (m05Canvas.width !== displaySize * dpr || m05Canvas.height !== displaySize * dpr) {
     m05Canvas.width = displaySize * dpr;
     m05Canvas.height = displaySize * dpr;
-    m05Canvas.style.width = displaySize + 'px';
-    m05Canvas.style.height = displaySize + 'px';
   }
+  m05Canvas.style.width = displaySize + 'px';
+  m05Canvas.style.height = displaySize + 'px';
 
   m05Ctx.save();
   m05Ctx.scale(dpr, dpr);
@@ -941,10 +957,10 @@ function drawM05Wheel() {
   const arcSize = (2 * Math.PI) / numSegments;
   const centerX = displaySize / 2;
   const centerY = displaySize / 2;
-  const outerRadius = centerX - 8; // 182px
-  const bevelWidth = 16;
-  const segmentRadius = outerRadius - bevelWidth; // 166px
-  const innerRadius = 46; // Center hub radius
+  const outerRadius = centerX - (isMobile ? 6 : 8);
+  const bevelWidth = isMobile ? 12 : 16;
+  const segmentRadius = outerRadius - bevelWidth;
+  const innerRadius = isMobile ? 34 : 46;
 
   // --- 1. OUTER FACETED CRYSTAL BEVEL RIM (24 Facets with Gold Bevel Lines) ---
   m05Ctx.beginPath();
@@ -1079,8 +1095,8 @@ function drawM05Wheel() {
       m05Ctx.shadowBlur = 1;
     }
 
-    m05Ctx.font = 'bold 11px monospace, "Plus Jakarta Sans", sans-serif';
-    m05Ctx.fillText(seg.text, segmentRadius - 16, 0);
+    m05Ctx.font = isMobile ? 'bold 9px monospace, "Plus Jakarta Sans", sans-serif' : 'bold 11px monospace, "Plus Jakarta Sans", sans-serif';
+    m05Ctx.fillText(seg.text, segmentRadius - (isMobile ? 10 : 16), 0);
     m05Ctx.restore();
   });
 
@@ -1388,3 +1404,12 @@ if (document.readyState === 'loading') {
 } else {
   initAllWheelEngines();
 }
+
+let wheelResizeTimer = null;
+window.addEventListener('resize', () => {
+  clearTimeout(wheelResizeTimer);
+  wheelResizeTimer = setTimeout(() => {
+    if (!isSpinning1) drawWheel();
+    if (!isSpinning2) drawM05Wheel();
+  }, 150);
+});
