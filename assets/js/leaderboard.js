@@ -1,3 +1,20 @@
+
+function formatLeaderboardPrizeTag(tag) {
+  if (!tag) return '';
+  return tag
+    .replace(/Ứng viên Vua Số Đơn/gi, 'Kỷ Lục Số Đơn')
+    .replace(/Vua Số Đơn/gi, 'Kỷ Lục Số Đơn')
+    .replace(/Dẫn đầu Tân Binh/gi, 'Khách Hàng Mới Tiêu Biểu')
+    .replace(/Ứng viên Tân Binh/gi, 'Ứng viên Khách Mới')
+    .replace(/Tân Binh Tiềm Năng/gi, 'Khách Mới Tiềm Năng')
+    .replace(/Ứng viên Vua Tải Trọng/gi, 'Kỷ Lục Tải Trọng (Kg)')
+    .replace(/Vua Tải Trọng/gi, 'Kỷ Lục Tải Trọng (Kg)')
+    .replace(/Sự Trở Lại Ấn Tượng/gi, 'Tái Hợp Tác Ấn Tượng')
+    .replace(/Ứng viên Vua Thể Tích/gi, 'Kỷ Lục Thể Tích (M³)')
+    .replace(/Vua Thể Tích/gi, 'Kỷ Lục Thể Tích (M³)')
+    .replace(/Vua Khối Lượng/gi, 'Kỷ Lục Thể Tích (M³)')
+    .replace(/Ứng viên Tiềm Năng/gi, 'Khách Hàng Tiềm Năng');
+}
 /**
  * Leaderboard Engine for Eureka Customer Awards 2026
  * Privacy-First: Masked Customer Names (>=50% masked) & Official Customer Codes (Mã Khách: ERK-KH-XXXX)
@@ -88,7 +105,7 @@ const fallbackLeaderboardData = [
     "order_count": 26,
     "volume_weight": "31,5 tấn | 45 m³",
     "service_fee": 141050000,
-    "prize_tag": "Ứng viên Vua Số Đơn",
+    "prize_tag": "Kỷ Lục Số Đơn",
     "prize_type": "regular",
     "weight_kg": 31500,
     "volume_m3": 45
@@ -102,7 +119,7 @@ const fallbackLeaderboardData = [
     "order_count": 14,
     "volume_weight": "18,2 tấn | 88 m³",
     "service_fee": 128900000,
-    "prize_tag": "Dẫn đầu Tân Binh",
+    "prize_tag": "Khách Hàng Mới Tiêu Biểu",
     "prize_type": "regular",
     "weight_kg": 18200,
     "volume_m3": 88
@@ -116,7 +133,7 @@ const fallbackLeaderboardData = [
     "order_count": 11,
     "volume_weight": "85,6 tấn | 32 m³",
     "service_fee": 115400000,
-    "prize_tag": "Ứng viên Vua Tải Trọng",
+    "prize_tag": "Kỷ Lục Tải Trọng (Kg)",
     "prize_type": "regular",
     "weight_kg": 85600,
     "volume_m3": 32
@@ -130,7 +147,7 @@ const fallbackLeaderboardData = [
     "order_count": 12,
     "volume_weight": "24,0 tấn | 38 m³",
     "service_fee": 98700000,
-    "prize_tag": "Sự Trở Lại Ấn Tượng",
+    "prize_tag": "Tái Hợp Tác Ấn Tượng",
     "prize_type": "regular",
     "weight_kg": 24000,
     "volume_m3": 38
@@ -144,7 +161,7 @@ const fallbackLeaderboardData = [
     "order_count": 9,
     "volume_weight": "12,5 tấn | 72 m³",
     "service_fee": 86300000,
-    "prize_tag": "Ứng viên Vua Thể Tích",
+    "prize_tag": "Kỷ Lục Thể Tích (M³)",
     "prize_type": "regular",
     "weight_kg": 12500,
     "volume_m3": 72
@@ -186,7 +203,7 @@ const fallbackLeaderboardData = [
     "order_count": 10,
     "volume_weight": "15,2 tấn | 42 m³",
     "service_fee": 72100000,
-    "prize_tag": "Ứng viên Tân Binh",
+    "prize_tag": "Ứng viên Khách Mới",
     "prize_type": "regular",
     "weight_kg": 15200,
     "volume_m3": 42
@@ -270,7 +287,7 @@ const fallbackLeaderboardData = [
     "order_count": 8,
     "volume_weight": "8,5 tấn | 20 m³",
     "service_fee": 49100000,
-    "prize_tag": "Ứng viên Tiềm Năng",
+    "prize_tag": "Khách Hàng Tiềm Năng",
     "prize_type": "regular",
     "weight_kg": 8500,
     "volume_m3": 20
@@ -326,7 +343,7 @@ const fallbackLeaderboardData = [
     "order_count": 7,
     "volume_weight": "6,2 tấn | 19 m³",
     "service_fee": 35400000,
-    "prize_tag": "Tân Binh Tiềm Năng",
+    "prize_tag": "Khách Mới Tiềm Năng",
     "prize_type": "regular",
     "weight_kg": 6200,
     "volume_m3": 19
@@ -448,7 +465,7 @@ function renderLeaderboard(data) {
       `;
       prizeBadge = `
         <span class="px-3 py-1 rounded-full bg-amber-100 text-amber-900 border border-amber-300 font-extrabold text-[10px] uppercase tracking-wide shadow-sm">
-          ${item.prize_tag}
+          ${formatLeaderboardPrizeTag(item.prize_tag)}
         </span>
       `;
     } else if (item.rank === 2) {
@@ -460,7 +477,7 @@ function renderLeaderboard(data) {
       `;
       prizeBadge = `
         <span class="px-3 py-1 rounded-full bg-sky-100 text-sky-900 border border-sky-300 font-extrabold text-[10px] uppercase tracking-wide shadow-sm">
-          ${item.prize_tag}
+          ${formatLeaderboardPrizeTag(item.prize_tag)}
         </span>
       `;
     } else if (item.rank === 3) {
@@ -472,12 +489,12 @@ function renderLeaderboard(data) {
       `;
       prizeBadge = `
         <span class="px-3 py-1 rounded-full bg-amber-100 text-amber-900 border border-amber-300 font-extrabold text-[10px] uppercase tracking-wide shadow-sm">
-          ${item.prize_tag}
+          ${formatLeaderboardPrizeTag(item.prize_tag)}
         </span>
       `;
     } else {
       rankBadge = `<span class="font-bold text-slate-700 text-sm ml-2">${item.rank}</span>`;
-      prizeBadge = `<span class="text-slate-700 text-xs font-medium">${item.prize_tag}</span>`;
+      prizeBadge = `<span class="text-slate-700 text-xs font-medium">${formatLeaderboardPrizeTag(item.prize_tag)}</span>`;
     }
 
     let vipBadgeClass = 'bg-slate-100 text-slate-800 border border-slate-300';
@@ -566,7 +583,7 @@ function renderWeeklyWinnerSpotlight() {
     const prizeEl = document.getElementById('spotlight-prize-tag');
     const msgEl = document.getElementById('spotlight-congrats-msg');
 
-    if (weekEl) weekEl.textContent = `VINH DANH CHIẾN TƯỚNG: ${winner.week_title || 'TOP TUẦN'}`;
+    if (weekEl) weekEl.textContent = `VINH DANH KHÁCH HÀNG XUẤT SẮC: ${winner.week_title || 'TOP TUẦN'}`;
     if (nameEl) nameEl.textContent = maskCustomerName(winner.customer_name);
     if (codeEl) codeEl.textContent = `MÃ: ${winner.customer_code || winner.code || 'ERK-KH-8891'}`;
     function formatWeeklySpending(val) {

@@ -271,13 +271,141 @@ function saveNhiemVuConfig(config) {
 }
 
 let currentNhiemVuCodes = [];
+let currentNhiemVuModeOverride = null;
+let currentNhiemVuTheme = 'amber';
+
+function switchNhiemVuTab(mode) {
+  currentNhiemVuModeOverride = mode;
+  renderNhiemVuDisplay();
+}
+
+let isFaqMoreExpanded = false;
+let currentFaqCategory = 'all';
+
+function toggleFaqMore() {
+  isFaqMoreExpanded = !isFaqMoreExpanded;
+  const extraItems = document.querySelectorAll('.faq-item-extra');
+  const label = document.getElementById('faq-more-label');
+  const icon = document.getElementById('faq-more-icon');
+
+  extraItems.forEach(el => {
+    if (isFaqMoreExpanded) {
+      el.classList.remove('hidden');
+    } else {
+      el.classList.add('hidden');
+    }
+  });
+
+  if (label && icon) {
+    if (isFaqMoreExpanded) {
+      label.textContent = 'Thu gọn bớt câu hỏi';
+      icon.textContent = '↑';
+    } else {
+      label.textContent = 'Xem thêm 4 câu hỏi khác (4/8)';
+      icon.textContent = '↓';
+    }
+  }
+}
+
+function filterFaqCategory(cat) {
+  currentFaqCategory = cat;
+  const allBtns = document.querySelectorAll('.faq-filter-btn');
+  allBtns.forEach(b => {
+    b.className = 'faq-filter-btn px-3 py-1.5 rounded-lg font-bold text-xs text-slate-600 hover:text-slate-900 transition-all cursor-pointer whitespace-nowrap';
+  });
+
+  const activeBtn = document.getElementById('faq-filter-btn-' + cat);
+  if (activeBtn) {
+    activeBtn.className = 'faq-filter-btn px-3 py-1.5 rounded-lg font-bold text-xs bg-white text-slate-900 shadow-sm border border-slate-200 transition-all cursor-pointer whitespace-nowrap';
+  }
+
+  const moreBtn = document.getElementById('btn-toggle-faq-more');
+  const items = document.querySelectorAll('.faq-item');
+
+  items.forEach(item => {
+    const itemCat = item.getAttribute('data-category');
+    if (cat === 'all') {
+      if (item.classList.contains('faq-item-extra') && !isFaqMoreExpanded && window.innerWidth < 640) {
+        item.classList.add('hidden');
+      } else {
+        item.classList.remove('hidden');
+      }
+    } else {
+      if (itemCat === cat) {
+        item.classList.remove('hidden');
+      } else {
+        item.classList.add('hidden');
+      }
+    }
+  });
+
+  if (moreBtn) {
+    if (cat === 'all') {
+      moreBtn.classList.remove('hidden');
+    } else {
+      moreBtn.classList.add('hidden');
+    }
+  }
+}
+
+window.switchNhiemVuTab = switchNhiemVuTab;
+
+function renderRoadmapTabs(mode) {
+  return `
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 p-1.5 rounded-2xl bg-slate-100 border border-slate-200 mb-5 relative z-20">
+      <button type="button" onclick="switchNhiemVuTab('chang-1')" class="p-2 sm:p-2.5 rounded-xl border text-center transition-all cursor-pointer ${mode === 'chang-1' ? 'bg-amber-100 border-amber-400 text-amber-950 font-black shadow-md ring-2 ring-amber-400/60' : 'bg-white border-slate-200 text-slate-700 hover:border-slate-300 hover:bg-slate-50'}">
+        <div class="flex items-center justify-center gap-1 text-[11px] font-black uppercase">
+          <span>Chặng 1</span>
+          ${mode === 'chang-1' ? '<span class="inline-block w-1.5 h-1.5 rounded-full bg-amber-500 animate-ping"></span>' : '<span class="text-emerald-700 font-bold">✓</span>'}
+        </div>
+        <div class="text-[10px] text-slate-500 mt-0.5 font-medium">01/10 – 30/10</div>
+        <div class="text-[9px] ${mode === 'chang-1' ? 'text-amber-900 font-black' : 'text-emerald-800 font-bold'} mt-0.5">
+          ${mode === 'chang-1' ? 'Đang xem' : 'Hoàn thành'}
+        </div>
+      </button>
+
+      <button type="button" onclick="switchNhiemVuTab('chang-2')" class="p-2 sm:p-2.5 rounded-xl border text-center transition-all cursor-pointer ${mode === 'chang-2' ? 'bg-orange-100 border-orange-400 text-orange-950 font-black shadow-md ring-2 ring-orange-400/60' : 'bg-white border-slate-200 text-slate-700 hover:border-slate-300 hover:bg-slate-50'}">
+        <div class="flex items-center justify-center gap-1 text-[11px] font-black uppercase">
+          <span>Chặng 2</span>
+          ${mode === 'chang-2' ? '<span class="inline-block w-1.5 h-1.5 rounded-full bg-orange-500 animate-ping"></span>' : ''}
+        </div>
+        <div class="text-[10px] text-slate-500 mt-0.5 font-medium">01/11 – 20/11</div>
+        <div class="text-[9px] ${mode === 'chang-2' ? 'text-orange-950 font-black' : 'text-slate-500'} mt-0.5">
+          ${mode === 'chang-2' ? 'Đang xem' : 'Kế tiếp'}
+        </div>
+      </button>
+
+      <button type="button" onclick="switchNhiemVuTab('chang-3')" class="p-2 sm:p-2.5 rounded-xl border text-center transition-all cursor-pointer ${mode === 'chang-3' ? 'bg-blue-100 border-blue-400 text-blue-900 font-black shadow-md ring-2 ring-blue-400/60' : 'bg-white border-slate-200 text-slate-700 hover:border-slate-300 hover:bg-slate-50'}">
+        <div class="flex items-center justify-center gap-1 text-[11px] font-black uppercase">
+          <span>Chặng 3</span>
+          ${mode === 'chang-3' ? '<span class="inline-block w-1.5 h-1.5 rounded-full bg-blue-500 animate-ping"></span>' : ''}
+        </div>
+        <div class="text-[10px] text-slate-500 mt-0.5 font-medium">01/12 – 20/12</div>
+        <div class="text-[9px] ${mode === 'chang-3' ? 'text-blue-900 font-black' : 'text-slate-500'} mt-0.5">
+          ${mode === 'chang-3' ? 'Đang xem' : 'Về đích Gala'}
+        </div>
+      </button>
+
+      <button type="button" onclick="switchNhiemVuTab('tong-ket')" class="p-2 sm:p-2.5 rounded-xl border text-center transition-all cursor-pointer ${mode === 'tong-ket' ? 'bg-emerald-100 border-emerald-400 text-emerald-950 font-black shadow-md ring-2 ring-emerald-400/60' : 'bg-white border-slate-200 text-slate-700 hover:border-slate-300 hover:bg-slate-50'}">
+        <div class="flex items-center justify-center gap-1 text-[11px] font-black uppercase">
+          <span>Tổng Kết</span>
+          ${mode === 'tong-ket' ? '<span class="inline-block w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></span>' : ''}
+        </div>
+        <div class="text-[10px] text-slate-500 mt-0.5 font-medium">Cả 3 Chặng</div>
+        <div class="text-[9px] ${mode === 'tong-ket' ? 'text-emerald-900 font-black' : 'text-slate-500'} mt-0.5">
+          ${mode === 'tong-ket' ? 'Đang xem' : 'Toàn diện'}
+        </div>
+      </button>
+    </div>
+  `;
+}
 
 function renderNhiemVuDisplay() {
   const container = document.getElementById('nhiem-vu-display-wrapper');
   if (!container) return;
 
   const cfg = getNhiemVuConfig();
-  const mode = cfg.active_mode || 'chang-1';
+  const mode = currentNhiemVuModeOverride || cfg.active_mode || 'chang-1';
 
   if (mode === 'tong-ket') {
     // Mode Tổng Kết Cả 3 Chặng
@@ -289,8 +417,11 @@ function renderNhiemVuDisplay() {
       <div class="rounded-3xl p-6 sm:p-8 bg-white border border-slate-200 shadow-xl relative overflow-hidden">
         <div class="absolute -top-24 -right-24 w-72 h-72 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
+        <!-- 4-Chặng Tab Navigation -->
+        ${renderRoadmapTabs(mode)}
+
         <div class="text-center max-w-2xl mx-auto mb-8 relative z-10">
-          <span class="px-3.5 py-1.5 rounded-full bg-emerald-500/20 text-emerald-300 text-xs font-black border border-emerald-500/30 uppercase tracking-wider inline-block mb-3">
+          <span class="px-3.5 py-1.5 rounded-full bg-emerald-100 text-emerald-900 text-xs font-black border border-emerald-300 uppercase tracking-wider inline-block mb-3 shadow-sm">
             BẢNG TỔNG KẾT TOÀN DIỆN CHƯƠNG TRÌNH
           </span>
           <h3 class="text-2xl sm:text-3xl font-black text-slate-900 font-display">
@@ -301,9 +432,9 @@ function renderNhiemVuDisplay() {
           </p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 relative z-10">
+        <div id="nhiem-vu-summary-cards" class="nhiem-vu-3-cols grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 relative z-10">
           <!-- Cột 1 -->
-          <div class="p-6 rounded-2xl bg-white border-t-4 border-amber-400 border-x border-b border-slate-200 shadow-lg flex flex-col justify-between">
+          <div onclick="switchNhiemVuTab('chang-1')" class="p-6 rounded-2xl bg-white border-t-4 border-amber-400 border-x border-b border-slate-200 shadow-lg flex flex-col justify-between cursor-pointer hover:border-amber-400 hover:scale-[1.01] transition-all">
             <div>
               <div class="flex items-center justify-between mb-3">
                 <span class="text-xs font-black text-amber-900 bg-amber-100 border border-amber-300 px-3 py-1 rounded-lg">CHẶNG 1 — T10</span>
@@ -319,12 +450,12 @@ function renderNhiemVuDisplay() {
             </div>
             <div class="pt-3 border-t border-slate-100 text-xs text-slate-600 flex items-center justify-between">
               <span>Giảm tới 30% cước</span>
-              <span class="text-emerald-800 font-bold">100% Hoàn tất</span>
+              <span class="text-emerald-800 font-bold">Xem chi tiết →</span>
             </div>
           </div>
 
           <!-- Cột 2 -->
-          <div class="p-6 rounded-2xl bg-white border-t-4 border-orange-500 border-x border-b border-slate-200 shadow-lg flex flex-col justify-between">
+          <div onclick="switchNhiemVuTab('chang-2')" class="p-6 rounded-2xl bg-white border-t-4 border-orange-500 border-x border-b border-slate-200 shadow-lg flex flex-col justify-between cursor-pointer hover:border-orange-400 hover:scale-[1.01] transition-all">
             <div>
               <div class="flex items-center justify-between mb-3">
                 <span class="text-xs font-black text-orange-950 bg-orange-100 border border-orange-300 px-3 py-1 rounded-lg">CHẶNG 2 — T11</span>
@@ -340,12 +471,12 @@ function renderNhiemVuDisplay() {
             </div>
             <div class="pt-3 border-t border-slate-100 text-xs text-slate-600 flex items-center justify-between">
               <span>Giảm tới 30% cước</span>
-              <span class="text-emerald-800 font-bold">100% Hoàn tất</span>
+              <span class="text-emerald-800 font-bold">Xem chi tiết →</span>
             </div>
           </div>
 
           <!-- Cột 3 -->
-          <div class="p-6 rounded-2xl bg-white border-t-4 border-blue-400 border-x border-b border-slate-200 shadow-lg flex flex-col justify-between">
+          <div onclick="switchNhiemVuTab('chang-3')" class="p-6 rounded-2xl bg-white border-t-4 border-blue-400 border-x border-b border-slate-200 shadow-lg flex flex-col justify-between cursor-pointer hover:border-blue-400 hover:scale-[1.01] transition-all">
             <div>
               <div class="flex items-center justify-between mb-3">
                 <span class="text-xs font-black text-blue-900 bg-blue-100 border border-blue-300 px-3 py-1 rounded-lg">CHẶNG 3 — T12</span>
@@ -361,7 +492,7 @@ function renderNhiemVuDisplay() {
             </div>
             <div class="pt-3 border-t border-slate-100 text-xs text-slate-600 flex items-center justify-between">
               <span>Tăng 15 ngày nợ Elite+</span>
-              <span class="text-emerald-800 font-bold">100% Hoàn tất</span>
+              <span class="text-emerald-800 font-bold">Xem chi tiết →</span>
             </div>
           </div>
         </div>
@@ -369,7 +500,6 @@ function renderNhiemVuDisplay() {
         <!-- Super VIP Grand Banner: Light Luxury Warm Gold, 100% No Dark Gradient -->
         <div class="p-5 sm:p-6 rounded-2xl bg-gradient-to-r from-amber-50 via-amber-100/70 to-amber-50 border-2 border-amber-300 shadow-md flex flex-col sm:flex-row sm:items-center justify-between gap-4 relative z-10">
           <div class="flex items-center gap-4">
-            
             <div>
               <h4 class="text-base sm:text-lg font-black text-amber-950 font-display">Chiến Binh Bứt Phá — Hoàn Thành Trọn Vẹn 3 Chặng</h4>
               <p class="text-xs sm:text-sm text-slate-700 mt-1 leading-relaxed">
@@ -390,12 +520,13 @@ function renderNhiemVuDisplay() {
   const curChang = (cfg && cfg[mode.replace('-', '_')]) || (cfg && cfg.chang_1) || (typeof DEFAULT_NHIEM_VU_CONFIG !== 'undefined' ? DEFAULT_NHIEM_VU_CONFIG.chang_1 : { customer_codes: [] });
   const codes = (curChang && curChang.customer_codes) ? curChang.customer_codes : [];
   currentNhiemVuCodes = codes;
+  currentNhiemVuTheme = curChang.theme || 'amber';
 
   const themeColors = {
     amber: { border: 'border-amber-400', badge: 'bg-amber-100 text-amber-900 border-amber-300 font-black', text: 'text-amber-900' },
     orange: { border: 'border-orange-400', badge: 'bg-orange-100 text-orange-950 border-orange-300 font-black', text: 'text-orange-950' },
     blue: { border: 'border-blue-400', badge: 'bg-blue-100 text-blue-900 border-blue-300 font-black', text: 'text-blue-900' }
-  }[curChang.theme || 'amber'];
+  }[curChang.theme || 'amber'] || { border: 'border-amber-400', badge: 'bg-amber-100 text-amber-900 border-amber-300 font-black', text: 'text-amber-900' };
 
   container.innerHTML = `
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
@@ -404,48 +535,17 @@ function renderNhiemVuDisplay() {
         <div class="absolute -top-24 -left-24 w-60 h-60 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
         <div class="relative z-10">
-          <!-- Mini 3-Chặng Progress Roadmap -->
-          <div class="grid grid-cols-3 gap-2 p-1.5 rounded-2xl bg-slate-100 border border-slate-200 mb-5">
-            <div class="p-2 sm:p-2.5 rounded-xl border text-center transition-all ${mode === 'chang-1' ? 'bg-amber-100 border-amber-400 text-amber-950 font-black shadow-md ring-1 ring-amber-400/50' : 'bg-white border-slate-200 text-slate-700'}">
-              <div class="flex items-center justify-center gap-1 text-[11px] font-black uppercase">
-                <span>Chặng 1</span>
-                ${mode === 'chang-1' ? '<span class="inline-block w-1.5 h-1.5 rounded-full bg-amber-500 animate-ping"></span>' : '<span class="text-emerald-700"></span>'}
-              </div>
-              <div class="text-[10px] text-slate-500 mt-0.5 font-medium">01/10 – 30/10</div>
-              <div class="text-[9px] ${mode === 'chang-1' ? 'text-amber-900 font-black' : 'text-emerald-800 font-bold'} mt-0.5">
-                ${mode === 'chang-1' ? 'Đang công bố' : 'Hoàn thành'}
-              </div>
-            </div>
+          <!-- 4-Chặng Progress Roadmap Tabs -->
+          ${renderRoadmapTabs(mode)}
 
-            <div class="p-2 sm:p-2.5 rounded-xl border text-center transition-all ${mode === 'chang-2' ? 'bg-orange-100 border-orange-400 text-orange-950 font-black shadow-md ring-1 ring-orange-400/50' : 'bg-white border-slate-200 text-slate-700'}">
-              <div class="flex items-center justify-center gap-1 text-[11px] font-black uppercase">
-                <span>Chặng 2</span>
-                ${mode === 'chang-2' ? '<span class="inline-block w-1.5 h-1.5 rounded-full bg-orange-500 animate-ping"></span>' : ''}
-              </div>
-              <div class="text-[10px] text-slate-500 mt-0.5 font-medium">01/11 – 20/11</div>
-              <div class="text-[9px] ${mode === 'chang-2' ? 'text-orange-950 font-black' : 'text-slate-500'} mt-0.5">
-                ${mode === 'chang-2' ? 'Đang công bố' : 'Kế tiếp'}
-              </div>
-            </div>
-
-            <div class="p-2 sm:p-2.5 rounded-xl border text-center transition-all ${mode === 'chang-3' ? 'bg-blue-100 border-blue-400 text-blue-900 font-black shadow-md ring-1 ring-blue-400/50' : 'bg-white border-slate-200 text-slate-700'}">
-              <div class="flex items-center justify-center gap-1 text-[11px] font-black uppercase">
-                <span>Chặng 3</span>
-                ${mode === 'chang-3' ? '<span class="inline-block w-1.5 h-1.5 rounded-full bg-blue-500 animate-ping"></span>' : ''}
-              </div>
-              <div class="text-[10px] text-slate-500 mt-0.5 font-medium">01/12 – 20/12</div>
-              <div class="text-[9px] ${mode === 'chang-3' ? 'text-blue-900 font-black' : 'text-slate-500'} mt-0.5">
-                ${mode === 'chang-3' ? 'Đang công bố' : 'Về đích Gala'}
-              </div>
-            </div>
-          </div>
-
-          <!-- Header Chặng & Hero Banner Hình Ảnh Với Blur Đen -->
-          <div class="relative rounded-2xl overflow-hidden mb-5 border border-white/15 shadow-2xl h-44 sm:h-52 group/hero">
+          <!-- Header Chặng & Hero Banner Hình Ảnh Với Dark Scrim Siêu Rõ Chữ -->
+          <div class="relative rounded-2xl overflow-hidden mb-5 border border-white/20 shadow-2xl h-48 sm:h-56 group/hero nhiem-vu-hero-banner">
             <img src="${curChang.image || (mode === 'chang-2' ? 'assets/images/chang-2-cao-diem.jpg' : (mode === 'chang-3' ? 'assets/images/chang-3-ve-dich.jpg' : 'assets/images/chang-1-khoi-dong.jpg'))}" alt="${curChang.title}" class="w-full h-full object-cover group-hover/hero:scale-105 transition-transform duration-700 brightness-90" />
-            <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/35 to-transparent"></div>
             
-            <div class="absolute inset-0 p-4 sm:p-5 flex flex-col justify-between z-10">
+            <!-- Dark scrim gradient tăng độ tương phản rõ rệt -->
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/65 to-slate-950/20 pointer-events-none"></div>
+            
+            <div class="absolute inset-0 p-4 sm:p-5 flex flex-col justify-between z-10 pointer-events-none">
               <div class="flex items-center justify-between">
                 <span class="px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider border backdrop-blur-md shadow-lg ${themeColors.badge}">
                   ${curChang.period_title}
@@ -456,14 +556,14 @@ function renderNhiemVuDisplay() {
               </div>
 
               <div>
-                <span class="text-[11px] font-bold text-amber-200 uppercase tracking-widest block mb-1 flex items-center gap-1.5">
+                <span class="hero-eyebrow text-[11px] font-bold uppercase tracking-widest block mb-1 flex items-center gap-1.5" style="color: #FDE68A !important; text-shadow: 0 1px 4px rgba(0,0,0,0.95) !important;">
                   <span class="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
                   TIÊU ĐIỂM CHẶNG ĐUA CAO ĐIỂM
                 </span>
-                <h3 class="text-2xl sm:text-3xl font-black text-white font-display drop-shadow-md mb-1">
+                <h3 class="hero-title text-2xl sm:text-3xl font-black font-display drop-shadow-md mb-1" style="color: #FFFFFF !important; text-shadow: 0 2px 10px rgba(0,0,0,0.9), 0 1px 3px rgba(0,0,0,0.95) !important;">
                   "${curChang.title}"
                 </h3>
-                <p class="text-xs text-white/90 line-clamp-2 max-w-xl drop-shadow leading-relaxed">
+                <p class="hero-desc text-xs line-clamp-2 max-w-xl drop-shadow leading-relaxed" style="color: #FFFFFF !important; opacity: 0.95 !important; text-shadow: 0 1px 6px rgba(0,0,0,0.9), 0 1px 2px rgba(0,0,0,0.95) !important;">
                   ${curChang.desc}
                 </p>
               </div>
@@ -544,7 +644,7 @@ function renderNhiemVuDisplay() {
 
           <!-- Codes Badges Grid: 2 cột compact, chiều cao vừa vặn -->
           <div id="nhiem-vu-codes-list" class="grid grid-cols-2 gap-2 max-h-[220px] overflow-y-auto pr-1">
-            ${renderNhiemVuCodeBadges(codes)}
+            ${renderNhiemVuCodeBadges(codes, curChang.theme || 'amber')}
           </div>
         </div>
 
@@ -560,13 +660,19 @@ function renderNhiemVuDisplay() {
   `;
 }
 
-function renderNhiemVuCodeBadges(codes) {
+function renderNhiemVuCodeBadges(codes, theme = 'amber') {
   if (!codes || codes.length === 0) {
     return `<div class="col-span-full py-6 text-center text-xs text-slate-500">Chưa có mã khách hàng nào hoàn thành nhiệm vụ.</div>`;
   }
+  const badgeStyles = {
+    amber: 'bg-amber-50/80 border-amber-300 hover:border-amber-500 text-amber-900 group-hover:text-amber-950',
+    orange: 'bg-orange-50/80 border-orange-300 hover:border-orange-500 text-orange-950 group-hover:text-orange-950',
+    blue: 'bg-sky-50/80 border-sky-300 hover:border-sky-500 text-sky-900 group-hover:text-sky-950'
+  }[theme] || 'bg-amber-50/80 border-amber-300 hover:border-amber-500 text-amber-900 group-hover:text-amber-950';
+
   return codes.map(code => `
-    <div class="py-2 px-3 rounded-lg bg-amber-50/80 border border-amber-300 hover:border-amber-500 transition-all flex items-center justify-between gap-1.5 group shadow-sm">
-      <span class="text-xs font-bold text-amber-900 tracking-wide group-hover:text-amber-950 truncate">
+    <div class="py-2 px-3 rounded-lg ${badgeStyles} border transition-all flex items-center justify-between gap-1.5 group shadow-sm">
+      <span class="text-xs font-bold tracking-wide truncate">
         ${code}
       </span>
       <span class="text-[10px] font-black text-emerald-900 bg-emerald-100 px-2 py-0.5 rounded border border-emerald-300 shrink-0">
@@ -588,7 +694,7 @@ function filterNhiemVuCodes(query) {
     return code.includes(q) || (qClean && codeClean.includes(qClean));
   });
 
-  container.innerHTML = renderNhiemVuCodeBadges(filtered);
+  container.innerHTML = renderNhiemVuCodeBadges(filtered, currentNhiemVuTheme);
 }
 
 // ==================== 7. HỆ THỐNG PHÂN PHỐI BẢNG XẾP HẠNG 05 GIẢI PHỤ CHUYÊN MÔN ====================
@@ -648,7 +754,7 @@ function formatVND(num) {
 const GIAI_PHU_CONFIGS = {
   'vua-so-luong-don': {
     id: 'vua-so-luong-don',
-    name: 'Vua Số Lượng Đơn',
+    name: 'Kỷ Lục Số Lượng Đơn',
     icon: '',
     prize: '3.000.000 đ',
     badge: 'Tiêu chí đơn hàng',
@@ -661,7 +767,7 @@ const GIAI_PHU_CONFIGS = {
   },
   'tan-binh-xuat-sac': {
     id: 'tan-binh-xuat-sac',
-    name: 'Tân Binh Xuất Sắc',
+    name: 'Khách Hàng Mới Tiêu Biểu',
     icon: '',
     prize: '3.000.000 đ',
     badge: 'Khách hàng mới',
@@ -679,7 +785,7 @@ const GIAI_PHU_CONFIGS = {
   },
   'su-tro-lai-an-tuong': {
     id: 'su-tro-lai-an-tuong',
-    name: 'Sự Trở Lại Ấn Tượng',
+    name: 'Tái Hợp Tác Ấn Tượng',
     icon: '',
     prize: '3.000.000 đ',
     badge: 'Tái kích hoạt',
@@ -697,7 +803,7 @@ const GIAI_PHU_CONFIGS = {
   },
   'vua-tai-trong': {
     id: 'vua-tai-trong',
-    name: 'Vua Tải Trọng (Kg)',
+    name: 'Kỷ Lục Tải Trọng (Kg)',
     icon: '',
     prize: '3.000.000 đ',
     badge: 'Tổng khối lượng',
@@ -717,7 +823,7 @@ const GIAI_PHU_CONFIGS = {
   },
   'vua-khoi-luong': {
     id: 'vua-khoi-luong',
-    name: 'Vua Khối Lượng (M³)',
+    name: 'Kỷ Lục Thể Tích (M³)',
     icon: '',
     prize: '3.000.000 đ',
     badge: 'Tổng thể tích',
@@ -758,7 +864,7 @@ function getGalaAwardsAllocation(data) {
     awardedCodes.add(sortedRank[0].customer_code);
     allocation.allAwardedMap[sortedRank[0].customer_code] = {
       key: 'top1',
-      name: 'Quán Quân Toàn Đoàn (Laptop Surface Pro 11)',
+      name: 'Giải Quán Quân (Laptop Surface Pro 12)',
       type: 'main',
       badgeText: 'Quán Quân'
     };
@@ -769,7 +875,7 @@ function getGalaAwardsAllocation(data) {
     awardedCodes.add(sortedRank[1].customer_code);
     allocation.allAwardedMap[sortedRank[1].customer_code] = {
       key: 'top2',
-      name: 'Á Quân 1 Toàn Đoàn (iPad Air M3)',
+      name: 'Giải Á Quân 1 (iPad Air M3)',
       type: 'main',
       badgeText: 'Á Quân 1'
     };
@@ -780,7 +886,7 @@ function getGalaAwardsAllocation(data) {
     awardedCodes.add(sortedRank[2].customer_code);
     allocation.allAwardedMap[sortedRank[2].customer_code] = {
       key: 'top3',
-      name: 'Á Quân 2 Toàn Đoàn (Máy Lọc Dyson)',
+      name: 'Giải Á Quân 2 (Máy Lọc Dyson)',
       type: 'main',
       badgeText: 'Á Quân 2'
     };
@@ -1160,18 +1266,21 @@ function renderGalaSummaryData() {
     }
   });
 
-  // Gán vào 4 ô chỉ số thống kê
+  // Gán vào 4 ô chỉ số thống kê (tinh gọn, chuẩn Dashboard B2B)
   const elTotalCust = document.getElementById('gala-stat-total-customers');
   const elTotalOrders = document.getElementById('gala-stat-total-orders');
   const elTotalVol = document.getElementById('gala-stat-total-volume');
+  const elTotalRev = document.getElementById('gala-stat-total-revenue');
 
-  if (elTotalCust) elTotalCust.textContent = `${totalCustomers.toLocaleString('vi-VN')} Doanh Nghiệp`;
-  if (elTotalOrders) elTotalOrders.textContent = `${totalOrders.toLocaleString('vi-VN')} Đơn Booking`;
+  if (elTotalCust) elTotalCust.innerHTML = `${totalCustomers.toLocaleString('vi-VN')} <span class="text-xs sm:text-sm font-semibold opacity-75">Khách hàng</span>`;
+  if (elTotalOrders) elTotalOrders.innerHTML = `${totalOrders.toLocaleString('vi-VN')} <span class="text-xs sm:text-sm font-semibold opacity-75">Đơn</span>`;
   if (elTotalVol) {
-    const kgStr = totalKg >= 1000 ? `${(Math.round(totalKg / 1000)).toLocaleString('vi-VN')} Tấn` : `${Math.round(totalKg).toLocaleString('vi-VN')} Kg`;
-    const m3Str = `${Math.round(totalM3).toLocaleString('vi-VN')} m³`;
-    elTotalVol.textContent = `${kgStr} & ${m3Str}`;
+    const kgVal = totalKg >= 1000 ? (Math.round(totalKg / 1000)).toLocaleString('vi-VN') : Math.round(totalKg).toLocaleString('vi-VN');
+    const kgUnit = totalKg >= 1000 ? 'Tấn' : 'Kg';
+    const m3Val = Math.round(totalM3).toLocaleString('vi-VN');
+    elTotalVol.innerHTML = `${kgVal} <span class="text-xs sm:text-sm font-semibold opacity-75">${kgUnit}</span> <span class="opacity-60">/</span> ${m3Val} <span class="text-xs sm:text-sm font-semibold opacity-75">m³</span>`;
   }
+  if (elTotalRev) elTotalRev.innerHTML = `135 <span class="text-xs sm:text-sm font-semibold opacity-75">Triệu</span>`;
 
   // 2. TỔNG SẮP 8 GIẢI THƯỞNG GALA (ĐẢM BẢO MỖI KHÁCH DUY NHẤT 1 GIẢI)
   const alloc = getGalaAwardsAllocation(data);
@@ -1225,7 +1334,7 @@ function renderGalaSummaryData() {
     const vEl = document.getElementById('gala-award-don-val');
     if (cEl) cEl.textContent = w1.customer_code || '';
     if (nEl) nEl.textContent = w1.customer_name || w1.original_name || '';
-    if (vEl) vEl.textContent = `${w1.order_count || 0} Đơn Booking`;
+    if (vEl) vEl.textContent = `${w1.order_count || 0} Đơn`;
   }
 
   // Giải 2: Tân Binh Xuất Sắc
@@ -1247,7 +1356,7 @@ function renderGalaSummaryData() {
     const vEl = document.getElementById('gala-award-return-val');
     if (cEl) cEl.textContent = w3.customer_code || '';
     if (nEl) nEl.textContent = w3.customer_name || w3.original_name || '';
-    if (vEl) vEl.textContent = `${w3.order_count || 0} Đơn Tái Xuất`;
+    if (vEl) vEl.textContent = `${w3.order_count || 0} Đơn`;
   }
 
   // Giải 4: Vua Tải Trọng (Kg)

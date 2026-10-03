@@ -78,7 +78,7 @@
     "order_count": 26,
     "volume_weight": "31,5 tấn | 45 m³",
     "service_fee": 141050000,
-    "prize_tag": "Ứng viên Vua Số Đơn",
+    "prize_tag": "Kỷ Lục Số Đơn",
     "prize_type": "regular",
     "weight_kg": 31500,
     "volume_m3": 45
@@ -92,7 +92,7 @@
     "order_count": 14,
     "volume_weight": "18,2 tấn | 88 m³",
     "service_fee": 128900000,
-    "prize_tag": "Dẫn đầu Tân Binh",
+    "prize_tag": "Khách Hàng Mới Tiêu Biểu",
     "prize_type": "regular",
     "weight_kg": 18200,
     "volume_m3": 88
@@ -106,7 +106,7 @@
     "order_count": 11,
     "volume_weight": "85,6 tấn | 32 m³",
     "service_fee": 115400000,
-    "prize_tag": "Ứng viên Vua Tải Trọng",
+    "prize_tag": "Kỷ Lục Tải Trọng (Kg)",
     "prize_type": "regular",
     "weight_kg": 85600,
     "volume_m3": 32
@@ -120,7 +120,7 @@
     "order_count": 12,
     "volume_weight": "24,0 tấn | 38 m³",
     "service_fee": 98700000,
-    "prize_tag": "Sự Trở Lại Ấn Tượng",
+    "prize_tag": "Tái Hợp Tác Ấn Tượng",
     "prize_type": "regular",
     "weight_kg": 24000,
     "volume_m3": 38
@@ -134,7 +134,7 @@
     "order_count": 9,
     "volume_weight": "12,5 tấn | 72 m³",
     "service_fee": 86300000,
-    "prize_tag": "Ứng viên Vua Thể Tích",
+    "prize_tag": "Kỷ Lục Thể Tích (M³)",
     "prize_type": "regular",
     "weight_kg": 12500,
     "volume_m3": 72
@@ -176,7 +176,7 @@
     "order_count": 10,
     "volume_weight": "15,2 tấn | 42 m³",
     "service_fee": 72100000,
-    "prize_tag": "Ứng viên Tân Binh",
+    "prize_tag": "Ứng viên Khách Mới",
     "prize_type": "regular",
     "weight_kg": 15200,
     "volume_m3": 42
@@ -260,7 +260,7 @@
     "order_count": 8,
     "volume_weight": "8,5 tấn | 20 m³",
     "service_fee": 49100000,
-    "prize_tag": "Ứng viên Tiềm Năng",
+    "prize_tag": "Khách Hàng Tiềm Năng",
     "prize_type": "regular",
     "weight_kg": 8500,
     "volume_m3": 20
@@ -316,7 +316,7 @@
     "order_count": 7,
     "volume_weight": "6,2 tấn | 19 m³",
     "service_fee": 35400000,
-    "prize_tag": "Tân Binh Tiềm Năng",
+    "prize_tag": "Khách Mới Tiềm Năng",
     "prize_type": "regular",
     "weight_kg": 6200,
     "volume_m3": 19

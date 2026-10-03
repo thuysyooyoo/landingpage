@@ -884,7 +884,7 @@ function initDatabaseSheets(ss) {
   var sBXH = ss.getSheetByName('BangXepHang');
   if (!sBXH) {
     sBXH = ss.insertSheet('BangXepHang');
-    sBXH.appendRow(['Hạng', 'Mã Khách Hàng', 'Tên Khách Hàng (Bảo Mật)', 'Tên Doanh Nghiệp Gốc', 'Hạng VIP', 'Tổng Đơn', 'Tải Trọng (Kg)', 'Thể Tích (M³)', 'Phí Dịch Vụ (VNĐ)', 'Quà Tạm Tính / Giải Thưởng', 'Thời Gian Cập Nhật']);
+    sBXH.appendRow(['Hạng', 'Mã Khách Hàng', 'Tên Khách Hàng (Bảo Mật)', 'Tên Khách Hàng Gốc', 'Hạng VIP', 'Tổng Đơn', 'Tải Trọng (Kg)', 'Thể Tích (M³)', 'Phí Dịch Vụ (VNĐ)', 'Quà Tạm Tính / Giải Thưởng', 'Thời Gian Cập Nhật']);
     var hBXH = sBXH.getRange(1, 1, 1, 11);
     hBXH.setBackground('#0f172a').setFontColor('#fbbf24').setFontWeight('bold');
     sBXH.setFrozenRows(1);
