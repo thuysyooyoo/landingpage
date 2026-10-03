@@ -1683,9 +1683,6 @@ section {
   filter: drop-shadow(0 22px 30px rgba(15, 23, 42, 0.38)) drop-shadow(0 8px 12px rgba(15, 23, 42, 0.22));
 }
 
-.crystal-plate > .absolute {
-  z-index: 25;
-}
 
 /* ==========================================================================
    24. 3D MECHANICAL CASING FOR DUAL LUCKY WHEELS (PASTEL LUXURY)
