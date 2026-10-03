@@ -3397,5 +3397,33 @@ button[aria-label="Đóng menu"]:hover svg {
     border-radius: 6px !important;
     align-self: flex-start !important;
   }
+
+  /* 3. THỂ LỆ & FAQ ACCORDION MOBILE COMPACT */
+  #the-le .glass-countdown-strip {
+    padding: 0.85rem 0.6rem !important;
+    border-radius: 1.25rem !important;
+  }
+  #the-le .faq-item {
+    border-radius: 0.85rem !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
+  }
+  #the-le .faq-item button {
+    padding: 0.55rem 0.75rem !important;
+    font-size: 11.5px !important;
+    line-height: 1.35 !important;
+  }
+  #the-le .faq-item button span:first-child {
+    font-size: 11.5px !important;
+    letter-spacing: -0.01em !important;
+  }
+  #the-le .faq-item button span:last-child {
+    font-size: 15px !important;
+  }
+  #the-le .faq-item > div[id^="faq-content-"] {
+    padding: 0.6rem 0.75rem 0.75rem !important;
+    font-size: 11px !important;
+    line-height: 1.45 !important;
+  }
+
 }
 
