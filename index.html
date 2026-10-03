@@ -1227,13 +1227,14 @@
       </div>
 
       <!-- THANH CHỌN 5 TAB DẠNG CAPSULE KÍNH NGỌC TRAI -->
-      <div class="flex justify-center mb-10 overflow-x-auto pb-2">
-        <div class="tab-nav-capsule inline-flex items-center gap-1.5 shadow-md">
+      <div class="flex justify-center mb-8 sm:mb-10 px-2 sm:px-0">
+        <div class="tab-nav-capsule w-full max-w-lg sm:max-w-none sm:w-auto grid grid-cols-2 sm:flex sm:flex-row sm:items-center gap-1.5 shadow-md">
           <button onclick="switchTab('tab-top3', this)" class="tab-pill-btn tab-active">
             Top 3 Chung Cuộc
           </button>
           <button onclick="switchTab('tab-giai-phu', this)" class="tab-pill-btn">
-            05 Hạng Mục Tri Ân Tiêu Biểu
+            <span class="sm:hidden">5 Hạng Mục Tiêu Biểu</span>
+            <span class="hidden sm:inline">05 Hạng Mục Tri Ân Tiêu Biểu</span>
           </button>
           <button onclick="switchTab('tab-vong-quay', this)" class="tab-pill-btn">
             Vòng Quay Tri Ân
@@ -1241,7 +1242,7 @@
           <button onclick="switchTab('tab-top-tuan', this)" class="tab-pill-btn">
             Giải Top Tuần
           </button>
-          <button onclick="switchTab('tab-nhiem-vu', this)" class="tab-pill-btn">
+          <button onclick="switchTab('tab-nhiem-vu', this)" class="tab-pill-btn col-span-2 sm:col-span-1">
             Nhiệm Vụ Hệ Thống
           </button>
         </div>
@@ -1618,7 +1619,7 @@
           </span>
         </div>
 
-        <div class="overflow-x-auto rounded-2xl border border-amber-200/70 bg-white/40 backdrop-blur-md">
+        <div class="overflow-x-auto no-scrollbar rounded-2xl border border-amber-200/70 bg-white/40 backdrop-blur-md">
           <table class="w-full text-left text-xs sm:text-sm border-collapse">
             <thead>
               <tr class="bg-gradient-to-r from-amber-100/90 via-orange-50/70 to-amber-100/90 text-amber-950 font-black border-b border-amber-200/80 text-[11px] sm:text-xs uppercase tracking-wider font-display">
@@ -1678,7 +1679,7 @@
           </div>
         </div>
 
-        <div class="overflow-x-auto">
+        <div class="overflow-x-auto no-scrollbar">
           <table class="w-full text-left text-[11px] sm:text-sm">
             <thead>
               <tr class="text-slate-600 font-bold border-b border-slate-200">
@@ -1909,7 +1910,7 @@
 
       <!-- Leaderboard Table Container (Scrollable 10 rows upfront + full participant scroll) -->
       <div class="glass-countdown-strip p-5 sm:p-8 relative">
-        <div class="overflow-x-auto max-h-[620px] overflow-y-auto rounded-2xl border border-slate-200 scroll-smooth shadow-sm">
+        <div class="overflow-x-auto no-scrollbar max-h-[620px] overflow-y-auto rounded-2xl border border-slate-200 scroll-smooth shadow-sm">
           <table class="w-full text-left text-xs sm:text-sm" id="leaderboard-table">
             <thead class="sticky top-0 bg-slate-100 backdrop-blur-md border-b border-slate-200 z-10 shadow-sm text-slate-700">
               <tr class="text-slate-400 text-[10px] sm:text-[11px] uppercase tracking-wider">
@@ -2021,15 +2022,15 @@
         <div class="lg:col-span-7 glass-countdown-strip p-3.5 sm:p-7 space-y-2 sm:space-y-3">
           
           <!-- Thanh lọc chủ đề câu hỏi (Category Filter Pills) -->
-          <div class="flex items-center gap-1.5 p-1 rounded-xl bg-slate-100/90 border border-slate-200 mb-2 sm:mb-3 text-xs overflow-x-auto">
-            <button id="faq-filter-btn-all" onclick="filterFaqCategory('all')" class="faq-filter-btn px-3 py-1.5 rounded-lg font-bold text-xs bg-white text-slate-900 shadow-sm border border-slate-200 transition-all cursor-pointer whitespace-nowrap">
+          <div class="grid grid-cols-3 sm:flex sm:items-center gap-1.5 p-1 rounded-xl bg-slate-100/90 border border-slate-200 mb-2 sm:mb-3 text-xs">
+            <button id="faq-filter-btn-all" onclick="filterFaqCategory('all')" class="faq-filter-btn px-2 sm:px-3 py-1.5 rounded-lg font-bold text-[11px] sm:text-xs bg-white text-slate-900 shadow-sm border border-slate-200 transition-all cursor-pointer text-center justify-center flex items-center">
               Tất Cả (8)
             </button>
-            <button id="faq-filter-btn-thele" onclick="filterFaqCategory('thele')" class="faq-filter-btn px-3 py-1.5 rounded-lg font-bold text-xs text-slate-600 hover:text-slate-900 transition-all cursor-pointer whitespace-nowrap">
-              Thể Lệ & BXH (4)
+            <button id="faq-filter-btn-thele" onclick="filterFaqCategory('thele')" class="faq-filter-btn px-2 sm:px-3 py-1.5 rounded-lg font-bold text-[11px] sm:text-xs text-slate-600 hover:text-slate-900 transition-all cursor-pointer text-center justify-center flex items-center">
+              <span class="sm:hidden">Thể Lệ (4)</span><span class="hidden sm:inline">Thể Lệ & BXH (4)</span>
             </button>
-            <button id="faq-filter-btn-giaithuong" onclick="filterFaqCategory('giaithuong')" class="faq-filter-btn px-3 py-1.5 rounded-lg font-bold text-xs text-slate-600 hover:text-slate-900 transition-all cursor-pointer whitespace-nowrap">
-              Giải Thưởng & Quà (4)
+            <button id="faq-filter-btn-giaithuong" onclick="filterFaqCategory('giaithuong')" class="faq-filter-btn px-2 sm:px-3 py-1.5 rounded-lg font-bold text-[11px] sm:text-xs text-slate-600 hover:text-slate-900 transition-all cursor-pointer text-center justify-center flex items-center">
+              <span class="sm:hidden">Giải Thưởng (4)</span><span class="hidden sm:inline">Giải Thưởng & Quà (4)</span>
             </button>
           </div>
 
@@ -3467,7 +3468,7 @@
       </div>
 
       <!-- Quick Switch Tabs (5 giải phụ) -->
-      <div class="flex items-center gap-1.5 overflow-x-auto pb-2 mb-4 scrollbar-thin">
+      <div class="flex flex-wrap sm:flex-nowrap items-center gap-1.5 mb-4 no-scrollbar">
         <button type="button" onclick="switchGiaiPhuTab('vua-so-luong-don')" id="tab-btn-vua-so-luong-don" class="giai-phu-tab-btn px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all bg-amber-400 text-slate-900 shadow">
           Vua Số Lượng Đơn
         </button>
