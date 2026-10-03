@@ -1729,86 +1729,95 @@
           </div>
         </div>
 
+                <!-- Chỉ dẫn vuốt bảng trên mobile -->
+        <div class="sm:hidden flex items-center justify-between mb-3 px-3 py-1.5 rounded-lg bg-amber-500/10 border border-amber-300/40 text-[11px] text-amber-900">
+          <span class="inline-flex items-center gap-1.5 font-medium">
+            <svg class="w-3.5 h-3.5 text-amber-600 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>
+            Vuốt ngang để xem đủ 5 cột quyền lợi
+          </span>
+          <span class="text-[10px] text-amber-700 font-bold uppercase tracking-wider">5 cột ↔</span>
+        </div>
+
         <div class="overflow-x-auto">
-          <table class="w-full text-left text-xs sm:text-sm">
+          <table class="w-full min-w-[640px] text-left text-xs sm:text-sm">
             <thead>
               <tr class="text-slate-600 font-bold border-b border-slate-200">
-                <th class="pb-3 font-semibold">Hạng Khách Hàng</th>
-                <th class="pb-3 font-semibold">Cấp VIP Được Nâng Lên</th>
-                <th class="pb-3 font-semibold">Đặc Quyền Cước Gom Cont</th>
-                <th class="pb-3 font-semibold">Lưu Kho TQ / VN</th>
-                <th class="pb-3 font-semibold">Đặc Quyền Đột Phá</th>
+                <th class="pb-3 pr-2 font-semibold whitespace-nowrap w-[15%]">Hạng Khách Hàng</th>
+                <th class="pb-3 px-2 font-semibold whitespace-nowrap w-[18%]">Cấp VIP Nâng Lên</th>
+                <th class="pb-3 px-2 font-semibold whitespace-nowrap w-[23%]">Đặc Quyền Cước Gom Cont</th>
+                <th class="pb-3 px-2 font-semibold whitespace-nowrap w-[19%]">Lưu Kho TQ / VN</th>
+                <th class="pb-3 pl-2 font-semibold whitespace-nowrap w-[25%]">Đặc Quyền Đột Phá</th>
               </tr>
             </thead>
             <tbody class="divide-y divide-slate-200 text-slate-700">
               <tr class="hover:bg-amber-50/60 transition-colors">
-                <td class="py-3.5 font-bold text-slate-900">
+                <td class="py-3 sm:py-3.5 pr-2 font-bold text-slate-900 whitespace-nowrap">
                   <a href="https://www.erktransport.com/pricing" target="_blank" rel="noopener noreferrer" class="hover:text-amber-600 transition-colors inline-flex items-center gap-1 group" title="Xem chi tiết gói BASIC tại bảng giá Eureka">
                     <span>BASIC</span>
                     <span class="text-[10px] text-slate-400 group-hover:text-amber-900">↗</span>
                   </a>
                 </td>
-                <td class="py-3.5">
+                <td class="py-3 sm:py-3.5 px-2 whitespace-nowrap">
                   <a href="https://www.erktransport.com/pricing" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1 rounded-md bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-300 font-bold text-xs inline-flex items-center gap-1 transition-all hover:scale-105 shadow-sm cursor-pointer" title="Bấm để xem quyền lợi gói PRO trên erktransport.com/pricing">
                     <span>→ VIP PRO</span>
                     <span class="text-[9px] opacity-75">↗</span>
                   </a>
                 </td>
-                <td class="py-3.5 text-emerald-900 font-semibold">Giảm 10% cước gom cont</td>
-                <td class="py-3.5 text-slate-600 font-medium">10 ngày TQ / 3 ngày VN</td>
-                <td class="py-3.5 text-slate-600 font-medium">Squad hỗ trợ 2-in-1, CK 2đ/RMB</td>
+                <td class="py-3 sm:py-3.5 px-2 text-emerald-900 font-semibold whitespace-nowrap">Giảm 10% cước gom cont</td>
+                <td class="py-3 sm:py-3.5 px-2 text-slate-600 font-medium whitespace-nowrap">10 ngày TQ / 3 ngày VN</td>
+                <td class="py-3 sm:py-3.5 pl-2 text-slate-600 font-medium whitespace-nowrap">Squad hỗ trợ 2-in-1, CK 2đ/RMB</td>
               </tr>
               <tr class="hover:bg-amber-50/60 transition-colors">
-                <td class="py-3.5 font-bold text-slate-900">
+                <td class="py-3 sm:py-3.5 pr-2 font-bold text-slate-900 whitespace-nowrap">
                   <a href="https://www.erktransport.com/pricing" target="_blank" rel="noopener noreferrer" class="hover:text-blue-600 transition-colors inline-flex items-center gap-1 group" title="Xem chi tiết gói PRO tại bảng giá Eureka">
                     <span>PRO</span>
                     <span class="text-[10px] text-slate-400 group-hover:text-blue-900">↗</span>
                   </a>
                 </td>
-                <td class="py-3.5">
+                <td class="py-3 sm:py-3.5 px-2 whitespace-nowrap">
                   <a href="https://www.erktransport.com/pricing" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1 rounded-md bg-blue-600/30 hover:bg-blue-600/50 text-blue-900 border border-blue-500/40 font-bold text-xs inline-flex items-center gap-1 transition-all hover:scale-105 shadow cursor-pointer" title="Bấm để xem quyền lợi gói PREMIUM trên erktransport.com/pricing">
                     <span>→ VIP PREMIUM</span>
                     <span class="text-[9px] opacity-75">↗</span>
                   </a>
                 </td>
-                <td class="py-3.5 text-emerald-900 font-semibold">Giảm 20% cước gom cont</td>
-                <td class="py-3.5 text-slate-600 font-medium">15 ngày TQ / 5 ngày VN</td>
-                <td class="py-3.5 text-slate-600 font-medium">Squad hỗ trợ 3-in-1, CK 3đ/RMB</td>
+                <td class="py-3 sm:py-3.5 px-2 text-emerald-900 font-semibold whitespace-nowrap">Giảm 20% cước gom cont</td>
+                <td class="py-3 sm:py-3.5 px-2 text-slate-600 font-medium whitespace-nowrap">15 ngày TQ / 5 ngày VN</td>
+                <td class="py-3 sm:py-3.5 pl-2 text-slate-600 font-medium whitespace-nowrap">Squad hỗ trợ 3-in-1, CK 3đ/RMB</td>
               </tr>
               <tr class="hover:bg-amber-50/60 transition-colors">
-                <td class="py-3.5 font-bold text-slate-900">
+                <td class="py-3 sm:py-3.5 pr-2 font-bold text-slate-900 whitespace-nowrap">
                   <a href="https://www.erktransport.com/pricing" target="_blank" rel="noopener noreferrer" class="hover:text-purple-600 font-semibold transition-colors inline-flex items-center gap-1 group" title="Xem chi tiết gói PREMIUM tại bảng giá Eureka">
                     <span>PREMIUM</span>
                     <span class="text-[10px] text-slate-400 group-hover:text-purple-900 font-semibold">↗</span>
                   </a>
                 </td>
-                <td class="py-3.5">
+                <td class="py-3 sm:py-3.5 px-2 whitespace-nowrap">
                   <a href="https://www.erktransport.com/pricing" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1 rounded-md bg-purple-600/30 hover:bg-purple-600/50 text-purple-900 font-semibold border border-purple-500/40 font-bold text-xs inline-flex items-center gap-1 transition-all hover:scale-105 shadow cursor-pointer" title="Bấm để xem quyền lợi gói ELITE trên erktransport.com/pricing">
                     <span>→ VIP ELITE</span>
                     <span class="text-[9px] opacity-75">↗</span>
                   </a>
                 </td>
-                <td class="py-3.5 text-emerald-900 font-semibold">Giảm 30% cước gom cont</td>
-                <td class="py-3.5 text-slate-600 font-medium">30 ngày TQ / 7 ngày VN</td>
-                <td class="py-3.5 text-slate-600 font-medium">Tổ tác chiến 4-in-1, CK 5đ/RMB</td>
+                <td class="py-3 sm:py-3.5 px-2 text-emerald-900 font-semibold whitespace-nowrap">Giảm 30% cước gom cont</td>
+                <td class="py-3 sm:py-3.5 px-2 text-slate-600 font-medium whitespace-nowrap">30 ngày TQ / 7 ngày VN</td>
+                <td class="py-3 sm:py-3.5 pl-2 text-slate-600 font-medium whitespace-nowrap">Tổ tác chiến 4-in-1, CK 5đ/RMB</td>
               </tr>
               <tr class="bg-brand-500/5 hover:bg-brand-500/10 transition-colors">
-                <td class="py-3.5 font-bold text-amber-900">
+                <td class="py-3 sm:py-3.5 pr-2 font-bold text-amber-900 whitespace-nowrap">
                   <a href="https://www.erktransport.com/pricing" target="_blank" rel="noopener noreferrer" class="hover:text-amber-200 transition-colors inline-flex items-center gap-1.5 group" title="Xem chi tiết gói ELITE tại bảng giá Eureka">
                     <span> ELITE</span>
                     <span class="text-[10px] text-amber-900 group-hover:text-amber-200">↗</span>
                   </a>
                 </td>
-                <td class="py-3.5">
+                <td class="py-3 sm:py-3.5 px-2 whitespace-nowrap">
                   <a href="https://www.erktransport.com/pricing" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1 rounded-md bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-900 font-black text-xs inline-flex items-center gap-1 transition-all hover:scale-105 shadow cursor-pointer" title="Bấm để xem quyền lợi gói ELITE trên erktransport.com/pricing">
                     <span>→ VIP ELITE+</span>
                     <span class="text-[9px] opacity-80">↗</span>
                   </a>
                 </td>
-                <td class="py-3.5 text-amber-900 font-bold">Giữ nguyên ưu đãi Elite</td>
-                <td class="py-3.5 text-slate-600 font-medium">Tối đa hạn mức</td>
-                <td class="py-3.5">
-                  <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-amber-100 text-amber-900 font-black text-xs border border-amber-300">
+                <td class="py-3 sm:py-3.5 px-2 text-amber-900 font-bold whitespace-nowrap">Giữ nguyên ưu đãi Elite</td>
+                <td class="py-3 sm:py-3.5 px-2 text-slate-600 font-medium whitespace-nowrap">Tối đa hạn mức</td>
+                <td class="py-3 sm:py-3.5 pl-2 whitespace-nowrap">
+                  <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-amber-100 text-amber-900 font-black text-xs border border-amber-300 shadow-sm">
                      TĂNG THÊM 15 NGÀY CÔNG NỢ
                   </span>
                 </td>
@@ -1931,14 +1940,14 @@
           <table class="w-full text-left text-xs sm:text-sm" id="leaderboard-table">
             <thead class="sticky top-0 bg-slate-100 backdrop-blur-md border-b border-slate-200 z-10 shadow-sm text-slate-700">
               <tr class="text-slate-400 text-[10px] sm:text-[11px] uppercase tracking-wider">
-                <th class="py-3 px-2 sm:px-3 whitespace-nowrap w-12 sm:w-16">Hạng</th>
-                <th class="py-3 px-2 sm:px-3">Khách Hàng & Mã Khách</th>
-                <th class="py-3 px-3 whitespace-nowrap hidden sm:table-cell">Hạng VIP</th>
-                <th class="py-3 px-3 text-right whitespace-nowrap hidden md:table-cell">Tổng Đơn</th>
-                <th class="py-3 px-3 text-right whitespace-nowrap hidden md:table-cell text-amber-900">Tải Trọng (Kg)</th>
-                <th class="py-3 px-3 text-right whitespace-nowrap hidden md:table-cell text-sky-900">Thể Tích (M³)</th>
-                <th class="py-3 px-2 sm:px-3 text-right whitespace-nowrap">Phí Dịch Vụ</th>
-                <th class="py-3 px-3 text-center whitespace-nowrap hidden sm:table-cell">Quà Tạm Tính</th>
+                <th class="py-2.5 sm:py-3 px-1.5 sm:px-3 whitespace-nowrap w-10 sm:w-16 text-center">Hạng</th>
+                <th class="py-2.5 sm:py-3 px-2 sm:px-3">Khách Hàng & Mã Khách</th>
+                <th class="py-2.5 sm:py-3 px-3 whitespace-nowrap hidden sm:table-cell">Hạng VIP</th>
+                <th class="py-2.5 sm:py-3 px-3 text-right whitespace-nowrap hidden md:table-cell">Tổng Đơn</th>
+                <th class="py-2.5 sm:py-3 px-3 text-right whitespace-nowrap hidden md:table-cell text-amber-900">Tải Trọng (Kg)</th>
+                <th class="py-2.5 sm:py-3 px-3 text-right whitespace-nowrap hidden md:table-cell text-sky-900">Thể Tích (M³)</th>
+                <th class="py-2.5 sm:py-3 px-2 sm:px-3 text-right whitespace-nowrap w-24 sm:w-auto">Phí Dịch Vụ</th>
+                <th class="py-2.5 sm:py-3 px-3 text-center whitespace-nowrap hidden sm:table-cell">Quà Tạm Tính</th>
               </tr>
             </thead>
             <tbody class="divide-y divide-slate-800/60" id="leaderboard-body">

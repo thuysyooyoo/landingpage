@@ -1352,11 +1352,23 @@ section#the-le .blur-3xl {
 #nhiem-vu-display-wrapper .nhiem-vu-hero-banner .hero-eyebrow,
 #nhiem-vu-display-wrapper .group\/hero .hero-eyebrow,
 #nhiem-vu-display-wrapper .hero-eyebrow,
-#nhiem-vu-display-wrapper .nhiem-vu-hero-banner span[class*="text-amber"],
-#nhiem-vu-display-wrapper .group\/hero span[class*="text-amber"] {
+#nhiem-vu-display-wrapper .nhiem-vu-hero-banner span[class*="text-amber"]:not(.nhiem-vu-period-badge),
+#nhiem-vu-display-wrapper .group\/hero span[class*="text-amber"]:not(.nhiem-vu-period-badge) {
   color: #FDE68A !important;
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.95) !important;
 }
+
+/* Badge Chặng: Chữ đậm, tối màu, độ tương phản cao, siêu sắc nét */
+#nhiem-vu-display-wrapper .nhiem-vu-period-badge,
+#nhiem-vu-display-wrapper .nhiem-vu-hero-banner .nhiem-vu-period-badge {
+  color: #451A03 !important;
+  background-color: #FEF3C7 !important;
+  border: 1.5px solid #F59E0B !important;
+  font-weight: 900 !important;
+  text-shadow: none !important;
+  letter-spacing: 0.05em !important;
+}
+
 #nhiem-vu-display-wrapper .nhiem-vu-hero-banner .text-white,
 #nhiem-vu-display-wrapper .group\/hero .text-white {
   color: #FFFFFF !important;
