@@ -153,31 +153,20 @@ section [class*="bg-slate-800"] {
       OPTICAL RAY-TRACING & CHROMATIC DISPERSION (LĂNG KÍNH CẦU VỒNG)
    ========================================================================== */
 section#tong-quan {
-  background: linear-gradient(180deg, #FFFFFF 0%, #FAFAFD 100%) !important;
+  background-color: #FFFFFF !important;
+  background-image: url('../img/hero-layers/trung-bay-cong-nghe-tren-lua-vang.png') !important;
+  background-size: cover !important;
+  background-position: right center !important;
+  background-repeat: no-repeat !important;
   position: relative !important;
   overflow: hidden !important;
   border-bottom: 1px solid rgba(226, 232, 240, 0.7) !important;
 }
 
-/* Iridescent Ambient Optical Ray-tracing Background (Tia Sáng Lăng Kính Khúc Xạ) */
+/* Xóa bỏ hoàn toàn lớp màu loang gradient của section#tong-quan::before */
 section#tong-quan::before {
-  content: '';
-  position: absolute;
-  top: -60px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 1350px;
-  height: 750px;
-  background: 
-    radial-gradient(circle at 35% 25%, rgba(236, 72, 153, 0.22) 0%, transparent 45%),
-    radial-gradient(circle at 65% 28%, rgba(59, 130, 246, 0.22) 0%, transparent 45%),
-    radial-gradient(circle at 50% 60%, rgba(245, 158, 11, 0.20) 0%, transparent 50%),
-    radial-gradient(circle at 20% 70%, rgba(168, 85, 247, 0.18) 0%, transparent 45%),
-    repeating-linear-gradient(60deg, rgba(168, 85, 247, 0.04) 0px, rgba(168, 85, 247, 0.04) 3px, transparent 3px, transparent 40px);
-  pointer-events: none;
-  z-index: 1;
-  mask-image: radial-gradient(ellipse at center, black 50%, transparent 85%);
-  animation: prismDrift 8s ease-in-out infinite alternate;
+  display: none !important;
+  content: none !important;
 }
 
 @keyframes prismDrift {
@@ -943,28 +932,57 @@ button.fixed.bottom-6 {
 /* ==========================================================================
    15. MODAL SYNCHRONIZATION (WELCOME WHEEL MODAL & WIN POPUPS)
    ========================================================================== */
-#welcome-wheel-modal .relative.bg-white\/95,
-#welcome-wheel-modal .relative.bg-slate-900\/95,
-#welcome-wheel-modal .max-w-4xl {
-  background: rgba(255, 255, 255, 0.96) !important;
-  backdrop-filter: blur(28px) saturate(200%) !important;
-  border: 2px solid rgba(245, 158, 11, 0.5) !important;
-  box-shadow: 0 35px 80px -15px rgba(124, 58, 237, 0.18), 0 0 40px rgba(245, 158, 11, 0.15) !important;
-  color: #0F172A !important;
+#welcome-wheel-modal .crystal-wheel-card,
+#welcome-wheel-modal > div {
+  background: linear-gradient(135deg, rgba(255, 252, 246, 0.65) 0%, rgba(248, 238, 226, 0.52) 100%) !important;
+  backdrop-filter: blur(24px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+  border: 0.75px solid rgba(254, 240, 199, 0.9) !important;
+  box-shadow: 
+    0 25px 65px -15px rgba(90, 50, 20, 0.25), 
+    0 0 35px rgba(251, 191, 36, 0.18), 
+    inset 0 1px 2px rgba(255, 255, 255, 0.95) !important;
+  border-radius: 28px !important;
+  color: #2C1A0E !important;
+}
+
+#welcome-wheel-modal .wheel-form-card {
+  background: rgba(255, 255, 255, 0.78) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border: 0.75px solid rgba(255, 255, 255, 0.95) !important;
+  box-shadow: 0 6px 20px rgba(180, 130, 80, 0.08), inset 0 1px 1px rgba(255, 255, 255, 1) !important;
+}
+
+#welcome-wheel-modal #user-phone-input {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border: 1px solid rgba(225, 215, 200, 0.8) !important;
+  color: #1E293B !important;
+}
+
+#welcome-wheel-modal .wheel-winner-card {
+  background: rgba(255, 255, 255, 0.48) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border: 0.75px solid rgba(255, 255, 255, 0.85) !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.03) !important;
+}
+
+#welcome-wheel-modal #winner-ticker-list > div {
+  background: rgba(255, 255, 255, 0.82) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  border: 0.75px solid rgba(255, 255, 255, 0.95) !important;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.02) !important;
 }
 
 #welcome-wheel-modal h3 {
-  color: #0F172A !important;
+  color: #2C1A0E !important;
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
 }
 
 #welcome-wheel-modal p {
-  color: #475569 !important;
-}
-
-#welcome-wheel-modal .wheel-outer-rim {
-  background: radial-gradient(circle, #FFFBEB 0%, #FEF3C7 60%, #FDE68A 100%) !important;
-  border: 5px solid #F59E0B !important;
-  box-shadow: 0 25px 60px -10px rgba(245, 158, 11, 0.45), 0 0 0 3px rgba(254, 240, 138, 0.6), inset 0 2px 6px rgba(245, 158, 11, 0.2) !important;
+  color: #64748B !important;
 }
 
 #user-phone-input {
@@ -998,26 +1016,38 @@ button.fixed.bottom-6 {
   color: #059669 !important;
 }
 
-/* Win Announcement Modal */
+/* Win Announcement Modal (Pearl Crystal Glass Aesthetic) */
+#win-modal {
+  background-color: rgba(15, 23, 42, 0.35) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+}
+
+#win-modal .win-modal-card,
 #win-modal .glass-card {
-  background: rgba(255, 255, 255, 0.98) !important;
-  color: #0F172A !important;
-  border: 2px solid #F59E0B !important;
-  box-shadow: 0 35px 80px -15px rgba(245, 158, 11, 0.3) !important;
+  background: linear-gradient(135deg, rgba(255, 253, 248, 0.95) 0%, rgba(248, 240, 230, 0.88) 100%) !important;
+  backdrop-filter: blur(28px) saturate(190%) !important;
+  -webkit-backdrop-filter: blur(28px) saturate(190%) !important;
+  border: 0.75px solid rgba(254, 240, 199, 0.9) !important;
+  box-shadow: 
+    0 35px 80px -15px rgba(60, 35, 10, 0.32), 
+    0 0 45px rgba(245, 158, 11, 0.2), 
+    inset 0 1px 3px rgba(255, 255, 255, 0.95) !important;
+  border-radius: 28px !important;
+  color: #2C1A0E !important;
 }
 
 #win-modal h3 {
-  color: #0F172A !important;
+  color: #2C1A0E !important;
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
 }
 
 #win-modal p {
-  color: #475569 !important;
+  color: #57534E !important;
 }
 
 #modal-voucher-code {
-  background: #FEF3C7 !important;
-  color: #B45309 !important;
-  border: 1.5px solid #FCD34D !important;
+  color: #78350F !important;
 }
 
 /* M05 Notice Modal */
@@ -1114,12 +1144,20 @@ button.fixed.bottom-6 {
 }
 
 #spin-center-btn {
-  background: radial-gradient(circle at 35% 35%, #FFFBEB 0%, #FBBF24 45%, #D97706 80%, #92400E 100%) !important;
-  border: 3.5px solid #FFFFFF !important;
-  box-shadow: 0 8px 24px rgba(180, 83, 9, 0.45), 0 0 0 4px rgba(245, 158, 11, 0.35), inset 0 2px 4px rgba(255, 255, 255, 0.9), inset 0 -3px 6px rgba(120, 53, 15, 0.6) !important;
-  color: #FFFFFF !important;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6) !important;
+  width: 76px !important;
+  height: 76px !important;
+  border-radius: 50% !important;
+  background: radial-gradient(circle at 40% 35%, #FFFFFF 0%, #FFF8EC 35%, #F5E5C9 70%, #DFC08A 100%) !important;
+  border: 2.5px solid #D4AF37 !important;
+  box-shadow: 
+    0 8px 24px rgba(180, 130, 60, 0.35), 
+    0 0 0 2px rgba(255, 255, 255, 0.85), 
+    inset 0 2px 5px rgba(255, 255, 255, 0.95), 
+    inset 0 -2px 5px rgba(180, 130, 60, 0.25) !important;
+  color: #382210 !important;
+  text-shadow: none !important;
   cursor: pointer !important;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), filter 0.2s ease !important;
 }
 
 #spin-center-btn:hover {
@@ -1405,15 +1443,21 @@ section {
 
 /* Modal Backdrop Translucent Glassmorphism (Revealing Homepage Underneath) */
 #welcome-wheel-modal {
-  background-color: rgba(15, 23, 42, 0.18) !important;
-  backdrop-filter: blur(14px) !important;
-  -webkit-backdrop-filter: blur(14px) !important;
+  background-color: rgba(15, 23, 42, 0.22) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
 }
 
 #welcome-wheel-modal > div {
-  background: rgba(255, 255, 255, 0.94) !important;
-  border: 2px solid rgba(255, 255, 255, 0.95) !important;
-  box-shadow: 0 35px 80px -15px rgba(0, 0, 0, 0.28), 0 0 50px rgba(245, 158, 11, 0.18) !important;
+  background: linear-gradient(135deg, rgba(255, 252, 246, 0.65) 0%, rgba(248, 238, 226, 0.52) 100%) !important;
+  backdrop-filter: blur(24px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+  border: 0.75px solid rgba(254, 240, 199, 0.9) !important;
+  box-shadow: 
+    0 25px 65px -15px rgba(90, 50, 20, 0.25), 
+    0 0 35px rgba(251, 191, 36, 0.18), 
+    inset 0 1px 2px rgba(255, 255, 255, 0.95) !important;
+  border-radius: 28px !important;
 }
 
 /* ==========================================================================
@@ -1851,7 +1895,7 @@ p, .body-text {
 #cot-moc-vip,
 #bxh-truc-tuyen,
 #the-le,
-section {
+section:not(#tong-quan) {
   background-color: transparent !important;
   background-image: none !important;
   border-color: rgba(226, 232, 240, 0.7) !important;

@@ -259,25 +259,40 @@ function toggleGalaLedBulbs(chaseSpeed = 400) {
 let welcomeSegments = [];
 
 function initWelcomeWheelData() {
+  const crystalSegments = [
+    { id: 1, text: 'VOUCHER 400K', line1: 'VOUCHER', line2: '400K', type: 'ivory', prize: 'Voucher 400.000 đ Lộc Xuân', probability_weight: 0, stock_quantity: 10 },
+    { id: 2, text: 'GIẢM 10% CƯỚC', line1: 'GIẢM 10%', line2: 'CƯỚC', type: 'champagne', prize: 'Giảm giá 10% chi phí vận chuyển', probability_weight: 100, stock_quantity: 9999 },
+    { id: 3, text: 'QUAY TRI ÂN', line1: 'QUAY', line2: 'TRI ÂN', type: 'amber', prize: 'Vé Tham Dự Quay Thưởng Tri Ân Mùng 05', probability_weight: 0, stock_quantity: 50 },
+    { id: 4, text: 'IPHONE 15 PRO', line1: 'IPHONE', line2: '15 PRO', type: 'champagne', prize: 'iPhone 15 Pro Max 256GB Tri Ân', probability_weight: 0, stock_quantity: 1 },
+    { id: 5, text: 'TRẢ TRƯỚC 500K', line1: 'TRẢ TRƯỚC', line2: '500K', type: 'ivory', prize: 'Voucher Trả Trước 500.000 đ', probability_weight: 0, stock_quantity: 15 },
+    { id: 6, text: 'KHÁCH HÀNG VIP', line1: 'KHÁCH HÀNG', line2: 'VIP', type: 'champagne', prize: 'Gói Hỗ Trợ Squad Khách Hàng VIP', probability_weight: 0, stock_quantity: 10 },
+    { id: 7, text: 'VOUCHER 200K', line1: 'VOUCHER', line2: '200K', type: 'ivory', prize: 'Voucher Chiết Khấu 200.000 đ', probability_weight: 0, stock_quantity: 25 },
+    { id: 8, text: 'QUAY TIẾP', line1: 'QUAY', line2: 'TIẾP', type: 'champagne', prize: 'Lượt Quay May Mắn Tiếp Theo', probability_weight: 0, stock_quantity: 999 }
+  ];
+
   if (typeof getActiveWheelSegments === 'function') {
-    welcomeSegments = getActiveWheelSegments();
-  } else if (typeof DEFAULT_WHEEL_SEGMENTS !== 'undefined') {
-    welcomeSegments = JSON.parse(JSON.stringify(DEFAULT_WHEEL_SEGMENTS));
+    const raw = getActiveWheelSegments();
+    if (raw && raw[0] && raw[0].line1) {
+      welcomeSegments = raw;
+    } else {
+      welcomeSegments = crystalSegments;
+      localStorage.setItem('eureka_welcome_wheel_config', JSON.stringify(crystalSegments));
+    }
   } else {
     welcomeSegments = [
-      { id: 1, text: 'GIẢM GIÁ 10% CƯỚC', color: '#ea580c', textColor: '#FFFFFF', prize: 'Giảm giá 10% chi phí vận chuyển', probability_weight: 100, stock_quantity: 9999 },
-      { id: 2, text: 'VOUCHER 300K', color: '#1e293b', textColor: '#FBBF24', prize: 'Voucher Chiết Khấu 300.000 đ', probability_weight: 0, stock_quantity: 25 },
-      { id: 3, text: 'ƯU TIÊN XẾP CONT', color: '#f59e0b', textColor: '#0F172A', prize: 'Vé Ưu Tiên Xếp Cont Sớm', probability_weight: 0, stock_quantity: 18 },
-      { id: 4, text: 'GIẢM 50% LƯU KHO', color: '#0f172a', textColor: '#FFFFFF', prize: 'Giảm 50% Phí Lưu Kho Bãi', probability_weight: 0, stock_quantity: 15 },
-      { id: 5, text: 'VOUCHER 300K', color: '#ea580c', textColor: '#FFFFFF', prize: 'Voucher Chiết Khấu 300.000 đ', probability_weight: 0, stock_quantity: 20 },
-      { id: 6, text: 'GÓI SQUAD 2-IN-1', color: '#1e293b', textColor: '#38BDF8', prize: 'Gói Hỗ Trợ Squad 2–in–1', probability_weight: 0, stock_quantity: 11 },
-      { id: 7, text: 'VOUCHER 400K', color: '#f59e0b', textColor: '#0F172A', prize: 'Voucher 400.000 đ Lộc Xuân', probability_weight: 0, stock_quantity: 10 },
-      { id: 8, text: 'MAY MẮN LẦN SAU', color: '#0f172a', textColor: '#94A3B8', prize: 'Vé Tích Lũy Quay Mùng 05', probability_weight: 0, stock_quantity: 999 }
+      { id: 1, text: 'VOUCHER 400K', line1: 'VOUCHER', line2: '400K', type: 'ivory', prize: 'Voucher 400.000 đ Lộc Xuân', probability_weight: 0, stock_quantity: 10 },
+      { id: 2, text: 'GIẢM 10% CƯỚC', line1: 'GIẢM 10%', line2: 'CƯỚC', type: 'champagne', prize: 'Giảm giá 10% chi phí vận chuyển', probability_weight: 100, stock_quantity: 9999 },
+      { id: 3, text: 'QUAY TRI ÂN', line1: 'QUAY', line2: 'TRI ÂN', type: 'amber', prize: 'Vé Tham Dự Quay Thưởng Tri Ân Mùng 05', probability_weight: 0, stock_quantity: 50 },
+      { id: 4, text: 'IPHONE 15 PRO', line1: 'IPHONE', line2: '15 PRO', type: 'champagne', prize: 'iPhone 15 Pro Max 256GB Tri Ân', probability_weight: 0, stock_quantity: 1 },
+      { id: 5, text: 'TRẢ TRƯỚC 500K', line1: 'TRẢ TRƯỚC', line2: '500K', type: 'ivory', prize: 'Voucher Trả Trước 500.000 đ', probability_weight: 0, stock_quantity: 15 },
+      { id: 6, text: 'KHÁCH HÀNG VIP', line1: 'KHÁCH HÀNG', line2: 'VIP', type: 'champagne', prize: 'Gói Hỗ Trợ Squad Khách Hàng VIP', probability_weight: 0, stock_quantity: 10 },
+      { id: 7, text: 'VOUCHER 200K', line1: 'VOUCHER', line2: '200K', type: 'ivory', prize: 'Voucher Chiết Khấu 200.000 đ', probability_weight: 0, stock_quantity: 25 },
+      { id: 8, text: 'QUAY TIẾP', line1: 'QUAY', line2: 'TIẾP', type: 'champagne', prize: 'Lượt Quay May Mắn Tiếp Theo', probability_weight: 0, stock_quantity: 999 }
     ];
   }
 }
 
-let currentAngle1 = 0;
+let currentAngle1 = -5 * Math.PI / 8; // Slice 0 (VOUCHER 400K) at top-left, Slice 1 (GIẢM 10% CƯỚC) at top-right
 let isSpinning1 = false;
 
 function drawWheel() {
@@ -286,67 +301,233 @@ function drawWheel() {
   const ctx1 = canvas1.getContext('2d');
   if (!ctx1) return;
 
+  const dpr = window.devicePixelRatio || 1;
+  const displaySize = 360;
+  if (canvas1.width !== displaySize * dpr || canvas1.height !== displaySize * dpr) {
+    canvas1.width = displaySize * dpr;
+    canvas1.height = displaySize * dpr;
+    canvas1.style.width = displaySize + 'px';
+    canvas1.style.height = displaySize + 'px';
+  }
+
+  ctx1.save();
+  ctx1.scale(dpr, dpr);
+  ctx1.clearRect(0, 0, displaySize, displaySize);
+
   if (!welcomeSegments || welcomeSegments.length === 0) {
     initWelcomeWheelData();
   }
 
   const numSegments = welcomeSegments.length;
   const arcSize = (2 * Math.PI) / numSegments;
-  const centerX = canvas1.width / 2;
-  const centerY = canvas1.height / 2;
-  const radius = centerX - 10;
+  const centerX = displaySize / 2;
+  const centerY = displaySize / 2;
+  const outerRadius = centerX - 8; // 172px
+  const bevelWidth = 15;
+  const segmentRadius = outerRadius - bevelWidth; // 157px
+  const innerRadius = 42; // Center hub radius
 
-  ctx1.clearRect(0, 0, canvas1.width, canvas1.height);
-
-  // Outer Gold Rim Glow
-  ctx1.save();
+  // --- 1. OUTER FACETED CRYSTAL BEVEL RIM ---
   ctx1.beginPath();
-  ctx1.arc(centerX, centerY, radius + 6, 0, 2 * Math.PI);
-  ctx1.lineWidth = 10;
-  ctx1.strokeStyle = '#F59E0B';
-  ctx1.shadowColor = '#F59E0B';
-  ctx1.shadowBlur = 18;
-  ctx1.stroke();
-  ctx1.restore();
+  ctx1.arc(centerX, centerY, outerRadius, 0, 2 * Math.PI);
+  ctx1.fillStyle = 'rgba(255, 250, 240, 0.20)';
+  ctx1.fill();
 
-  // Draw Segments
+  // 24 faceted trapezoids around the bevel band
+  const numBevelFacets = 24;
+  const bevelArc = (2 * Math.PI) / numBevelFacets;
+  for (let k = 0; k < numBevelFacets; k++) {
+    const bStart = k * bevelArc;
+    const bEnd = (k + 1) * bevelArc;
+
+    ctx1.beginPath();
+    ctx1.arc(centerX, centerY, outerRadius, bStart, bEnd);
+    ctx1.arc(centerX, centerY, segmentRadius, bEnd, bStart, true);
+    ctx1.closePath();
+
+    if (k % 2 === 0) {
+      ctx1.fillStyle = 'rgba(255, 252, 245, 0.50)';
+    } else {
+      ctx1.fillStyle = 'rgba(235, 215, 185, 0.30)';
+    }
+    ctx1.fill();
+
+    // Delicate facet boundary line
+    ctx1.beginPath();
+    ctx1.moveTo(centerX + segmentRadius * Math.cos(bStart), centerY + segmentRadius * Math.sin(bStart));
+    ctx1.lineTo(centerX + outerRadius * Math.cos(bStart), centerY + outerRadius * Math.sin(bStart));
+    ctx1.strokeStyle = 'rgba(212, 175, 55, 0.45)';
+    ctx1.lineWidth = 0.75;
+    ctx1.stroke();
+  }
+
+  // Outer gold rim line
+  ctx1.beginPath();
+  ctx1.arc(centerX, centerY, outerRadius, 0, 2 * Math.PI);
+  ctx1.strokeStyle = '#D4AF37';
+  ctx1.lineWidth = 1.75;
+  ctx1.stroke();
+
+  // Inner rim gold line
+  ctx1.beginPath();
+  ctx1.arc(centerX, centerY, segmentRadius, 0, 2 * Math.PI);
+  ctx1.strokeStyle = '#E2C78E';
+  ctx1.lineWidth = 1.25;
+  ctx1.stroke();
+
+  // --- 2. SEGMENTS (CRYSTAL & AMBER WEDGES) ---
   welcomeSegments.forEach((seg, i) => {
     const angle = currentAngle1 + i * arcSize;
+    const midAngle = angle + arcSize / 2;
+
+    // Segment Wedge Path
     ctx1.beginPath();
     ctx1.moveTo(centerX, centerY);
-    ctx1.arc(centerX, centerY, radius, angle, angle + arcSize);
-    ctx1.fillStyle = seg.color;
+    ctx1.arc(centerX, centerY, segmentRadius, angle, angle + arcSize);
+    ctx1.closePath();
+
+    // Fill Palette: Ivory, Champagne Gold, or Cognac Amber
+    const isAmber = seg.type === 'amber' || (seg.text && seg.text.includes('TRI ÂN'));
+    const isIvory = seg.type === 'ivory' || (!isAmber && i % 2 === 0);
+
+    if (isAmber) {
+      const grad = ctx1.createRadialGradient(centerX, centerY, innerRadius, centerX, centerY, segmentRadius);
+      grad.addColorStop(0, 'rgba(245, 158, 11, 0.92)');
+      grad.addColorStop(0.4, 'rgba(217, 119, 6, 0.88)');
+      grad.addColorStop(1, 'rgba(154, 52, 18, 0.82)');
+      ctx1.fillStyle = grad;
+    } else if (isIvory) {
+      const grad = ctx1.createRadialGradient(centerX, centerY, innerRadius, centerX, centerY, segmentRadius);
+      grad.addColorStop(0, 'rgba(255, 255, 255, 0.65)');
+      grad.addColorStop(0.5, 'rgba(255, 253, 248, 0.40)');
+      grad.addColorStop(1, 'rgba(246, 238, 225, 0.28)');
+      ctx1.fillStyle = grad;
+    } else {
+      // Champagne Gold
+      const grad = ctx1.createRadialGradient(centerX, centerY, innerRadius, centerX, centerY, segmentRadius);
+      grad.addColorStop(0, 'rgba(255, 252, 245, 0.65)');
+      grad.addColorStop(0.5, 'rgba(249, 235, 210, 0.42)');
+      grad.addColorStop(1, 'rgba(233, 212, 175, 0.28)');
+      ctx1.fillStyle = grad;
+    }
     ctx1.fill();
-    ctx1.lineWidth = 1.5;
-    ctx1.strokeStyle = '#0F172A';
+
+    // Laser-etched diamond facet lines
+    // 1. Center radial bisector line
+    ctx1.beginPath();
+    ctx1.moveTo(centerX + (innerRadius + 6) * Math.cos(midAngle), centerY + (innerRadius + 6) * Math.sin(midAngle));
+    ctx1.lineTo(centerX + (segmentRadius - 2) * Math.cos(midAngle), centerY + (segmentRadius - 2) * Math.sin(midAngle));
+    ctx1.strokeStyle = isAmber ? 'rgba(255, 255, 255, 0.4)' : 'rgba(212, 175, 55, 0.35)';
+    ctx1.lineWidth = 0.8;
     ctx1.stroke();
 
-    // Segment Text
+    // 2. Diamond chevron facets near the rim
+    const rChevron = segmentRadius * 0.75;
+    const mx = centerX + rChevron * Math.cos(midAngle);
+    const my = centerY + rChevron * Math.sin(midAngle);
+    const lx = centerX + (segmentRadius - 2) * Math.cos(angle);
+    const ly = centerY + (segmentRadius - 2) * Math.sin(angle);
+    const rx = centerX + (segmentRadius - 2) * Math.cos(angle + arcSize);
+    const ry = centerY + (segmentRadius - 2) * Math.sin(angle + arcSize);
+
+    ctx1.beginPath();
+    ctx1.moveTo(lx, ly);
+    ctx1.lineTo(mx, my);
+    ctx1.lineTo(rx, ry);
+    ctx1.strokeStyle = isAmber ? 'rgba(255, 255, 255, 0.3)' : 'rgba(200, 160, 80, 0.28)';
+    ctx1.lineWidth = 0.8;
+    ctx1.stroke();
+
+    // Segment divider hairline
+    ctx1.beginPath();
+    ctx1.moveTo(centerX + innerRadius * Math.cos(angle), centerY + innerRadius * Math.sin(angle));
+    ctx1.lineTo(centerX + segmentRadius * Math.cos(angle), centerY + segmentRadius * Math.sin(angle));
+    ctx1.strokeStyle = 'rgba(212, 175, 55, 0.7)';
+    ctx1.lineWidth = 1.25;
+    ctx1.stroke();
+
+    // Segment Typography (Tangential 2-line layout perpendicular to radius spoke)
     ctx1.save();
-    ctx1.translate(centerX, centerY);
-    ctx1.rotate(angle + arcSize / 2);
-    ctx1.textAlign = 'right';
-    ctx1.fillStyle = seg.textColor || '#FFFFFF';
-    ctx1.font = 'bold 12px "Plus Jakarta Sans", sans-serif';
-    ctx1.shadowColor = 'rgba(0,0,0,0.8)';
-    ctx1.shadowBlur = 4;
-    ctx1.fillText(seg.text, radius - 24, 4);
+    const rText = segmentRadius * 0.65;
+    const tx = centerX + rText * Math.cos(midAngle);
+    const ty = centerY + rText * Math.sin(midAngle);
+
+    ctx1.translate(tx, ty);
+    ctx1.rotate(midAngle + Math.PI / 2);
+
+    const l1 = seg.line1 || (seg.text ? seg.text.split(' ')[0] : 'QUÀ');
+    const l2 = seg.line2 || (seg.text ? seg.text.split(' ').slice(1).join(' ') : '');
+
+    ctx1.textAlign = 'center';
+    ctx1.textBaseline = 'middle';
+
+    if (isAmber) {
+      ctx1.fillStyle = '#FFFFFF';
+      ctx1.shadowColor = 'rgba(0,0,0,0.55)';
+      ctx1.shadowBlur = 3;
+    } else {
+      ctx1.fillStyle = '#382210';
+      ctx1.shadowColor = 'rgba(255,255,255,0.8)';
+      ctx1.shadowBlur = 1;
+    }
+
+    if (l2) {
+      // Line 1 (closer to rim)
+      ctx1.font = 'bold 11px "Plus Jakarta Sans", sans-serif';
+      ctx1.fillText(l1, 0, -8);
+      // Line 2 (closer to center)
+      ctx1.font = '800 12px "Plus Jakarta Sans", sans-serif';
+      ctx1.fillText(l2, 0, 7);
+    } else {
+      ctx1.font = '800 12px "Plus Jakarta Sans", sans-serif';
+      ctx1.fillText(l1, 0, 0);
+    }
+
     ctx1.restore();
   });
 
-  // Center Inner Ring & Indicator
+  // --- 3. CENTER HUB (3D FACETED DIAMOND CRYSTAL BEZEL) ---
   ctx1.beginPath();
-  ctx1.arc(centerX, centerY, 38, 0, 2 * Math.PI);
-  ctx1.fillStyle = '#0F172A';
+  ctx1.arc(centerX, centerY, innerRadius, 0, 2 * Math.PI);
+  ctx1.fillStyle = '#D4AF37';
   ctx1.fill();
-  ctx1.lineWidth = 4;
-  ctx1.strokeStyle = '#FBBF24';
-  ctx1.stroke();
+
+  // 12 Diamond facet cuts on center bezel
+  const numCenterFacets = 12;
+  const cArc = (2 * Math.PI) / numCenterFacets;
+  for (let j = 0; j < numCenterFacets; j++) {
+    const cStart = j * cArc;
+    const cEnd = (j + 1) * cArc;
+
+    ctx1.beginPath();
+    ctx1.arc(centerX, centerY, innerRadius, cStart, cEnd);
+    ctx1.arc(centerX, centerY, innerRadius - 5, cEnd, cStart, true);
+    ctx1.closePath();
+
+    ctx1.fillStyle = (j % 2 === 0) ? '#FFFDF8' : '#EBD5B0';
+    ctx1.fill();
+    ctx1.strokeStyle = 'rgba(212, 175, 55, 0.4)';
+    ctx1.lineWidth = 0.5;
+    ctx1.stroke();
+  }
+
+  // Inner sparkling cabochon
+  const cabochonRadius = innerRadius - 5;
+  const cabGrad = ctx1.createRadialGradient(centerX - 4, centerY - 4, 2, centerX, centerY, cabochonRadius);
+  cabGrad.addColorStop(0, '#FFFFFF');
+  cabGrad.addColorStop(0.35, '#FFFBF4');
+  cabGrad.addColorStop(0.8, '#F7EBD7');
+  cabGrad.addColorStop(1, '#D8BA84');
 
   ctx1.beginPath();
-  ctx1.arc(centerX, centerY, 30, 0, 2 * Math.PI);
-  ctx1.fillStyle = '#F59E0B';
+  ctx1.arc(centerX, centerY, cabochonRadius, 0, 2 * Math.PI);
+  ctx1.fillStyle = cabGrad;
   ctx1.fill();
+  ctx1.strokeStyle = '#D4AF37';
+  ctx1.lineWidth = 1.5;
+  ctx1.stroke();
+
+  ctx1.restore();
 }
 
 function pickWinningIndexByWeight(segments) {
@@ -538,9 +719,11 @@ function spinWheel() {
   const arcSize = (2 * Math.PI) / numSegments;
   const spins = 5 + Math.floor(Math.random() * 2);
   const targetSegmentAngle = (3 * Math.PI / 2) - (targetIndex * arcSize + arcSize / 2);
-  const totalRotation = spins * 2 * Math.PI + targetSegmentAngle;
 
-  const startAngle = currentAngle1 % (2 * Math.PI);
+  const startAngle = currentAngle1;
+  let delta = (targetSegmentAngle - (startAngle % (2 * Math.PI))) % (2 * Math.PI);
+  if (delta < 0) delta += 2 * Math.PI;
+  const totalRotation = spins * 2 * Math.PI + delta;
   const finalAngle = startAngle + totalRotation;
   const duration = 4800;
   const startTime = performance.now();

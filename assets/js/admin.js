@@ -277,14 +277,14 @@ function closeAdminDashboard() {
 
 // Default Wheel Segments (Fix cứng cấu hình trúng giải 10% cước theo chỉ đạo)
 const DEFAULT_WHEEL_SEGMENTS = [
-  { id: 1, text: 'GIẢM GIÁ 10% CƯỚC', color: '#ea580c', textColor: '#FFFFFF', prize: 'Giảm giá 10% chi phí vận chuyển', probability_weight: 100, stock_quantity: 9999 },
-  { id: 2, text: 'VOUCHER 300K', color: '#1e293b', textColor: '#FBBF24', prize: 'Voucher Chiết Khấu 300.000 đ', probability_weight: 0, stock_quantity: 25 },
-  { id: 3, text: 'ƯU TIÊN XẾP CONT', color: '#f59e0b', textColor: '#0F172A', prize: 'Vé Ưu Tiên Xếp Cont Sớm', probability_weight: 0, stock_quantity: 18 },
-  { id: 4, text: 'GIẢM 50% LƯU KHO', color: '#0f172a', textColor: '#FFFFFF', prize: 'Giảm 50% Phí Lưu Kho Bãi', probability_weight: 0, stock_quantity: 15 },
-  { id: 5, text: 'VOUCHER 300K', color: '#ea580c', textColor: '#FFFFFF', prize: 'Voucher Chiết Khấu 300.000 đ', probability_weight: 0, stock_quantity: 20 },
-  { id: 6, text: 'GÓI SQUAD 2-IN-1', color: '#1e293b', textColor: '#38BDF8', prize: 'Gói Hỗ Trợ Squad 2–in–1', probability_weight: 0, stock_quantity: 11 },
-  { id: 7, text: 'VOUCHER 400K', color: '#f59e0b', textColor: '#0F172A', prize: 'Voucher 400.000 đ Lộc Xuân', probability_weight: 0, stock_quantity: 10 },
-  { id: 8, text: 'MAY MẮN LẦN SAU', color: '#0f172a', textColor: '#94A3B8', prize: 'Vé Tích Lũy Quay Mùng 05', probability_weight: 0, stock_quantity: 999 }
+  { id: 1, text: 'VOUCHER 400K', line1: 'VOUCHER', line2: '400K', type: 'ivory', prize: 'Voucher 400.000 đ Lộc Xuân', probability_weight: 0, stock_quantity: 10 },
+  { id: 2, text: 'GIẢM 10% CƯỚC', line1: 'GIẢM 10%', line2: 'CƯỚC', type: 'champagne', prize: 'Giảm giá 10% chi phí vận chuyển', probability_weight: 100, stock_quantity: 9999 },
+  { id: 3, text: 'QUAY TRI ÂN', line1: 'QUAY', line2: 'TRI ÂN', type: 'amber', prize: 'Vé Tham Dự Quay Thưởng Tri Ân Mùng 05', probability_weight: 0, stock_quantity: 50 },
+  { id: 4, text: 'IPHONE 15 PRO', line1: 'IPHONE', line2: '15 PRO', type: 'champagne', prize: 'iPhone 15 Pro Max 256GB Tri Ân', probability_weight: 0, stock_quantity: 1 },
+  { id: 5, text: 'TRẢ TRƯỚC 500K', line1: 'TRẢ TRƯỚC', line2: '500K', type: 'ivory', prize: 'Voucher Trả Trước 500.000 đ', probability_weight: 0, stock_quantity: 15 },
+  { id: 6, text: 'KHÁCH HÀNG VIP', line1: 'KHÁCH HÀNG', line2: 'VIP', type: 'champagne', prize: 'Gói Hỗ Trợ Squad Khách Hàng VIP', probability_weight: 0, stock_quantity: 10 },
+  { id: 7, text: 'VOUCHER 200K', line1: 'VOUCHER', line2: '200K', type: 'ivory', prize: 'Voucher Chiết Khấu 200.000 đ', probability_weight: 0, stock_quantity: 25 },
+  { id: 8, text: 'QUAY TIẾP', line1: 'QUAY', line2: 'TIẾP', type: 'champagne', prize: 'Lượt Quay May Mắn Tiếp Theo', probability_weight: 0, stock_quantity: 999 }
 ];
 window.DEFAULT_WHEEL_SEGMENTS = DEFAULT_WHEEL_SEGMENTS;
 
