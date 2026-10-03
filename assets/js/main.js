@@ -453,9 +453,9 @@ function renderNhiemVuDisplay() {
         <div class="p-5 sm:p-6 rounded-2xl bg-gradient-to-r from-amber-50 via-amber-100/70 to-amber-50 border-2 border-amber-300 shadow-md flex flex-col sm:flex-row sm:items-center justify-between gap-4 relative z-10">
           <div class="flex items-center gap-4">
             <div>
-              <h4 class="text-base sm:text-lg font-black text-amber-950 font-display">Chiến Binh Bứt Phá — Hoàn Thành Trọn Vẹn 3 Chặng</h4>
+              <h4 class="text-base sm:text-lg font-black text-amber-950 font-display">Vinh Danh Khách Hàng Tiêu Biểu — Hoàn Thành Trọn Vẹn 3 Chặng</h4>
               <p class="text-xs sm:text-sm text-slate-700 mt-1 leading-relaxed">
-                Eureka Logistics xin gửi lời cảm ơn chân thành và sâu sắc nhất tới toàn thể Quý khách hàng đã luôn đồng hành, tin tưởng và nhiệt tình tham gia chương trình thi đua tri ân 2026!
+                Eureka Logistics xin trân trọng tri ân và vinh danh Quý khách hàng đã luôn tin tưởng đồng hành, xuất sắc hoàn thành trọn vẹn lộ trình 3 chặng năm 2026!
               </p>
             </div>
           </div>
